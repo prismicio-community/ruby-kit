@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ApiData' do
+describe 'Api' do
   before do
     @data = {'refs' => [
       Ref.new('ref1', 'label1'),
@@ -9,16 +9,16 @@ describe 'ApiData' do
       Ref.new('ref30', 'label3'),
       Ref.new('ref4', 'label4'),
     ]}
-    @api_data = ApiData.new(@data)
+    @api = Api.new(@data)
   end
 
   describe 'refs' do
     it "returns a map with an element from each type" do
-      @api_data.refs['label2'].ref.should == 'ref2'
+      @api.refs['label2'].ref.should == 'ref2'
     end
 
     it "returns a map with the correct number of elements" do
-      @api_data.refs.size.should == 4
+      @api.refs.size.should == 4
     end
   end
 end

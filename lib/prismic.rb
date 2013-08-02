@@ -1,5 +1,9 @@
 class ApiData
   attr_accessor :refs, :bookmarks, :types, :tags, :forms
+end
+
+class Api
+  attr_accessor :refs, :bookmarks, :forms, :master
 
   def initialize(data)
     @bookmarks = data['bookmarks']
