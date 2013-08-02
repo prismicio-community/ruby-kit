@@ -1,7 +1,14 @@
 class ApiData
   attr_accessor :refs, :bookmarks, :types, :tags, :forms
 
-  def parse_json(json)
+  def initialize(data)
+    @bookmarks = data['bookmarks']
+    @refs = get_refs_from_data(data)
+  end
+
+  private
+  def get_refs_from_data(data)
+    Hash[data['refs'].map { |ref| [ref.label, ref] }]
   end
 end
 
@@ -25,4 +32,9 @@ end
 
 class Ref
   attr_accessor :ref, :label, :isMasterRef, :scheduledAt
+
+  def initialize(ref, label)
+    @ref = ref
+    @label = label
+  end
 end
