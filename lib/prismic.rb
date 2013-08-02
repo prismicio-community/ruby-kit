@@ -9,6 +9,7 @@ class Api
     @bookmarks = data['bookmarks']
     @refs = get_refs_from_data(data)
     @forms = get_forms_from_data(data)
+    @master = get_master_from_data
   end
 
   private
@@ -22,6 +23,13 @@ class Api
         [key, SearchForm.new(self, form, form.defaultData)]
       end
     ]
+  end
+
+  def get_master_from_data
+    @refs.values
+      .map { |ref| ref if ref.isMasterRef }
+      .compact
+      .first
   end
 end
 
@@ -61,8 +69,9 @@ end
 class Ref
   attr_accessor :ref, :label, :isMasterRef, :scheduledAt
 
-  def initialize(ref, label)
+  def initialize(ref, label, isMasterRef = false)
     @ref = ref
     @label = label
+    @isMasterRef = isMasterRef
   end
 end

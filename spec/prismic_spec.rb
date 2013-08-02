@@ -6,8 +6,8 @@ describe 'Api' do
     @data['refs'] = [
       Ref.new('ref1', 'label1'),
       Ref.new('ref2', 'label2'),
-      Ref.new('ref3', 'label3'),
       Ref.new('ref30', 'label3'),
+      Ref.new('ref3', 'label3', true),
       Ref.new('ref4', 'label4'),
     ]
     @data['forms'] = {
@@ -48,6 +48,16 @@ describe 'Api' do
 
     it "returns a map with the correct number of elements" do
       @api_data.forms.size.should == 4
+    end
+  end
+
+  describe 'master' do
+    it "returns a Ref" do
+      @api_data.master.should be_kind_of (Ref)
+    end
+
+    it "returns the first master" do
+      @api_data.master.label.should == 'label3'
     end
   end
 end
