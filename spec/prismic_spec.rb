@@ -2,23 +2,52 @@ require 'spec_helper'
 
 describe 'Api' do
   before do
-    @data = {'refs' => [
+    @data = {}
+    @data['refs'] = [
       Ref.new('ref1', 'label1'),
       Ref.new('ref2', 'label2'),
       Ref.new('ref3', 'label3'),
       Ref.new('ref30', 'label3'),
       Ref.new('ref4', 'label4'),
-    ]}
-    @api = Api.new(@data)
+    ]
+    @data['forms'] = {
+      'form1' => Form.new('form1'),
+      'form2' => Form.new('form2'),
+      'form3' => Form.new('form3'),
+      'form4' => Form.new('form4'),
+    }
+    @api_data = Api.new(@data)
   end
 
   describe 'refs' do
     it "returns a map with an element from each type" do
-      @api.refs['label2'].ref.should == 'ref2'
+      @api_data.refs['label2'].ref.should == 'ref2'
     end
 
     it "returns a map with the correct number of elements" do
-      @api.refs.size.should == 4
+      @api_data.refs.size.should == 4
+    end
+  end
+
+  describe 'forms' do
+    it "returns a map of { String => SearchForm }" do
+      @api_data.forms['form1'].should be_kind_of (SearchForm)
+    end
+
+    it "sets SearchForm.api to the correct value" do
+      @api_data.forms['form2'].api.should be_kind_of (Api)
+    end
+
+    it "sets SearchForm.form to the correct value" do
+      @api_data.forms['form2'].form.name.should == 'form2'
+    end
+
+    it "sets SearchForm.data to the correct value" do
+      @api_data.forms['form2'].data.should == {}
+    end
+
+    it "returns a map with the correct number of elements" do
+      @api_data.forms.size.should == 4
     end
   end
 end
