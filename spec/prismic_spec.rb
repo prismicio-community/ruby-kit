@@ -16,48 +16,48 @@ describe 'Api' do
       'form3' => Form.new('form3'),
       'form4' => Form.new('form4'),
     }
-    @api_data = Api.new(@data)
+    @api = Api.new(@data)
   end
 
   describe 'refs' do
     it "returns a map with an element from each type" do
-      @api_data.refs['label2'].ref.should == 'ref2'
+      @api.refs['label2'].ref.should == 'ref2'
     end
 
     it "returns a map with the correct number of elements" do
-      @api_data.refs.size.should == 4
+      @api.refs.size.should == 4
     end
   end
 
   describe 'forms' do
     it "returns a map of { String => SearchForm }" do
-      @api_data.forms['form1'].should be_kind_of (SearchForm)
+      @api.forms['form1'].should be_kind_of (SearchForm)
     end
 
     it "sets SearchForm.api to the correct value" do
-      @api_data.forms['form2'].api.should be_kind_of (Api)
+      @api.forms['form2'].api.should be_kind_of (Api)
     end
 
     it "sets SearchForm.form to the correct value" do
-      @api_data.forms['form2'].form.name.should == 'form2'
+      @api.forms['form2'].form.name.should == 'form2'
     end
 
     it "sets SearchForm.data to the correct value" do
-      @api_data.forms['form2'].data.should == {}
+      @api.forms['form2'].data.should == {}
     end
 
     it "returns a map with the correct number of elements" do
-      @api_data.forms.size.should == 4
+      @api.forms.size.should == 4
     end
   end
 
   describe 'master' do
     it "returns a Ref" do
-      @api_data.master.should be_kind_of (Ref)
+      @api.master.should be_kind_of (Ref)
     end
 
     it "returns the first master" do
-      @api_data.master.label.should == 'label3'
+      @api.master.label.should == 'label3'
     end
 
     it "throws an exception if no master was found" do
