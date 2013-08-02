@@ -59,6 +59,10 @@ describe 'Api' do
     it "returns the first master" do
       @api_data.master.label.should == 'label3'
     end
+
+    it "throws an exception if no master was found" do
+      expect { Api.new({ 'refs' => [] }) }.to raise_error Api::NoMasterFoundException
+    end
   end
 end
 

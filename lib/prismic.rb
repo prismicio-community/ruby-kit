@@ -18,6 +18,7 @@ class Api
   end
 
   def get_forms_from_data(data)
+    data['forms'] = data['forms'] || {}
     Hash[
       data['forms'].map do |key, form|
         [key, SearchForm.new(self, form, form.defaultData)]
@@ -26,10 +27,19 @@ class Api
   end
 
   def get_master_from_data
-    @refs.values
+    master = @refs.values
       .map { |ref| ref if ref.isMasterRef }
       .compact
       .first
+
+      if not master.nil?
+        master
+      else
+        raise NoMasterFoundException
+      end
+  end
+
+  class NoMasterFoundException < Exception
   end
 end
 
