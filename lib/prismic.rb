@@ -33,11 +33,12 @@ class Api
     result = {}
     hash = parser.parse(data)
 
+    result['bookmarks'] = hash['bookmarks']
+    result['types'] = hash['types']
+
     result['refs'] = hash['refs'].map do |ref|
       Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
     end
-
-    result['bookmarks'] = hash['bookmarks']
 
     result
   end

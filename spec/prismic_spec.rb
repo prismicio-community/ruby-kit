@@ -106,12 +106,26 @@ describe 'Api' do
         @parsed_response['bookmarks'].should be_kind_of Hash
       end
 
-      it "returns a hash of size" do
+      it "returns a hash of size 3" do
         @parsed_response['bookmarks'].size.should == 3
       end
 
       it "retuns a hash containing the bookmarks" do
         @parsed_response['bookmarks']['about'].should == 'Ue0EDd_mqb8Dhk3j'
+      end
+    end
+
+    describe "parsing types" do
+      it "returns a hash" do
+        @parsed_response['types'].should be_kind_of Hash
+      end
+
+      it "returns a hash of size 6" do
+        @parsed_response['types'].size.should == 6
+      end
+
+      it "retuns a hash containing the types" do
+        @parsed_response['types']['blog-post'].should == 'Blog post'
       end
     end
   end
