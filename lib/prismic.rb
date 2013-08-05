@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'yajl'
 
 class ApiData
   attr_accessor :refs, :bookmarks, :types, :tags, :forms
@@ -25,6 +26,18 @@ class Api
     else
       raise PrismicWSConnectionError, res.message
     end
+  end
+
+  def self.parse_api_response(data)
+    parser = Yajl::Parser.new
+    result = {}
+    hash = parser.parse(data)
+
+    result['refs'] = hash['refs'].map do |ref|
+      Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
+    end
+
+    result
   end
 
   private

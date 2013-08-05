@@ -64,6 +64,37 @@ describe 'Api' do
       expect { Api.new({ 'refs' => [] }) }.to raise_error Api::NoMasterFoundException
     end
   end
+
+  describe 'parse_api_response' do
+    before do
+      data = File.open("#{Dir.pwd}/spec/responses_mocks/api.json").read
+      @parsed_response = Api.parse_api_response(data)
+    end
+
+    describe "parsing refs" do
+      it "returns a hash" do
+        @parsed_response.should be_kind_of Hash
+      end
+
+      it "returns a hash containing a an array" do
+        @parsed_response['refs'].should be_kind_of Array
+      end
+
+      it "returns a hash containing a an array whose size is 2" do
+        @parsed_response['refs'].size.should == 2
+      end
+
+      it "returns a hash containing a an array of Ref objects" do
+        @parsed_response['refs'][0].should be_kind_of Ref
+      end
+
+      it "fills the Ref objects with the correct data" do
+        @parsed_response['refs'][1].ref.should == 'foo'
+        @parsed_response['refs'][1].label.should == 'bar'
+        @parsed_response['refs'][1].isMasterRef.should == false
+      end
+    end
+  end
 end
 
 describe 'Form' do
