@@ -37,6 +37,8 @@ class Api
       Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
     end
 
+    result['bookmarks'] = hash['bookmarks']
+
     result
   end
 

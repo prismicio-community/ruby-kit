@@ -88,10 +88,30 @@ describe 'Api' do
         @parsed_response['refs'][0].should be_kind_of Ref
       end
 
-      it "fills the Ref objects with the correct data" do
+      it "fills the Ref objects with the correct ref data" do
         @parsed_response['refs'][1].ref.should == 'foo'
+      end
+
+      it "fills the Ref objects with the correct ref label" do
         @parsed_response['refs'][1].label.should == 'bar'
+      end
+
+      it "fills the Ref objects with the correct ref isMasterRef" do
         @parsed_response['refs'][1].isMasterRef.should == false
+      end
+    end
+
+    describe "parsing bookmarks" do
+      it "returns a hash" do
+        @parsed_response['bookmarks'].should be_kind_of Hash
+      end
+
+      it "returns a hash of size" do
+        @parsed_response['bookmarks'].size.should == 3
+      end
+
+      it "retuns a hash containing the bookmarks" do
+        @parsed_response['bookmarks']['about'].should == 'Ue0EDd_mqb8Dhk3j'
       end
     end
   end
