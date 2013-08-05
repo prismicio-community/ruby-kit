@@ -15,6 +15,18 @@ class Api
     @master = get_master_from_data
   end
 
+  def self.get(url, path = '/api')
+    http = Net::HTTP.new(URI(url).host)
+    req = Net::HTTP::Get.new(path, { 'Accept' => 'application/json' })
+    res = http.request(req)
+
+    if res.code == '200'
+      res
+    else
+      raise PrismicWSConnectionError, res.message
+    end
+  end
+
   private
   def get_refs_from_data(data)
     Hash[data['refs'].map { |ref| [ref.label, ref] }]
@@ -27,18 +39,6 @@ class Api
         [key, SearchForm.new(self, form, form.defaultData)]
       end
     ]
-  end
-
-  def self.get(url, path = '/api')
-    http = Net::HTTP.new(URI(url).host)
-    req = Net::HTTP::Get.new(path, { 'Accept' => 'application/json' })
-    res = http.request(req)
-
-    if res.code == '200'
-      res
-    else
-      raise PrismicWSConnectionError, res.message
-    end
   end
 
   def get_master_from_data
