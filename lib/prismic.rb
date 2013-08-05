@@ -1,3 +1,6 @@
+require 'net/http'
+require 'uri'
+
 class ApiData
   attr_accessor :refs, :bookmarks, :types, :tags, :forms
 end
@@ -26,6 +29,18 @@ class Api
     ]
   end
 
+  def self.get(url, path = '/api')
+    http = Net::HTTP.new(URI(url).host)
+    req = Net::HTTP::Get.new(path, { 'Accept' => 'application/json' })
+    res = http.request(req)
+
+    if res.code == '200'
+      res
+    else
+      raise PrismicWSConnectionError, res.message
+    end
+  end
+
   def get_master_from_data
     master = @refs.values
       .map { |ref| ref if ref.isMasterRef }
@@ -40,6 +55,12 @@ class Api
   end
 
   class NoMasterFoundException < Exception
+  end
+
+  class PrismicWSConnectionError < Exception
+    def initialize(msg)
+      super("Can't connect to Prismic's API: #{msg}")
+    end
   end
 end
 
