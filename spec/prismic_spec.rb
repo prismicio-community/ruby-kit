@@ -128,6 +128,20 @@ describe 'Api' do
         @parsed_response['types']['blog-post'].should == 'Blog post'
       end
     end
+
+    describe "parsing tags" do
+      it "returns an array" do
+        @parsed_response['tags'].should be_kind_of Array
+      end
+
+      it "returns a hash of size 4" do
+        @parsed_response['tags'].size.should == 4
+      end
+
+      it "retuns a hash containing the types" do
+        @parsed_response['tags'].should include 'Cupcake'
+      end
+    end
   end
 end
 

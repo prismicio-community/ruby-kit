@@ -35,6 +35,7 @@ class Api
 
     result['bookmarks'] = hash['bookmarks']
     result['types'] = hash['types']
+    result['tags'] = hash['tags']
 
     result['refs'] = hash['refs'].map do |ref|
       Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
