@@ -41,6 +41,19 @@ class Api
       Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
     end
 
+    result['forms'] = Hash[
+      hash['forms'].map do |k, form|
+        [k, Form.new(
+          form['name'],
+          {},
+          form['method'],
+          form['rel'],
+          form['enctype'],
+          form['action'],
+        )]
+      end
+    ]
+
     result
   end
 
@@ -82,11 +95,15 @@ class Api
 end
 
 class Form
-  attr_accessor :name, :method, :rel, :enctype, :action, :fields
+  attr_accessor :name, :form_method, :rel, :enctype, :action, :fields
 
-  def initialize(name = nil, fields = {})
+  def initialize(name, fields, form_method, rel, enctype, action)
     @name = name
     @fields = fields
+    @form_method = form_method
+    @rel = rel
+    @enctype = enctype
+    @action = action
   end
 
   def defaultData

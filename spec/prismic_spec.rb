@@ -11,10 +11,10 @@ describe 'Api' do
       Ref.new('ref4', 'label4'),
     ]
     @data['forms'] = {
-      'form1' => Form.new('form1'),
-      'form2' => Form.new('form2'),
-      'form3' => Form.new('form3'),
-      'form4' => Form.new('form4'),
+      'form1' => Form.new('form1', {}, nil, nil, nil, nil),
+      'form2' => Form.new('form2', {}, nil, nil, nil, nil),
+      'form3' => Form.new('form3', {}, nil, nil, nil, nil),
+      'form4' => Form.new('form4', {}, nil, nil, nil, nil),
     }
     @api = Api.new(@data)
   end
@@ -71,11 +71,11 @@ describe 'Api' do
       @parsed_response = Api.parse_api_response(data)
     end
 
-    describe "parsing refs" do
-      it "returns a hash" do
-        @parsed_response.should be_kind_of Hash
-      end
+    it "returns a hash" do
+      @parsed_response.should be_kind_of Hash
+    end
 
+    describe "parsing refs" do
       it "returns a hash containing a an array" do
         @parsed_response['refs'].should be_kind_of Array
       end
@@ -144,53 +144,53 @@ describe 'Api' do
     end
 
     describe "parsing forms" do
-      it "returns an array" do
-        @parse_api_response['forms'].should be_kind_of Array
+      it "returns a hash" do
+        @parsed_response['forms'].should be_kind_of Hash
       end
 
-      it "returns an array of size 10" do
-        @parse_api_response['forms'].size.should == 10
+      it "returns a hash of size 10" do
+        @parsed_response['forms'].size.should == 10
       end
 
-      it "returns an array of Form objects" do
-        @parse_api_response['forms']['pies'].should be_kind_of Form
+      it "returns a hash of Form objects" do
+        @parsed_response['forms']['pies'].should be_kind_of Form
       end
 
       it "correctly fills objects names" do
-        @parse_api_response['forms']['pies']['name'].should == 'Little Pies'
+        @parsed_response['forms']['pies'].name.should == 'Little Pies'
       end
 
       it "correctly fills objects method" do
-        @parse_api_response['forms']['pies']['method'].should == 'GET'
+        @parsed_response['forms']['pies'].form_method.should == 'GET'
       end
 
       it "correctly fills objects rel" do
-        @parse_api_response['forms']['pies']['rel'].should == 'collection'
+        @parsed_response['forms']['pies'].rel.should == 'collection'
       end
 
       it "correctly fills objects enctype" do
-        @parse_api_response['forms']['pies']['enctype'].should ==
+        @parsed_response['forms']['pies'].enctype.should ==
           'application/x-www-form-urlencoded'
       end
 
       it "correctly fills objects action" do
-        @parse_api_response['forms']['pies']['action'].should ==
+        @parsed_response['forms']['pies'].action.should ==
           'http://lesbonneschoses.wroom.io/api/documents/search'
       end
 
       describe "filling objects fields" do
         it "creates all the fields" do
-          @parse_api_response['forms']['pies']['fields'].size.should == 2
+          @parsed_response['forms']['pies']['fields'].size.should == 2
         end
 
         it "fills the fields with the type info" do
-          @parse_api_response['forms']['pies']['fields']['ref']['type'].should == 'String'
+          @parsed_response['forms']['pies']['fields']['ref']['type'].should == 'String'
         end
 
         it "fills the fields with the default info" do
-          @parse_api_response['forms']['pies']['fields']['q']['default'].should ==
+          @parsed_response['forms']['pies']['fields']['q']['default'].should ==
             '[[at(document.tags, [\"Pie\"])][any(document.type, [\"product\"])]]'
-          @parse_api_response['forms']['pies']['fields']['q']['type'].should == 'String'
+          @parsed_response['forms']['pies']['fields']['q']['type'].should == 'String'
         end
       end
     end
@@ -200,13 +200,13 @@ end
 describe 'Form' do
   describe 'defaultData' do
     it 'creates a map of default fields data' do
-      form = Form.new
+      form = Form.new(nil, {}, nil, nil, nil, nil)
 
       form.fields = {"foo1" => nil}
       defaultData = form.defaultData
       defaultData.should be_empty
 
-      form = Form.new
+      form = Form.new(nil, {}, nil, nil, nil, nil)
       form.fields = {"foo1" => "bar1",
                      "foo2" => "bar2",
                      "foo3" => nil,
