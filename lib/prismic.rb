@@ -30,37 +30,44 @@ class Api
 
   def self.parse_api_response(data)
     parser = Yajl::Parser.new
-    result = {}
     hash = parser.parse(data)
 
-    result['bookmarks'] = hash['bookmarks']
-    result['types'] = hash['types']
-    result['tags'] = hash['tags']
-
-    result['refs'] = hash['refs'].map do |ref|
-      Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
+    create_refs = lambda do
+      hash['refs'].map do |ref|
+        Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
+      end
     end
 
-    result['forms'] = Hash[
-      hash['forms'].map do |k, form|
-        form_fields = Hash[
-          form['fields'].map do |k, field|
-            [k, Field.new(field['type'], field['default'])]
+    create_forms = lambda do
+      Hash[
+        hash['forms'].map do |k, form|
+          create_form_fields = lambda do
+            Hash[
+              form['fields'].map do |k, field|
+                [k, Field.new(field['type'], field['default'])]
+              end
+            ]
           end
-        ]
 
-        [k, Form.new(
-          form['name'],
-          form_fields,
-          form['method'],
-          form['rel'],
-          form['enctype'],
-          form['action'],
-        )]
-      end
-    ]
+          [k, Form.new(
+            form['name'],
+            create_form_fields.call,
+            form['method'],
+            form['rel'],
+            form['enctype'],
+            form['action'],
+          )]
+        end
+      ]
+    end
 
-    result
+    {
+      'bookmarks' => hash['bookmarks'],
+      'forms'     => create_forms.call,
+      'refs'      => create_refs.call,
+      'tags'      => hash['tags'],
+      'types'     => hash['types']
+    }
   end
 
   private
