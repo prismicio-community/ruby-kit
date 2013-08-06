@@ -144,18 +144,54 @@ describe 'Api' do
     end
 
     describe "parsing forms" do
-      it "returns an array"
-      it "returns an array of size 10"
-      it "returns an array of Form objects"
-      it "correctly fills objects names"
-      it "correctly fills objects method"
-      it "correctly fills objects rel"
-      it "correctly fills objects enctype"
-      it "correctly fills objects action"
+      it "returns an array" do
+        @parse_api_response['forms'].should be_kind_of Array
+      end
+
+      it "returns an array of size 10" do
+        @parse_api_response['forms'].size.should == 10
+      end
+
+      it "returns an array of Form objects" do
+        @parse_api_response['forms']['pies'].should be_kind_of Form
+      end
+
+      it "correctly fills objects names" do
+        @parse_api_response['forms']['pies']['name'].should == 'Little Pies'
+      end
+
+      it "correctly fills objects method" do
+        @parse_api_response['forms']['pies']['method'].should == 'GET'
+      end
+
+      it "correctly fills objects rel" do
+        @parse_api_response['forms']['pies']['rel'].should == 'collection'
+      end
+
+      it "correctly fills objects enctype" do
+        @parse_api_response['forms']['pies']['enctype'].should ==
+          'application/x-www-form-urlencoded'
+      end
+
+      it "correctly fills objects action" do
+        @parse_api_response['forms']['pies']['action'].should ==
+          'http://lesbonneschoses.wroom.io/api/documents/search'
+      end
+
       describe "filling objects fields" do
-        it "creates all the fields"
-        it "fills the fields with the type info"
-        it "fills the fields with the default info"
+        it "creates all the fields" do
+          @parse_api_response['forms']['pies']['fields'].size.should == 2
+        end
+
+        it "fills the fields with the type info" do
+          @parse_api_response['forms']['pies']['fields']['ref']['type'].should == 'String'
+        end
+
+        it "fills the fields with the default info" do
+          @parse_api_response['forms']['pies']['fields']['q']['default'].should ==
+            '[[at(document.tags, [\"Pie\"])][any(document.type, [\"product\"])]]'
+          @parse_api_response['forms']['pies']['fields']['q']['type'].should == 'String'
+        end
       end
     end
   end
