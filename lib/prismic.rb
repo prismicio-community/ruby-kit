@@ -30,18 +30,44 @@ class Api
 
   def self.parse_api_response(data)
     parser = Yajl::Parser.new
-    result = {}
     hash = parser.parse(data)
 
-    result['bookmarks'] = hash['bookmarks']
-    result['types'] = hash['types']
-    result['tags'] = hash['tags']
-
-    result['refs'] = hash['refs'].map do |ref|
-      Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
+    create_refs = lambda do
+      hash['refs'].map do |ref|
+        Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
+      end
     end
 
-    result
+    create_forms = lambda do
+      Hash[
+        hash['forms'].map do |k, form|
+          create_form_fields = lambda do
+            Hash[
+              form['fields'].map do |k, field|
+                [k, Field.new(field['type'], field['default'])]
+              end
+            ]
+          end
+
+          [k, Form.new(
+            form['name'],
+            create_form_fields.call,
+            form['method'],
+            form['rel'],
+            form['enctype'],
+            form['action'],
+          )]
+        end
+      ]
+    end
+
+    {
+      'bookmarks' => hash['bookmarks'],
+      'forms'     => create_forms.call,
+      'refs'      => create_refs.call,
+      'tags'      => hash['tags'],
+      'types'     => hash['types']
+    }
   end
 
   private
@@ -82,11 +108,15 @@ class Api
 end
 
 class Form
-  attr_accessor :name, :method, :rel, :enctype, :action, :fields
+  attr_accessor :name, :form_method, :rel, :enctype, :action, :fields
 
-  def initialize(name = nil, fields = {})
+  def initialize(name, fields, form_method, rel, enctype, action)
     @name = name
     @fields = fields
+    @form_method = form_method
+    @rel = rel
+    @enctype = enctype
+    @action = action
   end
 
   def defaultData
@@ -107,7 +137,12 @@ class SearchForm
 end
 
 class Field
-  attr_accessor :type, :default
+  attr_accessor :field_type, :default
+
+  def initialize(field_type, default)
+    @field_type = field_type
+    @default = default
+  end
 end
 
 class Document
