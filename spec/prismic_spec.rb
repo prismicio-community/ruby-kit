@@ -142,6 +142,22 @@ describe 'Api' do
         @parsed_response['tags'].should include 'Cupcake'
       end
     end
+
+    describe "parsing forms" do
+      it "returns an array"
+      it "returns an array of size 10"
+      it "returns an array of Form objects"
+      it "correctly fills objects names"
+      it "correctly fills objects method"
+      it "correctly fills objects rel"
+      it "correctly fills objects enctype"
+      it "correctly fills objects action"
+      describe "filling objects fields" do
+        it "creates all the fields"
+        it "fills the fields with the type info"
+        it "fills the fields with the default info"
+      end
+    end
   end
 end
 
