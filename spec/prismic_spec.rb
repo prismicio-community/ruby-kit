@@ -180,17 +180,16 @@ describe 'Api' do
 
       describe "filling objects fields" do
         it "creates all the fields" do
-          @parsed_response['forms']['pies']['fields'].size.should == 2
+          @parsed_response['forms']['pies'].fields.size.should == 2
         end
 
         it "fills the fields with the type info" do
-          @parsed_response['forms']['pies']['fields']['ref']['type'].should == 'String'
+          @parsed_response['forms']['pies'].fields['ref'].field_type.should == 'String'
         end
 
         it "fills the fields with the default info" do
-          @parsed_response['forms']['pies']['fields']['q']['default'].should ==
-            '[[at(document.tags, [\"Pie\"])][any(document.type, [\"product\"])]]'
-          @parsed_response['forms']['pies']['fields']['q']['type'].should == 'String'
+          @parsed_response['forms']['pies'].fields['q'].default.should ==
+            '[[at(document.tags, ["Pie"])][any(document.type, ["product"])]]'
         end
       end
     end

@@ -43,9 +43,15 @@ class Api
 
     result['forms'] = Hash[
       hash['forms'].map do |k, form|
+        form_fields = Hash[
+          form['fields'].map do |k, field|
+            [k, Field.new(field['type'], field['default'])]
+          end
+        ]
+
         [k, Form.new(
           form['name'],
-          {},
+          form_fields,
           form['method'],
           form['rel'],
           form['enctype'],
@@ -124,7 +130,12 @@ class SearchForm
 end
 
 class Field
-  attr_accessor :type, :default
+  attr_accessor :field_type, :default
+
+  def initialize(field_type, default)
+    @field_type = field_type
+    @default = default
+  end
 end
 
 class Document
