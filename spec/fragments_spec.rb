@@ -2,45 +2,84 @@ require 'spec_helper'
 
 describe 'WebLink' do
   describe 'asHtml' do
-    it "returns an <a> HTML tag pointing to the link" do
-      web_link = Fragments::WebLink.new('my_url')
-      web_link.asHtml.should == '<a href="my_url">my_url</a>'
+    before do
+      @web_link = Fragments::WebLink.new('my_url')
+    end
+
+    it "returns an <a> HTML element" do
+      Nokogiri::XML(@web_link.asHtml).child.name.should == 'a'
+    end
+
+    it "returns a HTML element with an href attribute" do
+      Nokogiri::XML(@web_link.asHtml).child.has_attribute?('href').should be_true
+    end
+
+    it "returns a HTML element with an href attribute pointing to the url" do
+      Nokogiri::XML(@web_link.asHtml).child.attribute('href').value.should == 'my_url'
+    end
+
+    it "returns a HTML element whose content is the link" do
+      Nokogiri::XML(@web_link.asHtml).child.content.should == 'my_url'
     end
   end
 end
 
 describe 'MediaLink' do
   describe 'asHtml' do
-    it "returns an <a> HTML tag pointing to the link" do
-      media_link = Fragments::MediaLink.new('my_url')
-      media_link.asHtml.should == '<a href="my_url">my_url</a>'
+    before do
+      @media_link = Fragments::MediaLink.new('my_url')
+    end
+
+    it "returns an <a> HTML element" do
+      Nokogiri::XML(@media_link.asHtml).child.name.should == 'a'
+    end
+
+    it "returns a HTML element with an href attribute" do
+      Nokogiri::XML(@media_link.asHtml).child.has_attribute?('href').should be_true
+    end
+
+    it "returns a HTML element with an href attribute pointing to the url" do
+      Nokogiri::XML(@media_link.asHtml).child.attribute('href').value.should == 'my_url'
+    end
+
+    it "returns a HTML element whose content is the link" do
+      Nokogiri::XML(@media_link.asHtml).child.content.should == 'my_url'
     end
   end
 end
 
 describe 'Text' do
   describe 'asHtml' do
-    it "returns a <span> HTML tag with class 'text' that wraps the value" do
-      text = Fragments::Text.new('my_value')
-      text.asHtml.should == '<span class="text">my_value</span>'
+    before do
+      @text = Fragments::Text.new('my_value')
     end
-  end
-end
 
-describe 'Text' do
-  describe 'asHtml' do
-    it "returns a <span> HTML tag with class 'text' that wraps the value" do
-      text = Fragments::Text.new('my_value')
-      text.asHtml.should == '<span class="text">my_value</span>'
+    it "returns a <span> HTML element" do
+      Nokogiri::XML(@text.asHtml).child.name.should == 'span'
+    end
+
+    it "returns a HTML element with the 'text' class" do
+      Nokogiri::XML(@text.asHtml).child.attribute('class').value.split.should include 'text'
+    end
+
+    it "returns a HTML element whose content is the value" do
+      Nokogiri::XML(@text.asHtml).child.content.should == 'my_value'
     end
   end
 end
 
 describe 'Date' do
+  before do
+    @date = Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
+  end
+
   describe 'asHtml' do
-    it "returns a <time> HTML tag that wraps the date in the ISO8601 format" do
-      text = Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
-      text.asHtml.should == '<time>2013-08-07T11:13:07.000+02:00</time>'
+    it "returns a <time> HTML element" do
+      Nokogiri::XML(@date.asHtml).child.name.should == 'time'
+    end
+
+    it "returns a HTML element whose content is the date in the ISO8601 format" do
+      Nokogiri::XML(@date.asHtml).child.content.should == '2013-08-07T11:13:07.000+02:00'
     end
   end
 end
@@ -61,8 +100,16 @@ describe 'Number' do
   end
 
   describe 'asHtml' do
-    it "returns a <span> HTML tag with the class 'number' that wraps the value" do
-      @number.asHtml.should == "<span class=\"number\">10.2</span>"
+    it "returns a <span> HTML element" do
+      Nokogiri::XML(@number.asHtml).child.name.should == 'span'
+    end
+
+    it "returns a HTML element with the class 'number'" do
+      Nokogiri::XML(@number.asHtml).child.attribute('class').value.split.should include 'number'
+    end
+
+    it "returns a HTML element whose content is the value" do
+      Nokogiri::XML(@number.asHtml).child.content.should == '10.2'
     end
   end
 end
@@ -122,8 +169,16 @@ describe 'Color' do
   end
 
   describe 'asHtml' do
-    it "returns a <span> HTML tag with the class 'color' and wrapping the value" do
-      @color.asHtml.should == "<span class=\"color\">#{@hex_value}</span>"
+    it "returns a <span> HTML element" do
+      Nokogiri::XML(@color.asHtml).child.name.should == 'span'
+    end
+
+    it "returns a HTML element with the class 'color'" do
+      Nokogiri::XML(@color.asHtml).child.attribute('class').value.split.should include 'color'
+    end
+
+    it "returns a HTML element whose content is the value" do
+      Nokogiri::XML(@color.asHtml).child.content.should == @hex_value
     end
   end
 
@@ -149,31 +204,31 @@ describe 'Embed' do
       Nokogiri::XML(@embed.asHtml).child.name.should == 'div'
     end
 
-    it "returns a div element with a data-oembed attribute" do
+    it "returns an element with a data-oembed attribute" do
       Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed').should be_true
     end
 
-    it "returns a div element with a data-oembed attribute containing the url" do
+    it "returns an element with a data-oembed attribute containing the url" do
       Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed').value.should == 'my_url'
     end
 
-    it "returns a div element with a data-oembed-type attribute" do
+    it "returns an element with a data-oembed-type attribute" do
       Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed-type').should be_true
     end
 
-    it "returns a div element with a data-oembed-type attribute containing the type in lowercase" do
+    it "returns an element with a data-oembed-type attribute containing the type in lowercase" do
       Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed-type').value.should == 'my_type'
     end
 
-    it "returns a div element with a data-oembed-provider attribute" do
+    it "returns an element with a data-oembed-provider attribute" do
       Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed-provider').should be_true
     end
 
-    it "returns a div element with a data-oembed-provider attribute containing the provider in lowercase" do
+    it "returns an element with a data-oembed-provider attribute containing the provider in lowercase" do
       Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed-provider').value.should == 'my_provider'
     end
 
-    it "returns a div element wrapping the `html` value" do
+    it "returns an element wrapping the `html` value" do
       Nokogiri::XML(@embed.asHtml).child.content.should == 'my_html'
     end
   end
