@@ -276,3 +276,40 @@ describe 'Image::View' do
     end
   end
 end
+
+describe 'Image' do
+  before do
+    @main_view = Fragments::Image::View.new('my_url', 10, 10)
+    @another_view = Fragments::Image::View.new('my_url2', 20, 20)
+    @image = Fragments::Image.new(@main_view, { 'another_view' => @another_view })
+  end
+
+  describe 'initialize' do
+    it "does not accept a hash with the `main` key" do
+      expect { Fragments::Image.new(nil, { 'main' => nil })}.to raise_error
+    end
+  end
+
+  describe 'get_view' do
+    it "returns `main`'s value is asked for`" do
+      @image.get_view('main').should == @main_view
+    end
+
+    it "returns the value of the specified key" do
+      @image.get_view('another_view').should == @another_view
+    end
+
+    it "raises an error if the key does not exist" do
+      expect { @image.get_view('foo') }.to raise_error Fragments::Image::ViewDoesNotExistException
+    end
+  end
+
+  describe 'asHtml' do
+    it "returns the HTML representation of the main view" do
+      Nokogiri::XML(@image.asHtml).child.name.should == Nokogiri::XML(@main_view.asHtml).child.name
+      Nokogiri::XML(@image.asHtml).child.attribute('src').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('src').value
+      Nokogiri::XML(@image.asHtml).child.attribute('width').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('width').value
+      Nokogiri::XML(@image.asHtml).child.attribute('height').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('height').value
+    end
+  end
+end

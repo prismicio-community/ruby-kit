@@ -107,33 +107,66 @@ class Fragments
   end
 
   class Image
-    class View
-      attr_accessor :url, :width, :height
+    attr_accessor :main, :views
 
-      def initialize(url, width, height)
-        if width == 0
-          raise NullWidthException, "A View's with cannot be null"
-        elsif height == 0
-          raise NullHeightException, "A View's with cannot be null"
-        end
-
-        @url = url
-        @width = width
-        @height = height
+    def initialize(main, views)
+      if views.has_key?('main')
+        raise ViewsHasMainKeyException
       end
 
-      def ratio
-        return @width / @height
+      @main = main
+      @views = views
+    end
+
+    def asHtml
+      @main.asHtml
+    end
+
+    def get_view(key)
+      if key == 'main'
+        @main
+      else
+        (@views.has_key? key) ? @views[key] : (raise ViewDoesNotExistException)
+      end
+    end
+
+    class ViewsHasMainKeyException < Exception
+      def initialize
+        super("An additional view cannot be called main. Please use the field " +
+              "Fragments::Image.main for this purpose.")
+      end
+    end
+
+    class ViewDoesNotExistException < Exception
+    end
+  end
+
+  class Image::View
+    attr_accessor :url, :width, :height
+
+    def initialize(url, width, height)
+      if width == 0
+        raise NullWidthException, "A View's with cannot be null"
+      elsif height == 0
+        raise NullHeightException, "A View's with cannot be null"
       end
 
-      def asHtml
-        "<img src='#{@url}' width='#{@width}' height='#{@height}'>"
-      end
+      @url = url
+      @width = width
+      @height = height
+    end
 
-      class NullHeightException < Exception
-      end
-      class NullWidthException < Exception
-      end
+    def ratio
+      return @width / @height
+    end
+
+    def asHtml
+      "<img src='#{@url}' width='#{@width}' height='#{@height}'>"
+    end
+
+    class NullHeightException < Exception
+    end
+    class NullWidthException < Exception
     end
   end
 end
