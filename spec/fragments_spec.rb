@@ -313,3 +313,28 @@ describe 'Image' do
     end
   end
 end
+
+describe 'StructuredText::Image' do
+  before do
+    @view = Fragments::Image::View.new('my_url', 10, 10)
+    @image = Fragments::Block::Image.new(@view)
+  end
+
+  describe 'url' do
+    it "returns the view's url" do
+      @image.url.should == @view.url
+    end
+  end
+
+  describe 'width' do
+    it "returns the view's width" do
+      @image.width.should == @view.width
+    end
+  end
+
+  describe 'height' do
+    it "returns the view's height" do
+      @image.height.should == @view.height
+    end
+  end
+end
