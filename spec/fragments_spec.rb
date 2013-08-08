@@ -109,7 +109,7 @@ describe 'Number' do
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@number.asHtml).child.content.should == '10.2'
+      Nokogiri::XML(@number.asHtml).child.content.should == 10.2.to_s
     end
   end
 end
@@ -230,6 +230,49 @@ describe 'Embed' do
 
     it "returns an element wrapping the `html` value" do
       Nokogiri::XML(@embed.asHtml).child.content.should == 'my_html'
+    end
+  end
+end
+
+describe 'Image::View' do
+  before do
+    @url = 'my_url'
+    @width = 10
+    @height = 2
+    @view = Fragments::Image::View.new(@url, @width, @height)
+  end
+
+  describe 'initialize' do
+    it "should not accept null (0) height" do
+      expect { Fragments::Image::View.new(nil, 0, 42) }.to raise_error Fragments::Image::View::NullWidthException
+    end
+
+    it "should not accept null (0) width" do
+      expect { Fragments::Image::View.new(nil, 42, 0) }.to raise_error Fragments::Image::View::NullHeightException
+    end
+  end
+
+  describe 'ratio' do
+    it "returns the width/height ratio of the image" do
+      @view.ratio.should == @width / @height
+    end
+  end
+
+  describe 'asHtml' do
+    it "return an <img> HTML element" do
+      Nokogiri::XML(@view.asHtml).child.name.should == 'img'
+    end
+
+    it "returns an element whose `src` attribute equals the url" do
+      Nokogiri::XML(@view.asHtml).child.attribute('src').value.should == @url
+    end
+
+    it "returns an element whose `width` attribute equals the width" do
+      Nokogiri::XML(@view.asHtml).child.attribute('width').value.should == @width.to_s
+    end
+
+    it "returns an element whose `height` attribute equals the height" do
+      Nokogiri::XML(@view.asHtml).child.attribute('height').value.should == @height.to_s
     end
   end
 end

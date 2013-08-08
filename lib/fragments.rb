@@ -105,4 +105,35 @@ class Fragments
         data-oembed-provider='#{@provider.downcase}'>#{@html}</div>"
     end
   end
+
+  class Image
+    class View
+      attr_accessor :url, :width, :height
+
+      def initialize(url, width, height)
+        if width == 0
+          raise NullWidthException, "A View's with cannot be null"
+        elsif height == 0
+          raise NullHeightException, "A View's with cannot be null"
+        end
+
+        @url = url
+        @width = width
+        @height = height
+      end
+
+      def ratio
+        return @width / @height
+      end
+
+      def asHtml
+        "<img src='#{@url}' width='#{@width}' height='#{@height}'>"
+      end
+
+      class NullHeightException < Exception
+      end
+      class NullWidthException < Exception
+      end
+    end
+  end
 end
