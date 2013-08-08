@@ -6,7 +6,7 @@ class Fragments
       @url = url
     end
 
-    def asHtml
+    def as_html
       "<a href=\"#{@url}\">#{@url}</a>"
     end
   end
@@ -24,7 +24,7 @@ class Fragments
       @value = value
     end
 
-    def asHtml
+    def as_html
       "<span class=\"text\">#{@value}</span>"
     end
   end
@@ -36,7 +36,7 @@ class Fragments
       @value = value
     end
 
-    def asHtml
+    def as_html
       "<time>#{value.iso8601(3)}</time>"
     end
   end
@@ -52,7 +52,7 @@ class Fragments
       @value.to_int
     end
 
-    def asHtml
+    def as_html
       "<span class=\"number\">#{@value}</span>"
     end
   end
@@ -76,7 +76,7 @@ class Fragments
       }
     end
 
-    def asHtml
+    def as_html
       "<span class=\"color\">#{@value}</span>"
     end
 
@@ -99,7 +99,7 @@ class Fragments
       @o_embed_json = o_embed_json
     end
 
-    def asHtml
+    def as_html
       "<div data-oembed='#{@url}'
         data-oembed-type='#{@embed_type.downcase}'
         data-oembed-provider='#{@provider.downcase}'>#{@html}</div>"
@@ -118,8 +118,8 @@ class Fragments
       @views = views
     end
 
-    def asHtml
-      @main.asHtml
+    def as_html
+      @main.as_html
     end
 
     def get_view(key)
@@ -160,7 +160,7 @@ class Fragments
       return @width / @height
     end
 
-    def asHtml
+    def as_html
       "<img src='#{@url}' width='#{@width}' height='#{@height}'>"
     end
 

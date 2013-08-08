@@ -1,69 +1,69 @@
 require 'spec_helper'
 
 describe 'WebLink' do
-  describe 'asHtml' do
+  describe 'as_html' do
     before do
       @web_link = Fragments::WebLink.new('my_url')
     end
 
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@web_link.asHtml).child.name.should == 'a'
+      Nokogiri::XML(@web_link.as_html).child.name.should == 'a'
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@web_link.asHtml).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@web_link.as_html).child.has_attribute?('href').should be_true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@web_link.asHtml).child.attribute('href').value.should == 'my_url'
+      Nokogiri::XML(@web_link.as_html).child.attribute('href').value.should == 'my_url'
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@web_link.asHtml).child.content.should == 'my_url'
+      Nokogiri::XML(@web_link.as_html).child.content.should == 'my_url'
     end
   end
 end
 
 describe 'MediaLink' do
-  describe 'asHtml' do
+  describe 'as_html' do
     before do
       @media_link = Fragments::MediaLink.new('my_url')
     end
 
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@media_link.asHtml).child.name.should == 'a'
+      Nokogiri::XML(@media_link.as_html).child.name.should == 'a'
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@media_link.asHtml).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@media_link.as_html).child.has_attribute?('href').should be_true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@media_link.asHtml).child.attribute('href').value.should == 'my_url'
+      Nokogiri::XML(@media_link.as_html).child.attribute('href').value.should == 'my_url'
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@media_link.asHtml).child.content.should == 'my_url'
+      Nokogiri::XML(@media_link.as_html).child.content.should == 'my_url'
     end
   end
 end
 
 describe 'Text' do
-  describe 'asHtml' do
+  describe 'as_html' do
     before do
       @text = Fragments::Text.new('my_value')
     end
 
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@text.asHtml).child.name.should == 'span'
+      Nokogiri::XML(@text.as_html).child.name.should == 'span'
     end
 
     it "returns a HTML element with the 'text' class" do
-      Nokogiri::XML(@text.asHtml).child.attribute('class').value.split.should include 'text'
+      Nokogiri::XML(@text.as_html).child.attribute('class').value.split.should include 'text'
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@text.asHtml).child.content.should == 'my_value'
+      Nokogiri::XML(@text.as_html).child.content.should == 'my_value'
     end
   end
 end
@@ -73,13 +73,13 @@ describe 'Date' do
     @date = Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "returns a <time> HTML element" do
-      Nokogiri::XML(@date.asHtml).child.name.should == 'time'
+      Nokogiri::XML(@date.as_html).child.name.should == 'time'
     end
 
     it "returns a HTML element whose content is the date in the ISO8601 format" do
-      Nokogiri::XML(@date.asHtml).child.content.should == '2013-08-07T11:13:07.000+02:00'
+      Nokogiri::XML(@date.as_html).child.content.should == '2013-08-07T11:13:07.000+02:00'
     end
   end
 end
@@ -99,17 +99,17 @@ describe 'Number' do
     end
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@number.asHtml).child.name.should == 'span'
+      Nokogiri::XML(@number.as_html).child.name.should == 'span'
     end
 
     it "returns a HTML element with the class 'number'" do
-      Nokogiri::XML(@number.asHtml).child.attribute('class').value.split.should include 'number'
+      Nokogiri::XML(@number.as_html).child.attribute('class').value.split.should include 'number'
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@number.asHtml).child.content.should == 10.2.to_s
+      Nokogiri::XML(@number.as_html).child.content.should == 10.2.to_s
     end
   end
 end
@@ -168,17 +168,17 @@ describe 'Color' do
     end
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@color.asHtml).child.name.should == 'span'
+      Nokogiri::XML(@color.as_html).child.name.should == 'span'
     end
 
     it "returns a HTML element with the class 'color'" do
-      Nokogiri::XML(@color.asHtml).child.attribute('class').value.split.should include 'color'
+      Nokogiri::XML(@color.as_html).child.attribute('class').value.split.should include 'color'
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@color.asHtml).child.content.should == @hex_value
+      Nokogiri::XML(@color.as_html).child.content.should == @hex_value
     end
   end
 
@@ -199,37 +199,37 @@ describe 'Embed' do
                                   'my_height', 'my_html', 'my_oembed_json')
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "returns a div element" do
-      Nokogiri::XML(@embed.asHtml).child.name.should == 'div'
+      Nokogiri::XML(@embed.as_html).child.name.should == 'div'
     end
 
     it "returns an element with a data-oembed attribute" do
-      Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed').should be_true
     end
 
     it "returns an element with a data-oembed attribute containing the url" do
-      Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed').value.should == 'my_url'
+      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed').value.should == 'my_url'
     end
 
     it "returns an element with a data-oembed-type attribute" do
-      Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed-type').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-type').should be_true
     end
 
     it "returns an element with a data-oembed-type attribute containing the type in lowercase" do
-      Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed-type').value.should == 'my_type'
+      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-type').value.should == 'my_type'
     end
 
     it "returns an element with a data-oembed-provider attribute" do
-      Nokogiri::XML(@embed.asHtml).child.has_attribute?('data-oembed-provider').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-provider').should be_true
     end
 
     it "returns an element with a data-oembed-provider attribute containing the provider in lowercase" do
-      Nokogiri::XML(@embed.asHtml).child.attribute('data-oembed-provider').value.should == 'my_provider'
+      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-provider').value.should == 'my_provider'
     end
 
     it "returns an element wrapping the `html` value" do
-      Nokogiri::XML(@embed.asHtml).child.content.should == 'my_html'
+      Nokogiri::XML(@embed.as_html).child.content.should == 'my_html'
     end
   end
 end
@@ -258,21 +258,21 @@ describe 'Image::View' do
     end
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "return an <img> HTML element" do
-      Nokogiri::XML(@view.asHtml).child.name.should == 'img'
+      Nokogiri::XML(@view.as_html).child.name.should == 'img'
     end
 
     it "returns an element whose `src` attribute equals the url" do
-      Nokogiri::XML(@view.asHtml).child.attribute('src').value.should == @url
+      Nokogiri::XML(@view.as_html).child.attribute('src').value.should == @url
     end
 
     it "returns an element whose `width` attribute equals the width" do
-      Nokogiri::XML(@view.asHtml).child.attribute('width').value.should == @width.to_s
+      Nokogiri::XML(@view.as_html).child.attribute('width').value.should == @width.to_s
     end
 
     it "returns an element whose `height` attribute equals the height" do
-      Nokogiri::XML(@view.asHtml).child.attribute('height').value.should == @height.to_s
+      Nokogiri::XML(@view.as_html).child.attribute('height').value.should == @height.to_s
     end
   end
 end
@@ -304,12 +304,12 @@ describe 'Image' do
     end
   end
 
-  describe 'asHtml' do
+  describe 'as_html' do
     it "returns the HTML representation of the main view" do
-      Nokogiri::XML(@image.asHtml).child.name.should == Nokogiri::XML(@main_view.asHtml).child.name
-      Nokogiri::XML(@image.asHtml).child.attribute('src').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('src').value
-      Nokogiri::XML(@image.asHtml).child.attribute('width').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('width').value
-      Nokogiri::XML(@image.asHtml).child.attribute('height').value.should == Nokogiri::XML(@main_view.asHtml).child.attribute('height').value
+      Nokogiri::XML(@image.as_html).child.name.should == Nokogiri::XML(@main_view.as_html).child.name
+      Nokogiri::XML(@image.as_html).child.attribute('src').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('src').value
+      Nokogiri::XML(@image.as_html).child.attribute('width').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('width').value
+      Nokogiri::XML(@image.as_html).child.attribute('height').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('height').value
     end
   end
 end
