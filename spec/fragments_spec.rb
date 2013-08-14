@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'WebLink' do
   describe 'as_html' do
     before do
-      @web_link = Fragments::WebLink.new('my_url')
+      @web_link = Prismic::Fragments::WebLink.new('my_url')
     end
 
     it "returns an <a> HTML element" do
@@ -27,7 +27,7 @@ end
 describe 'MediaLink' do
   describe 'as_html' do
     before do
-      @media_link = Fragments::MediaLink.new('my_url')
+      @media_link = Prismic::Fragments::MediaLink.new('my_url')
     end
 
     it "returns an <a> HTML element" do
@@ -51,7 +51,7 @@ end
 describe 'Text' do
   describe 'as_html' do
     before do
-      @text = Fragments::Text.new('my_value')
+      @text = Prismic::Fragments::Text.new('my_value')
     end
 
     it "returns a <span> HTML element" do
@@ -70,7 +70,7 @@ end
 
 describe 'Date' do
   before do
-    @date = Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
+    @date = Prismic::Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
   end
 
   describe 'as_html' do
@@ -86,7 +86,7 @@ end
 
 describe 'Number' do
   before do
-    @number = Fragments::Number.new(10.2)
+    @number = Prismic::Fragments::Number.new(10.2)
   end
 
   describe 'as_int' do
@@ -117,7 +117,7 @@ end
 describe 'Color' do
   before do
     @hex_value = '00FF99'
-    @color = Fragments::Color.new(@hex_value)
+    @color = Prismic::Fragments::Color.new(@hex_value)
   end
 
   describe 'asRGB' do
@@ -144,7 +144,7 @@ describe 'Color' do
 
   describe 'self.asRGB' do
     before do
-      @color = Fragments::Color
+      @color = Prismic::Fragments::Color
     end
 
     it "returns a hash" do
@@ -184,18 +184,18 @@ describe 'Color' do
 
   describe 'self.valid?' do
     it "returns true if the color is valid" do
-      Fragments::Color.valid?(@hex_value).should be_true
+      Prismic::Fragments::Color.valid?(@hex_value).should be_true
     end
 
     it "returns false if the color is not valid" do
-      Fragments::Color.valid?("I'm a murloc").should be_false
+      Prismic::Fragments::Color.valid?("I'm a murloc").should be_false
     end
   end
 end
 
 describe 'Embed' do
   before do
-    @embed = Fragments::Embed.new('MY_TYPE', 'MY_PROVIDER', 'my_url', 'my_width',
+    @embed = Prismic::Fragments::Embed.new('MY_TYPE', 'MY_PROVIDER', 'my_url', 'my_width',
                                   'my_height', 'my_html', 'my_oembed_json')
   end
 
@@ -239,16 +239,16 @@ describe 'Image::View' do
     @url = 'my_url'
     @width = 10
     @height = 2
-    @view = Fragments::Image::View.new(@url, @width, @height)
+    @view = Prismic::Fragments::Image::View.new(@url, @width, @height)
   end
 
   describe 'initialize' do
     it "should not accept null (0) height" do
-      expect { Fragments::Image::View.new(nil, 0, 42) }.to raise_error Fragments::Image::View::NullWidthException
+      expect { Prismic::Fragments::Image::View.new(nil, 0, 42) }.to raise_error Prismic::Fragments::Image::View::NullWidthException
     end
 
     it "should not accept null (0) width" do
-      expect { Fragments::Image::View.new(nil, 42, 0) }.to raise_error Fragments::Image::View::NullHeightException
+      expect { Prismic::Fragments::Image::View.new(nil, 42, 0) }.to raise_error Prismic::Fragments::Image::View::NullHeightException
     end
   end
 
@@ -279,14 +279,14 @@ end
 
 describe 'Image' do
   before do
-    @main_view = Fragments::Image::View.new('my_url', 10, 10)
-    @another_view = Fragments::Image::View.new('my_url2', 20, 20)
-    @image = Fragments::Image.new(@main_view, { 'another_view' => @another_view })
+    @main_view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
+    @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20)
+    @image = Prismic::Fragments::Image.new(@main_view, { 'another_view' => @another_view })
   end
 
   describe 'initialize' do
     it "does not accept a hash with the `main` key" do
-      expect { Fragments::Image.new(nil, { 'main' => nil })}.to raise_error
+      expect { Prismic::Fragments::Image.new(nil, { 'main' => nil })}.to raise_error
     end
   end
 
@@ -300,7 +300,7 @@ describe 'Image' do
     end
 
     it "raises an error if the key does not exist" do
-      expect { @image.get_view('foo') }.to raise_error Fragments::Image::ViewDoesNotExistException
+      expect { @image.get_view('foo') }.to raise_error Prismic::Fragments::Image::ViewDoesNotExistException
     end
   end
 
@@ -316,8 +316,8 @@ end
 
 describe 'StructuredText::Image' do
   before do
-    @view = Fragments::Image::View.new('my_url', 10, 10)
-    @image = Fragments::Block::Image.new(@view)
+    @view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
+    @image = Prismic::Fragments::Block::Image.new(@view)
   end
 
   describe 'url' do

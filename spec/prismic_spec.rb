@@ -4,19 +4,19 @@ describe 'Api' do
   before do
     @data = {}
     @data['refs'] = [
-      Ref.new('ref1', 'label1'),
-      Ref.new('ref2', 'label2'),
-      Ref.new('ref30', 'label3'),
-      Ref.new('ref3', 'label3', true),
-      Ref.new('ref4', 'label4'),
+      Prismic::Ref.new('ref1', 'label1'),
+      Prismic::Ref.new('ref2', 'label2'),
+      Prismic::Ref.new('ref30', 'label3'),
+      Prismic::Ref.new('ref3', 'label3', true),
+      Prismic::Ref.new('ref4', 'label4'),
     ]
     @data['forms'] = {
-      'form1' => Form.new('form1', {}, nil, nil, nil, nil),
-      'form2' => Form.new('form2', {}, nil, nil, nil, nil),
-      'form3' => Form.new('form3', {}, nil, nil, nil, nil),
-      'form4' => Form.new('form4', {}, nil, nil, nil, nil),
+      'form1' => Prismic::Form.new('form1', {}, nil, nil, nil, nil),
+      'form2' => Prismic::Form.new('form2', {}, nil, nil, nil, nil),
+      'form3' => Prismic::Form.new('form3', {}, nil, nil, nil, nil),
+      'form4' => Prismic::Form.new('form4', {}, nil, nil, nil, nil),
     }
-    @api = Api.new(@data)
+    @api = Prismic::Api.new(@data)
   end
 
   describe 'refs' do
@@ -31,11 +31,11 @@ describe 'Api' do
 
   describe 'forms' do
     it "returns a map of { String => SearchForm }" do
-      @api.forms['form1'].should be_kind_of (SearchForm)
+      @api.forms['form1'].should be_kind_of (Prismic::SearchForm)
     end
 
     it "sets SearchForm.api to the correct value" do
-      @api.forms['form2'].api.should be_kind_of (Api)
+      @api.forms['form2'].api.should be_kind_of (Prismic::Api)
     end
 
     it "sets SearchForm.form to the correct value" do
@@ -53,7 +53,7 @@ describe 'Api' do
 
   describe 'master' do
     it "returns a Ref" do
-      @api.master.should be_kind_of (Ref)
+      @api.master.should be_kind_of (Prismic::Ref)
     end
 
     it "returns the first master" do
@@ -62,15 +62,15 @@ describe 'Api' do
 
     it "throws an exception if no master was found" do
       expect {
-        Api.new({ 'refs' => [] })
-      }.to raise_error Api::NoMasterFoundException
+        Prismic::Api.new({ 'refs' => [] })
+      }.to raise_error Prismic::Api::NoMasterFoundException
     end
   end
 
   describe 'parse_api_response' do
     before do
-      data = File.open("#{Dir.pwd}/spec/responses_mocks/api.json").read
-      @parsed_response = Api.parse_api_response(data)
+      data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
+      @parsed_response = Prismic::Api.parse_api_response(data)
     end
 
     it "returns a hash" do
@@ -87,7 +87,7 @@ describe 'Api' do
       end
 
       it "returns a hash containing a an array of Ref objects" do
-        @parsed_response['refs'][0].should be_kind_of Ref
+        @parsed_response['refs'][0].should be_kind_of Prismic::Ref
       end
 
       it "fills the Ref objects with the correct ref data" do
@@ -155,7 +155,7 @@ describe 'Api' do
       end
 
       it "returns a hash of Form objects" do
-        @parsed_response['forms']['pies'].should be_kind_of Form
+        @parsed_response['forms']['pies'].should be_kind_of Prismic::Form
       end
 
       it "correctly fills objects names" do
@@ -201,13 +201,13 @@ end
 describe 'Form' do
   describe 'default_data' do
     it 'creates a map of default fields data' do
-      form = Form.new(nil, {}, nil, nil, nil, nil)
+      form = Prismic::Form.new(nil, {}, nil, nil, nil, nil)
 
       form.fields = {"foo1" => nil}
       default_data = form.default_data
       default_data.should be_empty
 
-      form = Form.new(nil, {}, nil, nil, nil, nil)
+      form = Prismic::Form.new(nil, {}, nil, nil, nil, nil)
       form.fields = {"foo1" => "bar1",
                      "foo2" => "bar2",
                      "foo3" => nil,
