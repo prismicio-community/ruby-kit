@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'yajl-ruby'
-gem 'nokogiri'
+gem 'yajl-ruby', require: 'yajl'
 
 group :test do
   gem 'rspec'
+  gem 'nokogiri'
 end
