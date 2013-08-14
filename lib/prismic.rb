@@ -11,11 +11,36 @@ module Prismic
   class SearchForm
     attr_accessor :api, :form, :data
 
-    def initialize(api, form, data)
+    def initialize(api, form, data=form.default_data)
       @api = api
       @form = form
       @data = data
     end
+
+    def name
+      form.name
+    end
+
+    def form_method
+      form.form_method
+    end
+
+    def rel
+      form.rel
+    end
+
+    def enctype
+      form.enctype
+    end
+
+    def action
+      form.action
+    end
+
+    def fields
+      form.fields
+    end
+
   end
 
   class Field
@@ -25,6 +50,7 @@ module Prismic
       @field_type = field_type
       @default = default
     end
+
   end
 
   class Document
@@ -41,6 +67,7 @@ module Prismic
     end
 
     alias :master? :master
+
   end
 
 end

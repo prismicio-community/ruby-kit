@@ -1,17 +1,33 @@
 module Prismic
   class Api
-    attr_accessor :refs, :bookmarks, :forms, :master
+    attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types
 
-    def initialize(data)
-      @bookmarks = data['bookmarks']
-      @refs = get_refs_from_data(data)
-      @forms = get_forms_from_data(data)
-      @master = get_master_from_data
+    def initialize
+      @bookmarks = {}
+      @refs = {}
+      @forms = {}
+      @master = nil
+      @tags = {}
+      @types = {}
+      yield self
+      raise NoMasterFoundException unless master
+    end
+
+    def bookmark(name)
+      bookmarks[name]
+    end
+
+    def ref(name)
+      refs[name]
+    end
+
+    def form(name)
+      forms[name]
     end
 
     def self.get(url, path = '/api')
       http = Net::HTTP.new(URI(url).host)
-      req = Net::HTTP::Get.new(path, { 'Accept' => 'application/json' })
+      req = Net::HTTP::Get.new(path, {'Accept' => 'application/json'})
       res = http.request(req)
 
       if res.code == '200'
@@ -22,67 +38,30 @@ module Prismic
     end
 
     def self.parse_api_response(data)
-      parser = Yajl::Parser.new
-      hash = parser.parse(data)
-
-      create_refs = lambda do
-        hash['refs'].map do |ref|
-          Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])
-        end
-      end
-
-      create_forms = lambda do
-        Hash[
-          hash['forms'].map do |k, form|
-            create_form_fields = lambda do
-              Hash[form['fields'].map { |k2, field|
-                [k2, Field.new(field['type'], field['default'])]
-              }]
-            end
-
-            [k, Form.new(
-              form['name'],
-              create_form_fields.call,
-              form['method'],
-              form['rel'],
-              form['enctype'],
-              form['action'],
-            )]
-          end
-        ]
-      end
-
-      {
-        'bookmarks' => hash['bookmarks'],
-        'forms'     => create_forms.call,
-        'refs'      => create_refs.call,
-        'tags'      => hash['tags'],
-        'types'     => hash['types']
+      new { |api|
+        api.bookmarks = data['bookmarks']
+        api.forms = Hash[data['forms'].map { |k, form|
+          [k, SearchForm.new(api, Form.new(
+            form['name'],
+            Hash[form['fields'].map { |k2, field|
+              [k2, Field.new(field['type'], field['default'])]
+            }],
+            form['method'],
+            form['rel'],
+            form['enctype'],
+            form['action'],
+          ))]
+        }]
+        api.refs = Hash[data['refs'].map { |ref|
+          [ref['label'], Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])]
+        }]
+        api.master = api.refs.values.map { |ref| ref if ref.master? }.compact.first
+        api.tags = data['tags']
+        api.types = data['types']
       }
     end
 
     private
-
-    def get_refs_from_data(data)
-      Hash[data['refs'].map { |ref| [ref.label, ref] }]
-    end
-
-    def get_forms_from_data(data)
-      data['forms'] = data['forms'] || {}
-      Hash[data['forms'].map { |key, form|
-        [key, SearchForm.new(self, form, form.default_data)]
-      }]
-    end
-
-    def get_master_from_data
-      master = @refs.values.map { |ref| ref if ref.master? }.compact.first
-
-        if not master.nil?
-          master
-        else
-          raise NoMasterFoundException
-        end
-    end
 
     class NoMasterFoundException < Exception
     end
