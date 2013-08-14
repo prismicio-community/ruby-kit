@@ -42,11 +42,9 @@ class Api
       Hash[
         hash['forms'].map do |k, form|
           create_form_fields = lambda do
-            Hash[
-              form['fields'].map do |k, field|
-                [k, Field.new(field['type'], field['default'])]
-              end
-            ]
+            Hash[form['fields'].map { |k2, field|
+              [k2, Field.new(field['type'], field['default'])]
+            }]
           end
 
           [k, Form.new(
@@ -71,24 +69,20 @@ class Api
   end
 
   private
+
   def get_refs_from_data(data)
     Hash[data['refs'].map { |ref| [ref.label, ref] }]
   end
 
   def get_forms_from_data(data)
     data['forms'] = data['forms'] || {}
-    Hash[
-      data['forms'].map do |key, form|
-        [key, SearchForm.new(self, form, form.defaultData)]
-      end
-    ]
+    Hash[data['forms'].map { |key, form|
+      [key, SearchForm.new(self, form, form.default_data)]
+    }]
   end
 
   def get_master_from_data
-    master = @refs.values
-      .map { |ref| ref if ref.isMasterRef }
-      .compact
-      .first
+    master = @refs.values.map { |ref| ref if ref.master? }.compact.first
 
       if not master.nil?
         master
@@ -119,7 +113,7 @@ class Form
     @action = action
   end
 
-  def defaultData
+  def default_data
     fields.select do |k, v|
       not v.nil?
     end
@@ -150,11 +144,13 @@ class Document
 end
 
 class Ref
-  attr_accessor :ref, :label, :isMasterRef, :scheduledAt
+  attr_accessor :ref, :label, :master, :scheduledAt
 
-  def initialize(ref, label, isMasterRef = false)
+  def initialize(ref, label, master = false)
     @ref = ref
     @label = label
-    @isMasterRef = isMasterRef
+    @master = master
   end
+
+  alias :master? :master
 end

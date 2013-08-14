@@ -61,7 +61,9 @@ describe 'Api' do
     end
 
     it "throws an exception if no master was found" do
-      expect { Api.new({ 'refs' => [] }) }.to raise_error Api::NoMasterFoundException
+      expect {
+        Api.new({ 'refs' => [] })
+      }.to raise_error Api::NoMasterFoundException
     end
   end
 
@@ -96,8 +98,8 @@ describe 'Api' do
         @parsed_response['refs'][1].label.should == 'bar'
       end
 
-      it "fills the Ref objects with the correct ref isMasterRef" do
-        @parsed_response['refs'][1].isMasterRef.should == false
+      it "fills the Ref objects with the correct ref master?" do
+        @parsed_response['refs'][1].master?.should == false
       end
     end
 
@@ -197,21 +199,21 @@ describe 'Api' do
 end
 
 describe 'Form' do
-  describe 'defaultData' do
+  describe 'default_data' do
     it 'creates a map of default fields data' do
       form = Form.new(nil, {}, nil, nil, nil, nil)
 
       form.fields = {"foo1" => nil}
-      defaultData = form.defaultData
-      defaultData.should be_empty
+      default_data = form.default_data
+      default_data.should be_empty
 
       form = Form.new(nil, {}, nil, nil, nil, nil)
       form.fields = {"foo1" => "bar1",
                      "foo2" => "bar2",
                      "foo3" => nil,
                      "foo4" => "bar4"}
-      defaultData = form.defaultData
-      defaultData.size.should == 3
+      default_data = form.default_data
+      default_data.size.should == 3
     end
   end
 end

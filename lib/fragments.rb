@@ -7,7 +7,7 @@ class Fragments
     end
 
     def as_html
-      "<a href=\"#{@url}\">#{@url}</a>"
+      %(<a href="#@url">#@url</a>)
     end
   end
 
@@ -25,7 +25,7 @@ class Fragments
     end
 
     def as_html
-      "<span class=\"text\">#{@value}</span>"
+      %(<span class="text">#@value</span>)
     end
   end
 
@@ -37,7 +37,7 @@ class Fragments
     end
 
     def as_html
-      "<time>#{value.iso8601(3)}</time>"
+      %(<time>#{value.iso8601(3)}</time>)
     end
   end
 
@@ -48,12 +48,12 @@ class Fragments
       @value = value
     end
 
-    def asInt
+    def as_int
       @value.to_int
     end
 
     def as_html
-      "<span class=\"number\">#{@value}</span>"
+      %(<span class="number">#@value</span>)
     end
   end
 
@@ -77,12 +77,11 @@ class Fragments
     end
 
     def as_html
-      "<span class=\"color\">#{@value}</span>"
+      %(<span class="color">#@value</span>)
     end
 
-    def self.is_a_valid_color(value)
-      hex_color_format = /([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/
-      hex_color_format.match(value)
+    def self.valid?(value)
+      /(\h{2})(\h{2})(\h{2})/ ===  value
     end
   end
 
@@ -100,9 +99,11 @@ class Fragments
     end
 
     def as_html
-      "<div data-oembed='#{@url}'
-        data-oembed-type='#{@embed_type.downcase}'
-        data-oembed-provider='#{@provider.downcase}'>#{@html}</div>"
+      <<-HTML
+      <div data-oembed="#@url"
+          data-oembed-type="#{@embed_type.downcase}"
+          data-oembed-provider="#{@provider.downcase}">#@html</div>
+      HTML
     end
   end
 
@@ -110,23 +111,22 @@ class Fragments
     attr_accessor :main, :views
 
     def initialize(main, views)
-      if views.has_key?('main')
-        raise ViewsHasMainKeyException
-      end
-
+      raise ViewsHasMainKeyException if views.has_key?('main')
       @main = main
       @views = views
     end
 
     def as_html
-      @main.as_html
+      main.as_html
     end
 
     def get_view(key)
       if key == 'main'
-        @main
+        main
+      elsif @views.has_key?(key)
+        views[key]
       else
-        (@views.has_key? key) ? @views[key] : (raise ViewDoesNotExistException)
+        raise ViewDoesNotExistException
       end
     end
 
@@ -145,12 +145,8 @@ class Fragments
     attr_accessor :url, :width, :height
 
     def initialize(url, width, height)
-      if width == 0
-        raise NullWidthException, "A View's with cannot be null"
-      elsif height == 0
-        raise NullHeightException, "A View's with cannot be null"
-      end
-
+      raise NullWidthException, "A View's with cannot be null" if width == 0
+      raise NullHeightException, "A View's with cannot be null" if height == 0
       @url = url
       @width = width
       @height = height
@@ -161,22 +157,21 @@ class Fragments
     end
 
     def as_html
-      "<img src='#{@url}' width='#{@width}' height='#{@height}'>"
+      %(<img src="#@url" width="#@width" height="#@height">)
     end
 
-    class NullHeightException < Exception
-    end
-    class NullWidthException < Exception
-    end
+    class NullSizeException < Exception ; end
+    class NullHeightException < NullSizeException ; end
+    class NullWidthException < NullSizeException ; end
   end
 
   class StructuredText
     class Span
       attr_accessor :start, :end
 
-      def initialize(start, end_)
+      def initialize(start, finish)
         @start = start
-        @end = end_
+        @end = finish
       end
     end
 

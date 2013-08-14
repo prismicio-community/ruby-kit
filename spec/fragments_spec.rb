@@ -89,13 +89,13 @@ describe 'Number' do
     @number = Fragments::Number.new(10.2)
   end
 
-  describe 'asInt' do
+  describe 'as_int' do
     it "returns an Integer" do
-      @number.asInt.should be_kind_of Integer
+      @number.as_int.should be_kind_of Integer
     end
 
     it "returns the integer representation of the number" do
-      @number.asInt.should == 10
+      @number.as_int.should == 10
     end
   end
 
@@ -182,13 +182,13 @@ describe 'Color' do
     end
   end
 
-  describe 'self.is_a_valid_color' do
+  describe 'self.valid?' do
     it "returns true if the color is valid" do
-      Fragments::Color.is_a_valid_color(@hex_value).should be_true
+      Fragments::Color.valid?(@hex_value).should be_true
     end
 
     it "returns false if the color is not valid" do
-      Fragments::Color.is_a_valid_color("I'm a murloc").should be_false
+      Fragments::Color.valid?("I'm a murloc").should be_false
     end
   end
 end
