@@ -242,16 +242,6 @@ describe 'Image::View' do
     @view = Prismic::Fragments::Image::View.new(@url, @width, @height)
   end
 
-  describe 'initialize' do
-    it "should not accept null (0) height" do
-      expect { Prismic::Fragments::Image::View.new(nil, 0, 42) }.to raise_error Prismic::Fragments::Image::View::NullWidthException
-    end
-
-    it "should not accept null (0) width" do
-      expect { Prismic::Fragments::Image::View.new(nil, 42, 0) }.to raise_error Prismic::Fragments::Image::View::NullHeightException
-    end
-  end
-
   describe 'ratio' do
     it "returns the width/height ratio of the image" do
       @view.ratio.should == @width / @height
@@ -282,12 +272,6 @@ describe 'Image' do
     @main_view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
     @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20)
     @image = Prismic::Fragments::Image.new(@main_view, { 'another_view' => @another_view })
-  end
-
-  describe 'initialize' do
-    it "does not accept a hash with the `main` key" do
-      expect { Prismic::Fragments::Image.new(nil, { 'main' => nil })}.to raise_error
-    end
   end
 
   describe 'get_view' do

@@ -152,24 +152,5 @@ describe 'Api' do
     end
 
   end
-end
 
-describe 'Form' do
-  describe 'default_data' do
-    it 'creates a map of default fields data' do
-      form = Prismic::Form.new(nil, {}, nil, nil, nil, nil)
-
-      form.fields = {"foo1" => nil}
-      default_data = form.default_data
-      default_data.should be_empty
-
-      form = Prismic::Form.new(nil, {}, nil, nil, nil, nil)
-      form.fields = {"foo1" => "bar1",
-                     "foo2" => "bar2",
-                     "foo3" => nil,
-                     "foo4" => "bar4"}
-      default_data = form.default_data
-      default_data.size.should == 3
-    end
-  end
 end

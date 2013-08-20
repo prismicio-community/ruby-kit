@@ -12,9 +12,7 @@ module Prismic
     end
 
     def default_data
-      fields.select do |k, v|
-        not v.nil?
-      end
+      fields
     end
   end
 end

@@ -4,7 +4,6 @@ module Prismic
       attr_accessor :main, :views
 
       def initialize(main, views)
-        raise ViewsHasMainKeyException if views.has_key?('main')
         @main = main
         @views = views
       end
@@ -23,22 +22,12 @@ module Prismic
         end
       end
 
-      class ViewsHasMainKeyException < Error
-        def initialize
-          super("An additional view cannot be called main. Please use the field " +
-                "Fragments::Image.main for this purpose.")
-        end
-      end
-
-      class ViewDoesNotExistException < Error
-      end
+      class ViewDoesNotExistException < Error ; end
 
       class View
         attr_accessor :url, :width, :height
 
         def initialize(url, width, height)
-          raise NullWidthException, "A View's with cannot be null" if width == 0
-          raise NullHeightException, "A View's with cannot be null" if height == 0
           @url = url
           @width = width
           @height = height
@@ -52,9 +41,6 @@ module Prismic
           %(<img src="#@url" width="#@width" height="#@height">)
         end
 
-        class NullSizeException < Error ; end
-        class NullHeightException < NullSizeException ; end
-        class NullWidthException < NullSizeException ; end
       end
 
     end
