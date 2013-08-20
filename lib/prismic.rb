@@ -4,6 +4,25 @@ require 'yajl'
 
 module Prismic
 
+  # These exception can contains an error cause and is able to show them
+  class Error < Exception
+    attr_reader :cause
+    def initialize(msg=nil, cause=nil)
+      msg, cause = cause, nil if !msg && cause.is_a?(String)
+      msg ? super(msg) : msg
+      @cause = cause
+    end
+    def full_trace(e=self)
+      first, *backtrace = e.backtrace
+      msg = e == self ? "" : "Caused by "
+      msg += "#{first}: #{e.message} (#{e.class})"
+      stack = backtrace.map{|s| "\tfrom #{s}" }.join("\n")
+      cause = e.respond_to?(:cause) ? e.cause : nil
+      cause_stack = cause ? full_trace(cause) : nil
+      [msg, stack, cause_stack].compact.join("\n")
+    end
+  end
+
   class ApiData
     attr_accessor :refs, :bookmarks, :types, :tags, :forms
   end

@@ -63,10 +63,10 @@ module Prismic
 
     private
 
-    class NoMasterFoundException < Exception
+    class NoMasterFoundException < Error
     end
 
-    class PrismicWSConnectionError < Exception
+    class PrismicWSConnectionError < Error
       def initialize(msg)
         super("Can't connect to Prismic's API: #{msg}")
       end
