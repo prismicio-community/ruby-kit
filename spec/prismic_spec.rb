@@ -20,12 +20,6 @@ describe 'Api' do
     }
   end
 
-  it "does not allow to be created without master Ref" do
-    expect {
-      Prismic::Api.new {}
-    }.to raise_error Prismic::Api::NoMasterFoundException
-  end
-
   describe 'ref' do
 
     it "return the right Ref" do
@@ -72,6 +66,20 @@ describe 'Api' do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
       @json = Yajl::Parser.new.parse(@data)
       @parsed = Prismic::Api.parse_api_response(@json)
+    end
+
+    it "does not allow to be created without master Ref" do
+      expect {
+        Prismic::Api.parse_api_response({
+          "refs" => [],
+        })
+      }.to raise_error(Prismic::Api::BadPrismicResponseError, "No master Ref found")
+    end
+
+    it "does not allow to be created without any Ref" do
+      expect {
+        Prismic::Api.parse_api_response({})
+      }.to raise_error(Prismic::Api::BadPrismicResponseError, "No refs given")
     end
 
     it "creates 2 refs" do
