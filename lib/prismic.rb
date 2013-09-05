@@ -1,6 +1,5 @@
 require 'net/http'
 require 'uri'
-require 'yajl'
 
 module Prismic
 
@@ -8,7 +7,6 @@ module Prismic
   class Error < Exception
     attr_reader :cause
     def initialize(msg=nil, cause=nil)
-      msg, cause = cause, nil if !msg && cause.is_a?(String)
       msg ? super(msg) : msg
       @cause = cause
     end
@@ -21,6 +19,15 @@ module Prismic
       cause_stack = cause ? full_trace(cause) : nil
       [msg, stack, cause_stack].compact.join("\n")
     end
+  end
+  class MissingRef < Error
+    def initialize(msg=nil, cause=nil)
+      super(msg || "Can't use the API without specifying a ref to use", cause)
+    end
+  end
+
+  def self.api(*args)
+    API.start(*args)
   end
 
   class ApiData
@@ -59,6 +66,29 @@ module Prismic
     def fields
       form.fields
     end
+
+    attr_accessor :ref
+    def ref(given_ref=nil)
+      if given_ref
+        self.ref = given_ref
+      else
+        @ref
+      end
+    end
+
+    def submit(given_ref=nil)
+      ref = ref(given_ref)
+      raise MissingRef unless ref
+      if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
+        uri = URI(action)
+        uri.query = URI.encode_www_form(data)
+        Net::HTTP.get_response(uri).value
+      else
+        raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
+      end
+    end
+
+    class UnsupportedFormKind < Error ; end
 
   end
 

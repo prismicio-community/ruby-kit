@@ -1,8 +1,9 @@
 module Prismic
-  class Api
+  class API
     attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types
 
-    def initialize
+    def initialize(json)
+      @json = json
       @bookmarks = {}
       @refs = {}
       @forms = {}
@@ -24,20 +25,31 @@ module Prismic
       forms[name]
     end
 
-    def self.get(url, path = '/api')
-      http = Net::HTTP.new(URI(url).host)
-      req = Net::HTTP::Get.new(path, {'Accept' => 'application/json'})
+    def as_json
+      @json
+    end
+
+    def self.get(url)
+      uri = URI(url)
+      http = Net::HTTP.new(uri.host)
+      req = Net::HTTP::Get.new(uri.path, {'Accept' => 'application/json'})
       res = http.request(req)
 
       if res.code == '200'
         res
       else
-        raise PrismicWSConnectionError, res.message
+        raise PrismicWSConnectionError, res
       end
     end
 
+    def self.start(url)
+      resp = get(url)
+      json = JSON.load(resp.body)
+      parse_api_response(json)
+    end
+
     def self.parse_api_response(data)
-      new { |api|
+      new(data) { |api|
         api.bookmarks = data['bookmarks']
         data_forms = data['forms'] || []
         api.forms = Hash[data_forms.map { |k, form|
@@ -68,8 +80,8 @@ module Prismic
     class BadPrismicResponseError < Error ; end
 
     class PrismicWSConnectionError < Error
-      def initialize(msg, cause=nil)
-        super("Can't connect to Prismic's API: #{msg}", cause)
+      def initialize(resp, cause=nil)
+        super("Can't connect to Prismic's API: #{resp.code} #{resp.message}", cause)
       end
     end
   end

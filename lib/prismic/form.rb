@@ -12,7 +12,8 @@ module Prismic
     end
 
     def default_data
-      fields
+      Hash[fields.map{|key, field| [key, field.default] }.compact]
     end
+
   end
 end
