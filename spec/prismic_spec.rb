@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'Api' do
   before do
+    json_representation = '{"foo": "bar"}'
     @master = Prismic::Ref.new('ref3', 'label3', true)
-    @api = Prismic::Api.new { |api|
+    @api = Prismic::API.new(json_representation) { |api|
       api.refs = {
         'label1' => Prismic::Ref.new('ref1', 'label1'),
         'label2' => Prismic::Ref.new('ref2', 'label2'),
@@ -21,65 +22,54 @@ describe 'Api' do
   end
 
   describe 'ref' do
-
     it "return the right Ref" do
       @api.ref('label2').label.should == 'label2'
     end
-
   end
 
   describe 'refs' do
-
     it "returns the correct number of elements" do
       @api.refs.size.should == 4
     end
-
   end
 
   describe 'form' do
-
     it "return the right Form" do
       @api.form('form2').form.name.should == 'form2'
     end
-
   end
 
   describe 'forms' do
-
     it "returns the correct number of elements" do
       @api.forms.size.should == 4
     end
-
   end
 
   describe 'master' do
-
     it "returns a master Ref" do
       @api.master.master?.should be_true
     end
-
   end
 
   describe 'parse_api_response' do
-
     before do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
       @json = Yajl::Parser.new.parse(@data)
-      @parsed = Prismic::Api.parse_api_response(@json)
+      @parsed = Prismic::API.parse_api_response(@json)
     end
 
     it "does not allow to be created without master Ref" do
       expect {
-        Prismic::Api.parse_api_response({
+        Prismic::API.parse_api_response({
           "refs" => [],
         })
-      }.to raise_error(Prismic::Api::BadPrismicResponseError, "No master Ref found")
+      }.to raise_error(Prismic::API::BadPrismicResponseError, "No master Ref found")
     end
 
     it "does not allow to be created without any Ref" do
       expect {
-        Prismic::Api.parse_api_response({})
-      }.to raise_error(Prismic::Api::BadPrismicResponseError, "No refs given")
+        Prismic::API.parse_api_response({})
+      }.to raise_error(Prismic::API::BadPrismicResponseError, "No refs given")
     end
 
     it "creates 2 refs" do
@@ -158,7 +148,6 @@ describe 'Api' do
       @parsed.forms['pies'].fields['q'].default.should ==
         '[[at(document.tags, ["Pie"])][any(document.type, ["product"])]]'
     end
-
   end
 
 end
