@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'yajl'
+require 'json'
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 

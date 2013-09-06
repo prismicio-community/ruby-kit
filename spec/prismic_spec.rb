@@ -150,4 +150,17 @@ describe 'Api' do
     end
   end
 
+  describe 'as_json' do
+    before do
+      @json = @api.as_json
+    end
+
+    it "returns the json representation of the api" do
+      @json['foo'].should == 'bar'
+    end
+
+    it "returns the json representation of the api containing one single element" do
+      @json.size.should == 1
+    end
+  end
 end
