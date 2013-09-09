@@ -77,6 +77,8 @@ module Prismic
           http.request(request)
         end
 
+        raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
+
         JSON.parse(response.body)
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
@@ -84,7 +86,7 @@ module Prismic
     end
 
     class UnsupportedFormKind < Error ; end
-
+    class RefNotFoundException < Error ; end
   end
 
   class Field
