@@ -64,12 +64,20 @@ module Prismic
 
     def submit(ref)
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
-        uri = URI(action)
         data['ref'] = ref
         data.delete_if { |k, v| !v }
 
+        uri = URI(action)
         uri.query = URI.encode_www_form(data)
-        Net::HTTP.get_response(uri).value
+
+        request = Net::HTTP::Get.new(uri.request_uri)
+        request.add_field('Accept', 'application/json')
+
+        response = Net::HTTP.new(uri.host, uri.port).start do |http|
+          http.request(request)
+        end
+
+        JSON.parse(response.body)
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
