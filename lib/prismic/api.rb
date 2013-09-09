@@ -26,7 +26,7 @@ module Prismic
     end
 
     def as_json
-      JSON.parse(@json)
+      @json
     end
 
     def self.get(url)

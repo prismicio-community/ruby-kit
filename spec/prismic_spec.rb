@@ -156,11 +156,11 @@ describe 'Api' do
     end
 
     it "returns the json representation of the api" do
-      @json['foo'].should == 'bar'
+      JSON.parse(@json)['foo'].should == 'bar'
     end
 
     it "returns the json representation of the api containing one single element" do
-      @json.size.should == 1
+      JSON.parse(@json).size.should == 1
     end
   end
 end
