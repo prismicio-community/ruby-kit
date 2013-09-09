@@ -6,10 +6,10 @@ describe 'Api' do
     @master = Prismic::Ref.new('ref3', 'label3', true)
     @api = Prismic::API.new(json_representation) { |api|
       api.refs = {
-        'label1' => Prismic::Ref.new('ref1', 'label1'),
-        'label2' => Prismic::Ref.new('ref2', 'label2'),
-        'label3' => @master,
-        'label4' => Prismic::Ref.new('ref4', 'label4'),
+        'key1' => Prismic::Ref.new('ref1', 'label1'),
+        'key2' => Prismic::Ref.new('ref2', 'label2'),
+        'key3' => @master,
+        'key4' => Prismic::Ref.new('ref4', 'label4'),
       }
       api.forms = {
         'form1' => Prismic::SearchForm.new(api, Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
@@ -22,14 +22,20 @@ describe 'Api' do
   end
 
   describe 'ref' do
-    it "return the right Ref" do
-      @api.ref('label2').label.should == 'label2'
+    it "returns the right Ref" do
+      @api.ref('key2').label.should == 'label2'
     end
   end
 
   describe 'refs' do
     it "returns the correct number of elements" do
       @api.refs.size.should == 4
+    end
+  end
+
+  describe 'ref_id_by_label' do
+    it "returns the id of the ref" do
+      @api.ref_id_by_label('key4').ref == 'ref4'
     end
   end
 

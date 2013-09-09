@@ -20,11 +20,6 @@ module Prismic
       [msg, stack, cause_stack].compact.join("\n")
     end
   end
-  class MissingRef < Error
-    def initialize(msg=nil, cause=nil)
-      super(msg || "Can't use the API without specifying a ref to use", cause)
-    end
-  end
 
   def self.api(*args)
     API.start(*args)
@@ -67,20 +62,12 @@ module Prismic
       form.fields
     end
 
-    attr_accessor :ref
-    def ref(given_ref=nil)
-      if given_ref
-        self.ref = given_ref
-      else
-        @ref
-      end
-    end
-
-    def submit(given_ref=nil)
-      ref = ref(given_ref)
-      raise MissingRef unless ref
+    def submit(ref)
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         uri = URI(action)
+        data['ref'] = ref
+        data.delete_if { |k, v| !v }
+
         uri.query = URI.encode_www_form(data)
         Net::HTTP.get_response(uri).value
       else
@@ -107,16 +94,15 @@ module Prismic
   end
 
   class Ref
-    attr_accessor :ref, :label, :master, :scheduledAt
+    attr_accessor :ref, :label, :is_master, :scheduledAt
 
-    def initialize(ref, label, master = false)
+    def initialize(ref, label, is_master = false)
       @ref = ref
-      @label = label
-      @master = master
+      @label = label.downcase
+      @is_master = is_master
     end
 
-    alias :master? :master
-
+    alias :master? :is_master
   end
 
 end

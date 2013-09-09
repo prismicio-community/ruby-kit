@@ -21,6 +21,10 @@ module Prismic
       refs[name]
     end
 
+    def ref_id_by_label(label)
+      refs.find { |k, ref| k == label }.last
+    end
+
     def form(name)
       forms[name]
     end
