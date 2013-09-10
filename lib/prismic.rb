@@ -88,6 +88,12 @@ module Prismic
       end
     end
 
+    def query(query)
+      query.strip!
+      data['q'] = form.fields['q'].to_s + query[1, query.length-2]
+      self
+    end
+
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
   end

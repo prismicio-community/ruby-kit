@@ -188,3 +188,24 @@ describe 'Document' do
     end
   end
 end
+
+describe 'SearchForm' do
+  describe 'query' do
+    it "adds the query to the form's data" do
+      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
+      @form.query('[foo]')
+      @form.data.should == { 'q' => 'foo' }
+    end
+
+    it "adds existant queries (in fields) to the form's data" do
+      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => 'bar'}, nil, nil, nil, nil), {})
+      @form.query('[foo]')
+      @form.data.should == { 'q' => 'barfoo' }
+    end
+
+    it "returns the form itself" do
+      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => 'bar'}, nil, nil, nil, nil), {})
+      @form.query('[foo]').should == @form
+    end
+  end
+end
