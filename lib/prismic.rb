@@ -113,6 +113,10 @@ module Prismic
       @slugs = slugs
       @fragments = fragments
     end
+
+    def slug
+      slugs.empty? ? '-' : slugs.first
+    end
   end
 
   class Ref

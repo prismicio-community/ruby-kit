@@ -170,3 +170,21 @@ describe 'Api' do
     end
   end
 end
+
+describe 'Document' do
+  before do
+    @document = Prismic::Document.new(nil, nil, nil, nil, ['my-slug'], nil)
+    p @document
+  end
+
+  describe 'slug' do
+    it "returns the first slug if found" do
+      @document.slug.should == 'my-slug'
+    end
+
+    it "returns '-' if no slug found" do
+      @document.slugs = []
+      @document.slug.should == '-'
+    end
+  end
+end
