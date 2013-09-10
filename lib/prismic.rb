@@ -79,7 +79,10 @@ module Prismic
 
         raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
 
-        JSON.parse(response.body)
+        JSON.parse(response.body).map do |doc|
+          Document.new(doc['id'], doc['type'], doc['href'], doc['tags'],
+                       doc['slugs'], doc['data'].values.first)
+        end
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
@@ -101,6 +104,15 @@ module Prismic
 
   class Document
     attr_accessor :id, :type, :href, :tags, :slugs, :fragments
+
+    def initialize(id, type, href, tags, slugs, fragments)
+      @id = id
+      @type = type
+      @href = href
+      @tags = tags
+      @slugs = slugs
+      @fragments = fragments
+    end
   end
 
   class Ref
