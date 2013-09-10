@@ -174,7 +174,6 @@ end
 describe 'Document' do
   before do
     @document = Prismic::Document.new(nil, nil, nil, nil, ['my-slug'], nil)
-    p @document
   end
 
   describe 'slug' do
@@ -190,21 +189,25 @@ describe 'Document' do
 end
 
 describe 'SearchForm' do
+  before do
+    @field = Prismic::Field.new('String', '[foo]')
+  end
+
   describe 'query' do
     it "adds the query to the form's data" do
       @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
-      @form.query('[foo]')
-      @form.data.should == { 'q' => 'foo' }
+      @form.query('[bar]')
+      @form.data.should == { 'q' => '[bar]' }
     end
 
-    it "adds existant queries (in fields) to the form's data" do
-      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => 'bar'}, nil, nil, nil, nil), {})
-      @form.query('[foo]')
-      @form.data.should == { 'q' => 'barfoo' }
+    it "adds existant non-nil queries (in fields) to the form's data" do
+      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form.query('[bar]')
+      @form.data.should == { 'q' => '[foobar]' }
     end
 
     it "returns the form itself" do
-      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => 'bar'}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[foo]').should == @form
     end
   end
