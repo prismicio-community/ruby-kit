@@ -173,7 +173,12 @@ end
 
 describe 'Document' do
   before do
-    @document = Prismic::Document.new(nil, nil, nil, nil, ['my-slug'], nil)
+    fragments = {
+      'field1' => Prismic::Fragments::StructuredText::Span.new(0, 42),
+      'field2' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil),
+      'field3' => Prismic::Fragments::WebLink.new('weburl')
+    }
+    @document = Prismic::Document.new(nil, nil, nil, nil, ['my-slug'], fragments)
   end
 
   describe 'slug' do
@@ -184,6 +189,20 @@ describe 'Document' do
     it "returns '-' if no slug found" do
       @document.slugs = []
       @document.slug.should == '-'
+    end
+  end
+
+  describe 'as_html' do
+    it "returns a <section> HTML element" do
+      Nokogiri::XML(@document.as_html(nil)).child.name.should == 'section'
+    end
+
+    it "returns a HTML element with a 'data-field' attribute" do
+      Nokogiri::XML(@document.as_html(nil)).child.has_attribute?('data-field').should be_true
+    end
+
+    it "returns a HTML element with a 'data-field' attribute containing the name of the field" do
+      Nokogiri::XML(@document.as_html(nil)).child.attribute('data-field').value.should == 'field1'
     end
   end
 end

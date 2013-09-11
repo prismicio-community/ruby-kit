@@ -8,6 +8,9 @@ module Prismic
           @start = start
           @end = finish
         end
+
+        def as_html
+        end
       end
 
       class Span::Em < Span

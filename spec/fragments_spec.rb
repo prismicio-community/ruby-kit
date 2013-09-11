@@ -322,3 +322,11 @@ describe 'StructuredText::Image' do
     end
   end
 end
+
+describe 'StructuredText::Span' do
+  describe 'as_html'
+end
+
+describe 'Link::DocumentLink' do
+  describe 'as_html'
+end
