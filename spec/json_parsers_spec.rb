@@ -62,3 +62,13 @@ json
     web_link.url.should == "http://prismic.io"
   end
 end
+
+describe 'date_parser' do
+  before do
+    raw_json = <<json
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Date objects"
+end
