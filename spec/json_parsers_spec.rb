@@ -40,3 +40,22 @@ json
     text.value.should == "New York City, NY"
   end
 end
+
+describe 'web_link_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Link.web",
+      "value": {
+        "url": "http://prismic.io"
+      }
+    }
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses WebLinks objects" do
+    web_link = Prismic::JsonParser.web_link_parser(@json)
+    web_link.url.should == "http://prismic.io"
+  end
+end
