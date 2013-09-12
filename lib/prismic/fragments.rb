@@ -1,18 +1,5 @@
 module Prismic
   module Fragments
-
-    class Text
-      attr_accessor :value
-
-      def initialize(value)
-        @value = value
-      end
-
-      def as_html
-        %(<span class="text">#@value</span>)
-      end
-    end
-
     class Date
       attr_accessor :value
 
@@ -90,7 +77,6 @@ module Prismic
         HTML
       end
     end
-
   end
 end
 
@@ -98,3 +84,4 @@ require 'prismic/fragments/block'
 require 'prismic/fragments/image'
 require 'prismic/fragments/link'
 require 'prismic/fragments/structured_text'
+require 'prismic/fragments/text'

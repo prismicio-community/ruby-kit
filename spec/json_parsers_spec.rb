@@ -23,3 +23,20 @@ json
     document_link.is_broken.should == false
   end
 end
+
+describe 'text_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Text",
+      "value": "New York City, NY"
+    }
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Text objects" do
+    text = Prismic::JsonParser.text_parser(@json)
+    text.value.should == "New York City, NY"
+  end
+end

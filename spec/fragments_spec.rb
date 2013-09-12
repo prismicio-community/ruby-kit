@@ -327,6 +327,6 @@ describe 'StructuredText::Span' do
   describe 'as_html'
 end
 
-describe 'Link::DocumentLink' do
+describe 'DocumentLink' do
   describe 'as_html'
 end

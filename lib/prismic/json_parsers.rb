@@ -9,7 +9,8 @@ module Prismic
         json['isBroken'])
     end
 
-    def text_parser(json)
+    def self.text_parser(json)
+      Prismic::Fragments::Text.new(json['value'])
     end
 
     def web_link_parser(json)
