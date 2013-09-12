@@ -1,0 +1,19 @@
+module Prismic
+  module Fragments
+    class Number
+      attr_accessor :value
+
+      def initialize(value)
+        @value = value
+      end
+
+      def as_int
+        @value.to_int
+      end
+
+      def as_html
+        %(<span class="number">#@value</span>)
+      end
+    end
+  end
+end
