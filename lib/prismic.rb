@@ -165,3 +165,4 @@ end
 require 'prismic/api'
 require 'prismic/form'
 require 'prismic/fragments'
+require 'prismic/json_parsers'
