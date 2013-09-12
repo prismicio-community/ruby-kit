@@ -20,7 +20,8 @@ module Prismic
     def self.date_parser(json)
     end
 
-    def number_parser(json)
+    def self.number_parser(json)
+      Prismic::Fragments::Number.new(json['value'])
     end
 
     def embed_parser(json)

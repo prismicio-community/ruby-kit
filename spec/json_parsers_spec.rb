@@ -72,3 +72,20 @@ json
 
   it "correctly parses Date objects"
 end
+
+describe 'number_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Number",
+      "value": 3.55
+    }
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Number objects" do
+    number = Prismic::JsonParser.number_parser(@json)
+    number.value.should == 3.55
+  end
+end
