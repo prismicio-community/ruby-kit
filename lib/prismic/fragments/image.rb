@@ -42,7 +42,6 @@ module Prismic
         end
 
       end
-
     end
   end
 end

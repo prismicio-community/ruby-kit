@@ -89,3 +89,42 @@ json
     number.value.should == 3.55
   end
 end
+
+describe 'image_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Image",
+      "value": {
+        "main": {
+          "url": "url1",
+          "dimensions": {
+            "width": 500,
+            "height": 500
+          }
+        },
+        "views": {
+          "icon": {
+            "url": "url2",
+              "dimensions": {
+                "width": 250,
+                "height": 250
+              }
+          }
+        }
+      }
+    }
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Image objects" do
+    image = Prismic::JsonParser.image_parser(@json)
+    image.main.url.should == "url1"
+    image.main.width.should == 500
+    image.main.height.should == 500
+    image.views[0].url.should == "url2"
+    image.views[0].width.should == 250
+    image.views[0].height.should == 250
+  end
+end

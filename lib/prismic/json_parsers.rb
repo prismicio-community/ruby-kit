@@ -24,22 +24,34 @@ module Prismic
       Prismic::Fragments::Number.new(json['value'])
     end
 
-    def embed_parser(json)
+    def self.embed_parser(json)
     end
 
-    def image_parser(json)
+    def self.image_parser(json)
+      def self.view_parser(json)
+        Prismic::Fragments::Image::View.new(json['url'],
+                                            json['dimensions']['width'],
+                                            json['dimensions']['height'])
+      end
+
+      main  = view_parser(json['value']['main'])
+      views = json['value']['views'].map do |name, view|
+        view_parser(view)
+      end
+
+      Prismic::Fragments::Image.new(main, views)
     end
 
-    def span_parser(json)
+    def self.span_parser(json)
     end
 
-    def heading_parser(json)
+    def self.heading_parser(json)
     end
 
-    def paragraph_parser(json)
+    def self.paragraph_parser(json)
     end
 
-    def list_item_parser(json)
+    def self.list_item_parser(json)
     end
   end
 end
