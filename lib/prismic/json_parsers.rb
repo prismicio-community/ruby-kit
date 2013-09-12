@@ -42,9 +42,6 @@ module Prismic
       Prismic::Fragments::Image.new(main, views)
     end
 
-    def self.span_parser(json)
-    end
-
     def self.heading_parser(json)
     end
 
@@ -52,6 +49,10 @@ module Prismic
     end
 
     def self.list_item_parser(json)
+    end
+
+    def self.color_parser(json)
+      Prismic::Fragments::Color.new(json['value'][1..6])
     end
   end
 end

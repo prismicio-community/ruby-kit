@@ -138,3 +138,20 @@ json
     image.views[0].height.should == 250
   end
 end
+
+describe 'color_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Color",
+      "value": "#ffeacd"
+    }
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Color objects" do
+    color = Prismic::JsonParser.color_parser(@json)
+    color.value.should == "ffeacd"
+  end
+end
