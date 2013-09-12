@@ -90,6 +90,16 @@ json
   end
 end
 
+describe 'embed_parser' do
+  before do
+    raw_json = <<json
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses Embed objects"
+end
+
 describe 'image_parser' do
   before do
     raw_json = <<json
