@@ -2,13 +2,16 @@ describe 'document_link_parser' do
   before do
     raw_json = <<json
       {
-        "document": {
-          "id": "UdUjvt_mqVNObPeO",
-          "type": "product",
-          "tags": ["Macaron"],
-          "slug": "dark-chocolate-macaron"
-        },
-        "isBroken": false
+        "type": "Link.document",
+        "value": {
+          "document": {
+            "id": "UdUjvt_mqVNObPeO",
+            "type": "product",
+            "tags": ["Macaron"],
+            "slug": "dark-chocolate-macaron"
+          },
+          "isBroken": false
+        }
       }
 json
     @json = JSON.parse(raw_json)

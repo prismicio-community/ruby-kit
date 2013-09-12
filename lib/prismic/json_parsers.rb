@@ -2,11 +2,11 @@ module Prismic
   module JsonParser
     def self.document_link_parser(json)
       Prismic::Fragments::DocumentLink.new(
-        json['document']['id'],
-        json['document']['type'],
-        json['document']['tags'],
-        json['document']['slug'],
-        json['isBroken'])
+        json['value']['document']['id'],
+        json['value']['document']['type'],
+        json['value']['document']['tags'],
+        json['value']['document']['slug'],
+        json['value']['isBroken'])
     end
 
     def self.text_parser(json)
