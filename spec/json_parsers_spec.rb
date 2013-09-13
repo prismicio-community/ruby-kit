@@ -155,3 +155,23 @@ json
     color.value.should == "ffeacd"
   end
 end
+
+describe 'document_parser' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
+    json = JSON.parse(raw_json)
+    @document = Prismic::JsonParser.document_parser(json)
+  end
+
+  it "correctly parses Document objects" do
+    @document.id.should == 'UdUkXt_mqZBObPeS'
+    @document.type.should == 'product'
+    @document.href.should == 'doc-url'
+    @document.tags.should == ['Macaron']
+    @document.slugs.should == ['vanilla-macaron']
+  end
+
+  it "correctly parses the document's fragments" do
+
+  end
+end

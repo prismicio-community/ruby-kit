@@ -80,8 +80,7 @@ module Prismic
         raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
 
         JSON.parse(response.body).map do |doc|
-          Document.new(doc['id'], doc['type'], doc['href'], doc['tags'],
-                       doc['slugs'], doc['data'].values.first)
+          Prismic::JsonParser.document_parser(doc)
         end
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
@@ -159,7 +158,6 @@ module Prismic
 
     alias :master? :is_master
   end
-
 end
 
 require 'prismic/api'

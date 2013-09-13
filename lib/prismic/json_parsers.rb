@@ -42,17 +42,13 @@ module Prismic
       Prismic::Fragments::Image.new(main, views)
     end
 
-    def self.heading_parser(json)
-    end
-
-    def self.paragraph_parser(json)
-    end
-
-    def self.list_item_parser(json)
-    end
-
     def self.color_parser(json)
       Prismic::Fragments::Color.new(json['value'][1..6])
+    end
+
+    def self.document_parser(json)
+      Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
+                    json['slugs'], json['data'].values.first)
     end
   end
 end
