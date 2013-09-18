@@ -158,36 +158,52 @@ end
 
 describe 'structured_text_parser' do
   before do
-    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
-    json = JSON.parse(raw_json)
-    @structured_text = Prismic::JsonParser.structured_text_parser(json)
+    raw_json_paragraph = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
+    json_paragraph = JSON.parse(raw_json_paragraph)
+    @structured_text_paragraph = Prismic::JsonParser.structured_text_parser(json_paragraph)
+
+    raw_json_heading = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_heading.json")
+    json_heading = JSON.parse(raw_json_heading)
+    @structured_text_heading = Prismic::JsonParser.structured_text_parser(json_heading)
+  end
+
+  describe 'headings parsing' do
+    it "correctly parses headings" do
+      @structured_text_heading.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Heading
+      @structured_text_heading.blocks[0].text.should == "Salted Caramel Macaron"
+      @structured_text_heading.blocks[0].level.should == 1
+    end
+
+    it "parses all the spans" do
+      @structured_text_heading.blocks[0].spans.size.should == 1
+    end
   end
 
   describe 'paragraphs parsing' do
     it "correctly parses paragraphs" do
-      @structured_text.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
-      @structured_text.blocks[0].text.size.should == 224
+      @structured_text_paragraph.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
+      @structured_text_paragraph.blocks[0].text.size.should == 224
     end
   end
 
   describe 'spans parsing' do
-    it "should correctly parse the em spans" do
-      @structured_text.blocks[0].spans.size.should == 3
+    it "parses all the spans" do
+      @structured_text_paragraph.blocks[0].spans.size.should == 3
     end
 
-    it "should correctly parse the em spans" do
-      @structured_text.blocks[0].spans[0].start.should == 103
-      @structured_text.blocks[0].spans[0].end.should == 137
-      @structured_text.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
+    it "correctly parses the em spans" do
+      @structured_text_paragraph.blocks[0].spans[0].start.should == 103
+      @structured_text_paragraph.blocks[0].spans[0].end.should == 137
+      @structured_text_paragraph.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
     end
 
-    it "should correctly parse the strong spans" do
-      @structured_text.blocks[0].spans[2].should be_a Prismic::Fragments::StructuredText::Span::Strong
+    it "correctly parses the strong spans" do
+      @structured_text_paragraph.blocks[0].spans[2].should be_a Prismic::Fragments::StructuredText::Span::Strong
     end
 
-    it "should correctly parse the hyperlink spans" do
-      @structured_text.blocks[0].spans[1].should be_a Prismic::Fragments::StructuredText::Span::Hyperlink
-      @structured_text.blocks[0].spans[1].link.should be_a Prismic::Fragments::WebLink
+    it "correctly parses the hyperlink spans" do
+      @structured_text_paragraph.blocks[0].spans[1].should be_a Prismic::Fragments::StructuredText::Span::Hyperlink
+      @structured_text_paragraph.blocks[0].spans[1].link.should be_a Prismic::Fragments::WebLink
     end
   end
 end

@@ -3,6 +3,10 @@
   "value": [{
     "type": "heading1",
     "text": "Salted Caramel Macaron",
-    "spans": []
+    "spans": [{
+      "start": 162,
+      "end": 183,
+      "type": "strong"
+    }]
   }]
 }

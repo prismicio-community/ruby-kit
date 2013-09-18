@@ -68,20 +68,25 @@ module Prismic
     end
 
     def self.structured_text_parser(json)
+      def self.span_parser(span)
+        if span['type'] == 'em'
+          Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
+        elsif span['type'] == 'strong'
+          Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
+        elsif span['type'] == 'hyperlink'
+          Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
+        end
+      end
+
       blocks = json['value'].map do |block|
         if block['type'] == 'paragraph'
-          spans = block['spans'].map do |span|
-            if span['type'] == 'em'
-              Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
-            elsif span['type'] == 'strong'
-              Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
-            elsif span['type'] == 'hyperlink'
-              Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
-            end
-          end
+          spans = block['spans'].map {|span| span_parser(span)}
           Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
         elsif block['type'] =~ /^heading/
-          nil
+          spans = block['spans'].map {|span| span_parser(span)}
+          Prismic::Fragments::StructuredText::Block::Heading.new(block['text'],
+                                                                 spans,
+                                                                 block['type'][-1].to_i)
         end
       end
       Prismic::Fragments::StructuredText.new(blocks)
@@ -104,7 +109,7 @@ module Prismic
       end]
 
       Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
-                    json['slugs'], fragments)
+                            json['slugs'], fragments)
     end
 
     private
