@@ -68,6 +68,26 @@ describe 'Text' do
   end
 end
 
+describe 'Select' do
+  describe 'as_html' do
+    before do
+      @select = Prismic::Fragments::Select.new('my_value')
+    end
+
+    it "returns a <span> HTML element" do
+      Nokogiri::XML(@select.as_html).child.name.should == 'span'
+    end
+
+    it "returns a HTML element with the 'text' class" do
+      Nokogiri::XML(@select.as_html).child.attribute('class').value.split.should include 'text'
+    end
+
+    it "returns a HTML element whose content is the value" do
+      Nokogiri::XML(@select.as_html).child.content.should == 'my_value'
+    end
+  end
+end
+
 describe 'Date' do
   before do
     @date = Prismic::Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
@@ -301,7 +321,7 @@ end
 describe 'StructuredText::Image' do
   before do
     @view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
-    @image = Prismic::Fragments::Block::Image.new(@view)
+    @image = Prismic::Fragments::StructuredText::Block::Image.new(@view)
   end
 
   describe 'url' do
@@ -329,4 +349,19 @@ end
 
 describe 'DocumentLink' do
   describe 'as_html'
+end
+
+describe 'Multiple' do
+  before do
+    @multiple = Prismic::Fragments::Multiple.new
+  end
+
+  describe 'push' do
+    it "adds the element to the collection" do
+      @multiple.push(:something)
+      @multiple.size.should == 1
+      @multiple.push(:something_else)
+      @multiple.size.should == 2
+    end
+  end
 end

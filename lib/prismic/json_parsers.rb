@@ -1,5 +1,22 @@
 module Prismic
   module JsonParser
+    #class << self
+    def self.parsers
+      @parsers ||= {
+        'Link.document'  => method(:document_link_parser),
+        'Text'           => method(:text_parser),
+        'Link.web'       => method(:web_link_parser),
+        'Date'           => method(:date_parser),
+        'Number'         => method(:number_parser),
+        'Embed'          => method(:embed_parser),
+        'Image'          => method(:image_parser),
+        'Color'          => method(:color_parser),
+        'StructuredText' => method(:structured_text_parser),
+        'Select'         => method(:select_parser),
+        'Multiple'       => method(:multiple_parser),
+      }
+    end
+
     def self.document_link_parser(json)
       Prismic::Fragments::DocumentLink.new(
         json['value']['document']['id'],
@@ -10,6 +27,10 @@ module Prismic
     end
 
     def self.text_parser(json)
+      Prismic::Fragments::Text.new(json['value'])
+    end
+
+    def self.select_parser(json)
       Prismic::Fragments::Text.new(json['value'])
     end
 
@@ -46,9 +67,43 @@ module Prismic
       Prismic::Fragments::Color.new(json['value'][1..6])
     end
 
-    def self.document_parser(json)
-      Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
-                    json['slugs'], json['data'].values.first)
+    def self.structured_text_parser(json)
+      blocks = json['value'].map do |block|
+        if block['type'] == 'paragraph'
+          spans = nil
+          Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'],
+                                                                  spans)
+        elsif block['type'] =~ /^heading/
+          nil
+        end
+      end
+      Prismic::Fragments::StructuredText.new(blocks)
     end
+
+    def self.multiple_parser(json)
+      foo = json.map do |fragment|
+        parsers[fragment['type']].call(fragment)
+      end
+      Prismic::Fragments::Multiple.new(foo)
+    end
+
+    def self.document_parser(json)
+      fragments = Hash[json['data'].values.first.map do |name, fragment|
+        if fragment.is_a? Array
+          [name, multiple_parser(fragment)]
+        else
+          [name, parsers[fragment['type']].call(fragment)]
+        end
+      end]
+
+      Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
+                    json['slugs'], fragments)
+    end
+
+    private
+
+    def parser_for_fragment(fragment)
+    end
+    #end
   end
 end

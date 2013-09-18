@@ -156,6 +156,33 @@ json
   end
 end
 
+describe 'structured_text_parser' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
+    json = JSON.parse(raw_json)
+    @structured_text = Prismic::JsonParser.structured_text_parser(json)
+  end
+
+  describe 'paragraphs parsing' do
+    it "correctly parses paragraphs" do
+      @structured_text.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
+      @structured_text.blocks[0].text.size.should == 224
+    end
+  end
+
+  #it "correctly parses StructuredText objects" do
+    #@structured_text.blocks.size.should == 1
+    #@structured_text.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
+    #@structured_text.blocks[0].text.should == 224
+    #@structured_text.blocks[0].spans.size.should == 2
+    #@structured_text.blocks[0].spans[0].start.should == 103
+    #@structured_text.blocks[0].spans[0].end.should == 137
+    #@structured_text.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
+    #@structured_text.blocks[0].spans[1].class.should == Prismic::Fragments::StructuredText::Span::Hyperlink
+    #@structured_text.blocks[0].spans[2].class.should == Prismic::Fragments::StructuredText::Span::Strong
+  #end
+end
+
 describe 'document_parser' do
   before do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
@@ -172,6 +199,32 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
+    @document.fragments.size.should == 11
+    @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
+  end
+end
 
+describe 'multiple_parser' do
+  before do
+    raw_json = <<json
+      [
+        {
+          "type": "Text",
+          "value": "foo"
+        },
+        {
+          "type": "Text",
+          "value": "bar"
+        }
+      ]
+json
+    @json = JSON.parse(raw_json)
+  end
+
+  it "correctly parses the Multiple object's elements" do
+    multiple = Prismic::JsonParser.multiple_parser(@json)
+    multiple.size.should == 2
+    multiple[0].class.should == Prismic::Fragments::Text
+    multiple[0].class.should == Prismic::Fragments::Text
   end
 end
