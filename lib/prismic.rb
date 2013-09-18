@@ -135,8 +135,10 @@ module Prismic
 
     def get_html(fragment, link_resolver)
       if (fragment.is_a? Prismic::Fragments::StructuredText or
-          fragment.is_a? Prismic::Fragments::DocumentLink)
-          fragment.as_html(link_resolver)
+          fragment.is_a? Prismic::Fragments::DocumentLink or
+          fragment.is_a? Prismic::Fragments::Multiple)
+          #fragment.as_html(link_resolver)
+          nil
       else
         fragment.as_html
       end
