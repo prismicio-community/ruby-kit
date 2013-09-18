@@ -25,6 +25,12 @@ module Prismic
         end
 
         class Hyperlink < Span
+          attr_accessor :link
+          def initialize(start, finish, link)
+            @start = start
+            @end = finish
+            @link = link
+          end
         end
       end
 

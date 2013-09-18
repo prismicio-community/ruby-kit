@@ -70,9 +70,16 @@ module Prismic
     def self.structured_text_parser(json)
       blocks = json['value'].map do |block|
         if block['type'] == 'paragraph'
-          spans = nil
-          Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'],
-                                                                  spans)
+          spans = block['spans'].map do |span|
+            if span['type'] == 'em'
+              Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
+            elsif span['type'] == 'strong'
+              Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
+            elsif span['type'] == 'hyperlink'
+              Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
+            end
+          end
+          Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
         elsif block['type'] =~ /^heading/
           nil
         end
@@ -105,5 +112,15 @@ module Prismic
     def parser_for_fragment(fragment)
     end
     #end
+
+    private
+
+    def self.link_parser(json)
+      if json['type'] == 'Link.document'
+        document_link_parser(json)
+      elsif json['type'] == 'Link.web'
+        web_link_parser(json)
+      end
+    end
   end
 end

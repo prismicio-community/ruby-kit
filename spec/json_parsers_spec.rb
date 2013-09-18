@@ -170,17 +170,26 @@ describe 'structured_text_parser' do
     end
   end
 
-  #it "correctly parses StructuredText objects" do
-    #@structured_text.blocks.size.should == 1
-    #@structured_text.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
-    #@structured_text.blocks[0].text.should == 224
-    #@structured_text.blocks[0].spans.size.should == 2
-    #@structured_text.blocks[0].spans[0].start.should == 103
-    #@structured_text.blocks[0].spans[0].end.should == 137
-    #@structured_text.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
-    #@structured_text.blocks[0].spans[1].class.should == Prismic::Fragments::StructuredText::Span::Hyperlink
-    #@structured_text.blocks[0].spans[2].class.should == Prismic::Fragments::StructuredText::Span::Strong
-  #end
+  describe 'spans parsing' do
+    it "should correctly parse the em spans" do
+      @structured_text.blocks[0].spans.size.should == 3
+    end
+
+    it "should correctly parse the em spans" do
+      @structured_text.blocks[0].spans[0].start.should == 103
+      @structured_text.blocks[0].spans[0].end.should == 137
+      @structured_text.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
+    end
+
+    it "should correctly parse the strong spans" do
+      @structured_text.blocks[0].spans[2].should be_a Prismic::Fragments::StructuredText::Span::Strong
+    end
+
+    it "should correctly parse the hyperlink spans" do
+      @structured_text.blocks[0].spans[1].should be_a Prismic::Fragments::StructuredText::Span::Hyperlink
+      @structured_text.blocks[0].spans[1].link.should be_a Prismic::Fragments::WebLink
+    end
+  end
 end
 
 describe 'document_parser' do
