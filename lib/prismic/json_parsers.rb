@@ -107,6 +107,13 @@ module Prismic
               spans,
               false  # unordered
             )
+          when 'image'
+            view = Prismic::Fragments::Image::View.new(
+              block['url'],
+              block['dimensions']['width'],
+              block['dimensions']['height']
+            )
+            Prismic::Fragments::StructuredText::Block::Image.new(view)
           else
             puts "Unknown bloc type: #{block['type']}"
           end

@@ -176,6 +176,10 @@ module Prismic
           def height
             @view.height
           end
+
+          def as_html(link_resolver)
+            view.as_html(link_resolver)
+          end
         end
       end
     end

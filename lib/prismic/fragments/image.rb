@@ -9,7 +9,7 @@ module Prismic
       end
 
       def as_html(link_resolver=nil)
-        main.as_html
+        main.as_html(link_resolver)
       end
 
       def get_view(key)
@@ -37,8 +37,8 @@ module Prismic
           return @width / @height
         end
 
-        def as_html
-          %(<img src="#@url" width="#@width" height="#@height">)
+        def as_html(link_resolver=nil)
+          %(<img src="#@url" width="#@width" height="#@height" />)
         end
 
       end
