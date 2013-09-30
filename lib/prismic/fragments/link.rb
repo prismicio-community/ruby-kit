@@ -34,6 +34,11 @@ module Prismic
       end
 
       def as_html(link_resolver)
+        if broken?
+          %(<span>#{slug}</span>)
+        else
+          %(<a href="#{link_resolver.link_to(self)}">#{slug}</a>)
+        end
       end
 
       alias :broken? :broken
