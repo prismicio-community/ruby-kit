@@ -1,7 +1,7 @@
 module Prismic
   module Fragments
     class Link
-      def as_html
+      def as_html(link_resolver=nil)
         %(<a href="#@url">#@url</a>)
       end
     end

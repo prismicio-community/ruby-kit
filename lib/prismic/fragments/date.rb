@@ -7,7 +7,7 @@ module Prismic
         @value = value
       end
 
-      def as_html
+      def as_html(link_resolver=nil)
         %(<time>#{value.iso8601(3)}</time>)
       end
     end

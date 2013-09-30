@@ -7,7 +7,7 @@ module Prismic
         @value = value
       end
 
-      def as_html
+      def as_html(link_resolver=nil)
         %(<span class="text">#@value</span>)
       end
     end

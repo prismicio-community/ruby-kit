@@ -127,22 +127,11 @@ module Prismic
 
     def as_html(link_resolver)
       fragments.map { |field, fragment|
-        %(<section data-field="#{field}">#{get_html(fragment, link_resolver)}</section>)
+        %(<section data-field="#{field}">#{fragment.as_html(link_resolver)}</section>)
       }.join("\n")
     end
 
     private
-
-    def get_html(fragment, link_resolver)
-      if (fragment.is_a? Prismic::Fragments::StructuredText or
-          fragment.is_a? Prismic::Fragments::DocumentLink or
-          fragment.is_a? Prismic::Fragments::Multiple)
-          #fragment.as_html(link_resolver)
-          nil
-      else
-        fragment.as_html
-      end
-    end
 
     def parse_fragments(fragments)
       fragments

@@ -7,15 +7,16 @@ module Prismic
         @blocks = blocks
       end
 
+      def as_html(link_resolver)
+        blocks.map{|b| b.as_html(link_resolver) }.join
+      end
+
       class Span
         attr_accessor :start, :end
 
         def initialize(start, finish)
           @start = start
           @end = finish
-        end
-
-        def as_html
         end
 
         class Em < Span
@@ -42,6 +43,10 @@ module Prismic
             @text = text
             @spans = spans
           end
+
+          def as_html(link_resolver=nil)
+            text
+          end
         end
 
         class Heading < Text
@@ -52,9 +57,16 @@ module Prismic
             @spans = spans
             @level = level
           end
+
+          def as_html(link_resolver=nil)
+            %(<h#{level}>#{text}</h#{level}>)
+          end
         end
 
         class Paragraph < Text
+          def as_html(link_resolver=nil)
+            %(<p>#{super}</p>)
+          end
         end
 
         class ListItem < Text

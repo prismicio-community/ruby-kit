@@ -8,7 +8,7 @@ module Prismic
         @views = views
       end
 
-      def as_html
+      def as_html(link_resolver=nil)
         main.as_html
       end
 

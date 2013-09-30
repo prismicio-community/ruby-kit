@@ -13,7 +13,7 @@ module Prismic
         @o_embed_json = o_embed_json
       end
 
-      def as_html
+      def as_html(link_resolver=nil)
         <<-HTML
         <div data-oembed="#@url"
             data-oembed-type="#{@embed_type.downcase}"

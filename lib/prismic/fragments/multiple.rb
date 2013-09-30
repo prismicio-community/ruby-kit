@@ -20,14 +20,7 @@ module Prismic
       end
 
       def as_html(link_resolver)
-        @fragments.map { |fragment|
-          if (fragment.is_a? Prismic::Fragments::StructuredText or
-              fragment.is_a? Prismic::Fragments::DocumentLink)
-              fragment.as_html(link_resolver)
-          else
-            fragment.as_html
-          end
-        }.join
+        @fragments.map { |f| f.as_html(link_resolver) }.join
       end
 
       alias :length :size
