@@ -1,6 +1,16 @@
 module Prismic
   module Fragments
     class StructuredText
+      class Group
+        attr_reader :kind, :blocks
+        def initialize(kind)
+          @kind = kind
+          @blocks = []
+        end
+        def <<(block)
+          blocks << block
+        end
+      end
       attr_accessor :blocks
 
       def initialize(blocks)
@@ -8,7 +18,32 @@ module Prismic
       end
 
       def as_html(link_resolver)
-        blocks.map{|b| b.as_html(link_resolver) }.join
+        block_group = ->(block){
+          case block
+          when Block::ListItem
+            block.ordered? ? "ol" : "ul"
+          else
+            nil
+          end
+        }
+        groups, last = [], nil
+        blocks.each {|block|
+          group = block_group.(block)
+          groups << Group.new(group) if !last || group != last
+          groups.last << block
+          last = group
+        }
+        groups.map{|group|
+          html = group.blocks.map{|b| b.as_html(link_resolver) }.join
+          case group.kind
+          when "ol"
+            %(<ol>#{html}</ol>)
+          when "ul"
+            %(<ul>#{html}</ul>)
+          else
+            html
+          end
+        }.join("\n\n")
       end
 
       class Span
@@ -99,7 +134,7 @@ module Prismic
           end
 
           def as_html(link_resolver=nil)
-            %(<h#{level}>#{text}</h#{level}>)
+            %(<h#{level}>#{super}</h#{level}>)
           end
         end
 
@@ -111,10 +146,15 @@ module Prismic
 
         class ListItem < Text
           attr_accessor :ordered
+          alias :ordered? :ordered
 
           def initialize(text, spans, ordered)
             super(text, spans)
             @ordered = ordered
+          end
+
+          def as_html(link_resolver)
+            %(<li>#{super}</li>)
           end
         end
 
