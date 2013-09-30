@@ -39,6 +39,7 @@ module Prismic
       end
 
       def date_parser(json)
+        Prismic::Fragments::Date.new(Time.parse(json['value']))
       end
 
       def number_parser(json)
