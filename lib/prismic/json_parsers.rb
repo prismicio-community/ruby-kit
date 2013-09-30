@@ -46,6 +46,13 @@ module Prismic
       end
 
       def embed_parser(json)
+        Prismic::Fragments::Embed.new(
+          json['value']['oembed']['type'],
+          json['value']['oembed']['provider_name'],
+          json['value']['oembed']['provider_url'],
+          json['value']['oembed']['html'],
+          json['value']['oembed']
+        )
       end
 
       def image_parser(json)
