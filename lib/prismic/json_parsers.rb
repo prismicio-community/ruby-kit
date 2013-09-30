@@ -93,6 +93,20 @@ module Prismic
               spans,
               block['type'][-1].to_i
             )
+          when 'o-list-item'
+            spans = block['spans'].map {|span| span_parser(span) }
+            Prismic::Fragments::StructuredText::Block::ListItem.new(
+              block['text'],
+              spans,
+              true  # ordered
+            )
+          when 'list-item'
+            spans = block['spans'].map {|span| span_parser(span) }
+            Prismic::Fragments::StructuredText::Block::ListItem.new(
+              block['text'],
+              spans,
+              false  # unordered
+            )
           else
             puts "Unknown bloc type: #{block['type']}"
           end
