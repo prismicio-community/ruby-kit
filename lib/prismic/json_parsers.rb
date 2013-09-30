@@ -69,34 +69,40 @@ module Prismic
 
       def structured_text_parser(json)
         def self.span_parser(span)
-          if span['type'] == 'em'
+          case span['type']
+          when 'em'
             Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
-          elsif span['type'] == 'strong'
+          when 'strong'
             Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
-          elsif span['type'] == 'hyperlink'
+          when 'hyperlink'
             Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
+          else
+            puts "Unknown span_parser type: #{span['type']}"
           end
         end
 
         blocks = json['value'].map do |block|
-          if block['type'] == 'paragraph'
+          case block['type']
+          when 'paragraph'
             spans = block['spans'].map {|span| span_parser(span)}
             Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
-          elsif block['type'] =~ /^heading/
+          when /^heading/
             spans = block['spans'].map {|span| span_parser(span)}
             Prismic::Fragments::StructuredText::Block::Heading.new(block['text'],
                                                                   spans,
                                                                   block['type'][-1].to_i)
+          else
+            puts "Unknown bloc type: #{block['type']}"
           end
         end
         Prismic::Fragments::StructuredText.new(blocks)
       end
 
       def multiple_parser(json)
-        foo = json.map do |fragment|
+        fragments = json.map do |fragment|
           parsers[fragment['type']].call(fragment)
         end
-        Prismic::Fragments::Multiple.new(foo)
+        Prismic::Fragments::Multiple.new(fragments)
       end
 
       def document_parser(json)

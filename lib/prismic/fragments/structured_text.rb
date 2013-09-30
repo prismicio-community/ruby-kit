@@ -53,8 +53,7 @@ module Prismic
           attr_accessor :level
 
           def initialize(text, spans, level)
-            @text = text
-            @spans = spans
+            super(text, spans)
             @level = level
           end
 
@@ -73,8 +72,7 @@ module Prismic
           attr_accessor :ordered
 
           def initialize(text, spans, ordered)
-            @text = text
-            @spans = spans
+            super(text, spans)
             @ordered = ordered
           end
         end
