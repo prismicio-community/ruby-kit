@@ -20,7 +20,7 @@ module Prismic
       end
 
       def as_html(link_resolver=nil)
-        %(<span class="color">#@value</span>)
+        %(<span class="color">##@value</span>)
       end
 
       def self.valid?(value)
