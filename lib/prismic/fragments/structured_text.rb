@@ -181,6 +181,19 @@ module Prismic
             view.as_html(link_resolver)
           end
         end
+
+        class Embed < Block
+
+          def initialize(embed)
+            @embed
+          end
+
+          def as_html(link_resolver)
+            embed.as_html(link_resolver)
+          end
+
+        end
+
       end
     end
   end
