@@ -23,20 +23,20 @@ module Prismic
     end
 
     class DocumentLink < Link
-      attr_accessor :id, :link_type, :tags, :slug, :is_broken
+      attr_accessor :id, :link_type, :tags, :slug, :broken
 
-      def initialize(id, link_type, tags, slug, is_broken)
+      def initialize(id, link_type, tags, slug, broken)
         @id = id
         @link_type = link_type
         @tags = tags
         @slug = slug
-        @is_broken = is_broken
+        @broken = broken
       end
 
       def as_html(link_resolver)
       end
 
-      alias :broken? :is_broken
+      alias :broken? :broken
     end
   end
 end
