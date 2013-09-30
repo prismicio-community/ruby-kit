@@ -20,17 +20,35 @@ module Prismic
         end
 
         class Em < Span
+          def start_html(link_resolver=nil)
+            "<em>"
+          end
+          def end_html(link_resolver=nil)
+            "</em>"
+          end
         end
 
         class Strong < Span
+          def start_html(link_resolver=nil)
+            "<b>"
+          end
+          def end_html(link_resolver=nil)
+            "</b>"
+          end
         end
 
         class Hyperlink < Span
           attr_accessor :link
           def initialize(start, finish, link)
-            @start = start
-            @end = finish
+            super(start, finish)
             @link = link
+          end
+          def start_html(link_resolver)
+            # Quick-and-dirty way to generate the right <a> tag
+            link.as_html(link_resolver).sub(/(<a[^>]+>).*/, '\1')
+          end
+          def end_html(link_resolver=nil)
+            "</a>"
           end
         end
       end
@@ -45,7 +63,30 @@ module Prismic
           end
 
           def as_html(link_resolver=nil)
-            text
+            start_spans, end_spans = prepare_spans
+            text.chars.each_with_index.map {|c, i|
+              opening = start_spans[i].map {|span|
+                span.start_html(link_resolver)
+              }
+              closing = end_spans[i].map {|span|
+                span.end_html(link_resolver)
+              }
+              opening + closing + [c]
+            }.flatten.join("")
+          end
+
+          def prepare_spans
+            unless defined?(@prepared_spans)
+              start_spans = Hash.new{|h,k| h[k] = [] }
+              end_spans = Hash.new{|h,k| h[k] = [] }
+              spans.each {|span|
+                start_spans[span.start] << span
+                end_spans[span.end] << span
+              }
+              @start_spans = start_spans
+              @end_spans = end_spans
+            end
+            [@start_spans, @end_spans]
           end
         end
 
