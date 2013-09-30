@@ -84,13 +84,15 @@ module Prismic
         blocks = json['value'].map do |block|
           case block['type']
           when 'paragraph'
-            spans = block['spans'].map {|span| span_parser(span)}
+            spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
           when /^heading/
-            spans = block['spans'].map {|span| span_parser(span)}
-            Prismic::Fragments::StructuredText::Block::Heading.new(block['text'],
-                                                                  spans,
-                                                                  block['type'][-1].to_i)
+            spans = block['spans'].map {|span| span_parser(span) }
+            Prismic::Fragments::StructuredText::Block::Heading.new(
+              block['text'],
+              spans,
+              block['type'][-1].to_i
+            )
           else
             puts "Unknown bloc type: #{block['type']}"
           end
