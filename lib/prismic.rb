@@ -30,10 +30,9 @@ module Prismic
   end
 
   class SearchForm
-    attr_accessor :api, :form, :data
+    attr_accessor :form, :data
 
-    def initialize(api, form, data=form.default_data)
-      @api = api
+    def initialize(form, data=form.default_data)
       @form = form
       @data = data
     end
