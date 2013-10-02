@@ -24,6 +24,10 @@ then add in your code:
 require 'prismic'
 ```
 
+#### API Documentation
+
+You can browse the [API Documentation](http://prismicio.github.io/ruby-kit/).
+
 #### Use it
 
 You can look at the [rails starter](https://github.com/prismicio/ruby-rails-starter) project to see how to use it :-)
