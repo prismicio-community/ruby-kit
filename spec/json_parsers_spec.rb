@@ -23,7 +23,7 @@ json
     document_link.link_type.should == "product"
     document_link.tags.should == ['Macaron']
     document_link.slug.should == "dark-chocolate-macaron"
-    document_link.is_broken.should == false
+    document_link.broken?.should == false
   end
 end
 
@@ -66,11 +66,18 @@ end
 describe 'date_parser' do
   before do
     raw_json = <<json
+    {
+      "type": "date",
+      "value": "2013-09-19"
+    }
 json
     @json = JSON.parse(raw_json)
   end
 
-  it "correctly parses Date objects"
+  it "correctly parses Date objects" do
+    date = Prismic::JsonParser.date_parser(@json)
+    date.value.should == Time.new(2013, 9, 19)
+  end
 end
 
 describe 'number_parser' do
@@ -92,12 +99,37 @@ end
 
 describe 'embed_parser' do
   before do
+    @embed_type = "rich"
+    @provider = "GitHub"
+    @url = "https://gist.github.com"
+    @html = '<script src="https://gist.github.com/dohzya/6762845.js"></script>'
     raw_json = <<json
+    {
+      "type": "embed",
+      "value": {
+        "oembed": {
+          "version": "1.0",
+          "type": #{@embed_type.to_json},
+          "provider_name": #{@provider.to_json},
+          "provider_url": #{@url.to_json},
+          "html": #{@html.to_json},
+          "gist": "dohzya/6762845",
+          "embed_url": "https://gist.github.com/dohzya/6762845",
+          "title": "dohzya/gist:6762845"
+        }
+      }
+    }
 json
     @json = JSON.parse(raw_json)
   end
 
-  it "correctly parses Embed objects"
+  it "correctly parses Embed objects" do
+    embed = Prismic::JsonParser.embed_parser(@json)
+    embed.embed_type.should == @embed_type
+    embed.provider.should == @provider
+    embed.url.should == @url
+    embed.html.should == @html
+  end
 end
 
 describe 'image_parser' do

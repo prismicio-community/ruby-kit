@@ -198,7 +198,7 @@ describe 'Color' do
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@color.as_html).child.content.should == @hex_value
+      Nokogiri::XML(@color.as_html).child.content.should == "##@hex_value"
     end
   end
 
@@ -215,8 +215,13 @@ end
 
 describe 'Embed' do
   before do
-    @embed = Prismic::Fragments::Embed.new('MY_TYPE', 'MY_PROVIDER', 'my_url', 'my_width',
-                                  'my_height', 'my_html', 'my_oembed_json')
+    @embed = Prismic::Fragments::Embed.new(
+      'MY_TYPE',
+      'MY_PROVIDER',
+      'my_url',
+      'my_html',
+      'my_oembed_json'
+    )
   end
 
   describe 'as_html' do

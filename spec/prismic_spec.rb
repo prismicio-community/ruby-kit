@@ -3,22 +3,24 @@ require 'spec_helper'
 describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
-    @master = Prismic::Ref.new('ref3', 'label3', true)
-    @api = Prismic::API.new(json_representation) { |api|
-      api.refs = {
+    @api = Prismic::API.new({
+      json: json_representation,
+      bookmarks: {},
+      tags: {},
+      types: {},
+      refs: {
         'key1' => Prismic::Ref.new('ref1', 'label1'),
         'key2' => Prismic::Ref.new('ref2', 'label2'),
-        'key3' => @master,
+        'key3' => Prismic::Ref.new('ref3', 'label3', true),
         'key4' => Prismic::Ref.new('ref4', 'label4'),
-      }
-      api.forms = {
-        'form1' => Prismic::SearchForm.new(api, Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
-        'form2' => Prismic::SearchForm.new(api, Prismic::Form.new('form2', {}, nil, nil, nil, nil)),
-        'form3' => Prismic::SearchForm.new(api, Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
-        'form4' => Prismic::SearchForm.new(api, Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
-      }
-      api.master = @master
-    }
+      },
+      forms: {
+        'form1' => Prismic::SearchForm.new(Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
+        'form2' => Prismic::SearchForm.new(Prismic::Form.new('form2', {}, nil, nil, nil, nil)),
+        'form3' => Prismic::SearchForm.new(Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
+        'form4' => Prismic::SearchForm.new(Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
+      },
+    })
   end
 
   describe 'ref' do
@@ -60,7 +62,7 @@ describe 'Api' do
   describe 'parse_api_response' do
     before do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
-      @json = Yajl::Parser.new.parse(@data)
+      @json = JSON.parse(@data)
       @parsed = Prismic::API.parse_api_response(@json)
     end
 
@@ -174,11 +176,13 @@ end
 describe 'Document' do
   before do
     fragments = {
-      'field1' => Prismic::Fragments::StructuredText::Span.new(0, 42),
-      'field2' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil),
-      'field3' => Prismic::Fragments::WebLink.new('weburl')
+      'field1' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil),
+      'field2' => Prismic::Fragments::WebLink.new('weburl')
     }
     @document = Prismic::Document.new(nil, nil, nil, nil, ['my-slug'], fragments)
+    @link_resolver = Prismic::LinkResolver.new('master'){|doc_link|
+      "http://host/#{doc_link.id}"
+    }
   end
 
   describe 'slug' do
@@ -194,15 +198,15 @@ describe 'Document' do
 
   describe 'as_html' do
     it "returns a <section> HTML element" do
-      Nokogiri::XML(@document.as_html(nil)).child.name.should == 'section'
+      Nokogiri::XML(@document.as_html(@link_resolver)).child.name.should == 'section'
     end
 
     it "returns a HTML element with a 'data-field' attribute" do
-      Nokogiri::XML(@document.as_html(nil)).child.has_attribute?('data-field').should be_true
+      Nokogiri::XML(@document.as_html(@link_resolver)).child.has_attribute?('data-field').should be_true
     end
 
     it "returns a HTML element with a 'data-field' attribute containing the name of the field" do
-      Nokogiri::XML(@document.as_html(nil)).child.attribute('data-field').value.should == 'field1'
+      Nokogiri::XML(@document.as_html(@link_resolver)).child.attribute('data-field').value.should == 'field1'
     end
   end
 end
@@ -214,19 +218,19 @@ describe 'SearchForm' do
 
   describe 'query' do
     it "adds the query to the form's data" do
-      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
       @form.query('[bar]')
       @form.data.should == { 'q' => '[bar]' }
     end
 
     it "adds existant non-nil queries (in fields) to the form's data" do
-      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[bar]')
       @form.data.should == { 'q' => '[foobar]' }
     end
 
     it "returns the form itself" do
-      @form = Prismic::SearchForm.new(nil, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[foo]').should == @form
     end
   end
