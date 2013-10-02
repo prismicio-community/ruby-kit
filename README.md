@@ -1,5 +1,33 @@
 ## Ruby development kit for prismic.io
 
+### Getting Started
+
+#### Install using bundler
+
+You can this line in your Gemfile:
+
+```ruby
+gem install 'prismic.io', require: 'prismic'
+```
+
+#### Install manually
+
+Run in shell:
+
+```sh
+gem install prismic.io
+```
+
+then add in your code:
+
+```ruby
+require 'prismic'
+```
+
+#### Use it
+
+You can look at the [rails starter](https://github.com/prismicio/ruby-rails-starter) project to see how to use it :-)
+
 ### Licence
 
 This software is licensed under the Apache 2 license, quoted below.
