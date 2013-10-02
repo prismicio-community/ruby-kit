@@ -148,6 +148,17 @@ module Prismic
 
     alias :master? :is_master
   end
+
+  class LinkResolver
+    attr_reader :ref
+    def initialize(ref, &blk)
+      @ref = ref
+      @blk = blk
+    end
+    def link_to(doc_link)
+      @blk.call(doc_link)
+    end
+  end
 end
 
 require 'prismic/api'
