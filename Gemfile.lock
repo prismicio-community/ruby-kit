@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    Prismic (1.0.0.preview.1)
+    prismic.io (1.0.0.preview.1)
 
 GEM
   remote: https://rubygems.org/
@@ -29,9 +29,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Prismic!
   bundler (~> 1.3)
   nokogiri (~> 1.6)
+  prismic.io!
   rspec (~> 2.14)
   simplecov (~> 0.7)
   yajl-ruby (~> 1.1)
