@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'yajl-ruby', require: 'yajl'
 
 group :test do
+  gem 'yajl-ruby', require: 'yajl'
   gem 'rspec'
   gem 'nokogiri'
   gem 'simplecov'
