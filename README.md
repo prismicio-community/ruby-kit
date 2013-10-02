@@ -15,7 +15,7 @@ gem 'prismic.io', require: 'prismic'
 Run in shell:
 
 ```sh
-gem install prismic.io
+gem install prismic.io --pre
 ```
 
 then add in your code:
