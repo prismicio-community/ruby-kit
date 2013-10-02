@@ -7,7 +7,7 @@
 You can this line in your Gemfile:
 
 ```ruby
-gem install 'prismic.io', require: 'prismic'
+gem 'prismic.io', require: 'prismic'
 ```
 
 #### Install manually
