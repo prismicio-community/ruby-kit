@@ -159,6 +159,11 @@ module Prismic
       @blk.call(doc_link)
     end
   end
+
+  def self.link_resolver(ref, &blk)
+    LinkResolver.new(ref, &blk)
+  end
+
 end
 
 require 'prismic/api'
