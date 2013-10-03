@@ -352,6 +352,30 @@ describe 'StructuredText::Span' do
   describe 'as_html'
 end
 
+describe 'StructuredText::Hyperlink' do
+  before do
+    @link = Prismic::Fragments::DocumentLink.new(
+      "UdUjvt_mqVNObPeO",
+      "product",
+      ["Macaron"],
+      "dark-chocolate-macaron",
+      false  # broken
+    )
+    @hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @link)
+    @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+  end
+
+  describe 'as_html' do
+    it "can generate valid link" do
+      @hyperlink.start_html(@link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO">'
+    end
+    it "can generate valid html for broken link" do
+      @link.broken = true
+      @hyperlink.start_html(@link_resolver).should == "<span>"
+    end
+  end
+end
+
 describe 'DocumentLink' do
   describe 'as_html'
 end

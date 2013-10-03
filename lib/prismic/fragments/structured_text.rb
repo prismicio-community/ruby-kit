@@ -80,7 +80,7 @@ module Prismic
           end
           def start_html(link_resolver)
             # Quick-and-dirty way to generate the right <a> tag
-            link.as_html(link_resolver).sub(/(<a[^>]+>).*/, '\1')
+            link.as_html(link_resolver).sub(/(<[^>]+>).*/, '\1')
           end
           def end_html(link_resolver=nil)
             "</a>"
