@@ -90,7 +90,7 @@ end
 
 describe 'Date' do
   before do
-    @date = Prismic::Fragments::Date.new(DateTime.new(2013, 8, 7, 11, 13, 7, '+2'))
+    @date = Prismic::Fragments::Date.new(Time.new(2013, 8, 7, 11, 13, 7, '+02:00'))
   end
 
   describe 'as_html' do
