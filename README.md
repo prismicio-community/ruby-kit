@@ -32,6 +32,10 @@ You can browse the [API Documentation](http://prismicio.github.io/ruby-kit/).
 
 You can look at the [rails starter](https://github.com/prismicio/ruby-rails-starter) project to see how to use it :-)
 
+### Code Status
+
+* [![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
+
 ### Licence
 
 This software is licensed under the Apache 2 license, quoted below.
