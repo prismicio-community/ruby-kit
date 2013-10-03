@@ -1,5 +1,9 @@
 require 'nokogiri'
-require 'yajl'
+begin
+  require 'yajl'
+rescue LoadError
+  # ok not a big deal
+end
 require 'json'
 require 'simplecov'
 
