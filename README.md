@@ -1,5 +1,9 @@
 ## Ruby development kit for prismic.io
 
+[![Gem Version](https://badge.fury.io/rb/prismic.io.png)](http://badge.fury.io/rb/prismic.io)
+[![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
+[![Code Climate](https://codeclimate.com/github/prismicio/ruby-kit.png)](https://codeclimate.com/github/prismicio/ruby-kit)
+
 ### Getting Started
 
 #### Install using bundler
@@ -31,10 +35,6 @@ You can browse the [API Documentation](http://prismicio.github.io/ruby-kit/).
 #### Use it
 
 You can look at the [rails starter](https://github.com/prismicio/ruby-rails-starter) project to see how to use it :-)
-
-### Code Status
-
-* [![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
 
 ### Licence
 
