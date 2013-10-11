@@ -144,6 +144,12 @@ module Prismic
           end
         end
 
+        class Preformatted < Text
+          def as_html(link_resolver=nil)
+            %(<pre>#{super}</pre>)
+          end
+        end
+
         class ListItem < Text
           attr_accessor :ordered
           alias :ordered? :ordered

@@ -357,6 +357,20 @@ describe 'StructuredText::Paragraph' do
   end
 end
 
+describe 'StructuredText::Preformatted' do
+  before do
+    @text = "This is a simple test."
+    @spans = [
+      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
+      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
+    ]
+    @block = Prismic::Fragments::StructuredText::Block::Preformatted.new(@text, @spans)
+  end
+  it 'generates valid html' do
+    @block.as_html(nil).should == "<pre>This <em>is</em> <b>a</b> simple test.</pre>"
+  end
+end
+
 describe 'StructuredText::Image' do
   before do
     @view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
