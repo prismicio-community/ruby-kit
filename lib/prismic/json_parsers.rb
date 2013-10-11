@@ -18,11 +18,12 @@ module Prismic
       end
 
       def document_link_parser(json)
+        doc = json['value']['document']
         Prismic::Fragments::DocumentLink.new(
-          json['value']['document']['id'],
-          json['value']['document']['type'],
-          json['value']['document']['tags'],
-          json['value']['document']['slug'],
+          doc['id'],
+          doc['type'],
+          doc['tags'],
+          doc['slug'],
           json['value']['isBroken'])
       end
 
@@ -47,12 +48,13 @@ module Prismic
       end
 
       def embed_parser(json)
+        oembed = json['value']['oembed']
         Prismic::Fragments::Embed.new(
-          json['value']['oembed']['type'],
-          json['value']['oembed']['provider_name'],
-          json['value']['oembed']['provider_url'],
-          json['value']['oembed']['html'],
-          json['value']['oembed']
+          oembed['type'],
+          oembed['provider_name'],
+          oembed['provider_url'],
+          oembed['html'],
+          oembed
         )
       end
 
@@ -123,12 +125,13 @@ module Prismic
             )
             Prismic::Fragments::StructuredText::Block::Image.new(view)
           when 'embed'
+            boembed = block['oembed']
             embed = Prismic::Fragments::Embed.new(
-              block['oembed']['type'],
-              block['oembed']['provider_name'],
-              block['oembed']['provider_url'],
-              block['oembed']['html'],
-              block['oembed']
+              boembed['type'],
+              boembed['provider_name'],
+              boembed['provider_url'],
+              boembed['html'],
+              boembed
             )
             Prismic::Fragments::StructuredText::Block::Image.new(embed)
           else
