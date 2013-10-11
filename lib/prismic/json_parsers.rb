@@ -96,12 +96,16 @@ module Prismic
           when 'paragraph'
             spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
-          when /^heading/
+          when 'preformatted'
+            spans = block['spans'].map {|span| span_parser(span) }
+            Prismic::Fragments::StructuredText::Block::Preformatted.new(block['text'], spans)
+          when /^heading(\d+)$/
+            heading = $1
             spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::Heading.new(
               block['text'],
               spans,
-              block['type'][-1].to_i
+              heading.to_i
             )
           when 'o-list-item'
             spans = block['spans'].map {|span| span_parser(span) }

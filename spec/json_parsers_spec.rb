@@ -206,6 +206,22 @@ describe 'structured_text_parser' do
       @structured_text_heading.blocks[0].level.should == 1
     end
 
+    it "correctly parses >h9 heading" do
+      json_heading = JSON.parse(<<-JSON)
+        {
+          "type": "StructuredText",
+          "value": [{
+            "type": "heading10",
+            "text": "Salted Caramel Macaron",
+            "spans": []
+          }]
+        }
+      JSON
+      @structured_text_heading = Prismic::JsonParser.structured_text_parser(json_heading)
+      @structured_text_heading.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Heading
+      @structured_text_heading.blocks[0].level.should == 10
+    end
+
     it "parses all the spans" do
       @structured_text_heading.blocks[0].spans.size.should == 1
     end
