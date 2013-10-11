@@ -382,10 +382,6 @@ describe 'StructuredText::Image' do
   end
 end
 
-describe 'StructuredText::Span' do
-  describe 'as_html'
-end
-
 describe 'StructuredText::Hyperlink' do
   before do
     @link = Prismic::Fragments::DocumentLink.new(
