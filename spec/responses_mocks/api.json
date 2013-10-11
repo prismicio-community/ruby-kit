@@ -36,7 +36,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -52,7 +52,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -68,7 +68,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -84,7 +84,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -100,7 +100,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -116,7 +116,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -132,7 +132,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -148,7 +148,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -164,7 +164,7 @@
          "method":"GET",
          "rel":"collection",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"
@@ -178,7 +178,7 @@
       "everything":{
          "method":"GET",
          "enctype":"application/x-www-form-urlencoded",
-         "action":"http://lesbonneschoses.wroom.io/api/documents/search",
+         "action":"http://lesbonneschoses.prismic.io/api/documents/search",
          "fields":{
             "ref":{
                "type":"String"

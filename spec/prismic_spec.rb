@@ -141,7 +141,7 @@ describe 'Api' do
     end
 
     it "creates the right form's action" do
-      @parsed.forms['pies'].action.should == 'http://lesbonneschoses.wroom.io/api/documents/search'
+      @parsed.forms['pies'].action.should == 'http://lesbonneschoses.prismic.io/api/documents/search'
     end
 
     it "creates forms with the right fields" do
