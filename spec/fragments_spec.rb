@@ -323,6 +323,40 @@ describe 'Image' do
   end
 end
 
+describe 'StructuredText::Heading' do
+  before do
+    @text = "This is a simple test."
+    @spans = [
+      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
+      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
+    ]
+  end
+  it 'generates valid h1 html' do
+    @heading = 1
+    @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
+    @block.as_html(nil).should == "<h1>This <em>is</em> <b>a</b> simple test.</h1>"
+  end
+  it 'generates valid h2 html' do
+    @heading = 2
+    @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
+    @block.as_html(nil).should == "<h2>This <em>is</em> <b>a</b> simple test.</h2>"
+  end
+end
+
+describe 'StructuredText::Paragraph' do
+  before do
+    @text = "This is a simple test."
+    @spans = [
+      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
+      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
+    ]
+    @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
+  end
+  it 'generates valid html' do
+    @block.as_html(nil).should == "<p>This <em>is</em> <b>a</b> simple test.</p>"
+  end
+end
+
 describe 'StructuredText::Image' do
   before do
     @view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
