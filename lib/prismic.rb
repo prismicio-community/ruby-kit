@@ -145,12 +145,13 @@ module Prismic
   end
 
   class Ref
-    attr_accessor :ref, :label, :is_master, :scheduledAt
+    attr_accessor :ref, :label, :is_master, :scheduled_at
 
-    def initialize(ref, label, is_master = false)
+    def initialize(ref, label, is_master = false, scheduled_at = nil)
       @ref = ref
       @label = label
       @is_master = is_master
+      @scheduled_at = scheduled_at
     end
 
     alias :master? :is_master
