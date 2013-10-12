@@ -35,7 +35,6 @@ module Prismic
 
     def self.get(url, token=nil)
       url = url + "?access_token=" + token if token
-      puts url
       uri = URI(url)
       http = Net::HTTP.new(uri.host)
       path = token ? "#{uri.path}?access_token=#{token}" : uri.path
