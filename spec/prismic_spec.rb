@@ -3,24 +3,24 @@ require 'spec_helper'
 describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
-    @api = Prismic::API.new({
-      json: json_representation,
-      bookmarks: {},
-      tags: {},
-      types: {},
-      refs: {
+    @oauth_initiate_url = "https://lesbonneschoses.prismic.io/auth"
+    @api = Prismic::API.new(json_representation){|api|
+      api.bookmarks = {}
+      api.tags = {}
+      api.types = {}
+      api.refs = {
         'key1' => Prismic::Ref.new('ref1', 'label1'),
         'key2' => Prismic::Ref.new('ref2', 'label2'),
         'key3' => Prismic::Ref.new('ref3', 'label3', true),
         'key4' => Prismic::Ref.new('ref4', 'label4'),
-      },
-      forms: {
-        'form1' => Prismic::SearchForm.new(Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
-        'form2' => Prismic::SearchForm.new(Prismic::Form.new('form2', {}, nil, nil, nil, nil)),
-        'form3' => Prismic::SearchForm.new(Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
-        'form4' => Prismic::SearchForm.new(Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
-      },
-    })
+      }
+      api.forms = {
+        'form1' => Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
+        'form2' => Prismic::SearchForm.new(@api, Prismic::Form.new('form2', {}, nil, nil, nil, nil)),
+        'form3' => Prismic::SearchForm.new(@api, Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
+        'form4' => Prismic::SearchForm.new(@api, Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
+      }
+    }
   end
 
   describe 'ref' do
@@ -213,24 +213,25 @@ end
 
 describe 'SearchForm' do
   before do
+    @api = nil
     @field = Prismic::Field.new('String', '[foo]')
   end
 
   describe 'query' do
     it "adds the query to the form's data" do
-      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
       @form.query('[bar]')
       @form.data.should == { 'q' => '[bar]' }
     end
 
     it "adds existant non-nil queries (in fields) to the form's data" do
-      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[bar]')
       @form.data.should == { 'q' => '[foobar]' }
     end
 
     it "returns the form itself" do
-      @form = Prismic::SearchForm.new(Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[foo]').should == @form
     end
   end

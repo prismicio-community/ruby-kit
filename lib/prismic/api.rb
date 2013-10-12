@@ -1,15 +1,13 @@
 module Prismic
   class API
+    attr_reader :json, :access_token
     attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types
 
-    def initialize(args)
-      @json = args.fetch(:json)
-      @bookmarks = args.fetch(:bookmarks)
-      @refs = args.fetch(:refs)
-      @forms = args.fetch(:forms)
-      @tags = args.fetch(:tags)
-      @types = args.fetch(:types)
-      self.master = refs.values.map { |ref| ref if ref.master? }.compact.first
+    def initialize(json, access_token=nil)
+      @json = json
+      @access_token = access_token
+      yield self if block_given?
+      self.master = refs.values && refs.values.map { |ref| ref if ref.master? }.compact.first
       raise BadPrismicResponseError, "No master Ref found" unless master
     end
 
@@ -49,17 +47,16 @@ module Prismic
     def self.start(url, access_token=nil)
       resp = get(url, access_token)
       json = JSON.load(resp.body)
-      parse_api_response(json)
+      parse_api_response(json, access_token)
     end
 
-    def self.parse_api_response(data)
+    def self.parse_api_response(data, access_token=nil)
       data_forms = data['forms'] || []
       data_refs = data.fetch('refs'){ raise BadPrismicResponseError, "No refs given" }
-      new({
-        json: data,
-        bookmarks: data['bookmarks'],
-        forms: Hash[data_forms.map { |k, form|
-          [k, SearchForm.new(Form.new(
+      new(data, access_token) {|api|
+        api.bookmarks = data['bookmarks']
+        api.forms = Hash[data_forms.map { |k, form|
+          [k, SearchForm.new(api, Form.new(
             form['name'],
             Hash[form['fields'].map { |k2, field|
               [k2, Field.new(field['type'], field['default'])]
@@ -69,13 +66,13 @@ module Prismic
             form['enctype'],
             form['action'],
           ))]
-        }],
-        refs: Hash[data_refs.map { |ref|
+        }]
+        api.refs = Hash[data_refs.map { |ref|
           [ref['label'], Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])]
-        }],
-        tags: data['tags'],
-        types: data['types'],
-      })
+        }]
+        api.tags = data['tags']
+        api.types = data['types']
+      }
     end
 
     private

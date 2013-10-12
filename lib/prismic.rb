@@ -30,9 +30,10 @@ module Prismic
   end
 
   class SearchForm
-    attr_accessor :form, :data
+    attr_accessor :api, :form, :data
 
-    def initialize(form, data=form.default_data)
+    def initialize(api, form, data=form.default_data)
+      @api = api
       @form = form
       @data = data
     end
@@ -69,7 +70,9 @@ module Prismic
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
 
-        request = Net::HTTP::Get.new(uri.request_uri)
+        request_uri = uri.request_uri
+        request_uri += (request_uri =~ /\?/ ? '&' : '?') + "access_token=#{api.access_token}" if api.access_token
+        request = Net::HTTP::Get.new(request_uri)
         request.add_field('Accept', 'application/json')
 
         response = Net::HTTP.new(uri.host, uri.port).start do |http|
