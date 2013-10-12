@@ -20,6 +20,7 @@ describe 'Api' do
         'form3' => Prismic::SearchForm.new(@api, Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
         'form4' => Prismic::SearchForm.new(@api, Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
       }
+      api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, "https://lesbonneschoses.prismic.io/auth/token")
     }
   end
 
@@ -171,6 +172,28 @@ describe 'Api' do
       JSON.parse(@json).size.should == 1
     end
   end
+
+  describe "oauth_initiate_url" do
+    before do
+      @client_id = "client_id"
+      @redirect_uri = "http://website/callback"
+      @scope = "none"
+    end
+    def oauth_initiate_url
+      @api.oauth_initiate_url({
+        client_id: @client_id,
+        redirect_uri: @redirect_uri,
+        scope: @scope,
+      })
+    end
+    def redirect_uri_encoded
+      CGI.escape(@redirect_uri)
+    end
+    it "build a valid url" do
+      oauth_initiate_url.should == "#@oauth_initiate_url?client_id=#@client_id&redirect_uri=#{redirect_uri_encoded}&scope=#@scope"
+    end
+  end
+
 end
 
 describe 'Document' do

@@ -188,5 +188,7 @@
             }
          }
       }
-   }
+   },
+   "oauth_initiate": "https://lesbonneschoses.prismic.io/auth",
+   "oauth_token": "https://lesbonneschoses.prismic.io/auth/token"
 }

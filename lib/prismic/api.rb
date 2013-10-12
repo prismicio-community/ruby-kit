@@ -1,7 +1,7 @@
 module Prismic
   class API
     attr_reader :json, :access_token
-    attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types
+    attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types, :oauth
 
     def initialize(json, access_token=nil)
       @json = json
@@ -73,7 +73,30 @@ module Prismic
         }]
         api.tags = data['tags']
         api.types = data['types']
+        api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'])
       }
+    end
+
+    def oauth_initiate_url(opts)
+      oauth.initiate + "?" + {
+        "client_id" => opts.fetch(:client_id),
+        "redirect_uri" => opts.fetch(:redirect_uri),
+        "scope" => opts.fetch(:scope),
+      }.map{|kv| kv.map{|e| CGI.escape(e) }.join("=") }.join("&")
+    end
+
+    def oauth_check_token(params)
+      uri = URI(oauth.token)
+      res = Net::HTTP.post_form(uri, params)
+      if res.code == '200'
+        begin
+          JSON.parse(res.body)['access_token']
+        rescue Exception => e
+          raise PrismicWSConnectionError.new(res, e)
+        end
+      else
+        raise PrismicWSConnectionError, res
+      end
     end
 
     private
@@ -83,6 +106,14 @@ module Prismic
     class PrismicWSConnectionError < Error
       def initialize(resp, cause=nil)
         super("Can't connect to Prismic's API: #{resp.code} #{resp.message}", cause)
+      end
+    end
+
+    class OAuth
+      attr_reader :initiate, :token
+      def initialize(initiate, token)
+        @initiate = initiate
+        @token = token
       end
     end
   end
