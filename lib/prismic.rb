@@ -149,7 +149,7 @@ module Prismic
 
     def initialize(ref, label, is_master = false)
       @ref = ref
-      @label = label.downcase
+      @label = label
       @is_master = is_master
     end
 

@@ -37,7 +37,7 @@ describe 'Api' do
 
   describe 'ref_id_by_label' do
     it "returns the id of the ref" do
-      @api.ref_id_by_label('key4').ref == 'ref4'
+      @api.ref('key4').ref == 'ref4'
     end
   end
 

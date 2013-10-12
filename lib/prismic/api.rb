@@ -16,11 +16,11 @@ module Prismic
     end
 
     def ref(name)
-      refs[name]
+      refs[name.downcase]
     end
 
-    def ref_id_by_label(label)
-      refs.find { |k, ref| k == label }.last
+    def master_ref
+      ref('master')
     end
 
     def form(name)
@@ -68,7 +68,7 @@ module Prismic
           ))]
         }]
         api.refs = Hash[data_refs.map { |ref|
-          [ref['label'], Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])]
+          [ref['label'].downcase, Ref.new(ref['ref'], ref['label'], ref['isMasterRef'])]
         }]
         api.tags = data['tags']
         api.types = data['types']
