@@ -33,12 +33,10 @@ module Prismic
       @json
     end
 
-    def self.get(url, token=nil)
-      url = url + "?access_token=" + token if token
-      uri = URI(url)
+    def self.get(url, access_token=nil)
+      uri = URI(access_token ? "#{url}?access_token=#{access_token}" : url)
       http = Net::HTTP.new(uri.host)
-      path = token ? "#{uri.path}?access_token=#{token}" : uri.path
-      req = Net::HTTP::Get.new(path, 'Accept' => 'application/json')
+      req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
       res = http.request(req)
 
       if res.code == '200'
@@ -48,8 +46,8 @@ module Prismic
       end
     end
 
-    def self.start(url, token=nil)
-      resp = get(url, token)
+    def self.start(url, access_token=nil)
+      resp = get(url, access_token)
       json = JSON.load(resp.body)
       parse_api_response(json)
     end
