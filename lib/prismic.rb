@@ -78,7 +78,10 @@ module Prismic
 
         raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
 
+        raise FormSearchException, "Error : #{response.body}" if response.code != "200"
+
         JSON.parse(response.body).map do |doc|
+          raise FormSearchException, "Error : #{doc['error']}" if doc.include?('error')
           Prismic::JsonParser.document_parser(doc)
         end
       else
@@ -96,6 +99,7 @@ module Prismic
 
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
+    class FormSearchException < Error ; end
   end
 
   class Field
