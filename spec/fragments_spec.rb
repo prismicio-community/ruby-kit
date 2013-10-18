@@ -65,6 +65,11 @@ describe 'Text' do
     it "returns a HTML element whose content is the value" do
       Nokogiri::XML(@text.as_html).child.content.should == 'my_value'
     end
+
+    it "espaces HTML content" do
+      @text = Prismic::Fragments::Text.new('&my <value> #abcde')
+      @text.as_html.should =~ /^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$/
+    end
   end
 end
 
@@ -84,6 +89,11 @@ describe 'Select' do
 
     it "returns a HTML element whose content is the value" do
       Nokogiri::XML(@select.as_html).child.content.should == 'my_value'
+    end
+
+    it "escapes HTML" do
+      @select = Prismic::Fragments::Select.new('&my <value> #abcde')
+      @select.as_html(nil).should =~ %r{^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$}
     end
   end
 end
@@ -354,6 +364,15 @@ describe 'StructuredText::Paragraph' do
   end
   it 'generates valid html' do
     @block.as_html(nil).should == "<p>This <em>is</em> <b>a</b> simple test.</p>"
+  end
+  it "espaces HTML content" do
+    @text = '&my <value> #abcde'
+    @spans = [
+      Prismic::Fragments::StructuredText::Span::Em.new(4, 11),
+      Prismic::Fragments::StructuredText::Span::Strong.new(0, 1),
+    ]
+    @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
+    @block.as_html(nil).should =~ %r{^<[^>]+><b>&amp;</b>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
   end
 end
 

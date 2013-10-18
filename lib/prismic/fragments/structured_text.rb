@@ -106,7 +106,7 @@ module Prismic
               closing = end_spans[i].map {|span|
                 span.end_html(link_resolver)
               }
-              opening + closing + [c]
+              opening + closing + [CGI::escapeHTML(c)]
             }.flatten.join("")
           end
 
