@@ -257,5 +257,13 @@ describe 'SearchForm' do
       @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
       @form.query('[foo]').should == @form
     end
+
+    it "merge user defined params into default ones" do
+      field = ->(value){ Prismic::Field.new('String', value) }
+      default_params = {'param1' => field.('a'), 'param2' => field.('b')}
+      user_params = {'param1' => 'a2'}
+      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', default_params, nil, nil, nil, nil), user_params)
+      @form.data.should == {'param1' => 'a2', 'param2' => 'b'}
+    end
   end
 end
