@@ -93,10 +93,9 @@ module Prismic
     end
 
     def query(query)
-      strip_brakets = Proc.new {|str| str.strip[1, str.strip.length - 2]}
-
-      previous_query = (not form.fields['q'].nil?) ? form.fields['q'].default.to_s : ''
-      data['q'] = "[#{strip_brakets.call(previous_query)}#{strip_brakets.call(query)}]"
+      strip_brakets = ->(str) { str =~ /^\[(.*)\]$/ ? $1 : str }
+      previous_query = form.fields['q'] ? form.fields['q'].default.to_s : ''
+      data['q'] = "[%s%s]" % [strip_brakets.(previous_query), strip_brakets.(query)]
       self
     end
 
