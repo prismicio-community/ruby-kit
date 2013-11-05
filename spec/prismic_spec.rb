@@ -235,6 +235,16 @@ describe 'Document' do
 end
 
 describe 'SearchForm' do
+  describe 'set' do
+    it "adds the key/value pair as a field" do
+      form = Prismic::Form.new('form1', {}, nil, nil, nil, nil)
+      form.set('foo', 'bar')
+      form.fields['foo'].should == 'bar'
+    end
+  end
+end
+
+describe 'SearchForm' do
   before do
     @api = nil
     @field = Prismic::Field.new('String', '[foo]')

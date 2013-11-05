@@ -99,6 +99,10 @@ module Prismic
       self
     end
 
+    def set(field, value)
+      form.set(field, value)
+    end
+
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end

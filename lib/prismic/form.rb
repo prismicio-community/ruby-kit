@@ -15,5 +15,8 @@ module Prismic
       Hash[fields.map{|key, field| [key, field.default] }.compact]
     end
 
+    def set(field, value)
+      fields[field] = value
+    end
   end
 end
