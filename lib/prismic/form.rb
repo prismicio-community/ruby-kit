@@ -12,11 +12,7 @@ module Prismic
     end
 
     def default_data
-      Hash[fields.map{|key, field| [key, field.default] }.compact]
-    end
-
-    def set(field, value)
-      fields[field] = value
+      Hash[fields.map{|key, field| [key, field.default] if field.default }.compact]
     end
   end
 end

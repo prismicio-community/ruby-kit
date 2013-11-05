@@ -235,37 +235,30 @@ describe 'Document' do
 end
 
 describe 'SearchForm' do
-  describe 'set' do
-    it "adds the key/value pair as a field" do
-      form = Prismic::Form.new('form1', {}, nil, nil, nil, nil)
-      form.set('foo', 'bar')
-      form.fields['foo'].should == 'bar'
-    end
-  end
-end
-
-describe 'SearchForm' do
   before do
     @api = nil
-    @field = Prismic::Field.new('String', '[foo]')
+    @field = Prismic::Field.new('String', ['foo'], true)
   end
 
-  describe 'query' do
+  describe 'set() for queries' do
     it "adds the query to the form's data" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
-      @form.query('[bar]')
-      @form.data.should == { 'q' => '[bar]' }
+      @field.default = nil
+      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => ['bar'] }
+      @form.set('q', 'baz')
+      @form.data.should == { 'q' => ['bar', 'baz'] }
     end
 
     it "adds existant non-nil queries (in fields) to the form's data" do
       @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
-      @form.query('[bar]')
-      @form.data.should == { 'q' => '[foobar]' }
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => ['foo', 'bar'] }
     end
 
     it "returns the form itself" do
       @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
-      @form.query('[foo]').should == @form
+      @form.query('foo').should equal @form
     end
 
     it "merge user defined params into default ones" do

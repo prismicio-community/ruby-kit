@@ -64,11 +64,11 @@ module Prismic
     end
 
     def submit(ref = @ref)
-      raise NoRefSetException if @ref == nil
+      raise NoRefSetException unless @ref
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
-        data.delete_if { |k, v| !v }
+        data.delete_if { |k, v| v.nil? }
 
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
@@ -96,14 +96,18 @@ module Prismic
     end
 
     def query(query)
-      strip_brakets = ->(str) { str =~ /^\[(.*)\]$/ ? $1 : str }
-      previous_query = form.fields['q'] ? form.fields['q'].default.to_s : ''
-      data['q'] = "[%s%s]" % [strip_brakets.(previous_query), strip_brakets.(query)]
+      set('q', query)
       self
     end
 
-    def set(field, value)
-      form.set(field, value)
+    def set(field_name, value)
+      field = @form.fields[field_name]
+      if field.repeatable?
+        data[field_name] = [] unless data.include? field_name
+        data[field_name] << value
+      else
+        data[field_name] = value
+      end
     end
 
     def ref(ref)
@@ -117,13 +121,15 @@ module Prismic
   end
 
   class Field
-    attr_accessor :field_type, :default
+    attr_accessor :field_type, :default, :repeatable
 
-    def initialize(field_type, default)
+    def initialize(field_type, default, repeatable = false)
       @field_type = field_type
       @default = default
+      @repeatable = repeatable
     end
 
+    alias :repeatable? :repeatable
   end
 
   class Document
