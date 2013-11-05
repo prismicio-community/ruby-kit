@@ -276,4 +276,11 @@ describe 'SearchForm' do
       @form.data.should == {'param1' => 'a2', 'param2' => 'b'}
     end
   end
+
+  describe 'submit' do
+    it "raises an exception if no ref is set" do
+      form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      expect { form.submit }.to raise_error Prismic::SearchForm::NoRefSetException
+    end
+  end
 end

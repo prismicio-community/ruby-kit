@@ -30,12 +30,13 @@ module Prismic
   end
 
   class SearchForm
-    attr_accessor :api, :form, :data
+    attr_accessor :api, :form, :data, :ref
 
-    def initialize(api, form, data={})
+    def initialize(api, form, data={}, ref = nil)
       @api = api
       @form = form
       @data = form.default_data.merge(data)
+      @ref = ref
     end
 
     def name
@@ -62,7 +63,9 @@ module Prismic
       form.fields
     end
 
-    def submit(ref)
+    def submit(ref = @ref)
+      raise NoRefSetException if @ref == nil
+
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
         data.delete_if { |k, v| !v }
@@ -103,6 +106,11 @@ module Prismic
       form.set(field, value)
     end
 
+    def ref(ref)
+      @ref = ref
+    end
+
+    class NoRefSetException < Error ; end
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
@@ -174,7 +182,6 @@ module Prismic
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
   end
-
 end
 
 require 'prismic/api'
