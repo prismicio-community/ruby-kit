@@ -1,5 +1,5 @@
 module Prismic
 
-  VERSION = "1.0.0.preview.3"
+  VERSION = "1.0.0.preview.4"
 
 end
