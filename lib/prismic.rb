@@ -85,7 +85,7 @@ module Prismic
 
         raise FormSearchException, "Error : #{response.body}" if response.code != "200"
 
-        Prismic::JsonParser.result_parser(JSON.parse(response.body))
+        Prismic::JsonParser.results_parser(JSON.parse(response.body))
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
