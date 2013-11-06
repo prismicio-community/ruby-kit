@@ -167,8 +167,6 @@ module Prismic
 
       private
 
-      private
-
       def link_parser(json)
         if json['type'] == 'Link.document'
           document_link_parser(json)

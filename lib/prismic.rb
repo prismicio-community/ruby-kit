@@ -68,14 +68,13 @@ module Prismic
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
+        data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
 
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
 
-        request_uri = uri.request_uri
-        request_uri += (request_uri =~ /\?/ ? '&' : '?') + "access_token=#{api.access_token}" if api.access_token
-        request = Net::HTTP::Get.new(request_uri)
+        request = Net::HTTP::Get.new(uri.request_uri)
         request.add_field('Accept', 'application/json')
 
         response = Net::HTTP.new(uri.host, uri.port).start do |http|
