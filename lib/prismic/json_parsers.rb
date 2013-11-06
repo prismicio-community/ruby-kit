@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Prismic
   module JsonParser
     class << self

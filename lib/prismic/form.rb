@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Prismic
   class Form
     attr_accessor :name, :form_method, :rel, :enctype, :action, :fields

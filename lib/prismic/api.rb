@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Prismic
   class API
     attr_reader :json, :access_token
