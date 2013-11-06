@@ -277,6 +277,22 @@ describe 'document_parser' do
   end
 end
 
+describe 'results_parser' do
+
+  it "accepts results as an array" do
+    @json = JSON.parse('[]')
+    @results = Prismic::JsonParser.results_parser(@json)
+    @results.should == []
+  end
+
+  it "accepts results as an object" do
+    @json = JSON.parse('{"results":[]}')
+    @results = Prismic::JsonParser.results_parser(@json)
+    @results.should == []
+  end
+
+end
+
 describe 'multiple_parser' do
   before do
     raw_json = <<json
