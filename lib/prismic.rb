@@ -32,7 +32,7 @@ module Prismic
   class SearchForm
     attr_accessor :api, :form, :data, :ref
 
-    def initialize(api, form, data={}, ref = nil)
+    def initialize(api, form, data={}, ref=nil)
       @api = api
       @form = form
       @data = form.default_data.merge(data)
