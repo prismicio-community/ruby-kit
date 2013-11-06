@@ -30,12 +30,13 @@ module Prismic
   end
 
   class SearchForm
-    attr_accessor :api, :form, :data
+    attr_accessor :api, :form, :data, :ref
 
-    def initialize(api, form, data={})
+    def initialize(api, form, data={}, ref=nil)
       @api = api
       @form = form
       @data = form.default_data.merge(data)
+      @ref = ref
     end
 
     def name
@@ -62,10 +63,12 @@ module Prismic
       form.fields
     end
 
-    def submit(ref)
+    def submit(ref = @ref)
+      raise NoRefSetException unless @ref
+
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
-        data.delete_if { |k, v| !v }
+        data.delete_if { |k, v| v.nil? }
 
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
@@ -93,25 +96,40 @@ module Prismic
     end
 
     def query(query)
-      strip_brakets = ->(str) { str =~ /^\[(.*)\]$/ ? $1 : str }
-      previous_query = form.fields['q'] ? form.fields['q'].default.to_s : ''
-      data['q'] = "[%s%s]" % [strip_brakets.(previous_query), strip_brakets.(query)]
+      set('q', query)
       self
     end
 
+    def set(field_name, value)
+      field = @form.fields[field_name]
+      if field.repeatable?
+        data[field_name] = [] unless data.include? field_name
+        data[field_name] << value
+      else
+        data[field_name] = value
+      end
+    end
+
+    def ref(ref)
+      @ref = ref
+    end
+
+    class NoRefSetException < Error ; end
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
   end
 
   class Field
-    attr_accessor :field_type, :default
+    attr_accessor :field_type, :default, :repeatable
 
-    def initialize(field_type, default)
+    def initialize(field_type, default, repeatable = false)
       @field_type = field_type
       @default = default
+      @repeatable = repeatable
     end
 
+    alias :repeatable? :repeatable
   end
 
   class Document
@@ -170,7 +188,6 @@ module Prismic
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
   end
-
 end
 
 require 'prismic/api'
