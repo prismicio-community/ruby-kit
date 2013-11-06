@@ -30,7 +30,7 @@ require 'prismic'
 
 #### API Documentation
 
-You can browse the [API Documentation](http://prismicio.github.io/ruby-kit/).
+You can browse the [API Documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation).
 
 #### Use it
 
