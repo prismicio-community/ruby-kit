@@ -236,36 +236,72 @@ end
 
 describe 'SearchForm' do
   before do
-    @api = nil
     @field = Prismic::Field.new('String', ['foo'], true)
+    @api = nil
   end
 
   describe 'set() for queries' do
-    it "adds the query to the form's data" do
-      @field.default = nil
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+
+    it "append value for repetable fields" do
+      @field = Prismic::Field.new('String', ['foo'], true)
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {}
+      )
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => ['bar'] }
+      @form.data.should == { 'q' => ['foo', 'bar'] }  # test the 1st call
       @form.set('q', 'baz')
-      @form.data.should == { 'q' => ['bar', 'baz'] }
+      @form.data.should == { 'q' => ['foo', 'bar', 'baz'] }  # test an other
     end
 
-    it "adds existant non-nil queries (in fields) to the form's data" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+    it "replace value for non repetable fields" do
+      @field = Prismic::Field.new('String', 'foo', false)
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {}
+      )
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => ['foo', 'bar'] }
+      @form.data.should == { 'q' => 'bar' }  # test the 1st call
+      @form.set('q', 'baz')
+      @form.data.should == { 'q' => 'baz' }  # test an other
+    end
+
+    it "create value array for repetable fields without value" do
+      @field = Prismic::Field.new('String', nil, true)
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {}
+      )
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => ['bar'] }
+    end
+
+    it "create value for non repetable fields without value" do
+      @field = Prismic::Field.new('String', nil, false)
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {}
+      )
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => 'bar' }
     end
 
     it "returns the form itself" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {}
+      )
       @form.query('foo').should equal @form
     end
 
     it "merge user defined params into default ones" do
       field = ->(value){ Prismic::Field.new('String', value) }
       default_params = {'param1' => field.('a'), 'param2' => field.('b')}
-      user_params = {'param1' => 'a2'}
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', default_params, nil, nil, nil, nil), user_params)
+      @form = Prismic::SearchForm.new(
+        @api,
+        Prismic::Form.new('form1', default_params, nil, nil, nil, nil), {}
+      )
+      @form.set('param1', 'a2')
       @form.data.should == {'param1' => 'a2', 'param2' => 'b'}
     end
   end
