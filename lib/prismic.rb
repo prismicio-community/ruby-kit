@@ -30,12 +30,13 @@ module Prismic
   end
 
   class SearchForm
-    attr_accessor :api, :form, :data
+    attr_accessor :api, :form, :data, :ref
 
-    def initialize(api, form, data={})
+    def initialize(api, form, data={}, ref=nil)
       @api = api
       @form = form
       @data = form.default_data.merge(data)
+      @ref = ref
     end
 
     def name
@@ -62,17 +63,18 @@ module Prismic
       form.fields
     end
 
-    def submit(ref)
+    def submit(ref = @ref)
+      raise NoRefSetException unless @ref
+
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
-        data.delete_if { |k, v| !v }
+        data['access_token'] = api.access_token if api.access_token
+        data.delete_if { |k, v| v.nil? }
 
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
 
-        request_uri = uri.request_uri
-        request_uri += (request_uri =~ /\?/ ? '&' : '?') + "access_token=#{api.access_token}" if api.access_token
-        request = Net::HTTP::Get.new(request_uri)
+        request = Net::HTTP::Get.new(uri.request_uri)
         request.add_field('Accept', 'application/json')
 
         response = Net::HTTP.new(uri.host, uri.port).start do |http|
@@ -83,35 +85,47 @@ module Prismic
 
         raise FormSearchException, "Error : #{response.body}" if response.code != "200"
 
-        JSON.parse(response.body).map do |doc|
-          raise FormSearchException, "Error : #{doc['error']}" if doc.include?('error')
-          Prismic::JsonParser.document_parser(doc)
-        end
+        Prismic::JsonParser.results_parser(JSON.parse(response.body))
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
     end
 
     def query(query)
-      strip_brakets = ->(str) { str =~ /^\[(.*)\]$/ ? $1 : str }
-      previous_query = form.fields['q'] ? form.fields['q'].default.to_s : ''
-      data['q'] = "[%s%s]" % [strip_brakets.(previous_query), strip_brakets.(query)]
+      set('q', query)
       self
     end
 
+    def set(field_name, value)
+      field = @form.fields[field_name]
+      if field.repeatable?
+        data[field_name] = [] unless data.include? field_name
+        data[field_name] << value
+      else
+        data[field_name] = value
+      end
+    end
+
+    def ref(ref)
+      @ref = ref
+    end
+
+    class NoRefSetException < Error ; end
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
   end
 
   class Field
-    attr_accessor :field_type, :default
+    attr_accessor :field_type, :default, :repeatable
 
-    def initialize(field_type, default)
+    def initialize(field_type, default, repeatable = false)
       @field_type = field_type
       @default = default
+      @repeatable = repeatable
     end
 
+    alias :repeatable? :repeatable
   end
 
   class Document
@@ -170,7 +184,6 @@ module Prismic
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
   end
-
 end
 
 require 'prismic/api'

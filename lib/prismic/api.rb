@@ -27,6 +27,11 @@ module Prismic
       forms[name]
     end
 
+    def create_search_form(name, data={}, ref={})
+      form = self.form(name)
+      form and form.create_search_form(data, ref)
+    end
+
     def as_json
       @json
     end
@@ -56,7 +61,8 @@ module Prismic
       new(data, access_token) {|api|
         api.bookmarks = data['bookmarks']
         api.forms = Hash[data_forms.map { |k, form|
-          [k, SearchForm.new(api, Form.new(
+          [k, Form.new(
+            api,
             form['name'],
             Hash[form['fields'].map { |k2, field|
               [k2, Field.new(field['type'], field['default'])]
@@ -65,7 +71,7 @@ module Prismic
             form['rel'],
             form['enctype'],
             form['action'],
-          ))]
+          )]
         }]
         api.refs = Hash[data_refs.map { |ref|
           scheduled_at = ref['scheduledAt']

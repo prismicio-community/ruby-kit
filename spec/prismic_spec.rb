@@ -15,10 +15,10 @@ describe 'Api' do
         'key4' => Prismic::Ref.new('ref4', 'label4'),
       }
       api.forms = {
-        'form1' => Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {}, nil, nil, nil, nil)),
-        'form2' => Prismic::SearchForm.new(@api, Prismic::Form.new('form2', {}, nil, nil, nil, nil)),
-        'form3' => Prismic::SearchForm.new(@api, Prismic::Form.new('form3', {}, nil, nil, nil, nil)),
-        'form4' => Prismic::SearchForm.new(@api, Prismic::Form.new('form4', {}, nil, nil, nil, nil)),
+        'form1' => Prismic::Form.new(@api, 'form1', {}, nil, nil, nil, nil),
+        'form2' => Prismic::Form.new(@api, 'form2', {}, nil, nil, nil, nil),
+        'form3' => Prismic::Form.new(@api, 'form3', {}, nil, nil, nil, nil),
+        'form4' => Prismic::Form.new(@api, 'form4', {}, nil, nil, nil, nil),
       }
       api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, "https://lesbonneschoses.prismic.io/auth/token")
     }
@@ -44,7 +44,14 @@ describe 'Api' do
 
   describe 'form' do
     it "return the right Form" do
-      @api.form('form2').form.name.should == 'form2'
+      @api.form('form2').name.should == 'form2'
+    end
+  end
+
+  describe 'create_search_form' do
+    it "create a new search form for the right form" do
+      @form = @api.create_search_form('form2')
+      @form.form.name.should == 'form2'
     end
   end
 
@@ -236,34 +243,67 @@ end
 
 describe 'SearchForm' do
   before do
+    @field = Prismic::Field.new('String', ['foo'], true)
     @api = nil
-    @field = Prismic::Field.new('String', '[foo]')
   end
 
-  describe 'query' do
-    it "adds the query to the form's data" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {}, nil, nil, nil, nil), {})
-      @form.query('[bar]')
-      @form.data.should == { 'q' => '[bar]' }
+  def create_form(fields)
+    form = Prismic::Form.new(nil, 'form1', fields, nil, nil, nil, nil)
+    form.create_search_form
+  end
+
+  describe 'set() for queries' do
+
+    it "append value for repetable fields" do
+      @field = Prismic::Field.new('String', ['foo'], true)
+      @form = create_form('q' => @field)
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => ['foo', 'bar'] }  # test the 1st call
+      @form.set('q', 'baz')
+      @form.data.should == { 'q' => ['foo', 'bar', 'baz'] }  # test an other
     end
 
-    it "adds existant non-nil queries (in fields) to the form's data" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
-      @form.query('[bar]')
-      @form.data.should == { 'q' => '[foobar]' }
+    it "replace value for non repetable fields" do
+      @field = Prismic::Field.new('String', 'foo', false)
+      @form = create_form('q' => @field)
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => 'bar' }  # test the 1st call
+      @form.set('q', 'baz')
+      @form.data.should == { 'q' => 'baz' }  # test an other
+    end
+
+    it "create value array for repetable fields without value" do
+      @field = Prismic::Field.new('String', nil, true)
+      @form = create_form('q' => @field)
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => ['bar'] }
+    end
+
+    it "create value for non repetable fields without value" do
+      @field = Prismic::Field.new('String', nil, false)
+      @form = create_form('q' => @field)
+      @form.set('q', 'bar')
+      @form.data.should == { 'q' => 'bar' }
     end
 
     it "returns the form itself" do
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', {'q' => @field}, nil, nil, nil, nil), {})
-      @form.query('[foo]').should == @form
+      @form = create_form('q' => @field)
+      @form.query('foo').should equal @form
     end
 
     it "merge user defined params into default ones" do
       field = ->(value){ Prismic::Field.new('String', value) }
       default_params = {'param1' => field.('a'), 'param2' => field.('b')}
-      user_params = {'param1' => 'a2'}
-      @form = Prismic::SearchForm.new(@api, Prismic::Form.new('form1', default_params, nil, nil, nil, nil), user_params)
+      @form = create_form(default_params)
+      @form.set('param1', 'a2')
       @form.data.should == {'param1' => 'a2', 'param2' => 'b'}
+    end
+  end
+
+  describe 'submit' do
+    it "raises an exception if no ref is set" do
+      @form = create_form('q' => @field)
+      expect { @form.submit }.to raise_error Prismic::SearchForm::NoRefSetException
     end
   end
 end

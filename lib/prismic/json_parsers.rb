@@ -165,7 +165,13 @@ module Prismic
                               json['slugs'], fragments)
       end
 
-      private
+      def results_parser(results)
+        results = results['results'] unless results.is_a?(Array)
+        results.map do |doc|
+          raise FormSearchException, "Error : #{doc['error']}" if doc.include?('error')
+          document_parser(doc)
+        end
+      end
 
       private
 
