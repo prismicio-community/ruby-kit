@@ -165,6 +165,15 @@ describe 'Api' do
       @parsed.forms['pies'].fields['q'].default.should ==
         '[[at(document.tags, ["Pie"])][any(document.type, ["product"])]]'
     end
+
+    it "create fields (other than 'q') as non repeatable" do
+      @parsed.forms['pies'].fields['ref'].repeatable.should be_false
+    end
+
+    it "create 'q' fields as repeatable" do
+      @parsed.forms['pies'].fields['q'].repeatable.should be_true
+    end
+
   end
 
   describe 'as_json' do

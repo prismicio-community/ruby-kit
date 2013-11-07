@@ -66,7 +66,7 @@ module Prismic
             api,
             form['name'],
             Hash[form['fields'].map { |k2, field|
-              [k2, Field.new(field['type'], field['default'])]
+              [k2, Field.new(field['type'], field['default'], k2 == 'q')]
             }],
             form['method'],
             form['rel'],
