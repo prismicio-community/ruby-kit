@@ -1,3 +1,4 @@
+# encoding: utf-8
 describe 'document_link_parser' do
   before do
     raw_json = <<json
