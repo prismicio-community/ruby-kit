@@ -255,7 +255,7 @@ describe 'SearchForm' do
 
   describe 'set() for queries' do
 
-    it "append value for repetable fields" do
+    it "append value for repeatable fields" do
       @field = Prismic::Field.new('String', ['foo'], true)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
@@ -264,7 +264,7 @@ describe 'SearchForm' do
       @form.data.should == { 'q' => ['foo', 'bar', 'baz'] }  # test an other
     end
 
-    it "replace value for non repetable fields" do
+    it "replace value for non repeatable fields" do
       @field = Prismic::Field.new('String', 'foo', false)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
@@ -273,14 +273,14 @@ describe 'SearchForm' do
       @form.data.should == { 'q' => 'baz' }  # test an other
     end
 
-    it "create value array for repetable fields without value" do
+    it "create value array for repeatable fields without value" do
       @field = Prismic::Field.new('String', nil, true)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
       @form.data.should == { 'q' => ['bar'] }
     end
 
-    it "create value for non repetable fields without value" do
+    it "create value for non repeatable fields without value" do
       @field = Prismic::Field.new('String', nil, false)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
