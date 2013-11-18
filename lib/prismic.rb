@@ -84,6 +84,8 @@ module Prismic
 
         raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
 
+        raise InvalidTokenException, "Invalid access token" if response.code != "200" && JSON.parse(response.body)['error'].include?("Invalid access token")
+
         raise FormSearchException, "Error : #{response.body}" if response.code != "200"
 
         Prismic::JsonParser.results_parser(JSON.parse(response.body))
@@ -115,6 +117,7 @@ module Prismic
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
+    class InvalidTokenException < Error ; end
   end
 
   class Field
