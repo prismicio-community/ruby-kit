@@ -334,6 +334,28 @@ describe 'Image' do
   end
 end
 
+describe 'StructuredText' do
+  before do
+    @structuredtext = Prismic::Fragments::StructuredText.new([
+      Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", []),
+      Prismic::Fragments::StructuredText::Block::Heading.new("This is a title, but not the highest", [], 3),
+      Prismic::Fragments::StructuredText::Block::Heading.new("Document's title", [], 1),
+      Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", [])
+    ])
+  end
+  it 'finds the text of the first block' do
+    @structuredtext.blocks[0].text.should == "This is not a title"
+  end
+  it 'finds the right title if exists' do
+    @structuredtext.first_title.should == "Document's title"
+  end
+  it 'returns false if no title' do
+    @structuredtext.blocks[1] = Prismic::Fragments::StructuredText::Block::Text.new("This is not a title either", [])
+    @structuredtext.blocks[2] = Prismic::Fragments::StructuredText::Block::Text.new("And this is not a title either", [])
+    @structuredtext.first_title.should == false
+  end
+end
+
 describe 'StructuredText::Heading' do
   before do
     @text = "This is a simple test."
