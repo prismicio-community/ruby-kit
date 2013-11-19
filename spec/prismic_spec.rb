@@ -225,6 +225,34 @@ describe 'Document' do
     }
   end
 
+  describe 'first_title' do
+    it "returns the right title" do
+      @document.fragments['field3'] = Prismic::Fragments::StructuredText.new([
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", []),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is a title, but not the highest", [], 3),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is the highest title of the fragment, but not the document", [], 2),
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", [])
+      ])
+      @document.fragments['field4'] = Prismic::Fragments::StructuredText.new([
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", []),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is a title, but not the highest", [], 3),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is the highest title of the document", [], 1),
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", [])
+      ])
+      @document.fragments['field5'] = Prismic::Fragments::StructuredText.new([
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", []),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is a title, but not the highest", [], 3),
+        Prismic::Fragments::StructuredText::Block::Heading.new("This is the highest title of the fragment, but not the document", [], 2),
+        Prismic::Fragments::StructuredText::Block::Text.new("This is not a title", [])
+      ])
+      @document.first_title.should == "This is the highest title of the document"
+    end
+
+    it "returns false if no title" do
+      @document.first_title.should == false
+    end
+  end
+
   describe 'slug' do
     it "returns the first slug if found" do
       @document.slug.should == 'my-slug'
