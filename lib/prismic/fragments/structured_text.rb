@@ -47,6 +47,21 @@ module Prismic
         }.join("\n\n")
       end
 
+      # Finds the first highest title in a structured text
+      def first_title
+        max_level = 6 # any title with a higher level kicks the current one out
+        title = false
+        @blocks.each do |block|
+          if block.is_a?(Prismic::Fragments::StructuredText::Block::Heading)
+            if block.level < max_level
+              title = block.text
+              max_level = block.level # new maximum
+            end
+          end
+        end
+        title
+      end
+
       class Span
         attr_accessor :start, :end
 

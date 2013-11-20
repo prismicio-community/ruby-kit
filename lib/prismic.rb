@@ -151,6 +151,26 @@ module Prismic
       }.join("\n")
     end
 
+    # Finds the first highest title in a document
+    # It is impossible to reuse the StructuredText.first_title method, since we need to test the highest title across the whole document
+    def first_title
+      title = false
+      max_level = 6 # any title with a higher level kicks the current one out
+      @fragments.each do |_, fragment|
+        if fragment.is_a? Prismic::Fragments::StructuredText
+          fragment.blocks.each do |block|
+            if block.is_a?(Prismic::Fragments::StructuredText::Block::Heading)
+              if block.level < max_level
+                title = block.text
+                max_level = block.level # new maximum
+              end
+            end
+          end
+        end
+      end
+      title
+    end
+
     private
 
     def parse_fragments(fragments)
