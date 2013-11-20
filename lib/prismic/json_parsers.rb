@@ -67,8 +67,9 @@ module Prismic
         end
 
         main  = view_parser(json['value']['main'])
-        views = json['value']['views'].map do |name, view|
-          view_parser(view)
+        views = {}
+        json['value']['views'].each do |name, view|
+          views[name] = view_parser(view)
         end
 
         Prismic::Fragments::Image.new(main, views)

@@ -166,9 +166,9 @@ json
     image.main.url.should == "url1"
     image.main.width.should == 500
     image.main.height.should == 500
-    image.views[0].url.should == "url2"
-    image.views[0].width.should == 250
-    image.views[0].height.should == 250
+    image.views['icon'].url.should == "url2"
+    image.views['icon'].width.should == 250
+    image.views['icon'].height.should == 250
   end
 end
 
