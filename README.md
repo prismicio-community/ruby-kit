@@ -35,6 +35,7 @@ You should check out [the "Kits and helpers" section of our API documentation](h
  * The api object's type is Prismic::API, and the name of the method to retrieve the master ref is gotten by `api.master_ref`.
  * There's no `ctx` object to pass around; the context is passed in different ways.
  * From the api object, getting a form is done through the `create_search_form` method; a basic querying therefore looks like this: `api.create_search_form("everything").query("[[:d = at(document.type, \"product\")]]").submit(ref)`
+ * Advice: the `%()` Ruby notation for strings is great for queries, as they may include quotes and/or double-quotes. The above querying is therefore even better this way: `api.create_search_form("everything").query(%([[:d = at(document.type, "product")]])).submit(ref)`
  * Accessing type-dependent fields from a `document` is done through a `fragments` hash. Printing the HTML version of a field therefore looks like `document.fragments["title_user_friendly"].as_html(link_resolver(ref)).html_safe`.
 
 #### Use it
