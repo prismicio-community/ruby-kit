@@ -63,7 +63,9 @@ module Prismic
         def self.view_parser(json)
           Prismic::Fragments::Image::View.new(json['url'],
                                               json['dimensions']['width'],
-                                              json['dimensions']['height'])
+                                              json['dimensions']['height'],
+                                              json['alt'],
+                                              json['copyright'])
         end
 
         main  = view_parser(json['value']['main'])
@@ -127,7 +129,9 @@ module Prismic
             view = Prismic::Fragments::Image::View.new(
               block['url'],
               block['dimensions']['width'],
-              block['dimensions']['height']
+              block['dimensions']['height'],
+              block['alt'],
+              block['copyright']
             )
             Prismic::Fragments::StructuredText::Block::Image.new(view)
           when 'embed'

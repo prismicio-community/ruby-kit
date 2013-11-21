@@ -26,12 +26,14 @@ module Prismic
       class ViewDoesNotExistException < Error ; end
 
       class View
-        attr_accessor :url, :width, :height
+        attr_accessor :url, :width, :height, :alt, :copyright
 
-        def initialize(url, width, height)
+        def initialize(url, width, height, alt = nil, copyright = nil)
           @url = url
           @width = width
           @height = height
+          @alt = alt
+          @copyright = copyright
         end
 
         def ratio
@@ -39,7 +41,7 @@ module Prismic
         end
 
         def as_html(link_resolver=nil)
-          %(<img src="#@url" width="#@width" height="#@height" />)
+          %(<img src="#@url")+(alt == nil ? "" : %( alt="#@alt"))+%( width="#@width" height="#@height" />)
         end
 
       end

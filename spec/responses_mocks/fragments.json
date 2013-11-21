@@ -60,6 +60,8 @@
         "value": {
           "main": {
             "url": "https://wroomio.s3.amazonaws.com/lesbonneschoses/0417110ebf2dc34a3e8b7b28ee4e06ac82473b70.png",
+            "alt" : "Alternative text to image",
+            "copyright" : "CC-BY",
             "dimensions": {
               "width": 500,
               "height": 500
@@ -68,6 +70,8 @@
           "views": {
             "icon": {
               "url": "https://wroomio.s3.amazonaws.com/lesbonneschoses/babdc3421037f9af77720d8f5dcf1b84c912c6ba.png",
+              "alt" : "Alternative text to view",
+              "copyright" : "CC-BY",
               "dimensions": {
                 "width": 250,
                 "height": 250
