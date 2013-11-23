@@ -66,7 +66,7 @@ module Prismic
     end
 
     def submit(ref = @ref)
-      raise NoRefSetException unless @ref
+      raise NoRefSetException unless ref
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
