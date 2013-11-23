@@ -17,7 +17,10 @@ describe 'Api' do
       }
       api.forms = {
         'form1' => Prismic::Form.new(@api, 'form1', {}, nil, nil, nil, nil),
-        'form2' => Prismic::Form.new(@api, 'form2', {}, nil, nil, nil, nil),
+        'form2' => Prismic::Form.new(@api, 'form2', {
+          'q' => Prismic::Field.new('string', '[[any(document.type, [\"product\"])]]', true),
+          'param1' => Prismic::Field.new('string', 'value1', false),
+        }, nil, nil, nil, nil),
         'form3' => Prismic::Form.new(@api, 'form3', {}, nil, nil, nil, nil),
         'form4' => Prismic::Form.new(@api, 'form4', {}, nil, nil, nil, nil),
       }
@@ -53,6 +56,14 @@ describe 'Api' do
     it "create a new search form for the right form" do
       @form = @api.create_search_form('form2')
       @form.form.name.should == 'form2'
+    end
+    it "store default value as simple value when the field is not repeatable" do
+      @form = @api.create_search_form('form2')
+      @form.data['param1'].should == 'value1'
+    end
+    it "store default value as array when the field is repeatable" do
+      @form = @api.create_search_form('form2')
+      @form.data['q'].should == ['[[any(document.type, [\"product\"])]]']
     end
   end
 
@@ -281,7 +292,7 @@ end
 
 describe 'SearchForm' do
   before do
-    @field = Prismic::Field.new('String', ['foo'], true)
+    @field = Prismic::Field.new('String', 'foo', true)
     @api = nil
   end
 
@@ -293,7 +304,7 @@ describe 'SearchForm' do
   describe 'set() for queries' do
 
     it "append value for repeatable fields" do
-      @field = Prismic::Field.new('String', ['foo'], true)
+      @field = Prismic::Field.new('String', 'foo', true)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
       @form.data.should == { 'q' => ['foo', 'bar'] }  # test the 1st call

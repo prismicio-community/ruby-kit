@@ -36,7 +36,8 @@ module Prismic
     def initialize(api, form, data={}, ref=nil)
       @api = api
       @form = form
-      @data = form.default_data.merge(data)
+      @data = {}
+      form.default_data.each { |key, value| self.set(key, value) }
       @ref = ref
     end
 
@@ -65,7 +66,7 @@ module Prismic
     end
 
     def submit(ref = @ref)
-      raise NoRefSetException unless @ref
+      raise NoRefSetException unless ref
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
         data['ref'] = ref
@@ -94,7 +95,6 @@ module Prismic
 
     def query(query)
       set('q', query)
-      self
     end
 
     def set(field_name, value)
@@ -105,10 +105,12 @@ module Prismic
       else
         data[field_name] = value
       end
+      self
     end
 
     def ref(ref)
       @ref = ref
+      self
     end
 
     class NoRefSetException < Error ; end
