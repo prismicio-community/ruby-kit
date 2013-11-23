@@ -36,7 +36,8 @@ module Prismic
     def initialize(api, form, data={}, ref=nil)
       @api = api
       @form = form
-      @data = form.default_data.merge(data)
+      @data = {}
+      form.default_data.each { |key, value| self.set(key, value) }
       @ref = ref
     end
 
