@@ -95,7 +95,6 @@ module Prismic
 
     def query(query)
       set('q', query)
-      self
     end
 
     def set(field_name, value)
@@ -106,10 +105,12 @@ module Prismic
       else
         data[field_name] = value
       end
+      self
     end
 
     def ref(ref)
       @ref = ref
+      self
     end
 
     class NoRefSetException < Error ; end
