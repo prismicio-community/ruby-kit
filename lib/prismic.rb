@@ -65,11 +65,12 @@ module Prismic
       form.fields
     end
 
-    def submit(ref = @ref)
-      raise NoRefSetException unless ref
+    def submit(ref = nil)
+      self.ref(ref) if ref
+      raise NoRefSetException unless @ref
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
-        data['ref'] = ref
+        data['ref'] = @ref
         data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
 
@@ -109,7 +110,7 @@ module Prismic
     end
 
     def ref(ref)
-      @ref = ref
+      @ref = ref.is_a?(Ref) ? ref.ref : ref
       self
     end
 
