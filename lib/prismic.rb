@@ -85,6 +85,8 @@ module Prismic
 
         raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
 
+        raise AuthenticationException, "Authentication error : #{response.body}" if response.code == "401" || response.code == "403"
+
         raise FormSearchException, "Error : #{response.body}" if response.code != "200"
 
         Prismic::JsonParser.results_parser(JSON.parse(response.body))
@@ -117,6 +119,7 @@ module Prismic
     class UnsupportedFormKind < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
+    class AuthenticationException < Error ; end
   end
 
   class Field
