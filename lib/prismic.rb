@@ -105,7 +105,7 @@ module Prismic
 
     def set(field_name, value)
       field = @form.fields[field_name]
-      if field.repeatable?
+      if field && field.repeatable?
         data[field_name] = [] unless data.include? field_name
         data[field_name] << value
       else
