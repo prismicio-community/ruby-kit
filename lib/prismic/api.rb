@@ -12,22 +12,44 @@ module Prismic
       raise BadPrismicResponseError, "No master Ref found" unless master
     end
 
+    # Get a bookmark by its name
+    # @api
+    # @param  name [String] The bookmark's name
+    #
+    # @return [Hash] The bookmark
     def bookmark(name)
       bookmarks[name]
     end
 
+    # Get a {Ref reference} by its alias
+    # @api
+    # @param  name [String] The reference's alias
+    #
+    # @return [Ref] The reference
     def ref(name)
       refs[name.downcase]
     end
 
+    # Returns the master {Ref reference}
+    # @api
+    #
+    # @return [type] [description]
     def master_ref
       ref('master')
     end
+
 
     def form(name)
       forms[name]
     end
 
+    # Returns a {Prismic::SearchForm search form} by its name
+    # @api
+    # @param  name [String] The name of the form
+    # @param  data [Hash] Default values
+    # @param  ref [type] Default {Ref reference}
+    #
+    # @return [SearchForm] The search form
     def create_search_form(name, data={}, ref={})
       form = self.form(name)
       form and form.create_search_form(data, ref)

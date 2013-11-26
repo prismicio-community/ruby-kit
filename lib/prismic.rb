@@ -11,6 +11,11 @@ module Prismic
       msg ? super(msg) : msg
       @cause = cause
     end
+
+    # Return the full trace of the error (including nested errors)
+    # @param  e=self Parent error (don't use)
+    #
+    # @return [String] The trace
     def full_trace(e=self)
       first, *backtrace = e.backtrace
       msg = e == self ? "" : "Caused by "
@@ -22,14 +27,27 @@ module Prismic
     end
   end
 
-  def self.api(*args)
-    API.start(*args)
+  # Return an API instance
+  # @api
+  # @param url [String] The URL of the prismic.io repository
+  # @param access_token=nil [String] The access_token (if any)
+  #
+  # @return [API] The API instance related to this repository
+  def self.api(url, access_token=nil)
+    API.start(url, access_token=nil)
   end
 
   class ApiData
     attr_accessor :refs, :bookmarks, :types, :tags, :forms
   end
 
+
+  # A SearchForm represent a Form returned by the prismic.io API.
+  #
+  # These forms depend on the prismic.io repository, and can be fill and send
+  # in the same way than regular HTML forms.
+  #
+  # Get SearchForm instance through the {API#create_search_form} method.
   class SearchForm
     attr_accessor :api, :form, :data, :ref
 
@@ -66,6 +84,16 @@ module Prismic
       form.fields
     end
 
+    # Submit the form
+    # @api
+    #
+    # @note The reference MUST be defined, either by setting it at
+    #       {API#create_search_form creation}, by using the {#ref} method or by
+    #       providing the ref parameter.
+    #
+    # @param  ref [Ref, String] The {Ref reference} to use (if not already defined)
+    #
+    # @return [type] [description]
     def submit(ref = nil)
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
@@ -100,10 +128,20 @@ module Prismic
       end
     end
 
+    # Specify a query for this form
+    # @api
+    # @param  query [String] The query
+    #
+    # @return [SearchForm] self
     def query(query)
       set('q', query)
     end
 
+    # Specify a parameter for this form
+    # @param  field_name [String] The parameter's name
+    # @param  value [String] The parameter's value
+    #
+    # @return [SearchForm] self
     def set(field_name, value)
       field = @form.fields[field_name]
       if field && field.repeatable?
@@ -115,6 +153,11 @@ module Prismic
       self
     end
 
+    # Set the {Ref reference} to use
+    # @api
+    # @param  ref [Ref, String] The {Ref reference} to use
+    #
+    # @return [SearchForm] self
     def ref(ref)
       @ref = ref.is_a?(Ref) ? ref.ref : ref
       self
@@ -163,6 +206,7 @@ module Prismic
     end
 
     # Finds the first highest title in a document
+    #
     # It is impossible to reuse the StructuredText.first_title method, since we need to test the highest title across the whole document
     def first_title
       title = false
@@ -189,6 +233,12 @@ module Prismic
     end
   end
 
+
+  # Represent a prismic.io reference, a fix point in time.
+  #
+  # The references must be provided when accessing to any prismic.io resource
+  # (except /api) and allow to assert that the URL you use will always
+  # returns the same results.
   class Ref
     attr_accessor :ref, :label, :is_master, :scheduled_at
 
@@ -213,9 +263,22 @@ module Prismic
     end
   end
 
+
+  # Build a {LinkResolver} instance
+  # @api
+  #
+  # The {LinkResolver} will help to build URL specific to an application, based
+  # on a generic prismic.io's {Fragments::DocumentLink Document link}.
+  #
+  # @param  ref [Ref] The ref to use
+  # @yieldparam  doc_link [Fragments::DocumentLink] A DocumentLink instance
+  # @yieldreturn [String] The application specific URL of the given document
+  #
+  # @return [LinkResolver] [description]
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
   end
+
 end
 
 require 'prismic/api'
