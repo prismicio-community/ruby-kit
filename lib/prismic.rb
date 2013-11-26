@@ -37,7 +37,8 @@ module Prismic
       @api = api
       @form = form
       @data = {}
-      form.default_data.each { |key, value| self.set(key, value) }
+      form.default_data.each { |key, value| set(key, value) }
+      data.each { |key, value| set(key, value) }
       @ref = ref
     end
 
