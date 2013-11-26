@@ -29,12 +29,27 @@ module Prismic
 
   # Return an API instance
   # @api
+  #
+  # The access token and HTTP client can be provided.
+  #
+  # The HTTP Client must responds to same method than {DefaultHTTPClient}.
+  #
   # @param url [String] The URL of the prismic.io repository
-  # @param access_token=nil [String] The access_token (if any)
+  # @param [String] access_token The access token
+  # @param [Hash] opts The options
+  # @option opts [String] :access_token (nil) The access_token
+  # @option opts :http_client (DefaultHTTPClient) The HTTP client to use
+  #
+  # @overload api(url, opts=nil)
+  #   Standard use
+  # @overload api(url, access_token)
+  #   Provide the access_token (only)
   #
   # @return [API] The API instance related to this repository
-  def self.api(url, access_token=nil)
-    API.start(url, access_token=nil)
+  def self.api(url, opts=nil)
+    opts ||= {}
+    opts = {access_token: opts} if opts.is_a?(String)
+    API.start(url, opts)
   end
 
   class ApiData
@@ -103,24 +118,16 @@ module Prismic
         data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
 
-        uri = URI(action)
-        uri.query = URI.encode_www_form(data)
+        response = api.http_client.get(action, data, 'Accept' => 'application/json')
 
-        request = Net::HTTP::Get.new(uri.request_uri)
-        request.add_field('Accept', 'application/json')
-
-        response = Net::HTTP.new(uri.host, uri.port).start do |http|
-          http.request(request)
-        end
-
-        if response.code == "200"
+        if response.code.to_s == "200"
           Prismic::JsonParser.results_parser(JSON.parse(response.body))
         else
           body = JSON.parse(response.body) rescue nil
           error = body.is_a?(Hash) ? body['error'] : response.body
-          raise AuthenticationException, error if response.code == "401"
-          raise AuthorizationException, error if response.code == "403"
-          raise RefNotFoundException, error if response.code == "404"
+          raise AuthenticationException, error if response.code.to_s == "401"
+          raise AuthorizationException, error if response.code.to_s == "403"
+          raise RefNotFoundException, error if response.code.to_s == "404"
           raise FormSearchException, error
         end
       else
@@ -263,6 +270,23 @@ module Prismic
     end
   end
 
+  # Default HTTP client implementation, using the standard {Net::HTTP} library.
+  module DefaultHTTPClient
+    class << self
+      # Performs a GET call and returns the result
+      #
+      # The result must respond to
+      # - code: returns the response's HTTP status code (as number or String)
+      # - body: returns the response's body (as String)
+      def get(uri, data={}, headers={})
+        uri = URI(uri) if uri.is_a?(String)
+        uri.query = URI.encode_www_form(data)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = uri.scheme =~ /https/i
+        http.get(uri.request_uri, headers)
+      end
+    end
+  end
 
   # Build a {LinkResolver} instance
   # @api

@@ -1,12 +1,13 @@
 # encoding: utf-8
 module Prismic
   class API
-    attr_reader :json, :access_token
+    attr_reader :json, :access_token, :http_client
     attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types, :oauth
 
-    def initialize(json, access_token=nil)
+    def initialize(json, access_token, http_client)
       @json = json
       @access_token = access_token
+      @http_client = http_client
       yield self if block_given?
       self.master = refs.values && refs.values.map { |ref| ref if ref.master? }.compact.first
       raise BadPrismicResponseError, "No master Ref found" unless master
@@ -59,29 +60,26 @@ module Prismic
       @json
     end
 
-    def self.get(url, access_token=nil)
-      uri = URI(access_token ? "#{url}?access_token=#{access_token}" : url)
-      http = Net::HTTP.new(uri.host)
-      req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
-      res = http.request(req)
-
-      if res.code == '200'
-        res
-      else
-        raise PrismicWSConnectionError, res
-      end
+    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient)
+      data = {}
+      data["access_token"] = access_token if access_token
+      res = http_client.get(url, data, 'Accept' => 'application/json')
+      raise PrismicWSConnectionError, res unless res.code.to_s == '200'
+      res
     end
 
-    def self.start(url, access_token=nil)
-      resp = get(url, access_token)
+    def self.start(url, opts={})
+      http_client = opts[:http_client] || Prismic::DefaultHTTPClient
+      access_token = opts[:access_token]
+      resp = get(url, access_token, http_client)
       json = JSON.load(resp.body)
-      parse_api_response(json, access_token)
+      parse_api_response(json, access_token, http_client)
     end
 
-    def self.parse_api_response(data, access_token=nil)
+    def self.parse_api_response(data, access_token, http_client)
       data_forms = data['forms'] || []
       data_refs = data.fetch('refs'){ raise BadPrismicResponseError, "No refs given" }
-      new(data, access_token) {|api|
+      new(data, access_token, http_client) {|api|
         api.bookmarks = data['bookmarks']
         api.forms = Hash[data_forms.map { |k, form|
           [k, Form.new(

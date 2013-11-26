@@ -5,7 +5,7 @@ describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
     @oauth_initiate_url = "https://lesbonneschoses.prismic.io/auth"
-    @api = Prismic::API.new(json_representation){|api|
+    @api = Prismic::API.new(json_representation, nil, Prismic::DefaultHTTPClient){|api|
       api.bookmarks = {}
       api.tags = {}
       api.types = {}
@@ -83,20 +83,18 @@ describe 'Api' do
     before do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
       @json = JSON.parse(@data)
-      @parsed = Prismic::API.parse_api_response(@json)
+      @parsed = Prismic::API.parse_api_response(@json, nil, Prismic::DefaultHTTPClient)
     end
 
     it "does not allow to be created without master Ref" do
       expect {
-        Prismic::API.parse_api_response({
-          "refs" => [],
-        })
+        Prismic::API.parse_api_response({"refs" => []}, nil, Prismic::DefaultHTTPClient)
       }.to raise_error(Prismic::API::BadPrismicResponseError, "No master Ref found")
     end
 
     it "does not allow to be created without any Ref" do
       expect {
-        Prismic::API.parse_api_response({})
+        Prismic::API.parse_api_response({}, nil, Prismic::DefaultHTTPClient)
       }.to raise_error(Prismic::API::BadPrismicResponseError, "No refs given")
     end
 
