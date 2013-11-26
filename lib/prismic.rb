@@ -37,7 +37,8 @@ module Prismic
       @api = api
       @form = form
       @data = {}
-      form.default_data.each { |key, value| self.set(key, value) }
+      form.default_data.each { |key, value| set(key, value) }
+      data.each { |key, value| set(key, value) }
       @ref = ref
     end
 
@@ -65,11 +66,12 @@ module Prismic
       form.fields
     end
 
-    def submit(ref = @ref)
-      raise NoRefSetException unless ref
+    def submit(ref = nil)
+      self.ref(ref) if ref
+      raise NoRefSetException unless @ref
 
       if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
-        data['ref'] = ref
+        data['ref'] = @ref
         data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
 
@@ -83,11 +85,16 @@ module Prismic
           http.request(request)
         end
 
-        raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
-
-        raise FormSearchException, "Error : #{response.body}" if response.code != "200"
-
-        Prismic::JsonParser.results_parser(JSON.parse(response.body))
+        if response.code == "200"
+          Prismic::JsonParser.results_parser(JSON.parse(response.body))
+        else
+          body = JSON.parse(response.body) rescue nil
+          error = body.is_a?(Hash) ? body['error'] : response.body
+          raise AuthenticationException, error if response.code == "401"
+          raise AuthorizationException, error if response.code == "403"
+          raise RefNotFoundException, error if response.code == "404"
+          raise FormSearchException, error
+        end
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
@@ -99,7 +106,7 @@ module Prismic
 
     def set(field_name, value)
       field = @form.fields[field_name]
-      if field.repeatable?
+      if field && field.repeatable?
         data[field_name] = [] unless data.include? field_name
         data[field_name] << value
       else
@@ -109,12 +116,14 @@ module Prismic
     end
 
     def ref(ref)
-      @ref = ref
+      @ref = ref.is_a?(Ref) ? ref.ref : ref
       self
     end
 
     class NoRefSetException < Error ; end
     class UnsupportedFormKind < Error ; end
+    class AuthorizationException < Error ; end
+    class AuthenticationException < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
   end

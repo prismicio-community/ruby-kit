@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'LesBonnesChoses' do
 	before do
 		@api = Prismic.api("https://lesbonneschoses.prismic.io/api", nil)
-		@master_ref = @api.master_ref.ref
+		@master_ref = @api.master_ref
 	end
 
 	describe '/api' do
