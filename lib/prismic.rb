@@ -280,10 +280,22 @@ module Prismic
       # - body: returns the response's body (as String)
       def get(uri, data={}, headers={})
         uri = URI(uri) if uri.is_a?(String)
-        uri.query = URI.encode_www_form(data)
+        uri.query = url_encode(data)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = uri.scheme =~ /https/i
         http.get(uri.request_uri, headers)
+      end
+
+      def url_encode(data)
+        # Can't use URI.encode_www_form (doesn't support multi-values in 1.9.2)
+        encode = ->(k, v){ "#{k}=#{CGI::escape(v)}" }
+        data.map { |k, vs|
+          if vs.is_a?(Array)
+            vs.map{|v| encode.(k, v) }.join("&")
+          else
+            encode.(k, vs)
+          end
+        }.join("&")
       end
     end
   end
