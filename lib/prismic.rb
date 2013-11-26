@@ -34,7 +34,7 @@ module Prismic
   #
   # @return [API] The API instance related to this repository
   def self.api(url, access_token=nil)
-    API.start(url, access_token=nil)
+    API.start(url, access_token)
   end
 
   class ApiData
