@@ -199,6 +199,14 @@ module Prismic
             @view.height
           end
 
+          def alt
+            @view.alt
+          end
+
+          def copyright
+            @view.copyright
+          end
+
           def as_html(link_resolver)
             view.as_html(link_resolver)
           end
