@@ -84,11 +84,16 @@ module Prismic
           http.request(request)
         end
 
-        raise RefNotFoundException, "Ref #{ref} not found" if response.code == "404"
-
-        raise FormSearchException, "Error : #{response.body}" if response.code != "200"
-
-        Prismic::JsonParser.results_parser(JSON.parse(response.body))
+        if response.code == "200"
+          Prismic::JsonParser.results_parser(JSON.parse(response.body))
+        else
+          body = JSON.parse(response.body) rescue nil
+          error = body.is_a?(Hash) ? body['error'] : response.body
+          raise AuthenticationException, error if response.code == "401"
+          raise AuthorizationException, error if response.code == "403"
+          raise RefNotFoundException, error if response.code == "404"
+          raise FormSearchException, error
+        end
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
@@ -116,6 +121,8 @@ module Prismic
 
     class NoRefSetException < Error ; end
     class UnsupportedFormKind < Error ; end
+    class AuthorizationException < Error ; end
+    class AuthenticationException < Error ; end
     class RefNotFoundException < Error ; end
     class FormSearchException < Error ; end
   end
