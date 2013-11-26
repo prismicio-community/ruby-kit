@@ -60,10 +60,11 @@ module Prismic
     end
 
     def self.get(url, access_token=nil)
-      uri = URI(access_token ? "#{url}?access_token=#{access_token}" : url)
-      http = Net::HTTP.new(uri.host)
-      req = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
-      res = http.request(req)
+      uri = URI(url)
+      uri.query = URI.encode_www_form("access_token" => access_token) if access_token
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme =~ /https/i
+      res = http.get(uri.request_uri, 'Accept' => 'application/json')
 
       if res.code == '200'
         res

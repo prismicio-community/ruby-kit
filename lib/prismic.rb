@@ -105,13 +105,11 @@ module Prismic
 
         uri = URI(action)
         uri.query = URI.encode_www_form(data)
-
         request = Net::HTTP::Get.new(uri.request_uri)
         request.add_field('Accept', 'application/json')
-
-        response = Net::HTTP.new(uri.host, uri.port).start do |http|
-          http.request(request)
-        end
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = uri.scheme =~ /https/i
+        response = http.get(uri.request_uri, 'Accept' => 'application/json')
 
         if response.code == "200"
           Prismic::JsonParser.results_parser(JSON.parse(response.body))
