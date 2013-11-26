@@ -155,22 +155,23 @@ module Prismic
       end
 
       def document_parser(json)
-        fragments = Hash[json['data'].values.first.map do |name, fragment|
+        data_json = json['data'].values.first  # {"doc_type": data}
+        fragments = Hash[data_json.map { |name, fragment|
           if fragment.is_a? Array
             [name, multiple_parser(fragment)]
           else
             [name, parsers[fragment['type']].call(fragment)]
           end
-        end]
+        }]
 
         Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
                               json['slugs'], fragments)
       end
 
-      def results_parser(results)
-        results = results['results'] unless results.is_a?(Array)
-        results.map do |doc|
-          raise FormSearchException, "Error : #{doc['error']}" if doc.include?('error')
+      def results_parser(result)
+        result = {'results' => result} if result.is_a?(Array)
+        raise FormSearchException, "Error : #{result['error']}" if result['error']
+        result['results'].map do |doc|
           document_parser(doc)
         end
       end
