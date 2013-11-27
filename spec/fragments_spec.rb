@@ -275,7 +275,7 @@ describe 'Image::View' do
     @url = 'my_url'
     @width = 10
     @height = 2
-    @view = Prismic::Fragments::Image::View.new(@url, @width, @height)
+    @view = Prismic::Fragments::Image::View.new(@url, @width, @height, "", "")
   end
 
   describe 'ratio' do
@@ -316,7 +316,7 @@ end
 describe 'Image' do
   before do
     @main_view = Prismic::Fragments::Image::View.new('my_url', 10, 10, "Alternative", "CC-BY")
-    @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20)
+    @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20, "", "")
     @image = Prismic::Fragments::Image.new(@main_view, { 'another_view' => @another_view })
   end
 

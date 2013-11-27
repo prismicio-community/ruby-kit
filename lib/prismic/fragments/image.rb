@@ -28,7 +28,7 @@ module Prismic
       class View
         attr_accessor :url, :width, :height, :alt, :copyright
 
-        def initialize(url, width, height, alt = nil, copyright = nil)
+        def initialize(url, width, height, alt, copyright)
           @url = url
           @width = width
           @height = height
