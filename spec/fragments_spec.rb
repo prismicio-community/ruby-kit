@@ -275,7 +275,7 @@ describe 'Image::View' do
     @url = 'my_url'
     @width = 10
     @height = 2
-    @view = Prismic::Fragments::Image::View.new(@url, @width, @height)
+    @view = Prismic::Fragments::Image::View.new(@url, @width, @height, "", "")
   end
 
   describe 'ratio' do
@@ -300,13 +300,23 @@ describe 'Image::View' do
     it "returns an element whose `height` attribute equals the height" do
       Nokogiri::XML(@view.as_html).child.attribute('height').value.should == @height.to_s
     end
+
+    it "if set, returns an element whose `alt` attribute equals the alt" do
+      @alt = "Alternative text"
+      @view.alt = @alt
+      Nokogiri::XML(@view.as_html).child.attribute('alt').value.should == @alt
+    end
+
+    # it "if not set, alt attribute is absent" do
+    #   Nokogiri::XML(@view.as_html).child.attribute('alt').should == nil
+    # end
   end
 end
 
 describe 'Image' do
   before do
-    @main_view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
-    @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20)
+    @main_view = Prismic::Fragments::Image::View.new('my_url', 10, 10, "Alternative", "CC-BY")
+    @another_view = Prismic::Fragments::Image::View.new('my_url2', 20, 20, "", "")
     @image = Prismic::Fragments::Image.new(@main_view, { 'another_view' => @another_view })
   end
 
@@ -330,6 +340,7 @@ describe 'Image' do
       Nokogiri::XML(@image.as_html).child.attribute('src').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('src').value
       Nokogiri::XML(@image.as_html).child.attribute('width').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('width').value
       Nokogiri::XML(@image.as_html).child.attribute('height').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('height').value
+      Nokogiri::XML(@image.as_html).child.attribute('alt').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('alt').value
     end
   end
 end
@@ -415,7 +426,7 @@ end
 
 describe 'StructuredText::Image' do
   before do
-    @view = Prismic::Fragments::Image::View.new('my_url', 10, 10)
+    @view = Prismic::Fragments::Image::View.new('my_url', 10, 10, "Aternative", "CC-BY")
     @image = Prismic::Fragments::StructuredText::Block::Image.new(@view)
   end
 
@@ -434,6 +445,18 @@ describe 'StructuredText::Image' do
   describe 'height' do
     it "returns the view's height" do
       @image.height.should == @view.height
+    end
+  end
+
+  describe 'alt' do
+    it "returns the view's alt" do
+      @image.alt.should == @view.alt
+    end
+  end
+
+  describe 'copyright' do
+    it "returns the view's copyright" do
+      @image.copyright.should == @view.copyright
     end
   end
 end

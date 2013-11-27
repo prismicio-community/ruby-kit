@@ -141,6 +141,8 @@ describe 'image_parser' do
       "value": {
         "main": {
           "url": "url1",
+          "alt" : "Alternative",
+          "copyright" : "CC-BY",
           "dimensions": {
             "width": 500,
             "height": 500
@@ -149,6 +151,8 @@ describe 'image_parser' do
         "views": {
           "icon": {
             "url": "url2",
+            "alt" : "Alternative2",
+            "copyright" : "CC-0",
               "dimensions": {
                 "width": 250,
                 "height": 250
@@ -166,9 +170,13 @@ json
     image.main.url.should == "url1"
     image.main.width.should == 500
     image.main.height.should == 500
+    image.main.alt.should == "Alternative"
+    image.main.copyright.should == "CC-BY"
     image.views['icon'].url.should == "url2"
     image.views['icon'].width.should == 250
     image.views['icon'].height.should == 250
+    image.views['icon'].alt.should == "Alternative2"
+    image.views['icon'].copyright.should == "CC-0"
   end
 end
 
