@@ -41,7 +41,7 @@ module Prismic
         end
 
         def as_html(link_resolver=nil)
-          %(<img src="#@url")+(alt == nil ? "" : %( alt="#@alt"))+%( width="#@width" height="#@height" />)
+          %(<img src="#@url" alt="#@alt" width="#@width" height="#@height" />)
         end
 
       end
