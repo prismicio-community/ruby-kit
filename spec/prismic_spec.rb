@@ -46,6 +46,18 @@ describe 'Api' do
     end
   end
 
+  describe 'master_ref' do
+    it "returns the right Ref" do
+      @api.master_ref.label.should == 'label3'
+    end
+  end
+
+  describe 'master' do
+    it "returns the right Ref" do
+      @api.master.label.should == 'label3'
+    end
+  end
+
   describe 'form' do
     it "return the right Form" do
       @api.form('form2').name.should == 'form2'

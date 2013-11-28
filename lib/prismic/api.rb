@@ -2,7 +2,14 @@
 module Prismic
   class API
     attr_reader :json, :access_token, :http_client
-    attr_accessor :refs, :bookmarks, :forms, :master, :tags, :types, :oauth
+    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
+
+    # Returns the master {Ref reference}
+    # @api
+    #
+    # @return [Ref] The master {Ref reference}
+    attr_accessor :master
+    alias :master_ref :master
 
     def initialize(json, access_token, http_client)
       @json = json
@@ -30,15 +37,6 @@ module Prismic
     def ref(name)
       refs[name.downcase]
     end
-
-    # Returns the master {Ref reference}
-    # @api
-    #
-    # @return [type] [description]
-    def master_ref
-      ref('master')
-    end
-
 
     def form(name)
       forms[name]
