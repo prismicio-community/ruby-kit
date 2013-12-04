@@ -37,7 +37,6 @@ There are two ways to get a better understanding at the kit:
 ##### Ruby kit's specificities
 
 This Ruby kit contains some mild differences or tips over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), which sets general information about how our kits work. They are listed here:
- * Retrieving the master ref from the API object is gotten by `api.master_ref` (rather than `api.master`).
  * From the api object, getting a form is done through the `create_search_form` method; a basic querying therefore looks like this: `api.create_search_form("everything").query(%([[:d = at(document.type, "product")]])).ref(@ref).submit()`.
  * When calling the API, a faster way to pass the `ref`: directly as a parameter of the `submit` method (no need to use the `ref` method then): `api.create_search_form("everything").submit(@ref)`.
  * Accessing type-dependent fields from a `document` is done through a `fragments` hash (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document.fragments["title_user_friendly"].as_html(link_resolver(@ref)).html_safe`.
