@@ -233,6 +233,13 @@ module Prismic
       title
     end
 
+    def [](field)
+      array = field.split('.')
+      raise ArgumentError, "Argument should contain one dot. Example: product.price" if array.length != 2
+      return nil if array[0] != self.type
+      self.fragments[array[1]]
+    end
+
     private
 
     def parse_fragments(fragments)
