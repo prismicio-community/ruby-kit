@@ -54,6 +54,18 @@ module Prismic
       form and form.create_search_form(data, ref)
     end
 
+    # Returns a {Prismic::Document document} from its ID
+    # @api
+    # @param  id [String] The ID of the document
+    # @param  ref [type] Queried {Ref reference}
+    #
+    # @return [SearchForm] The search form
+    def get_document(id, ref)
+      documents = self.create_search_form('everything').query('[[:d = at(document.id, "'+id+'")]]').submit(ref)
+      raise BadPrismicResponseError, "Document ID "+id+" doesn't exist in this repository" if (documents.empty?)
+      documents[0]
+    end
+
     def as_json
       @json
     end

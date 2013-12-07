@@ -13,6 +13,12 @@ describe 'LesBonnesChoses' do
 		end
 	end
 
+	describe 'Prismic::API' do
+		it "queries a given document from its ID" do
+			@api.get_document('UkL0gMuvzYUANCpf', @master_ref).fragments['name'].blocks[0].text.should == 'Pastry Dresser'
+		end
+	end
+
 	describe 'query' do
 		it "queries everything and returns 20 documents" do
 			@api.create_search_form("everything").submit(@master_ref).size.should == 20
