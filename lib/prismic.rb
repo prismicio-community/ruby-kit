@@ -265,8 +265,13 @@ module Prismic
       @ref = ref
       @blk = blk
     end
-    def link_to(doc_link)
-      @blk.call(doc_link)
+    def link_to(doc)
+      if doc.is_a? Prismic::Fragments::DocumentLink
+        @blk.call(doc)
+      elsif doc.is_a? Prismic::Document
+        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.type, doc.tags, doc.slug, false)
+        @blk.call(doc_link)
+      end
     end
   end
 

@@ -234,6 +234,25 @@ describe 'Api' do
 
 end
 
+describe 'LinkResolver' do
+  before do
+    @doc_link = Prismic::Fragments::DocumentLink.new('id', 'blog-post', ['tag1', 'tag2'], 'my-slug', false)
+    @document = Prismic::Document.new('id', 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil)
+
+    @link_resolver = Prismic::LinkResolver.new(nil) do |doc|
+      '/'+doc.link_type+'/'+doc.id+'/'+doc.slug
+    end
+  end
+  
+  it "builds the right URL from a DocumentLink" do
+    @link_resolver.link_to(@doc_link).should == '/blog-post/id/my-slug'
+  end
+  
+  it "builds the right URL from a Document" do
+    @link_resolver.link_to(@document).should == '/blog-post/id/my-slug'
+  end
+end
+
 describe 'Document' do
   before do
     fragments = {
