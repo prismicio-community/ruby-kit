@@ -81,10 +81,10 @@ module Prismic
 
         class Strong < Span
           def start_html(link_resolver=nil)
-            "<b>"
+            "<strong>"
           end
           def end_html(link_resolver=nil)
-            "</b>"
+            "</strong>"
           end
         end
 

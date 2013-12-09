@@ -378,12 +378,12 @@ describe 'StructuredText::Heading' do
   it 'generates valid h1 html' do
     @heading = 1
     @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
-    @block.as_html(nil).should == "<h1>This <em>is</em> <b>a</b> simple test.</h1>"
+    @block.as_html(nil).should == "<h1>This <em>is</em> <strong>a</strong> simple test.</h1>"
   end
   it 'generates valid h2 html' do
     @heading = 2
     @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
-    @block.as_html(nil).should == "<h2>This <em>is</em> <b>a</b> simple test.</h2>"
+    @block.as_html(nil).should == "<h2>This <em>is</em> <strong>a</strong> simple test.</h2>"
   end
 end
 
@@ -397,7 +397,7 @@ describe 'StructuredText::Paragraph' do
     @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
   end
   it 'generates valid html' do
-    @block.as_html(nil).should == "<p>This <em>is</em> <b>a</b> simple test.</p>"
+    @block.as_html(nil).should == "<p>This <em>is</em> <strong>a</strong> simple test.</p>"
   end
   it "espaces HTML content" do
     @text = '&my <value> #abcde'
@@ -406,7 +406,7 @@ describe 'StructuredText::Paragraph' do
       Prismic::Fragments::StructuredText::Span::Strong.new(0, 1),
     ]
     @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
-    @block.as_html(nil).should =~ %r{^<[^>]+><b>&amp;</b>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
+    @block.as_html(nil).should =~ %r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
   end
 end
 
@@ -420,7 +420,7 @@ describe 'StructuredText::Preformatted' do
     @block = Prismic::Fragments::StructuredText::Block::Preformatted.new(@text, @spans)
   end
   it 'generates valid html' do
-    @block.as_html(nil).should == "<pre>This <em>is</em> <b>a</b> simple test.</pre>"
+    @block.as_html(nil).should == "<pre>This <em>is</em> <strong>a</strong> simple test.</pre>"
   end
 end
 
