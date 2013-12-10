@@ -53,7 +53,7 @@ module Prismic
       # @param separator [String] The string separator inserted between the blocks (a blank space by default)
       # @return [String] The complete string representing the textual value of the StructuredText field.
       def as_text(separator=' ')
-        blocks.map{|block| block.as_text }.select{|block| block }.join(separator)
+        blocks.map{|block| block.as_text }.compact.join(separator)
       end
 
       # Finds the first highest title in a structured text
