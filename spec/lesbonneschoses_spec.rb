@@ -34,4 +34,18 @@ describe 'LesBonnesChoses' do
 				.submit(@master_ref).size.should == 11
 		end		
 	end
+
+	describe 'fragments' do
+		it "returns a correct as_text on a StructuredText" do
+			@api.create_search_form("everything")
+				.query(%([[:d = at(document.id, "UkL0gMuvzYUANCps")]]))
+				.submit(@master_ref)[0].fragments['body'].as_text.should == "The end of a chapter the beginning of a new one Jean-Michel Pastranova, the founder of Les Bonnes Choses, and creator of the whole concept of modern fine pastry, has decided to step down as the CEO and the Director of Workshops of Les Bonnes Choses, to focus on other projects, among which his now best-selling pastry cook books, but also to take on a primary role in a culinary television show to be announced later this year. \"I believe I've taken the Les Bonnes Choses concept as far as it can go. Les Bonnes Choses is already an entity that is driven by its people, thanks to a strong internal culture, so I don't feel like they need me as much as they used to. I'm sure they are greater ways to come, to innovate in pastry, and I'm sure Les Bonnes Choses's coming innovation will be even more mind-blowing than if I had stayed longer.\" He will remain as a senior advisor to the board, and to the workshop artists, as his daughter Selena, who has been working with him for several years, will fulfill the CEO role from now on. \"My father was able not only to create a revolutionary concept, but also a company culture that puts everyone in charge of driving the company's innovation and quality. That gives us years, maybe decades of revolutionary ideas to come, and there's still a long, wonderful path to walk in the fine pastry world.\""
+		end
+
+		it "returns a correct as_text on a StructuredText with a separator" do
+			@api.create_search_form("everything")
+				.query(%([[:d = at(document.id, "UkL0gMuvzYUANCps")]]))
+				.submit(@master_ref)[0].fragments['body'].as_text(' #### ').should == "The end of a chapter the beginning of a new one #### Jean-Michel Pastranova, the founder of Les Bonnes Choses, and creator of the whole concept of modern fine pastry, has decided to step down as the CEO and the Director of Workshops of Les Bonnes Choses, to focus on other projects, among which his now best-selling pastry cook books, but also to take on a primary role in a culinary television show to be announced later this year. #### \"I believe I've taken the Les Bonnes Choses concept as far as it can go. Les Bonnes Choses is already an entity that is driven by its people, thanks to a strong internal culture, so I don't feel like they need me as much as they used to. I'm sure they are greater ways to come, to innovate in pastry, and I'm sure Les Bonnes Choses's coming innovation will be even more mind-blowing than if I had stayed longer.\" #### He will remain as a senior advisor to the board, and to the workshop artists, as his daughter Selena, who has been working with him for several years, will fulfill the CEO role from now on. #### \"My father was able not only to create a revolutionary concept, but also a company culture that puts everyone in charge of driving the company's innovation and quality. That gives us years, maybe decades of revolutionary ideas to come, and there's still a long, wonderful path to walk in the fine pastry world.\""
+		end
+	end
 end
