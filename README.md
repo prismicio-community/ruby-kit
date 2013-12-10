@@ -4,7 +4,7 @@
 [![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
 [![Code Climate](https://codeclimate.com/github/prismicio/ruby-kit.png)](https://codeclimate.com/github/prismicio/ruby-kit)
 
-### Getting Started
+### Getting Started with the gem
 
 #### Install using bundler
 
@@ -28,16 +28,23 @@ then add in your code:
 require 'prismic'
 ```
 
-#### Documentation
+#### Getting started with prismic.io
 
-There are two ways to get a better understanding at the kit:
- * to get a global overview how to use a prismic.io kit the best way, you can check out [our cross-technology documentation for kits](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), on prismic.io developers' portal. The Ruby kit's API has specificities in a couple of places, that are listed below.
- * to get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://prismicio.github.io/ruby-kit/) (click on the "Class list" tab at the top-right)
+On our [prismic.io developer's portal](https://developers.prismic.io/), on top of the complete documentation, you will:
+ * get a better understanding of [what prismic.io is and how to get started with it](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started).
+ * get a thorough understanding of [how prismic.io kits work](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one. There's a couple of specificities for Ruby's case, described below.
+ * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby).
+
+#### Kit documentation
+
+To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://prismicio.github.io/ruby-kit/) (click on the "Class list" tab at the top-right)
+
+Need to see what changed, or to upgrade your kit? Check out [this kit's changelog](changelog.md).
 
 ##### Ruby kit's specificities
 
-This Ruby kit contains some mild differences or tips over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), which sets general information about how our kits work. They are listed here:
- * From the api object, getting a form is done through the `create_search_form` method; a basic querying therefore looks like this: `api.create_search_form("everything").query(%([[:d = at(document.type, "product")]])).ref(@ref).submit()`.
+This Ruby kit contains some mild differences and syntastic sugar over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers) (which you should read first). They are listed here:
+ * From the api object, getting a form is done through the `create_search_form` method; a basic querying therefore looks like this: `api.create_search_form("everything").ref(@ref).submit()`.
  * When calling the API, a faster way to pass the `ref`: directly as a parameter of the `submit` method (no need to use the `ref` method then): `api.create_search_form("everything").submit(@ref)`.
  * Accessing type-dependent fields from a `document` is done through the `[]` operator (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document["title_user_friendly"].as_html(link_resolver(@ref)).html_safe`.
  * Two of the fields in the `DocumentLink` object (the one used to write your `link_resolver` method, for instance) were renamed to fit Ruby's best practice: `doc.type` is in fact `doc.link_type`, and `doc.isBroken` is in fact `doc.broken?`.
