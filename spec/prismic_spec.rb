@@ -330,6 +330,46 @@ describe 'SearchForm' do
     form.create_search_form
   end
 
+  describe 'fields methods' do
+
+    it "should be created for each valid field names" do
+      @form = create_form('a_param' => @field)
+      @form.should respond_to(:a_param)
+    end
+
+    it "should be created for each valid field names with number" do
+      @form = create_form('a_param2' => @field)
+      @form.should respond_to(:a_param2)
+    end
+
+    it "should be created for each camelCase field names" do
+      @form = create_form('anExampleParam0A0B' => @field)
+      @form.should respond_to(:an_example_param0_a0_b)
+    end
+
+    it "should not be created for field names begining with a number" do
+      @form = create_form('2param' => @field)
+      @form.should_not respond_to(:'2param')
+    end
+
+    it "should not be created for field names begining with an underscore" do
+      @form = create_form('_param' => @field)
+      @form.should_not respond_to(:'_param')
+    end
+
+    it "should not be created for field names containing invalid characters" do
+      @form = create_form('a-param' => @field)
+      @form.should_not respond_to(:'a-param')
+    end
+
+    it "should not be created if a method with same name already exists" do
+      Prismic::SearchForm.module_exec { def param_example_for_tests() "ok" end }
+      @form = create_form('param_example_for_tests' => @field)
+      @form.param_example_for_tests.should == "ok"
+    end
+
+  end
+
   describe 'set() for queries' do
 
     it "append value for repeatable fields" do

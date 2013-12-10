@@ -66,6 +66,18 @@ module Prismic
   # in the same way than regular HTML forms.
   #
   # Get SearchForm instance through the {API#create_search_form} method.
+  #
+  # The SearchForm instance contains helper methods for each predefined form's fields.
+  # Note that these methods are not be created if they risk to add confusion:
+  # - only letters, underscore and digits are authorized in the name
+  # - name starting with a digit or an underscore are forbidden
+  # - generated method can't override existing methods
+  #
+  # @example
+  #   search_form = api.create_search_form('everything')
+  #   search_form.page(3)  # specify the field 'page'
+  #   search_form.page_size("20")  # specify the 'page_size' field
+  #   results = search_form.submit(master_ref)  # submit the search form
   class SearchForm
     attr_accessor :api, :form, :data, :ref
 
@@ -73,10 +85,47 @@ module Prismic
       @api = api
       @form = form
       @data = {}
+      form.fields.each { |name, _| create_field_helper_method(name) }
       form.default_data.each { |key, value| set(key, value) }
       data.each { |key, value| set(key, value) }
       @ref = ref
     end
+
+    # @!method query(query)
+    #   Specify a query for this form.
+    #   @param  query [String] The query
+    #   @return [SearchForm] self
+
+    # @!method orderings(orderings)
+    #   Specify a orderings for this form.
+    #   @param  orderings [String] The orderings
+    #   @return [SearchForm] self
+
+    # @!method page(page)
+    #   Specify a page for this form.
+    #   @param  page [String,Fixum] The page
+    #   @return [SearchForm] self
+
+    # @!method page_size(page_size)
+    #   @generated
+    #   Specify a page size for this form.
+    #   @param  page_size [String,Fixum] The page size
+    #   @return [SearchForm] self
+
+    # Create the fields'helper methods
+    def create_field_helper_method(name)
+      return if name == 'ref'
+      return unless name =~ /\A[a-zA-Z][a-zA-Z0-9_]*\z/
+      meth_name = name.gsub(/([A-Z])/, '_\1').downcase
+      return if respond_to?(meth_name)
+      define_singleton_method(meth_name){|value| set(name, value) }
+      if name == 'q'
+        class << self
+          alias :query :q
+        end
+      end
+    end
+    private :create_field_helper_method
 
     def form_name
       form.name
@@ -136,15 +185,6 @@ module Prismic
       else
         raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
       end
-    end
-
-    # Specify a query for this form
-    # @api
-    # @param  query [String] The query
-    #
-    # @return [SearchForm] self
-    def query(query)
-      set('q', query)
     end
 
     # Specify a parameter for this form
