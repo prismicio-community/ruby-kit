@@ -39,7 +39,7 @@ There are two ways to get a better understanding at the kit:
 This Ruby kit contains some mild differences or tips over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), which sets general information about how our kits work. They are listed here:
  * From the api object, getting a form is done through the `create_search_form` method; a basic querying therefore looks like this: `api.create_search_form("everything").query(%([[:d = at(document.type, "product")]])).ref(@ref).submit()`.
  * When calling the API, a faster way to pass the `ref`: directly as a parameter of the `submit` method (no need to use the `ref` method then): `api.create_search_form("everything").submit(@ref)`.
- * Accessing type-dependent fields from a `document` is done through a `fragments` hash (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document.fragments["title_user_friendly"].as_html(link_resolver(@ref)).html_safe`.
+ * Accessing type-dependent fields from a `document` is done through the `[]` operator (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document["title_user_friendly"].as_html(link_resolver(@ref)).html_safe`.
  * Two of the fields in the `DocumentLink` object (the one used to write your `link_resolver` method, for instance) were renamed to fit Ruby's best practice: `doc.type` is in fact `doc.link_type`, and `doc.isBroken` is in fact `doc.broken?`.
 
 #### Use it

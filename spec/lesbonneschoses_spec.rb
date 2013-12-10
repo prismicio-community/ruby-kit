@@ -34,4 +34,25 @@ describe 'LesBonnesChoses' do
 				.submit(@master_ref).size.should == 11
 		end		
 	end
+
+	describe 'API::Document' do
+		before do
+			@document = @api.create_search_form('everything').query(%([[:d = at(document.id, "UkL0gMuvzYUANCpf")]])).submit(@master_ref)[0]
+		end
+
+		it 'Operator [] works on document' do
+			@document['job-offer.name'].as_html(nil).should == '<h1>Pastry Dresser</h1>'
+		end
+
+		it 'Operator [] returns nil if wrong type' do
+			@document['product.name'].should == nil
+		end
+
+		it 'Operator [] raises error if field is nonsense' do
+			expect {
+				@document['blablabla']
+			}.to raise_error(ArgumentError, "Argument should contain one dot. Example: product.price")
+		end
+	end
+
 end
