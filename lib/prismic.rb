@@ -78,7 +78,7 @@ module Prismic
       @ref = ref
     end
 
-    def name
+    def form_name
       form.name
     end
 
@@ -86,19 +86,19 @@ module Prismic
       form.form_method
     end
 
-    def rel
+    def form_rel
       form.rel
     end
 
-    def enctype
+    def form_enctype
       form.enctype
     end
 
-    def action
+    def form_action
       form.action
     end
 
-    def fields
+    def form_fields
       form.fields
     end
 
@@ -116,12 +116,12 @@ module Prismic
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
 
-      if form_method == "GET" && enctype == "application/x-www-form-urlencoded"
+      if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
         data['ref'] = @ref
         data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
 
-        response = api.http_client.get(action, data, 'Accept' => 'application/json')
+        response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
         if response.code.to_s == "200"
           Prismic::JsonParser.results_parser(JSON.parse(response.body))
