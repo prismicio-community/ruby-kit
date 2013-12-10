@@ -13,7 +13,7 @@ module Prismic
     end
 
     # Return the full trace of the error (including nested errors)
-    # @param  e=self Parent error (don't use)
+    # @param [Exception] e Parent error (for internal use)
     #
     # @return [String] The trace
     def full_trace(e=self)
@@ -34,16 +34,19 @@ module Prismic
   #
   # The HTTP Client must responds to same method than {DefaultHTTPClient}.
   #
-  # @param url [String] The URL of the prismic.io repository
-  # @param [String] access_token The access token
-  # @param [Hash] opts The options
-  # @option opts [String] :access_token (nil) The access_token
-  # @option opts :http_client (DefaultHTTPClient) The HTTP client to use
-  #
-  # @overload api(url, opts=nil)
+  # @overload api(url)
+  #   Simpler syntax (no configuration)
+  #   @param [String] url The URL of the prismic.io repository
+  # @overload api(url, opts)
   #   Standard use
+  #   @param [String] url The URL of the prismic.io repository
+  #   @param [Hash] opts The options
+  #   @option opts [String] :access_token (nil) The access_token
+  #   @option opts :http_client (DefaultHTTPClient) The HTTP client to use
   # @overload api(url, access_token)
   #   Provide the access_token (only)
+  #   @param [String] url The URL of the prismic.io repository
+  #   @param [String] access_token The access token
   #
   # @return [API] The API instance related to this repository
   def self.api(url, opts=nil)
@@ -108,7 +111,7 @@ module Prismic
     #
     # @param  ref [Ref, String] The {Ref reference} to use (if not already defined)
     #
-    # @return [type] [description]
+    # @return [Array<Document>] The results
     def submit(ref = nil)
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
@@ -275,7 +278,7 @@ module Prismic
     end
   end
 
-  # Default HTTP client implementation, using the standard {Net::HTTP} library.
+  # Default HTTP client implementation, using the standard Net::HTTP library.
   module DefaultHTTPClient
     class << self
       # Performs a GET call and returns the result
