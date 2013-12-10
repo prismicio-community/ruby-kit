@@ -47,6 +47,15 @@ module Prismic
         }.join("\n\n")
       end
 
+      # Returns the StructuredText as plain text, with zero formatting.
+      # Non-textual blocks (like images and embeds) are simply ignored.
+      #
+      # @param separator [String] The string separator inserted between the blocks (a blank space by default)
+      # @return [String] The complete string representing the textual value of the StructuredText field.
+      def as_text(separator=' ')
+        blocks.map{|block| block.as_text }.compact.join(separator)
+      end
+
       # Finds the first highest title in a structured text
       def first_title
         max_level = 6 # any title with a higher level kicks the current one out
@@ -105,6 +114,15 @@ module Prismic
       end
 
       class Block
+
+        # Returns nil, as a block is not textual by default.
+        # This is meant to be overriden by textual blocks (see Prismic::Fragments::StructuredText::Block::Text.as_text, for instance)
+        #
+        # @return nil, always.
+        def as_text
+          nil
+        end
+
         class Text
           attr_accessor :text, :spans
 
@@ -138,6 +156,13 @@ module Prismic
               @end_spans = end_spans
             end
             [@start_spans, @end_spans]
+          end
+
+          # Zero-formatted textual value of the block.
+          #
+          # @return The textual value.
+          def as_text
+            @text
           end
         end
 
