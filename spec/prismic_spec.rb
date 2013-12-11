@@ -58,13 +58,28 @@ describe 'Api' do
     end
   end
 
-  describe 'form' do
+  describe 'forms' do
     it "return the right Form" do
-      @api.form('form2').name.should == 'form2'
+      @api.forms['form2'].name.should == 'form2'
     end
   end
 
   describe 'create_search_form' do
+    it "create a new search form for the right form" do
+      @form = @api.form('form2')
+      @form.form.name.should == 'form2'
+    end
+    it "store default value as simple value when the field is not repeatable" do
+      @form = @api.form('form2')
+      @form.data['param1'].should == 'value1'
+    end
+    it "store default value as array when the field is repeatable" do
+      @form = @api.form('form2')
+      @form.data['q'].should == ['[[any(document.type, [\"product\"])]]']
+    end
+  end
+
+  describe 'deprecated create_search_form' do
     it "create a new search form for the right form" do
       @form = @api.create_search_form('form2')
       @form.form.name.should == 'form2'

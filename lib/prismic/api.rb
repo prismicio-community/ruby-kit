@@ -38,10 +38,6 @@ module Prismic
       refs[name.downcase]
     end
 
-    def form(name)
-      forms[name]
-    end
-
     # Returns a {Prismic::SearchForm search form} by its name
     # @api
     # @param  name [String] The name of the form
@@ -49,10 +45,13 @@ module Prismic
     # @param  ref [type] Default {Ref reference}
     #
     # @return [SearchForm] The search form
-    def create_search_form(name, data={}, ref={})
-      form = self.form(name)
+    def form(name, data={}, ref={})
+      form = self.forms[name]
       form and form.create_search_form(data, ref)
     end
+
+    # @deprecated Use {#form} instead.
+    alias_method :create_search_form, :form
 
     def as_json
       @json
