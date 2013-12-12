@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Image
+    class Image < Fragment
       attr_accessor :main, :views
 
       def initialize(main, views)
@@ -25,7 +25,7 @@ module Prismic
 
       class ViewDoesNotExistException < Error ; end
 
-      class View
+      class View < Fragment
         attr_accessor :url, :width, :height, :alt, :copyright
 
         def initialize(url, width, height, alt, copyright)

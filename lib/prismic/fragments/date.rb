@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Date
+    class Date < Fragment
       attr_accessor :value
 
       def initialize(value)

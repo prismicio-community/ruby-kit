@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Link
+    class Link < Fragment
       def as_html(link_resolver=nil)
         %(<a href="#@url">#@url</a>)
       end

@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Embed
+    class Embed < Fragment
       attr_accessor :embed_type, :provider, :url, :html, :o_embed_json
 
       def initialize(embed_type, provider, url, html, o_embed_json)

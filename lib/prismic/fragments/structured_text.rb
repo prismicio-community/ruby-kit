@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class StructuredText
+    class StructuredText < Fragment
       class Group
         attr_reader :kind, :blocks
         def initialize(kind)
