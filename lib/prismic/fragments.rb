@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'prismic/fragments/fragment'
 require 'prismic/fragments/block'
 require 'prismic/fragments/color'
 require 'prismic/fragments/date'

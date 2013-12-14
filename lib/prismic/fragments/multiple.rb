@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Multiple
+    class Multiple < Fragment
       attr_reader :fragments
 
       def initialize(fragments=[])

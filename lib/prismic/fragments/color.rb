@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Prismic
   module Fragments
-    class Color
+    class Color < Fragment
       attr_accessor :value
 
       def initialize(value)

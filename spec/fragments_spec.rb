@@ -23,13 +23,23 @@ describe 'WebLink' do
       Nokogiri::XML(@web_link.as_html).child.content.should == 'my_url'
     end
   end
+
+  describe 'as_text' do
+    before do
+      @web_link = Prismic::Fragments::WebLink.new('my_url')
+    end
+    it 'raises an NotImplementedError' do
+      expect { @web_link.as_text }.to raise_error NotImplementedError
+    end
+  end
 end
 
 describe 'MediaLink' do
+  before do
+    @media_link = Prismic::Fragments::MediaLink.new('my_url')
+  end
+
   describe 'as_html' do
-    before do
-      @media_link = Prismic::Fragments::MediaLink.new('my_url')
-    end
 
     it "returns an <a> HTML element" do
       Nokogiri::XML(@media_link.as_html).child.name.should == 'a'
@@ -47,13 +57,20 @@ describe 'MediaLink' do
       Nokogiri::XML(@media_link.as_html).child.content.should == 'my_url'
     end
   end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @media_link.as_text }.to raise_error NotImplementedError
+    end
+  end
 end
 
 describe 'Text' do
+  before do
+    @text = Prismic::Fragments::Text.new('my_value')
+  end
+
   describe 'as_html' do
-    before do
-      @text = Prismic::Fragments::Text.new('my_value')
-    end
 
     it "returns a <span> HTML element" do
       Nokogiri::XML(@text.as_html).child.name.should == 'span'
@@ -72,13 +89,20 @@ describe 'Text' do
       @text.as_html.should =~ /^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$/
     end
   end
+
+  describe 'as_text' do
+    it 'return the value' do
+      @text.as_text.should == 'my_value'
+    end
+  end
 end
 
 describe 'Select' do
+  before do
+    @select = Prismic::Fragments::Select.new('my_value')
+  end
+
   describe 'as_html' do
-    before do
-      @select = Prismic::Fragments::Select.new('my_value')
-    end
 
     it "returns a <span> HTML element" do
       Nokogiri::XML(@select.as_html).child.name.should == 'span'
@@ -97,6 +121,12 @@ describe 'Select' do
       @select.as_html(nil).should =~ %r{^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$}
     end
   end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @select.as_text }.to raise_error NotImplementedError
+    end
+  end
 end
 
 describe 'Date' do
@@ -111,6 +141,12 @@ describe 'Date' do
 
     it "returns a HTML element whose content is the date in the ISO8601 format" do
       Nokogiri::XML(@date.as_html).child.content.should == '2013-08-07T11:13:07.000+02:00'
+    end
+  end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @date.as_text }.to raise_error NotImplementedError
     end
   end
 end
@@ -141,6 +177,12 @@ describe 'Number' do
 
     it "returns a HTML element whose content is the value" do
       Nokogiri::XML(@number.as_html).child.content.should == 10.2.to_s
+    end
+  end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @number.as_text }.to raise_error NotImplementedError
     end
   end
 end
@@ -213,6 +255,12 @@ describe 'Color' do
     end
   end
 
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @color.as_text }.to raise_error NotImplementedError
+    end
+  end
+
   describe 'self.valid?' do
     it "returns true if the color is valid" do
       Prismic::Fragments::Color.valid?(@hex_value).should be_true
@@ -268,6 +316,12 @@ describe 'Embed' do
       Nokogiri::XML(@embed.as_html).child.content.should == 'my_html'
     end
   end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @embed.as_text }.to raise_error NotImplementedError
+    end
+  end
 end
 
 describe 'Image::View' do
@@ -311,6 +365,12 @@ describe 'Image::View' do
     #   Nokogiri::XML(@view.as_html).child.attribute('alt').should == nil
     # end
   end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @view.as_text }.to raise_error NotImplementedError
+    end
+  end
 end
 
 describe 'Image' do
@@ -341,6 +401,12 @@ describe 'Image' do
       Nokogiri::XML(@image.as_html).child.attribute('width').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('width').value
       Nokogiri::XML(@image.as_html).child.attribute('height').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('height').value
       Nokogiri::XML(@image.as_html).child.attribute('alt').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('alt').value
+    end
+  end
+
+  describe 'as_text' do
+    it 'raises an NotImplementedError' do
+      expect { @image.as_text }.to raise_error NotImplementedError
     end
   end
 end
@@ -483,10 +549,6 @@ describe 'StructuredText::Hyperlink' do
       @hyperlink.start_html(@link_resolver).should == "<span>"
     end
   end
-end
-
-describe 'DocumentLink' do
-  describe 'as_html'
 end
 
 describe 'Multiple' do
