@@ -37,7 +37,7 @@ On our [prismic.io developer's portal](https://developers.prismic.io/), on top o
 
 #### Kit documentation
 
-To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://prismicio.github.io/ruby-kit/) (click on the "Class list" tab at the top-right)
+To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames)
 
 Need to see what changed, or to upgrade your kit? Check out [this kit's changelog](changelog.md).
 
