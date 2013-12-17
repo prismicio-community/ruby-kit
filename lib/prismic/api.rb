@@ -1,6 +1,7 @@
 # encoding: utf-8
 module Prismic
   class API
+    @@warned_create_search_form = false
     attr_reader :json, :access_token, :http_client
     attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
 
@@ -51,7 +52,13 @@ module Prismic
     end
 
     # @deprecated Use {#form} instead.
-    alias_method :create_search_form, :form
+    def create_search_form(name, data={}, ref={})
+      if !@@warned_create_search_form
+        warn "[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead."
+        @@warned_create_search_form = true
+      end
+      form(name, data, ref)
+    end
 
     def as_json
       @json
