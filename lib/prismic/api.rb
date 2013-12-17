@@ -1,6 +1,7 @@
 # encoding: utf-8
 module Prismic
   class API
+    @@warned_create_search_form = false
     attr_reader :json, :access_token, :http_client
     attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
 
@@ -38,10 +39,6 @@ module Prismic
       refs[name.downcase]
     end
 
-    def form(name)
-      forms[name]
-    end
-
     # Returns a {Prismic::SearchForm search form} by its name
     # @api
     # @param  name [String] The name of the form
@@ -49,9 +46,18 @@ module Prismic
     # @param  ref [type] Default {Ref reference}
     #
     # @return [SearchForm] The search form
-    def create_search_form(name, data={}, ref={})
-      form = self.form(name)
+    def form(name, data={}, ref={})
+      form = self.forms[name]
       form and form.create_search_form(data, ref)
+    end
+
+    # @deprecated Use {#form} instead.
+    def create_search_form(name, data={}, ref={})
+      if !@@warned_create_search_form
+        warn "[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead."
+        @@warned_create_search_form = true
+      end
+      form(name, data, ref)
     end
 
     def as_json
