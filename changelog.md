@@ -1,5 +1,11 @@
 ## Changelog for prismic.io Ruby development kit
 
+### prismic.io.1.0.0.preview.8 (in progress)
+
+#### Potentially breaking changes
+
+#### New features
+
 
 ### prismic.io.1.0.0.preview.7
 
