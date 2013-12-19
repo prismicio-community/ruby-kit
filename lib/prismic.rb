@@ -62,22 +62,23 @@ module Prismic
 
   # A SearchForm represent a Form returned by the prismic.io API.
   #
-  # These forms depend on the prismic.io repository, and can be fill and send
-  # in the same way than regular HTML forms.
+  # These forms depend on the prismic.io repository, and can be filled and sent
+  # as regular HTML forms.
   #
-  # Get SearchForm instance through the {API#create_search_form} method.
+  # You may get a SearchForm instance through the {API#form} method.
   #
   # The SearchForm instance contains helper methods for each predefined form's fields.
-  # Note that these methods are not be created if they risk to add confusion:
+  # Note that these methods are not created if they risk to add confusion:
   # - only letters, underscore and digits are authorized in the name
   # - name starting with a digit or an underscore are forbidden
   # - generated method can't override existing methods
   #
   # @example
-  #   search_form = api.create_search_form('everything')
+  #   search_form = api.form('everything')
   #   search_form.page(3)  # specify the field 'page'
   #   search_form.page_size("20")  # specify the 'page_size' field
   #   results = search_form.submit(master_ref)  # submit the search form
+  #   results = api.form('everything').page(3).page_size("20").submit(master_ref) # methods can be chained
   class SearchForm
     attr_accessor :api, :form, :data, :ref
 
