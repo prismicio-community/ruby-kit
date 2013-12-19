@@ -544,6 +544,9 @@ describe 'StructuredText::Hyperlink' do
     it "can generate valid link" do
       @hyperlink.start_html(@link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO">'
     end
+    it "raises an error when no link_resolver provided" do
+      expect { @hyperlink.start_html(nil) }.to raise_error
+    end
     it "can generate valid html for broken link" do
       @link.broken = true
       @hyperlink.start_html(@link_resolver).should == "<span>"
