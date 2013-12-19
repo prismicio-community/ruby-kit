@@ -2,6 +2,7 @@
 module Prismic
   module JsonParser
     class << self
+      @@warned_unknown_type = []
       def parsers
         @parsers ||= {
           'Link.document'  => method(:document_link_parser),
@@ -160,6 +161,17 @@ module Prismic
 
       def document_parser(json)
         data_json = json['data'].values.first  # {"doc_type": data}
+
+        # Removing the unknown types + sending a warning, once
+        data_json.select!{ |_, fragment|
+          known_type = fragment.is_a?(Array) || parsers.include?(fragment['type'])
+          if !known_type && !@@warned_unknown_type.include?(fragment['type'])
+            warn "Type #{fragment['type']} is unknown, fragment was skipped; perhaps you should update your prismic.io gem?"
+            @@warned_unknown_type << fragment['type']
+          end
+          known_type
+        }
+
         fragments = Hash[data_json.map { |name, fragment|
           if fragment.is_a? Array
             [name, multiple_parser(fragment)]
