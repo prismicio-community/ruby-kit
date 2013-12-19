@@ -5,7 +5,7 @@
 #### Potentially breaking changes
 
 #### New features
-
+ * Support for group fragments.
 
 ### prismic.io.1.0.0.preview.7
 
