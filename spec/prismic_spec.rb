@@ -81,6 +81,7 @@ describe 'Api' do
 
   describe 'deprecated create_search_form' do
     it "create a new search form for the right form" do
+      @api.should_receive(:warn).with("[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead.")
       @form = @api.create_search_form('form2')
       @form.form.name.should == 'form2'
     end
