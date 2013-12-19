@@ -568,3 +568,21 @@ describe 'Multiple' do
     end
   end
 end
+
+describe 'Group' do
+  before do
+    @micro_api = Prismic.api("https://micro.prismic.io/api", nil)
+    @master_ref = @micro_api.master_ref
+    @docchapter = @micro_api.form("everything").query(%([[:d = at(document.type, "docchapter")]])).submit(@master_ref)[0]
+    @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
+  end
+
+  it 'accesses fields the proper way' do
+    @docchapter['docchapter.docs'][0]['linktodoc'].link_type.should == 'doc'
+  end
+
+  it 'serializes towards HTML as expected' do
+    @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
+  end
+
+end
