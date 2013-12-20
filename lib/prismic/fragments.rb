@@ -1,9 +1,9 @@
 # encoding: utf-8
 require 'prismic/fragments/fragment'
-require 'prismic/fragments/block'
 require 'prismic/fragments/color'
 require 'prismic/fragments/date'
 require 'prismic/fragments/embed'
+require 'prismic/fragments/group'
 require 'prismic/fragments/image'
 require 'prismic/fragments/link'
 require 'prismic/fragments/multiple'

@@ -16,6 +16,7 @@ module Prismic
           'StructuredText' => method(:structured_text_parser),
           'Select'         => method(:select_parser),
           'Multiple'       => method(:multiple_parser),
+          'Group'          => method(:group_parser)
         }
       end
 
@@ -157,6 +158,15 @@ module Prismic
           parsers[fragment['type']].call(fragment)
         end
         Prismic::Fragments::Multiple.new(fragments)
+      end
+
+      def group_parser(json)
+        fragment_list_array = []
+        json['value'].each do |group|
+          fragments = Hash[ group.map {|name, fragment| [name, parsers[fragment['type']].call(fragment)] }]
+          fragment_list_array << Prismic::Fragments::Group::FragmentMapping.new(fragments)
+        end
+        Prismic::Fragments::Group.new(fragment_list_array)
       end
 
       def document_parser(json)

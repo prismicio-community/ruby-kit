@@ -544,6 +544,9 @@ describe 'StructuredText::Hyperlink' do
     it "can generate valid link" do
       @hyperlink.start_html(@link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO">'
     end
+    it "raises an error when no link_resolver provided" do
+      expect { @hyperlink.start_html(nil) }.to raise_error
+    end
     it "can generate valid html for broken link" do
       @link.broken = true
       @hyperlink.start_html(@link_resolver).should == "<span>"
@@ -564,4 +567,22 @@ describe 'Multiple' do
       @multiple.size.should == 2
     end
   end
+end
+
+describe 'Group' do
+  before do
+    @micro_api = Prismic.api("https://micro.prismic.io/api", nil)
+    @master_ref = @micro_api.master_ref
+    @docchapter = @micro_api.form("everything").query(%([[:d = at(document.type, "docchapter")]])).orderings('[my.docchapter.priority]').submit(@master_ref)[0]
+    @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
+  end
+
+  it 'accesses fields the proper way' do
+    @docchapter['docchapter.docs'][0]['linktodoc'].link_type.should == 'doc'
+  end
+
+  it 'serializes towards HTML as expected' do
+    @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
+  end
+
 end

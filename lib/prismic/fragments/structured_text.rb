@@ -2,7 +2,12 @@
 module Prismic
   module Fragments
     class StructuredText < Fragment
-      class Group
+
+      # Used during the call of {StructuredText#as_html} : blocks are first gathered by groups,
+      # so that list items of the same list are placed within the same group, allowing to frame
+      # their serialization with <ul>...</ul> or <ol>...</ol>.
+      # Images, paragraphs, headings, embed, ... are then placed alone in their own BlockGroup.
+      class BlockGroup
         attr_reader :kind, :blocks
         def initialize(kind)
           @kind = kind
@@ -18,7 +23,16 @@ module Prismic
         @blocks = blocks
       end
 
+      # Serializes the current StructuredText fragment into a fully usable HTML code.
+      # You need to pass a proper link_resolver so that internal links are turned into the proper URL in
+      # your website. If you use a starter kit, one is provided, that you can still update later.
+      #
+      # This method simply executes the as_html methods on blocks;
+      # it is not advised to override this method if you want to change the HTML output, you should
+      # override the as_html method at the block level (like {Heading.as_html}, or {Preformatted.as_html},
+      # for instance).
       def as_html(link_resolver)
+        # Defining blocks that deserve grouping, assigning them "group kind" names
         block_group = ->(block){
           case block
           when Block::ListItem
@@ -27,13 +41,16 @@ module Prismic
             nil
           end
         }
+        # Initializing groups, which is an array of BlockGroup objects
         groups, last = [], nil
         blocks.each {|block|
           group = block_group.(block)
-          groups << Group.new(group) if !last || group != last
+          groups << BlockGroup.new(group) if !last || group != last
           groups.last << block
           last = group
         }
+        # HTML-serializing the groups object (delegating the serialization of Block objects),
+        # without forgetting to frame the BlockGroup objects right if needed
         groups.map{|group|
           html = group.blocks.map{|b| b.as_html(link_resolver) }.join
           case group.kind
@@ -96,19 +113,18 @@ module Prismic
             "</strong>"
           end
         end
-
+        
         class Hyperlink < Span
           attr_accessor :link
           def initialize(start, finish, link)
             super(start, finish)
             @link = link
           end
-          def start_html(link_resolver)
-            # Quick-and-dirty way to generate the right <a> tag
-            link.as_html(link_resolver).sub(/(<[^>]+>).*/, '\1')
+          def start_html(link_resolver = nil)
+            link.start_html(link_resolver)
           end
           def end_html(link_resolver=nil)
-            "</a>"
+            link.end_html(link_resolver)
           end
         end
       end
