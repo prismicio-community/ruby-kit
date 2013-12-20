@@ -28,7 +28,7 @@ module Prismic
 				@fragment_list_array.map { |fl| fl.as_text }.join("\n")
 			end
 
-			class FragmentList
+			class FragmentMapping
 
 				# a hash containing all the fragments in the fragment list
 				attr_accessor :fragments
