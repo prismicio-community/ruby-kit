@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'spec_helper'
+
 describe 'document_link_parser' do
   before do
     raw_json = <<json
@@ -324,5 +326,17 @@ json
     multiple.size.should == 2
     multiple[0].class.should == Prismic::Fragments::Text
     multiple[0].class.should == Prismic::Fragments::Text
+  end
+end
+
+describe 'unknown_parser' do
+  before do
+    @raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document_with_unknown_fragment.json")
+    @json = JSON.parse(@raw_json)
+  end
+
+  it "raises the proper error" do
+    Prismic::JsonParser.should_receive(:warn).with("Type blabla is unknown, fragment was skipped; perhaps you should update your prismic.io gem?")
+    Prismic::JsonParser.document_parser(@json).fragments.size.should == 2
   end
 end

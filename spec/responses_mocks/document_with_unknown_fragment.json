@@ -1,0 +1,37 @@
+{
+  "id": "UdUkXt_mqZBObPeS",
+  "type": "product",
+  "href": "doc-url",
+  "tags": [
+    "Macaron"
+  ],
+  "slugs": [
+    "vanilla-macaron"
+  ],
+  "data": {
+    "product": {
+      "name": {
+        "type": "StructuredText",
+        "value": [
+          {
+          "type": "heading1",
+          "text": "Vanilla Macaron",
+          "spans": []
+        }
+        ]
+      },
+      "short_lede": {
+        "type": "blabla",
+        "value": "foo"
+      },
+      "short_lede2": {
+        "type": "blabla",
+        "value": "foo"
+      },
+      "allergens": {
+        "type": "Text",
+        "value": "Contains almonds, eggs, milk"
+      }
+    }
+  }
+}
