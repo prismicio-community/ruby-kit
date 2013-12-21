@@ -20,6 +20,10 @@ module Prismic
 				@fragment_list_array[i]
 			end
 
+			def each(&blk)
+				@fragment_list_array.each { |elem| yield(elem) }
+			end
+
 			def as_html(link_resolver = nil)
 				@fragment_list_array.map { |fl| fl.as_html(link_resolver) }.join("\n")
 			end
