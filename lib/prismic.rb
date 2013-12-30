@@ -43,6 +43,7 @@ module Prismic
   #   @param [Hash] opts The options
   #   @option opts [String] :access_token (nil) The access_token
   #   @option opts :http_client (DefaultHTTPClient) The HTTP client to use
+  #   @option opts :cache_class (false) The caching class (which must extend Prismic::Cache) to use, or false for no caching
   # @overload api(url, access_token)
   #   Provide the access_token (only)
   #   @param [String] url The URL of the prismic.io repository
@@ -166,7 +167,13 @@ module Prismic
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
 
-      if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
+      # cache_key is a mix of HTTP URL and HTTP method
+      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&') if api.cached?
+
+      if (api.cached? && api.cache.contains?(@ref, cache_key))
+        api.cache.get(@ref, cache_key) # if cache key exists for this ref, look no further
+
+      elsif form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
         data['ref'] = @ref
         data['access_token'] = api.access_token if api.access_token
         data.delete_if { |k, v| v.nil? }
@@ -174,7 +181,9 @@ module Prismic
         response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
         if response.code.to_s == "200"
-          Prismic::JsonParser.results_parser(JSON.parse(response.body))
+          results = Prismic::JsonParser.results_parser(JSON.parse(response.body))
+          api.cache.add(@ref, cache_key, results, api) if api.cached? # add cache entry before returning it
+          results
         else
           body = JSON.parse(response.body) rescue nil
           error = body.is_a?(Hash) ? body['error'] : response.body
@@ -377,3 +386,4 @@ require 'prismic/api'
 require 'prismic/form'
 require 'prismic/fragments'
 require 'prismic/json_parsers'
+require 'prismic/cache'

@@ -1,9 +1,21 @@
 # encoding: utf-8
+
 module Prismic
   class API
+    @@cache = nil
     @@warned_create_search_form = false
     attr_reader :json, :access_token, :http_client
     attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
+
+    # Is the cache enabled on this API object?
+    #
+    # @return [Boolean]
+    attr_accessor :cached
+
+    # An alias to know if the cache is enabled on this API object
+    def cached?
+      @cached
+    end
 
     # Returns the master {Ref reference}
     # @api
@@ -12,13 +24,20 @@ module Prismic
     attr_accessor :master
     alias :master_ref :master
 
-    def initialize(json, access_token, http_client)
+    def initialize(json, access_token, http_client, cache_class=false)
       @json = json
       @access_token = access_token
       @http_client = http_client
       yield self if block_given?
+      @cached = !!cache_class
+      @@cache ||= cache_class.new if cached?
       self.master = refs.values && refs.values.map { |ref| ref if ref.master? }.compact.first
       raise BadPrismicResponseError, "No master Ref found" unless master
+    end
+
+    # Exposing the class variable as an instance method, so we don't need to require Prismic::API to have it work from an API object.
+    def cache
+      @@cache
     end
 
     # Get a bookmark by its name
@@ -75,15 +94,16 @@ module Prismic
     def self.start(url, opts={})
       http_client = opts[:http_client] || Prismic::DefaultHTTPClient
       access_token = opts[:access_token]
+      cache_class = opts[:cache_class] || false
       resp = get(url, access_token, http_client)
       json = JSON.load(resp.body)
-      parse_api_response(json, access_token, http_client)
+      parse_api_response(json, access_token, http_client, cache_class)
     end
 
-    def self.parse_api_response(data, access_token, http_client)
+    def self.parse_api_response(data, access_token, http_client, cache_class=false)
       data_forms = data['forms'] || []
       data_refs = data.fetch('refs'){ raise BadPrismicResponseError, "No refs given" }
-      new(data, access_token, http_client) {|api|
+      new(data, access_token, http_client, cache_class) {|api|
         api.bookmarks = data['bookmarks']
         api.forms = Hash[data_forms.map { |k, form|
           [k, Form.new(
