@@ -586,9 +586,9 @@ describe 'Group' do
   end
 
   it 'loops through the group fragment properly' do
-    output = ""
-    @docchapter['docchapter.docs'].each { |group| output << group['linktodoc'].slug + ' ' }
-    output.should == 'with-jquery with-bootstrap '
+    output = []
+    @docchapter['docchapter.docs'].each { |group| output << group['linktodoc'].slug }
+    output.join(' ').should == "with-jquery with-bootstrap"
   end
 
 end
