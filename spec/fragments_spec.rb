@@ -585,4 +585,14 @@ describe 'Group' do
     @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
   end
 
+  it 'loops through the group fragment properly' do
+    @docchapter['docchapter.docs'].to_array
+      .map{ |fragments| fragments['linktodoc'].slug }
+      .join(' ').should == "with-jquery with-bootstrap"
+  end
+
+  it 'loops through the subfragment list properly' do
+    @docchapter['docchapter.docs'][0].to_hash.keys.join(" ").should == "linktodoc"
+  end
+
 end
