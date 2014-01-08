@@ -4,53 +4,73 @@
 [![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
 [![Code Climate](https://codeclimate.com/github/prismicio/ruby-kit.png)](https://codeclimate.com/github/prismicio/ruby-kit)
 
-### Getting Started with the gem
+### Getting Started
 
-#### Install using bundler
+#### Install the kit for your project
 
-You can this line in your Gemfile:
+*(Assuming that [Ruby is installed](https://www.ruby-lang.org/en/downloads/) on your computer, as well as [RubyGems](http://rubygems.org/pages/download))*
+
+
+To install the gem on your computer, run in shell:
+
+```sh
+gem install prismic.io --pre
+```
+then add in your code:
+```ruby
+require 'prismic'
+```
+
+To add the gem as a dependency to your project with [Bundler](http://bundler.io/), you can add this line in your Gemfile:
 
 ```ruby
 gem 'prismic.io', require: 'prismic'
 ```
 
-#### Install manually
+#### Get started with prismic.io
 
-Run in shell:
+You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
 
-```sh
-gem install prismic.io --pre
-```
+#### Get started using the kit
 
-then add in your code:
+Also on our [prismic.io developer's portal](https://developers.prismic.io/), on top of our full documentation, you will:
+ * get a thorough introduction of [how to use prismic.io kits](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one.
+ * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby): starter projects, examples, ...
 
-```ruby
-require 'prismic'
-```
+#### Kit's detailed documentation
 
-#### Getting started with prismic.io
+To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames).
 
-On our [prismic.io developer's portal](https://developers.prismic.io/), on top of the complete documentation, you will:
- * get a better understanding of [what prismic.io is and how to get started with it](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started).
- * get a thorough understanding of [how prismic.io kits work](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one. There's a couple of specificities for Ruby's case, described below.
- * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby).
-
-#### Kit documentation
-
-To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames)
-
-Need to see what changed, or to upgrade your kit? Check out [this kit's changelog](changelog.md).
-
-##### Ruby kit's specificities
-
-This Ruby kit contains some mild differences and syntastic sugar over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers) (which you should read first). They are listed here:
+Thanks to Ruby's syntax, this kit contains some mild differences and syntastic sugar over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers) in general (which you should read first). They are listed here:
  * When calling the API, a faster way to pass the `ref`: directly as a parameter of the `submit` method (no need to use the `ref` method then): `api.form("everything").submit(@ref)`.
  * Accessing type-dependent fields from a `document` is done through the `[]` operator (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document["title_user_friendly"].as_html(link_resolver(@ref))`.
  * Two of the fields in the `DocumentLink` object (the one used to write your `link_resolver` method, for instance) were renamed to fit Ruby's best practice: `doc.type` is in fact `doc.link_type`, and `doc.isBroken` is in fact `doc.broken?`.
 
-#### Use it
+### Changelog
 
-You can look at the [rails starter](https://github.com/prismicio/ruby-rails-starter) project to see how to use it :-)
+Need to see what changed, or to upgrade your kit? Check out [this kit's changelog](changelog.md).
+
+### Contribute to the kit
+
+Contribution is open to all developer levels, read our "[Contribute to the official kits](https://developers.prismic.io/documentation/UszOeAEAANUlwFpp/contribute-to-the-official-kits)" documentation to learn more.
+
+#### Install the kit locally
+
+Of course, you're going to need [Ruby installed](https://www.ruby-lang.org/en/downloads/) on your computer, as well as [RubyGems](http://rubygems.org/pages/download) and [Bundler](http://bundler.io/).
+
+Clone the kit, then run ```bundle install```.
+
+#### Test
+
+Please write tests for any bugfix or new feature, by placing your tests in the [spec/](spec/) folder, following the [RSpec](http://rspec.info/) syntax. Launch the tests by running ```bundle exec rspec```
+
+If you find existing code that is not optimally tested and wish to make it better, we really appreciate it; but you should document it on its own branch and its own pull request.
+
+#### Documentation
+
+Please document any bugfix or new feature, using the [Yard](http://yardoc.org/) syntax. Don't worry about generating the doc, we'll take care of that.
+
+If you find existing code that is not optimally documented and wish to make it better, we really appreciate it; but you should document it on its own branch and its own pull request.
 
 ### Licence
 
