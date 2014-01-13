@@ -14,6 +14,11 @@ module Prismic
       def as_html(link_resolver=nil)
         %(#{start_html(link_resolver)}#@url#{end_html(link_resolver)})
       end
+
+      def url(link_resolver=nil)
+        @url
+      end
+
     end
 
     class WebLink < Link
@@ -44,8 +49,7 @@ module Prismic
       end
 
       def start_html(link_resolver)
-        raise "A link_resolver method is needed to serialize document links into a correct URL on your website. If you're using a starter kit, a trivial one is provided out-of-the-box, that you can update later." if link_resolver == nil
-        broken? ? %(<span>) : %(<a href="#{link_resolver.link_to(self)}">)
+        broken? ? %(<span>) : %(<a href="#{self.url(link_resolver)}">)
       end
 
       def end_html(link_resolver = nil)
@@ -54,6 +58,11 @@ module Prismic
 
       def as_html(link_resolver=nil)
         %(#{start_html(link_resolver)}#{slug}#{end_html(link_resolver)})
+      end
+
+      def url(link_resolver)
+        raise "A link_resolver method is needed to serialize document links into a correct URL on your website. If you're using a starter kit, a trivial one is provided out-of-the-box, that you can update later." if link_resolver == nil
+        link_resolver.link_to(self)
       end
 
       alias :broken? :broken
