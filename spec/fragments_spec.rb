@@ -34,35 +34,48 @@ describe 'WebLink' do
   end
 end
 
-describe 'MediaLink' do
+describe 'ImageLink' do
   before do
-    @media_link = Prismic::Fragments::MediaLink.new('my_url')
+    @image_link = Prismic::Fragments::ImageLink.new('my_url')
   end
 
   describe 'as_html' do
 
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@media_link.as_html).child.name.should == 'a'
+      Nokogiri::XML(@image_link.as_html).child.name.should == 'a'
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@media_link.as_html).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@image_link.as_html).child.has_attribute?('href').should be_true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@media_link.as_html).child.attribute('href').value.should == 'my_url'
+      Nokogiri::XML(@image_link.as_html).child.attribute('href').value.should == 'my_url'
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@media_link.as_html).child.content.should == 'my_url'
+      Nokogiri::XML(@image_link.as_html).child.content.should == 'my_url'
     end
   end
 
   describe 'as_text' do
     it 'raises an NotImplementedError' do
-      expect { @media_link.as_text }.to raise_error NotImplementedError
+      expect { @image_link.as_text }.to raise_error NotImplementedError
     end
   end
+end
+
+describe 'FileLink' do
+	describe 'in structured texts' do
+		before do
+			@raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_linkfile.json")
+			@json_structured_text = JSON.parse(@raw_json_structured_text)
+			@structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+		end
+		it 'serializes well into HTML' do
+			@structured_text.as_html(nil).should == "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</p>"
+		end
+	end
 end
 
 describe 'Text' do

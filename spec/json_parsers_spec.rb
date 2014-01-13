@@ -199,6 +199,34 @@ json
   end
 end
 
+describe 'file_link_parser' do
+  before do
+    raw_json = <<json
+    {
+      "type": "Link.file",
+      "value": {
+        "file": {
+          "name": "2012_annual.report.pdf",
+          "kind": "document",
+          "url": "https://prismic-io.s3.amazonaws.com/annual.report.pdf",
+          "size": "1282484"
+        }
+      }
+    }
+json
+    @json = JSON.parse(raw_json)
+    @link_file = Prismic::JsonParser.file_link_parser(@json)
+  end
+
+  it 'correctly parses file links' do
+    @link_file.url.should == "https://prismic-io.s3.amazonaws.com/annual.report.pdf"
+    @link_file.kind.should == "document"
+    @link_file.name.should == "2012_annual.report.pdf"
+    @link_file.size.should == "1282484"
+    @link_file.as_html.should == "<a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012_annual.report.pdf</a>"
+  end
+end
+
 describe 'structured_text_parser' do
   before do
     raw_json_paragraph = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
