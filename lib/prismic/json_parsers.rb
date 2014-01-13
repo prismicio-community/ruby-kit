@@ -8,6 +8,8 @@ module Prismic
           'Link.document'  => method(:document_link_parser),
           'Text'           => method(:text_parser),
           'Link.web'       => method(:web_link_parser),
+          'Link.image'       => method(:image_link_parser),
+          'Link.file'       => method(:file_link_parser),
           'Date'           => method(:date_parser),
           'Number'         => method(:number_parser),
           'Embed'          => method(:embed_parser),
@@ -28,6 +30,14 @@ module Prismic
           doc['tags'],
           doc['slug'],
           json['value']['isBroken'])
+      end
+
+      def image_link_parser(json)
+        Prismic::Fragments::ImageLink.new(json['value']['image']['url'])
+      end
+
+      def file_link_parser(json)
+        Prismic::Fragments::FileLink.new(json['value']['file']['url'], json['value']['file']['name'], json['value']['file']['kind'], json['value']['file']['size'])
       end
 
       def text_parser(json)
@@ -209,6 +219,10 @@ module Prismic
           document_link_parser(json)
         elsif json['type'] == 'Link.web'
           web_link_parser(json)
+        elsif json['type'] == 'Link.image'
+          image_link_parser(json)
+        elsif json['type'] == 'Link.file'
+          file_link_parser(json)
         end
       end
     end

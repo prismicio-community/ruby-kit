@@ -29,7 +29,23 @@ module Prismic
       end
     end
 
-    class MediaLink < Link
+    class FileLink < Link
+      attr_accessor :url, :name, :kind, :size
+
+      def initialize(url, name, kind, size)
+        @url = url
+        @name = name
+        @kind = kind
+        @size = size
+      end
+
+      def as_html(link_resolver=nil)
+        %(#{start_html(link_resolver)}#@name#{end_html(link_resolver)})
+      end
+
+    end
+
+    class ImageLink < Link
       attr_accessor :url
 
       def initialize(url)
