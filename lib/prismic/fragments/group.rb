@@ -28,6 +28,28 @@ module Prismic
 				@fragment_list_array.map { |fl| fl.as_text }.join("\n")
 			end
 
+			# Functions to manipulate the array
+
+			# Loops within the array
+			def each(&blk)
+				@fragment_list_array.each { |elem| yield(elem) }
+			end
+
+			# Maps the array
+			def map(&blk)
+				@fragment_list_array.map { |elem| yield(elem) }
+			end
+
+			# Returns the length of the array
+			def length
+				@fragment_list_array.length
+			end
+
+			# Checks if the array is empty
+			def empty?
+				@fragment_list_array.empty?
+			end
+
 			class FragmentMapping
 
 				# a hash containing all the fragments in the fragment list

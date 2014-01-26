@@ -598,4 +598,10 @@ describe 'Group' do
     @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
   end
 
+  it 'loops through the group fragment properly' do
+    output = []
+    @docchapter['docchapter.docs'].each { |group| output << group['linktodoc'].slug }
+    output.join(' ').should == "with-jquery with-bootstrap"
+  end
+
 end
