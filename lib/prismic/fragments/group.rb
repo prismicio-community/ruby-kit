@@ -28,6 +28,11 @@ module Prismic
 				@fragment_list_array.map { |fl| fl.as_text }.join("\n")
 			end
 
+			# Allows to manipulate the Group like an array, and to do things like group.to_array.map{|fragments| ..... }
+			def to_array
+				@fragment_list_array
+			end
+
 			class FragmentMapping
 
 				# a hash containing all the fragments in the fragment list
@@ -50,6 +55,11 @@ module Prismic
 
 				def as_text
 					@fragments.values.map { |fragment| fragment.as_text }.join("\n")
+				end
+
+				# Allows to manipulate the FragmentMapping like a Hash and to do things like fragments.each{|k,v| ... }
+				def to_hash
+					@fragments
 				end
 			end
 		end
