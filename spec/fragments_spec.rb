@@ -598,4 +598,23 @@ describe 'Group' do
     @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
   end
 
+  it 'loops through the group fragment properly' do
+    @docchapter['docchapter.docs']
+      .map{ |fragments| fragments['linktodoc'].slug }
+      .join(' ').should == "with-jquery with-bootstrap"
+  end
+
+  it 'returns the proper length of a group fragment' do
+    @docchapter['docchapter.docs'].length.should == 2
+  end
+
+  it 'loops through the subfragment list properly' do
+    @docchapter['docchapter.docs'][0].count.should == 1
+    @docchapter['docchapter.docs'][0].first[0].should == "linktodoc"
+  end
+
+  it 'returns the proper length of the sunfragment list' do
+    @docchapter['docchapter.docs'][0].length.should == 1
+  end
+
 end
