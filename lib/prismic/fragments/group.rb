@@ -20,6 +20,16 @@ module Prismic
 				@fragment_list_array[i]
 			end
 
+			def each(&blk)
+				@fragment_list_array.each(&blk)
+			end
+			include Enumerable  # adds map, select, etc
+
+			def length
+				@fragment_list_array.length
+			end
+			alias :size :length
+
 			def as_html(link_resolver = nil)
 				@fragment_list_array.map { |fl| fl.as_html(link_resolver) }.join("\n")
 			end
@@ -27,6 +37,7 @@ module Prismic
 			def as_text
 				@fragment_list_array.map { |fl| fl.as_text }.join("\n")
 			end
+
 
 			class FragmentMapping
 
@@ -41,6 +52,16 @@ module Prismic
 				def [](name)
 					@fragments[name]
 				end
+
+				def each(&blk)
+					@fragments.each(&blk)
+				end
+				include Enumerable  # adds map, select, etc
+
+				def length
+					@fragments.length
+				end
+				alias :size :length
 
 				def as_html(link_resolver = nil)
 					@fragments.map { |name, fragment|
