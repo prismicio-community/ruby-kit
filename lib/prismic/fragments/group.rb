@@ -28,6 +28,7 @@ module Prismic
 			def length
 				@fragment_list_array.length
 			end
+			alias :size :length
 
 			def as_html(link_resolver = nil)
 				@fragment_list_array.map { |fl| fl.as_html(link_resolver) }.join("\n")
@@ -60,6 +61,7 @@ module Prismic
 				def length
 					@fragments.length
 				end
+				alias :size :length
 
 				def as_html(link_resolver = nil)
 					@fragments.map { |name, fragment|

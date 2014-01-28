@@ -606,6 +606,7 @@ describe 'Group' do
 
   it 'returns the proper length of a group fragment' do
     @docchapter['docchapter.docs'].length.should == 2
+    @docchapter['docchapter.docs'].size.should == 2
   end
 
   it 'loops through the subfragment list properly' do
@@ -615,6 +616,7 @@ describe 'Group' do
 
   it 'returns the proper length of the sunfragment list' do
     @docchapter['docchapter.docs'][0].length.should == 1
+    @docchapter['docchapter.docs'][0].size.should == 1
   end
 
 end
