@@ -60,7 +60,7 @@ module Prismic
         @url = url
       end
 
-      def url(link_resolver)
+      def url(link_resolver=nil)
         @url
       end
     end
