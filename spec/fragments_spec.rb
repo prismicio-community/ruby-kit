@@ -2,11 +2,10 @@
 require 'spec_helper'
 
 describe 'WebLink' do
-  describe 'as_html' do
-    before do
+  before do
       @web_link = Prismic::Fragments::WebLink.new('my_url')
-    end
-
+  end
+  describe 'as_html' do
     it "returns an <a> HTML element" do
       Nokogiri::XML(@web_link.as_html).child.name.should == 'a'
     end
@@ -25,11 +24,32 @@ describe 'WebLink' do
   end
 
   describe 'as_text' do
-    before do
-      @web_link = Prismic::Fragments::WebLink.new('my_url')
-    end
     it 'raises an NotImplementedError' do
       expect { @web_link.as_text }.to raise_error NotImplementedError
+    end
+  end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @web_link.url(@link_resolver).should == 'my_url'
+    end
+  end
+end
+
+describe 'DocumentLink' do
+  before do
+    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", "product", ["Macaron"], "dark-chocolate-macaron", false)
+  end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @document_link.url(@link_resolver).should == 'http://localhost/UdUjvt_mqVNObPeO'
     end
   end
 end
@@ -61,6 +81,15 @@ describe 'ImageLink' do
   describe 'as_text' do
     it 'raises an NotImplementedError' do
       expect { @image_link.as_text }.to raise_error NotImplementedError
+    end
+  end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @image_link.url(@link_resolver).should == 'my_url'
     end
   end
 end
