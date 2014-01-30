@@ -15,6 +15,11 @@ module Prismic
         %(#{start_html(link_resolver)}#@url#{end_html(link_resolver)})
       end
 
+      # Returns the URL of the link
+      #
+      # @abstract See {WebLink#url}, {FileLink#url}, {ImageLink#url} or {DocumentLink#url}
+      #
+      # @param link_resolver [LinkResolver] The link resolver
       def url(link_resolver = nil)
         raise NotImplementedError, "Method #{__method__} is not implemented for #{inspect}", caller
       end
@@ -28,6 +33,14 @@ module Prismic
         @url = url
       end
 
+      # Returns the URL of the link
+      #
+      # @note The link_resolver parameter is accepted but it is not used by
+      #       this method, so not providing it is perfectly fine.
+      #
+      # @see Link#url
+      #
+      # @param link_resolver [LinkResolver] The link resolver
       def url(link_resolver = nil)
         @url
       end
@@ -47,6 +60,14 @@ module Prismic
         %(#{start_html(link_resolver)}#@name#{end_html(link_resolver)})
       end
 
+      # Returns the URL of the link
+      #
+      # @note The link_resolver parameter is accepted but it is not used by
+      #       this method, so not providing it is perfectly fine.
+      #
+      # @see Link#url
+      #
+      # @param link_resolver [LinkResolver]
       def url(link_resolver = nil)
         @url
       end
@@ -60,6 +81,14 @@ module Prismic
         @url = url
       end
 
+      # Returns the URL of the link
+      #
+      # @note The link_resolver parameter is accepted but it is not used by
+      #       this method, so not providing it is perfectly fine.
+      #
+      # @see Link#url
+      #
+      # @param link_resolver [LinkResolver]
       def url(link_resolver=nil)
         @url
       end
@@ -88,6 +117,13 @@ module Prismic
         %(#{start_html(link_resolver)}#{slug}#{end_html(link_resolver)})
       end
 
+      # Returns the URL of the link
+      #
+      # @overload url(link_resolver)
+      #
+      # @see Link#url
+      #
+      # @param link_resolver [LinkResolver]
       def url(link_resolver = nil)
         raise "A link_resolver method is needed to serialize document links into a correct URL on your website. If you're using a starter kit, a trivial one is provided out-of-the-box, that you can update later." if link_resolver == nil
         link_resolver.link_to(self)
