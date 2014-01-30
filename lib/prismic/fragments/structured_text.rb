@@ -100,7 +100,7 @@ module Prismic
           def start_html(link_resolver=nil)
             "<em>"
           end
-          def end_html(link_resolver=nil)
+          def end_html
             "</em>"
           end
         end
@@ -109,7 +109,7 @@ module Prismic
           def start_html(link_resolver=nil)
             "<strong>"
           end
-          def end_html(link_resolver=nil)
+          def end_html
             "</strong>"
           end
         end
@@ -123,8 +123,8 @@ module Prismic
           def start_html(link_resolver = nil)
             link.start_html(link_resolver)
           end
-          def end_html(link_resolver=nil)
-            link.end_html(link_resolver)
+          def end_html
+            link.end_html
           end
         end
       end
@@ -154,7 +154,7 @@ module Prismic
                 span.start_html(link_resolver)
               }
               closing = end_spans[i].map {|span|
-                span.end_html(link_resolver)
+                span.end_html
               }
               opening + closing + [CGI::escapeHTML(c)]
             }.flatten.join("")

@@ -7,12 +7,12 @@ module Prismic
         %(<a href="#@url">)
       end
 
-      def end_html(link_resolver = nil)
+      def end_html
         %(</a>)
       end
 
       def as_html(link_resolver=nil)
-        %(#{start_html(link_resolver)}#@url#{end_html(link_resolver)})
+        %(#{start_html(link_resolver)}#@url#{end_html})
       end
 
       # Returns the URL of the link
@@ -57,7 +57,7 @@ module Prismic
       end
 
       def as_html(link_resolver=nil)
-        %(#{start_html(link_resolver)}#@name#{end_html(link_resolver)})
+        %(#{start_html(link_resolver)}#@name#{end_html})
       end
 
       # Returns the URL of the link
@@ -109,12 +109,12 @@ module Prismic
         broken? ? %(<span>) : %(<a href="#{self.url(link_resolver)}">)
       end
 
-      def end_html(link_resolver = nil)
+      def end_html
         broken? ? %(</span>) : %(</a>)
       end
 
       def as_html(link_resolver=nil)
-        %(#{start_html(link_resolver)}#{slug}#{end_html(link_resolver)})
+        %(#{start_html(link_resolver)}#{slug}#{end_html})
       end
 
       # Returns the URL of the link
