@@ -15,8 +15,8 @@ module Prismic
         %(#{start_html(link_resolver)}#@url#{end_html(link_resolver)})
       end
 
-      def url(link_resolver=nil)
-        @url
+      def url(link_resolver = nil)
+        raise NotImplementedError, "Method #{__method__} is not implemented for #{inspect}", caller
       end
 
     end
@@ -26,6 +26,10 @@ module Prismic
 
       def initialize(url)
         @url = url
+      end
+
+      def url(link_resolver = nil)
+        @url
       end
     end
 
@@ -43,6 +47,10 @@ module Prismic
         %(#{start_html(link_resolver)}#@name#{end_html(link_resolver)})
       end
 
+      def url(link_resolver = nil)
+        @url
+      end
+
     end
 
     class ImageLink < Link
@@ -50,6 +58,10 @@ module Prismic
 
       def initialize(url)
         @url = url
+      end
+
+      def url(link_resolver)
+        @url
       end
     end
 
@@ -76,7 +88,7 @@ module Prismic
         %(#{start_html(link_resolver)}#{slug}#{end_html(link_resolver)})
       end
 
-      def url(link_resolver)
+      def url(link_resolver = nil)
         raise "A link_resolver method is needed to serialize document links into a correct URL on your website. If you're using a starter kit, a trivial one is provided out-of-the-box, that you can update later." if link_resolver == nil
         link_resolver.link_to(self)
       end
