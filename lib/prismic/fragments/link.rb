@@ -106,11 +106,11 @@ module Prismic
       end
 
       def start_html(link_resolver)
-        broken? ? %(<span>) : %(<a href="#{self.url(link_resolver)}">)
+        broken? ? %(<span>) : super
       end
 
       def end_html
-        broken? ? %(</span>) : %(</a>)
+        broken? ? %(</span>) : super
       end
 
       def as_html(link_resolver=nil)
