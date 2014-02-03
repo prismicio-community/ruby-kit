@@ -48,7 +48,7 @@ Thanks to Ruby's syntax, this kit contains some mild differences and syntastic s
 
 ### Changelog
 
-Need to see what changed, or to upgrade your kit? Check out [this kit's changelog](changelog.md).
+Need to see what changed, or to upgrade your kit? We keep our changelog on [this repository's "Releases" tab](https://github.com/prismicio/ruby-kit/releases).
 
 ### Contribute to the kit
 
