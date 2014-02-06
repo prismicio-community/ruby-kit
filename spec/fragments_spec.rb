@@ -95,16 +95,29 @@ describe 'ImageLink' do
 end
 
 describe 'FileLink' do
-	describe 'in structured texts' do
-		before do
-			@raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_linkfile.json")
-			@json_structured_text = JSON.parse(@raw_json_structured_text)
-			@structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
-		end
-		it 'serializes well into HTML' do
-			@structured_text.as_html(nil).should == "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</p>"
-		end
-	end
+  describe 'in structured texts' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_linkfile.json")
+      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should == "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</p>"
+    end
+  end
+end
+
+describe 'Spans' do
+  describe 'in structured texts' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_with_tricky_spans.json")
+      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should == "<h3><strong>Powering Through 2013 </strong></h3>\n\n<h3><strong>Online Resources:</strong></h3>\n\n<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
+    end
+  end
 end
 
 describe 'Text' do

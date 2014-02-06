@@ -1,0 +1,44 @@
+{
+	"type": "StructuredText",
+	"value" : [
+		{
+			"type" : "heading3",
+			"text" : "Powering Through 2013 ",
+			"spans" : [
+				{
+					"start": 0, 
+					"end": 22,
+					"type": "strong"
+				}
+			]
+		},
+		{
+			"type" : "heading3",
+			"text" : "Online Resources:",
+			"spans" : [
+				{
+					"start": 0, 
+					"end": 17,
+					"type": "strong"
+				}
+			]
+		},
+		{
+			"type" : "list-item",
+			"text" : "Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog here",
+			"spans" : [
+				{
+					"start" : 103,
+					"end" : 106,
+					"type" : "hyperlink",
+					"data" : {
+						"type" : "Link.web",
+						"value" : {
+							"url" : "http://prismic.io"
+						}
+					}
+				}
+			]
+		}
+	]
+}
