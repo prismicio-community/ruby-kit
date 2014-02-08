@@ -28,7 +28,7 @@
 			"text" : "Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog here",
 			"spans" : [
 				{
-					"start" : 103,
+					"start" : 102,
 					"end" : 106,
 					"type" : "hyperlink",
 					"data" : {
