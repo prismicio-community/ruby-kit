@@ -16,8 +16,6 @@ module Prismic
     # keys in the inner Hash are the query strings (URLs) of each query.
     # The object that is stored as a cache_object is what is returned by Prismic::JsonParser::results_parser
     # (so that we don't have to parse anything again, it's stored already parsed).
-    # 
-    # @api
     #
     # @return [Hash[Hash[Object]]]
     attr_accessor :resultscache
