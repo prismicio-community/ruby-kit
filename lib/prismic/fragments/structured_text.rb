@@ -154,19 +154,22 @@ module Prismic
             all_cuts = (start_spans.keys | end_spans.keys).sort
 
             # Initializing the browsing of the string
-            output = ""
+            output = []
             cursor = 0
 
             # Taking each text cut and inserting the closing tags and the opening tags if needed
             all_cuts.each do |cut|
               output << CGI::escapeHTML(text[cursor, cut-cursor])
-              output << end_spans[cut].map{|span| span.end_html}.join
-              output << start_spans[cut].map{|span| span.start_html(link_resolver)}.join
+              output << end_spans[cut].map{|span| span.end_html} # this pushes an array into the array; we'll need to flatten later
+              output << start_spans[cut].map{|span| span.start_html(link_resolver)} # this pushes an array into the array; we'll need to flatten later
               cursor = cut # cursor is now where the cut was
             end
 
             # Inserting what's left of the string, if there is something
             output << text[cursor..-1]
+
+            # Making the array into a string
+            output.flatten.join
 
           end
 
