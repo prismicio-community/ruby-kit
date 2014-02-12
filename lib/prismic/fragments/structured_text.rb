@@ -144,22 +144,38 @@ module Prismic
 
           def initialize(text, spans)
             @text = text
-            @spans = spans
+            @spans = spans.select{|span| span.start < span.end}
           end
 
           def as_html(link_resolver=nil)
+            # Getting Hashes of spanning tags to insert, sorted by starting position, and by ending position
             start_spans, end_spans = prepare_spans
-            text.chars.each_with_index.map {|c, i|
-              opening = start_spans[i].map {|span|
-                span.start_html(link_resolver)
-              }
-              closing = end_spans[i].map {|span|
-                span.end_html
-              }
-              opening + closing + [CGI::escapeHTML(c)]
-            }.flatten.join("")
+            # All the positions in which we'll have to insert an opening or closing tag
+            all_cuts = (start_spans.keys | end_spans.keys).sort
+
+            # Initializing the browsing of the string
+            output = []
+            cursor = 0
+
+            # Taking each text cut and inserting the closing tags and the opening tags if needed
+            all_cuts.each do |cut|
+              output << CGI::escapeHTML(text[cursor, cut-cursor])
+              output << end_spans[cut].map{|span| span.end_html} # this pushes an array into the array; we'll need to flatten later
+              output << start_spans[cut].map{|span| span.start_html(link_resolver)} # this pushes an array into the array; we'll need to flatten later
+              cursor = cut # cursor is now where the cut was
+            end
+
+            # Inserting what's left of the string, if there is something
+            output << text[cursor..-1]
+
+            # Making the array into a string
+            output.flatten.join
+
           end
 
+          # Building two span Hashes:
+          #  * start_spans, with the starting positions as keys, and spans as values
+          #  * end_spans, with the ending positions as keys, and spans as values
           def prepare_spans
             unless defined?(@prepared_spans)
               start_spans = Hash.new{|h,k| h[k] = [] }
