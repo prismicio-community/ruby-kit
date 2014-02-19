@@ -204,11 +204,24 @@ module Prismic
                               json['slugs'], fragments)
       end
 
-      def results_parser(result)
-        raise FormSearchException, "Error : #{result['error']}" if result['error']
-        result['results'].map do |doc|
+      def results_parser(results)
+        results.map do |doc|
           document_parser(doc)
         end
+      end
+
+      def documents_parser(documents)
+        raise FormSearchException, "Error : #{documents['error']}" if documents['error']
+        Prismic::Documents.new(
+          documents['page'],
+          documents['results_per_page'],
+          documents['results_size'],
+          documents['total_results_size'],
+          documents['total_pages'],
+          documents['next_page'],
+          documents['prev_page'],
+          results_parser(documents['results'])
+        )
       end
 
       private
