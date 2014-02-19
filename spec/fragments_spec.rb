@@ -638,7 +638,7 @@ describe 'Group' do
   before do
     @micro_api = Prismic.api("https://micro.prismic.io/api", nil)
     @master_ref = @micro_api.master_ref
-    @docchapter = @micro_api.form("everything").query(%([[:d = at(document.type, "docchapter")]])).orderings('[my.docchapter.priority]').submit(@master_ref).results[0]
+    @docchapter = @micro_api.form("everything").query(%([[:d = at(document.type, "docchapter")]])).orderings('[my.docchapter.priority]').submit(@master_ref)[0]
     @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
   end
 

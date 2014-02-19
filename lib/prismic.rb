@@ -247,6 +247,21 @@ module Prismic
       @prev_page = prev_page
       @results = results
     end
+
+    # Accessing the i-th document in the results
+    def [](i)
+      @results[i]
+    end
+
+    def each(&blk)
+      @results.each(&blk)
+    end
+    include Enumerable  # adds map, select, etc
+
+    def length
+      @results.length
+    end
+    alias :size :length
   end
 
   class Document
