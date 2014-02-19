@@ -2,11 +2,10 @@
 require 'spec_helper'
 
 describe 'WebLink' do
-  describe 'as_html' do
-    before do
+  before do
       @web_link = Prismic::Fragments::WebLink.new('my_url')
-    end
-
+  end
+  describe 'as_html' do
     it "returns an <a> HTML element" do
       Nokogiri::XML(@web_link.as_html).child.name.should == 'a'
     end
@@ -25,42 +24,108 @@ describe 'WebLink' do
   end
 
   describe 'as_text' do
-    before do
-      @web_link = Prismic::Fragments::WebLink.new('my_url')
-    end
     it 'raises an NotImplementedError' do
       expect { @web_link.as_text }.to raise_error NotImplementedError
     end
   end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @web_link.url(@link_resolver).should == 'my_url'
+    end
+  end
 end
 
-describe 'MediaLink' do
+describe 'DocumentLink' do
   before do
-    @media_link = Prismic::Fragments::MediaLink.new('my_url')
+    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", "product", ["Macaron"], "dark-chocolate-macaron", false)
+  end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @document_link.url(@link_resolver).should == 'http://localhost/UdUjvt_mqVNObPeO'
+    end
+  end
+end
+
+describe 'ImageLink' do
+  before do
+    @image_link = Prismic::Fragments::ImageLink.new('my_url')
   end
 
   describe 'as_html' do
 
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@media_link.as_html).child.name.should == 'a'
+      Nokogiri::XML(@image_link.as_html).child.name.should == 'a'
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@media_link.as_html).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@image_link.as_html).child.has_attribute?('href').should be_true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@media_link.as_html).child.attribute('href').value.should == 'my_url'
+      Nokogiri::XML(@image_link.as_html).child.attribute('href').value.should == 'my_url'
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@media_link.as_html).child.content.should == 'my_url'
+      Nokogiri::XML(@image_link.as_html).child.content.should == 'my_url'
     end
   end
 
   describe 'as_text' do
     it 'raises an NotImplementedError' do
-      expect { @media_link.as_text }.to raise_error NotImplementedError
+      expect { @image_link.as_text }.to raise_error NotImplementedError
+    end
+  end
+
+  describe 'url' do
+    before do
+      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    end
+    it 'works in a unified way' do
+      @image_link.url(@link_resolver).should == 'my_url'
+    end
+  end
+end
+
+describe 'FileLink' do
+  describe 'in structured texts' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_linkfile.json")
+      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should == "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</a></p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</a></p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</a></p>"
+    end
+  end
+end
+
+describe 'Span' do
+  describe 'in structured texts when end is at the end of line' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_with_tricky_spans.json")
+      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should == "<h3><strong>Powering Through 2013 </strong></h3>\n\n<h3><strong>Online Resources:</strong></h3>\n\n<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
+    end
+  end
+  describe 'in structured texts when multiple spans' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
+      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should == "<p>Experience <a href=\"http://prismic.io\">the</a> ultimate vanilla experience. Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>"
     end
   end
 end
@@ -583,6 +648,27 @@ describe 'Group' do
 
   it 'serializes towards HTML as expected' do
     @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
+  end
+
+  it 'loops through the group fragment properly' do
+    @docchapter['docchapter.docs']
+      .map{ |fragments| fragments['linktodoc'].slug }
+      .join(' ').should == "with-jquery with-bootstrap"
+  end
+
+  it 'returns the proper length of a group fragment' do
+    @docchapter['docchapter.docs'].length.should == 2
+    @docchapter['docchapter.docs'].size.should == 2
+  end
+
+  it 'loops through the subfragment list properly' do
+    @docchapter['docchapter.docs'][0].count.should == 1
+    @docchapter['docchapter.docs'][0].first[0].should == "linktodoc"
+  end
+
+  it 'returns the proper length of the sunfragment list' do
+    @docchapter['docchapter.docs'][0].length.should == 1
+    @docchapter['docchapter.docs'][0].size.should == 1
   end
 
 end
