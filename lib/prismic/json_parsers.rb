@@ -205,7 +205,6 @@ module Prismic
       end
 
       def results_parser(result)
-        result = {'results' => result} if result.is_a?(Array)
         raise FormSearchException, "Error : #{result['error']}" if result['error']
         result['results'].map do |doc|
           document_parser(doc)
