@@ -161,7 +161,7 @@ module Prismic
     #
     # @param  ref [Ref, String] The {Ref reference} to use (if not already defined)
     #
-    # @return [Array<Document>] The results
+    # @return [Documents] The results (array of Document object + pagination specifics)
     def submit(ref = nil)
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
@@ -174,7 +174,7 @@ module Prismic
         response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
         if response.code.to_s == "200"
-          Prismic::JsonParser.results_parser(JSON.parse(response.body))
+          Prismic::JsonParser.documents_parser(JSON.parse(response.body))
         else
           body = JSON.parse(response.body) rescue nil
           error = body.is_a?(Hash) ? body['error'] : response.body
@@ -232,6 +232,36 @@ module Prismic
     end
 
     alias :repeatable? :repeatable
+  end
+
+  class Documents
+    attr_accessor :page, :results_per_page, :results_size, :total_results_size, :total_pages, :next_page, :prev_page, :results
+
+    def initialize(page, results_per_page, results_size, total_results_size, total_pages, next_page, prev_page, results)
+      @page = page
+      @results_per_page = results_per_page
+      @results_size = results_size
+      @total_results_size = total_results_size
+      @total_pages = total_pages
+      @next_page = next_page
+      @prev_page = prev_page
+      @results = results
+    end
+
+    # Accessing the i-th document in the results
+    def [](i)
+      @results[i]
+    end
+
+    def each(&blk)
+      @results.each(&blk)
+    end
+    include Enumerable  # adds map, select, etc
+
+    def length
+      @results.length
+    end
+    alias :size :length
   end
 
   class Document

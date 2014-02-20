@@ -316,18 +316,26 @@ describe 'document_parser' do
   end
 end
 
-describe 'results_parser' do
+describe 'documents_parser' do
 
-  it "accepts results as an array" do
-    @json = JSON.parse('[]')
-    @results = Prismic::JsonParser.results_parser(@json)
-    @results.should == []
-  end
-
-  it "accepts results as an object" do
-    @json = JSON.parse('{"results":[]}')
-    @results = Prismic::JsonParser.results_parser(@json)
-    @results.should == []
+  it "accepts basic documents response" do
+    @json = JSON.parse('{ "page": 1,
+      "results_per_page": 20,
+      "results_size": 20,
+      "total_results_size": 40,
+      "total_pages": 2,
+      "next_page": "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20",
+      "prev_page": null,
+      "results":[]}')
+    @documents = Prismic::JsonParser.documents_parser(@json)
+    @documents.results.should == []
+    @documents.page.should == 1
+    @documents.results_per_page.should == 20
+    @documents.results_size.should == 20
+    @documents.total_results_size.should == 40
+    @documents.total_pages.should == 2
+    @documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20"
+    @documents.prev_page.should == nil
   end
 
 end

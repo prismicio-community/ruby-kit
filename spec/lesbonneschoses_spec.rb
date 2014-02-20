@@ -16,23 +16,64 @@ describe 'LesBonnesChoses' do
 	describe 'query' do
 		it "queries everything and returns 20 documents" do
 			@api.form("everything").submit(@master_ref).size.should == 20
+			@api.form("everything").submit(@master_ref).results.size.should == 20
 		end
 
 		it "queries macarons (using a predicate) and returns 7 documents" do
+			@api.form("everything")
+				.query(%([[:d = any(document.tags, ["Macaron"])]]))
+				.submit(@master_ref).results.size.should == 7
 			@api.form("everything")
 				.query(%([[:d = any(document.tags, ["Macaron"])]]))
 				.submit(@master_ref).size.should == 7
 		end
 
 		it "queries macarons (using a form) and returns 7 documents" do
+			@api.form("macarons").submit(@master_ref).results.size.should == 7
 			@api.form("macarons").submit(@master_ref).size.should == 7
 		end
 
 		it "queries macarons or cupcakes (using a form + a predicate) and returns 11 documents" do
 			@api.form("products")
 				.query(%([[:d = any(document.tags, ["Cupcake", "Macaron"])]]))
+				.submit(@master_ref).results.size.should == 11
+			@api.form("products")
+				.query(%([[:d = any(document.tags, ["Cupcake", "Macaron"])]]))
 				.submit(@master_ref).size.should == 11
 		end		
+	end
+
+	describe 'pagination' do
+		it "works in basic cases" do
+			documents = @api.form("everything").submit(@master_ref)
+			documents.page.should == 1
+			documents.results_per_page.should == 20
+			documents.results_size.should == 20
+			documents.total_results_size.should == 40
+			documents.total_pages.should == 2
+			documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20"
+			documents.prev_page.should == nil
+		end
+		it "works on page 2" do
+			documents = @api.form("everything").page("2").submit(@master_ref)
+			documents.page.should == 2
+			documents.results_per_page.should == 20
+			documents.results_size.should == 20
+			documents.total_results_size.should == 40
+			documents.total_pages.should == 2
+			documents.next_page.should == nil
+			documents.prev_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=1&pageSize=20"
+		end
+		it "works on page 2 with a pagination step of 10" do
+			documents = @api.form("everything").page("2").page_size("10").submit(@master_ref)
+			documents.page.should == 2
+			documents.results_per_page.should == 10
+			documents.results_size.should == 10
+			documents.total_results_size.should == 40
+			documents.total_pages.should == 4
+			documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=3&pageSize=10"
+			documents.prev_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=1&pageSize=10"
+		end
 	end
 
 	describe 'API::Document' do
@@ -52,6 +93,28 @@ describe 'LesBonnesChoses' do
 			expect {
 				@document['blablabla']
 			}.to raise_error(ArgumentError, "Argument should contain one dot. Example: product.price")
+		end
+	end
+
+	describe 'API::Documents' do
+		before do
+			@documents = @api.form('everything').submit(@master_ref)
+		end
+
+		it 'has a working [] operator' do
+			@documents[0].slug.should == @documents.results[0].slug
+		end
+		it 'has a proper size' do
+			@documents.length.should == 20
+			@documents.size.should == 20
+		end
+		it 'has a proper each method' do
+			array = []
+			@documents.each {|document| array << document.slug }
+			array.join(' ').should == 'pastry-dresser exotic-kiwi-pie apricot-pie sweet-strawberry-pie woodland-cherry-pie cool-coconut-macaron salted-caramel-macaron the-end-of-a-chapter-the-beginning-of-a-new-one get-the-right-approach-to-ganache one-day-in-the-life-of-a-les-bonnes-choses-pastry les-bonnes-chosess-internship-a-testimony our-world-famous-pastry-art-brainstorm-event tips-to-dress-a-pastry triple-chocolate-cupcake dont-be-a-stranger about-us wedding-gift-box art-director store-intern content-director'
+		end
+		it 'is a proper Enumerable' do
+			@documents.map {|document| document.slug }.join(' ').should == 'pastry-dresser exotic-kiwi-pie apricot-pie sweet-strawberry-pie woodland-cherry-pie cool-coconut-macaron salted-caramel-macaron the-end-of-a-chapter-the-beginning-of-a-new-one get-the-right-approach-to-ganache one-day-in-the-life-of-a-les-bonnes-choses-pastry les-bonnes-chosess-internship-a-testimony our-world-famous-pastry-art-brainstorm-event tips-to-dress-a-pastry triple-chocolate-cupcake dont-be-a-stranger about-us wedding-gift-box art-director store-intern content-director'
 		end
 	end
 
