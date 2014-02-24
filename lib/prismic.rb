@@ -55,6 +55,18 @@ module Prismic
     API.start(url, opts)
   end
 
+  def self.oauth_initiate_url(url, oauth_opts, api_opts=nil)
+    api_opts ||= {}
+    api_opts = {access_token: opts} if api_opts.is_a?(String)
+    API.oauth_initiate_url(url, oauth_opts, api_opts)
+  end
+
+  def self.oauth_check_token(url, oauth_opts, api_opts=nil)
+    api_opts ||= {}
+    api_opts = {access_token: api_opts} if api_opts.is_a?(String)
+    API.oauth_check_token(url, oauth_opts, api_opts)
+  end
+
   class ApiData
     attr_accessor :refs, :bookmarks, :types, :tags, :forms
   end
