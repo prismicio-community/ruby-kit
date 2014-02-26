@@ -234,7 +234,7 @@ describe 'Api' do
       @scope = "none"
     end
     def oauth_initiate_url
-      @api.oauth_initiate_url({
+      Prismic::API.oauth_initiate_url("https://lesbonneschoses.prismic.io/api", {
         client_id: @client_id,
         redirect_uri: @redirect_uri,
         scope: @scope,
