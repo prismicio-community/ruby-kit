@@ -24,7 +24,7 @@ describe 'Api' do
         'form3' => Prismic::Form.new(@api, 'form3', {}, nil, nil, nil, nil),
         'form4' => Prismic::Form.new(@api, 'form4', {}, nil, nil, nil, nil),
       }
-      api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, "https://lesbonneschoses.prismic.io/auth/token")
+      api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, "https://lesbonneschoses.prismic.io/auth/token", Prismic::DefaultHTTPClient)
     }
   end
 

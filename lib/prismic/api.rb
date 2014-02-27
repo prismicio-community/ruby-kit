@@ -79,7 +79,8 @@ module Prismic
           raise PrismicWSAuthError.new(
             json['error'],
             json['oauth_initiate'],
-            json['oauth_token']
+            json['oauth_token'],
+            http_client
           )
         rescue => e
           raise PrismicWSConnectionError.new(res, e)
@@ -121,7 +122,7 @@ module Prismic
         }]
         api.tags = data['tags']
         api.types = data['types']
-        api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'])
+        api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'], http_client)
       }
     end
 
@@ -177,16 +178,17 @@ module Prismic
 
     class PrismicWSAuthError < Error
       attr_reader :error, :oauth
-      def initialize(error, oauth_initialize, oauth_token)
+      def initialize(error, oauth_initialize, oauth_token, http_client)
         super("Can't connect to Prismic's API: #{error}")
         @error = error
-        @oauth = OAuth.new(oauth_initialize, oauth_token)
+        @oauth = OAuth.new(oauth_initialize, oauth_token, http_client)
       end
     end
 
     class OAuth
-      attr_reader :initiate, :token
-      def initialize(initiate, token)
+      attr_reader :initiate, :token, :http_client
+      def initialize(initiate, token, http_client)
+        @http_client = http_client
         @initiate = initiate
         @token = token
       end
@@ -198,8 +200,7 @@ module Prismic
         }.map{|kv| kv.map{|e| CGI.escape(e) }.join("=") }.join("&")
       end
       def check_token(params)
-        uri = URI(token)
-        res = Net::HTTP.post_form(uri, params)
+        res = http_client.post(token, params)
         if res.code == '200'
           begin
             JSON.parse(res.body)['access_token']
