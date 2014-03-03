@@ -55,6 +55,18 @@ module Prismic
     API.start(url, opts)
   end
 
+  def self.oauth_initiate_url(url, oauth_opts, api_opts=nil)
+    api_opts ||= {}
+    api_opts = {access_token: opts} if api_opts.is_a?(String)
+    API.oauth_initiate_url(url, oauth_opts, api_opts)
+  end
+
+  def self.oauth_check_token(url, oauth_opts, api_opts=nil)
+    api_opts ||= {}
+    api_opts = {access_token: api_opts} if api_opts.is_a?(String)
+    API.oauth_check_token(url, oauth_opts, api_opts)
+  end
+
   class ApiData
     attr_accessor :refs, :bookmarks, :types, :tags, :forms
   end
@@ -366,10 +378,23 @@ module Prismic
       # - body: returns the response's body (as String)
       def get(uri, data={}, headers={})
         uri = URI(uri) if uri.is_a?(String)
-        uri.query = url_encode(data)
+        add_query(uri, data)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = uri.scheme =~ /https/i
         http.get(uri.request_uri, headers)
+      end
+
+      # Performs a POST call and returns the result
+      #
+      # The result must respond to
+      # - code: returns the response's HTTP status code (as number or String)
+      # - body: returns the response's body (as String)
+      def post(uri, data={}, headers={})
+        uri = URI(uri) if uri.is_a?(String)
+        add_query(uri, data)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = uri.scheme =~ /https/i
+        http.post(uri.path, uri.query, headers)
       end
 
       def url_encode(data)
@@ -382,6 +407,14 @@ module Prismic
             encode.(k, vs)
           end
         }.join("&")
+      end
+
+      private
+
+      def add_query(uri, query)
+        query = url_encode(query)
+        query = "#{uri.query}&#{query}"if uri.query && !uri.query.empty?
+        uri.query = query
       end
     end
   end

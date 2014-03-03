@@ -2,6 +2,8 @@
 module Prismic
   class API
     @@warned_create_search_form = false
+    @@warned_oauth_initiate_url = false
+    @@warned_oauth_check_token = false
     attr_reader :json, :access_token, :http_client
     attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
 
@@ -68,8 +70,24 @@ module Prismic
       data = {}
       data["access_token"] = access_token if access_token
       res = http_client.get(url, data, 'Accept' => 'application/json')
-      raise PrismicWSConnectionError, res unless res.code.to_s == '200'
-      res
+      case res.code
+      when '200'
+        res
+      when '401', '403'
+        begin
+          json = JSON.load(res.body)
+          raise PrismicWSAuthError.new(
+            json['error'],
+            json['oauth_initiate'],
+            json['oauth_token'],
+            http_client
+          )
+        rescue => e
+          raise PrismicWSConnectionError.new(res, e)
+        end
+      else
+        raise PrismicWSConnectionError, res
+      end
     end
 
     def self.start(url, opts={})
@@ -104,30 +122,48 @@ module Prismic
         }]
         api.tags = data['tags']
         api.types = data['types']
-        api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'])
+        api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'], http_client)
       }
     end
 
+    def self.oauth_initiate_url(url, oauth_opts, api_opts={})
+      oauth =
+        begin
+          api = self.start(url, api_opts)
+          api.oauth
+        rescue PrismicWSAuthError => e
+          e.oauth
+        end
+      oauth.initiate_url(oauth_opts)
+    end
+
     def oauth_initiate_url(opts)
-      oauth.initiate + "?" + {
-        "client_id" => opts.fetch(:client_id),
-        "redirect_uri" => opts.fetch(:redirect_uri),
-        "scope" => opts.fetch(:scope),
-      }.map{|kv| kv.map{|e| CGI.escape(e) }.join("=") }.join("&")
+      if !@@warned_oauth_initiate_url
+        warn "[DEPRECATION] Method `API#oauth_initiate_url` is deprecated.  " +
+          "Please use `Prismic::API.oauth_initiate_url` instead."
+        @@warned_oauth_initiate_url = true
+      end
+      oauth.initiate_url(opts)
+    end
+
+    def self.oauth_check_token(url, oauth_params, api_opts={})
+      oauth =
+        begin
+          api = self.start(url, api_opts)
+          api.oauth
+        rescue PrismicWSAuthError => e
+          e.oauth
+        end
+      oauth.check_token(oauth_params)
     end
 
     def oauth_check_token(params)
-      uri = URI(oauth.token)
-      res = Net::HTTP.post_form(uri, params)
-      if res.code == '200'
-        begin
-          JSON.parse(res.body)['access_token']
-        rescue Exception => e
-          raise PrismicWSConnectionError.new(res, e)
-        end
-      else
-        raise PrismicWSConnectionError, res
+      if !@@warned_oauth_check_token
+        warn "[DEPRECATION] Method `API#oauth_check_token` is deprecated.  " +
+          "Please use `Prismic::API.oauth_check_token` instead."
+        @@warned_oauth_check_token = true
       end
+      oauth.check_token(params)
     end
 
     private
@@ -140,12 +176,42 @@ module Prismic
       end
     end
 
+    class PrismicWSAuthError < Error
+      attr_reader :error, :oauth
+      def initialize(error, oauth_initialize, oauth_token, http_client)
+        super("Can't connect to Prismic's API: #{error}")
+        @error = error
+        @oauth = OAuth.new(oauth_initialize, oauth_token, http_client)
+      end
+    end
+
     class OAuth
-      attr_reader :initiate, :token
-      def initialize(initiate, token)
+      attr_reader :initiate, :token, :http_client
+      def initialize(initiate, token, http_client)
+        @http_client = http_client
         @initiate = initiate
         @token = token
       end
+      def initiate_url(opts)
+        initiate + "?" + {
+          "client_id" => opts.fetch(:client_id),
+          "redirect_uri" => opts.fetch(:redirect_uri),
+          "scope" => opts.fetch(:scope),
+        }.map{|kv| kv.map{|e| CGI.escape(e) }.join("=") }.join("&")
+      end
+      def check_token(params)
+        res = http_client.post(token, params)
+        if res.code == '200'
+          begin
+            JSON.parse(res.body)['access_token']
+          rescue Exception => e
+            raise PrismicWSConnectionError.new(res, e)
+          end
+        else
+          raise PrismicWSConnectionError, res
+        end
+      end
     end
+
   end
 end
