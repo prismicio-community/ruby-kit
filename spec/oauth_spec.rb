@@ -39,6 +39,16 @@ describe 'OAuth' do
         url.should == expected_url
       end
 
+      it "should returns the URL (with access_token)" do
+        url = Prismic.oauth_initiate_url(PUBLIC_URL, OAUTH_INITIATE_OPTS, "token")
+        expected_url = [
+          "https://lesbonneschoses.prismic.io/auth?client_id=client_id",
+          "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
+          "scope=master%2Breleases",
+        ].join("&")
+        url.should == expected_url
+      end
+
     end
 
     describe "oauth_check_token" do
@@ -92,6 +102,16 @@ describe 'OAuth' do
 
       it "should returns the URL" do
         url = Prismic.oauth_initiate_url(PRIVATE_URL, OAUTH_INITIATE_OPTS)
+        expected_url = [
+          "https://privaterepository.prismic.io/auth?client_id=client_id",
+          "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
+          "scope=master%2Breleases",
+        ].join("&")
+        url.should == expected_url
+      end
+
+      it "should returns the URL (with access_token)" do
+        url = Prismic.oauth_initiate_url(PRIVATE_URL, OAUTH_INITIATE_OPTS, "token")
         expected_url = [
           "https://privaterepository.prismic.io/auth?client_id=client_id",
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",

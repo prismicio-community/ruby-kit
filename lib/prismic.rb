@@ -57,7 +57,7 @@ module Prismic
 
   def self.oauth_initiate_url(url, oauth_opts, api_opts=nil)
     api_opts ||= {}
-    api_opts = {access_token: opts} if api_opts.is_a?(String)
+    api_opts = {access_token: api_opts} if api_opts.is_a?(String)
     API.oauth_initiate_url(url, oauth_opts, api_opts)
   end
 
