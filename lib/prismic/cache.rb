@@ -18,13 +18,13 @@ module Prismic
     # (so that we don't have to parse anything again, it's stored already parsed).
     #
     # @return [Hash[Hash[Object]]]
-    attr_accessor :resultscache
+    attr_accessor :intern
 
     attr_accessor :latest_known_master_ref
 
     # Initialize the data structures
     def initialize
-      @resultscache = {} # Each non-existing value is an empty Hash by default
+      @intern = {}  # Each non-existing value is an empty Hash by default
     end
 
     # Add a cache entry.
@@ -35,32 +35,33 @@ module Prismic
         @latest_known_master_ref = api.master.ref
       end
       # and now, add
-      @resultscache[ref_id] ||= {}
-      @resultscache[ref_id][cache_key] = cache_object
+      @intern[ref_id] ||= {}
+      @intern[ref_id][cache_key] = cache_object
     end
 
     # Get a cache entry
     #
     # @return [Object] the cache object as was stored
     def get(ref_id, cache_key)
-      @resultscache[ref_id][cache_key]
+      @intern[ref_id][cache_key]
     end
+    alias :[] :get
 
     # Checks if a cache entry exists
     #
     # @return [Boolean]
-    def contains?(ref_id, cache_key)
-      @resultscache.key?(ref_id) && @resultscache[ref_id].key?(cache_key)
+    def include?(ref_id, cache_key)
+      @intern.include?(ref_id) && @intern[ref_id].include?(cache_key)
     end
 
     # Invalidates all the cache
     def invalidate_all!
-      @resultscache.clear
+      @intern.clear
     end
 
     # Invalidates all the cache but one ref (happens when new master ref)
     def invalidate_all_but!(ref_id)
-      @resultscache.delete_if { |key, _| key != ref_id }
+      @intern.delete_if { |key, _| key != ref_id }
     end
 
     # Expose a Hash of the keys of both Hashes. The keys of this Hash is the ref_ids, the values are arrays of cache_keys.
@@ -69,7 +70,7 @@ module Prismic
     #
     # @return [Hash[Array[String]]]
     def all_keys
-      Hash[ @resultscache.map{ |k, v| [k, v.keys] } ]
+      Hash[ @intern.map{ |k, v| [k, v.keys] } ]
     end
   end
 

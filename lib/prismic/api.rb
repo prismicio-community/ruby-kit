@@ -10,7 +10,7 @@ module Prismic
     # Is the cache enabled on this API object?
     #
     # @return [Boolean]
-    def cached?
+    def has_cache?
       !!cache
     end
 
