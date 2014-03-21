@@ -86,6 +86,7 @@ module Prismic
       http_client = opts[:http_client] || Prismic::DefaultHTTPClient
       access_token = opts[:access_token]
       cache = opts[:cache]
+      cache ||= Prismic::DefaultCache unless cache == false
       resp = get(url, access_token, http_client)
       json = JSON.load(resp.body)
       parse_api_response(json, access_token, http_client, cache)
