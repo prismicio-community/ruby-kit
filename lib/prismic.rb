@@ -168,33 +168,30 @@ module Prismic
       raise NoRefSetException unless @ref
 
       # cache_key is a mix of HTTP URL and HTTP method
-      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&') if api.has_cache?
+      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')
 
-      if api.has_cache? && api.cache.include?(cache_key)
-        api.cache[cache_key]
+      api.caching(cache_key) {
+        if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
+          data['ref'] = @ref
+          data['access_token'] = api.access_token if api.access_token
+          data.delete_if { |k, v| v.nil? }
 
-      elsif form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
-        data['ref'] = @ref
-        data['access_token'] = api.access_token if api.access_token
-        data.delete_if { |k, v| v.nil? }
+          response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
-        response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
-
-        if response.code.to_s == "200"
-          results = Prismic::JsonParser.results_parser(JSON.parse(response.body))
-          api.cache[cache_key] = results if api.has_cache?
-          results
+          if response.code.to_s == "200"
+            Prismic::JsonParser.results_parser(JSON.parse(response.body))
+          else
+            body = JSON.parse(response.body) rescue nil
+            error = body.is_a?(Hash) ? body['error'] : response.body
+            raise AuthenticationException, error if response.code.to_s == "401"
+            raise AuthorizationException, error if response.code.to_s == "403"
+            raise RefNotFoundException, error if response.code.to_s == "404"
+            raise FormSearchException, error
+          end
         else
-          body = JSON.parse(response.body) rescue nil
-          error = body.is_a?(Hash) ? body['error'] : response.body
-          raise AuthenticationException, error if response.code.to_s == "401"
-          raise AuthorizationException, error if response.code.to_s == "403"
-          raise RefNotFoundException, error if response.code.to_s == "404"
-          raise FormSearchException, error
+          raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
         end
-      else
-        raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
-      end
+      }
     end
 
     # Specify a parameter for this form

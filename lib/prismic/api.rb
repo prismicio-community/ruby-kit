@@ -14,6 +14,17 @@ module Prismic
       !!cache
     end
 
+    # Calls the given block if the provided key is not already cached
+    #
+    # If the cache is disabled, the block is always called
+    #
+    # @param key [String] the cache's key to test
+    #
+    # @return the return of the given block
+    def caching(key)
+      cache ? cache.get(key){ yield(key) } : yield(key)
+    end
+
     # Returns the master {Ref reference}
     # @api
     #

@@ -58,6 +58,9 @@ module Prismic
 
     # Get a cache entry
     #
+    # A block can be provided: it will be used to compute (and store) the value
+    # if the key is missing.
+    #
     # @param key [String] the key to fetch
     #
     # @return [Object] the cache object as was stored
@@ -65,6 +68,8 @@ module Prismic
       if @intern[key]
         renew(key)
         @intern[key][1]
+      elsif block_given?
+        self[key] = yield(key)
       end
     end
     alias :[] :get
