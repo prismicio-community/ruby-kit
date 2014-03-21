@@ -43,7 +43,7 @@ module Prismic
   #   @param [Hash] opts The options
   #   @option opts [String] :access_token (nil) The access_token
   #   @option opts :http_client (DefaultHTTPClient) The HTTP client to use
-  #   @option opts :cache_class (false) The caching class (which must extend Prismic::Cache) to use, or false for no caching
+  #   @option opts :cache (nil) The caching object (for instance Prismic::Cache) to use, or false for no caching
   # @overload api(url, access_token)
   #   Provide the access_token (only)
   #   @param [String] url The URL of the prismic.io repository

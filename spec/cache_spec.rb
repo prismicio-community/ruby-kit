@@ -1,10 +1,11 @@
 # encoding: utf-8
 require 'spec_helper'
 
-describe 'Cache\'s' do
+describe "Cache's" do
+
 	describe 'on/off switch' do
 		before do
-			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", {cache_class: Prismic::Cache})
+			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::Cache.new)
 			@master_ref = @api.master_ref
 		end
 
@@ -12,8 +13,9 @@ describe 'Cache\'s' do
 			@api.cached?.should == true
 			@api.cache.is_a?(Prismic::Cache).should == true
 		end
+
 		it "is properly off" do
-			api = Prismic.api("https://lesbonneschoses.prismic.io/api")
+			api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: false)
 			api.cached?.should == false
 		end
 
@@ -24,10 +26,9 @@ describe 'Cache\'s' do
 				@api.cache.resultscache.size.should == 1
 			end
 
-			it 'retrieves properly' do
-				api = Prismic.api("https://lesbonneschoses.prismic.io/api", {cache_class: Prismic::Cache})
-				api.cache.resultscache.size.should == 1
-				api.cache.resultscache[api.master.ref].values[0].size.should == 16
+			it 'does not cache /api' do
+				# do not call anything, so the only request made is the /api one
+				@api.cache.resultscache.size.should == 0
 			end
 		end
 
@@ -37,13 +38,19 @@ describe 'Cache\'s' do
 				@api.cache.add('fake_ref2', 'fake_cache_key', Object.new, @api)
 				@api.cache.add('fake_ref2', 'fake_cache_key2', Object.new, @api)
 			end
+			it 'contains some keys' do
+				@api.cache.contains?('fake_ref', 'fake_cache_key').should be_true
+			end
 			it 'stores well, again' do
-				@api.cache.resultscache.size.should == 3
+				@api.cache.resultscache.size.should == 2
 				@api.cache.resultscache['fake_ref2'].keys.size.should == 2
 				@api.cache.resultscache['fake_ref2'].has_key?('fake_cache_key2').should == true
 			end
 			it 'does all_keys well' do
-				@api.cache.all_keys.should == {"UkL0hcuvzYUANCrm"=>["GET::https://lesbonneschoses.prismic.io/api/documents/search?q=[\"[[:d = any(document.type, [\\\"product\\\"])]]\"]&page=1&pageSize=20"], "fake_ref"=>["fake_cache_key"], "fake_ref2"=>["fake_cache_key", "fake_cache_key2"]}
+				@api.cache.all_keys.should == {
+					"fake_ref" => ["fake_cache_key"],
+					"fake_ref2" => ["fake_cache_key", "fake_cache_key2"]
+				}
 			end
 			it 'invalidates well partially' do
 				@api.cache.invalidate_all_but!('fake_ref')

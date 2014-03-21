@@ -72,4 +72,6 @@ module Prismic
       Hash[ @resultscache.map{ |k, v| [k, v.keys] } ]
     end
   end
+
+  DefaultCache = Cache.new
 end
