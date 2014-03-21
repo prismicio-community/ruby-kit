@@ -7,8 +7,8 @@ module Prismic
   #
   # If you need a smarter caching (for instance, caching in files), you can extend this class and replace its methods,
   # and when creating your API object like this for instance: Prismic.api(url, options), pass the name of the class you created
-  # as a :cache_class option.
-  # Therefore, to use this simple cache, you can create your API object like this: Prismic.api(url, {cache_class: Prismic::Cache})
+  # as a :cache option.
+  # Therefore, to use this simple cache, you can create your API object like this: Prismic.api(url, cache: Prismic::DefaultCache)
   class Cache
 
     # Returns the cache object holding the responses to "results" queries (lists of documents).
