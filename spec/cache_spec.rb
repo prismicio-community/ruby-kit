@@ -5,7 +5,7 @@ describe "Cache's" do
 
 	describe 'on/off switch' do
 		before do
-			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::Cache.new)
+			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::Cache.new(3))
 			@cache = @api.cache
 			@master_ref = @api.master_ref
 		end
@@ -33,30 +33,40 @@ describe "Cache's" do
 			end
 		end
 
-		describe 'cache invalidation' do
+		describe 'cache storage' do
 			before do
-				@cache.add('fake_ref', 'fake_cache_key', Object.new, @api)
-				@cache.add('fake_ref2', 'fake_cache_key', Object.new, @api)
-				@cache.add('fake_ref2', 'fake_cache_key2', Object.new, @api)
+				# max_size = 3
+				@cache['fake_key1'] = 1
+				@cache['fake_key2'] = 2
+				@cache['fake_key3'] = 3
 			end
 			it 'contains some keys' do
-				@cache.include?('fake_ref', 'fake_cache_key').should be_true
+				@cache.include?('fake_key1').should be_true
 			end
-			it 'stores well, again' do
-				@cache.intern.size.should == 2
-				@cache.intern['fake_ref2'].keys.size.should == 2
-				@cache.intern['fake_ref2'].has_key?('fake_cache_key2').should == true
+			it 'contains all keys' do
+				@cache.intern.size.should == 3
 			end
-			it 'does all_keys well' do
-				@cache.all_keys.should == {
-					"fake_ref" => ["fake_cache_key"],
-					"fake_ref2" => ["fake_cache_key", "fake_cache_key2"]
-				}
+			it 'can return all keys' do
+				@cache.keys.should == %w(fake_key1 fake_key2 fake_key3)
 			end
-			it 'invalidates well partially' do
-				@cache.invalidate_all_but!('fake_ref')
-				@cache.intern.size.should == 1
-				@cache.intern.keys[0].should == 'fake_ref'
+			it 'deletes oldest key when updating max_size' do
+				@cache.max_size = 1
+				@cache.size.should == 1
+				@cache.include?('fake_key1').should be_false
+				@cache.include?('fake_key2').should be_false
+				@cache.include?('fake_key3').should be_true
+			end
+			it 'deletes oldest key when adding new one (at max_size)' do
+				@cache['fake_key4'] = 4
+				@cache.max_size = 3
+				@cache.size.should == 3
+				@cache.include?('fake_key1').should be_false
+			end
+			it 'keeps readed keys alive' do
+				@cache['fake_key1']
+				@cache['fake_key4'] = 4
+				@cache.include?('fake_key1').should be_true
+				@cache.include?('fake_key2').should be_false
 			end
 		end
 	end

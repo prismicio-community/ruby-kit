@@ -170,8 +170,8 @@ module Prismic
       # cache_key is a mix of HTTP URL and HTTP method
       cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&') if api.has_cache?
 
-      if api.has_cache? && api.cache.include?(@ref, cache_key)
-        api.cache[@ref, cache_key]
+      if api.has_cache? && api.cache.include?(cache_key)
+        api.cache[cache_key]
 
       elsif form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
         data['ref'] = @ref
@@ -182,7 +182,7 @@ module Prismic
 
         if response.code.to_s == "200"
           results = Prismic::JsonParser.results_parser(JSON.parse(response.body))
-          api.cache.add(@ref, cache_key, results, api) if api.has_cache?
+          api.cache[cache_key] = results if api.has_cache?
           results
         else
           body = JSON.parse(response.body) rescue nil

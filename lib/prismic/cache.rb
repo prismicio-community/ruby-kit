@@ -17,61 +17,109 @@ module Prismic
     # The object that is stored as a cache_object is what is returned by Prismic::JsonParser::results_parser
     # (so that we don't have to parse anything again, it's stored already parsed).
     #
-    # @return [Hash[Hash[Object]]]
-    attr_accessor :intern
+    # @return [Hash<String,Object>]
+    attr_reader :intern
 
-    attr_accessor :latest_known_master_ref
+    # Returns the maximum of keys to store
+    #
+    # @return [Fixum]
+    attr_reader :max_size
 
-    # Initialize the data structures
-    def initialize
-      @intern = {}  # Each non-existing value is an empty Hash by default
+    # @param max_size [Fixnum] (100) The default maximum of keys to store
+    def initialize(max_size=100)
+      @intern = {}
+      @max_size = max_size
     end
 
     # Add a cache entry.
-    def add(ref_id, cache_key, cache_object, api)
-      # if new master ref for this api, invalidate all other cache
-      if (@latest_known_master_ref != api.master.ref)
-        invalidate_all_but!(api.master.ref)
-        @latest_known_master_ref = api.master.ref
-      end
-      # and now, add
-      @intern[ref_id] ||= {}
-      @intern[ref_id][cache_key] = cache_object
+    #
+    # @param key [String] the key
+    # @param value the value to store
+    #
+    # @return the value
+    def store(key, value)
+      @intern[key] = [0, value]
+      age_keys
+      prune
+      value
+    end
+    alias :[]= :store
+
+    # Update the maximun number of keys to store
+    #
+    # Prune the cache old oldest keys if the new max_size is older than the keys
+    # number.
+    #
+    # @param max_size [Fixnum] the new maximun number of keys to store
+    def max_size=(max_size)
+      @max_size = max_size
+      prune
     end
 
     # Get a cache entry
     #
+    # @param key [String] the key to fetch
+    #
     # @return [Object] the cache object as was stored
-    def get(ref_id, cache_key)
-      @intern[ref_id][cache_key]
+    def get(key)
+      if @intern[key]
+        renew(key)
+        @intern[key][1]
+      end
     end
     alias :[] :get
 
     # Checks if a cache entry exists
     #
+    # @param key [String] the key to test
+    #
     # @return [Boolean]
-    def include?(ref_id, cache_key)
-      @intern.include?(ref_id) && @intern[ref_id].include?(cache_key)
+    def include?(key)
+      @intern.include?(key)
     end
 
     # Invalidates all the cache
     def invalidate_all!
       @intern.clear
     end
-
-    # Invalidates all the cache but one ref (happens when new master ref)
-    def invalidate_all_but!(ref_id)
-      @intern.delete_if { |key, _| key != ref_id }
-    end
+    alias :clear! :invalidate_all!
 
     # Expose a Hash of the keys of both Hashes. The keys of this Hash is the ref_ids, the values are arrays of cache_keys.
     # This is only for displaying purposes, if you want to check out what's stored in your cache without checking out the
     # quite verbose cache_objects.
     #
-    # @return [Hash[Array[String]]]
-    def all_keys
-      Hash[ @intern.map{ |k, v| [k, v.keys] } ]
+    # @return [Array<String>]
+    def keys
+      @intern.keys
     end
+
+    # Return the number of stored keys
+    #
+    # @return [Fixum]
+    def size
+      @intern.size
+    end
+    alias :length :size
+
+    private
+
+    def renew(key)
+      @intern[key][0] = 0
+    end
+
+    def delete_oldest
+      m = @intern.values.map{ |v| v[0] }.max
+      @intern.reject!{ |k,v| v[0] == m }
+    end
+
+    def age_keys
+      @intern.each { |_, v| v[0] += 1 }
+    end
+
+    def prune
+      delete_oldest while @intern.size > @max_size
+    end
+
   end
 
   DefaultCache = Cache.new
