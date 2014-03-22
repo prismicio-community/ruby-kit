@@ -11,6 +11,9 @@ module Prismic
   # Therefore, to use this simple cache, you can create your API object like this: Prismic.api(url, cache: Prismic::DefaultCache)
   class Cache
 
+    # Based on http://stackoverflow.com/questions/1933866/efficient-ruby-lru-cache
+    # The Hash are sorted, so the age is represented by the key order
+
     # Returns the cache object holding the responses to "results" queries (lists of documents).
     # This is a Hash in a Hash: keys in the outer Hash are the refs (so that it's easy to invalidate entire refs at once);
     # keys in the inner Hash are the query strings (URLs) of each query.
@@ -38,9 +41,11 @@ module Prismic
     #
     # @return the value
     def store(key, value)
-      @intern[key] = [0, value]
-      age_keys
-      prune
+      @intern.delete(key)
+      @intern[key] = value
+      if @intern.length > @max_size
+        @intern.delete(@intern.first[0])
+      end
       value
     end
     alias :[]= :store
@@ -52,8 +57,13 @@ module Prismic
     #
     # @param max_size [Fixnum] the new maximun number of keys to store
     def max_size=(max_size)
+      raise ArgumentError.new(:max_size) if max_size < 1
       @max_size = max_size
-      prune
+      if @max_size < @intern.size
+        @intern.keys[0 .. (@max_size-@intern.size)].each { |k|
+          @intern.delete(k)
+        }
+      end
     end
 
     # Get a cache entry
@@ -65,10 +75,11 @@ module Prismic
     #
     # @return [Object] the cache object as was stored
     def get(key)
-      if @intern[key]
-        renew(key)
-        @intern[key][1]
-      elsif block_given?
+      found = true
+      value = @intern.delete(key){ found = false }
+      if found
+        @intern[key] = value
+      else
         self[key] = yield(key)
       end
     end
@@ -105,25 +116,6 @@ module Prismic
       @intern.size
     end
     alias :length :size
-
-    private
-
-    def renew(key)
-      @intern[key][0] = 0
-    end
-
-    def delete_oldest
-      m = @intern.values.map{ |v| v[0] }.max
-      @intern.reject!{ |k,v| v[0] == m }
-    end
-
-    def age_keys
-      @intern.each { |_, v| v[0] += 1 }
-    end
-
-    def prune
-      delete_oldest while @intern.size > @max_size
-    end
 
   end
 
