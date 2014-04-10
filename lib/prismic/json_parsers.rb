@@ -148,14 +148,13 @@ module Prismic
             Prismic::Fragments::StructuredText::Block::Image.new(view)
           when 'embed'
             boembed = block['oembed']
-            embed = Prismic::Fragments::Embed.new(
+            Prismic::Fragments::Embed.new(
               boembed['type'],
               boembed['provider_name'],
               boembed['provider_url'],
               boembed['html'],
               boembed
             )
-            Prismic::Fragments::StructuredText::Block::Image.new(embed)
           else
             puts "Unknown bloc type: #{block['type']}"
           end
