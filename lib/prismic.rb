@@ -43,6 +43,7 @@ module Prismic
   #   @param [Hash] opts The options
   #   @option opts [String] :access_token (nil) The access_token
   #   @option opts :http_client (DefaultHTTPClient) The HTTP client to use
+  #   @option opts :cache (nil) The caching object (for instance Prismic::Cache) to use, or false for no caching
   # @overload api(url, access_token)
   #   Provide the access_token (only)
   #   @param [String] url The URL of the prismic.io repository
@@ -178,26 +179,31 @@ module Prismic
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
 
-      if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
-        data['ref'] = @ref
-        data['access_token'] = api.access_token if api.access_token
-        data.delete_if { |k, v| v.nil? }
+      # cache_key is a mix of HTTP URL and HTTP method
+      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')
 
-        response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
+      api.caching(cache_key) {
+        if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
+          data['ref'] = @ref
+          data['access_token'] = api.access_token if api.access_token
+          data.delete_if { |k, v| v.nil? }
 
-        if response.code.to_s == "200"
-          Prismic::JsonParser.documents_parser(JSON.parse(response.body))
+          response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
+
+          if response.code.to_s == "200"
+            Prismic::JsonParser.documents_parser(JSON.parse(response.body))
+          else
+            body = JSON.parse(response.body) rescue nil
+            error = body.is_a?(Hash) ? body['error'] : response.body
+            raise AuthenticationException, error if response.code.to_s == "401"
+            raise AuthorizationException, error if response.code.to_s == "403"
+            raise RefNotFoundException, error if response.code.to_s == "404"
+            raise FormSearchException, error
+          end
         else
-          body = JSON.parse(response.body) rescue nil
-          error = body.is_a?(Hash) ? body['error'] : response.body
-          raise AuthenticationException, error if response.code.to_s == "401"
-          raise AuthorizationException, error if response.code.to_s == "403"
-          raise RefNotFoundException, error if response.code.to_s == "404"
-          raise FormSearchException, error
+          raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
         end
-      else
-        raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
-      end
+      }
     end
 
     # Specify a parameter for this form
@@ -440,3 +446,4 @@ require 'prismic/api'
 require 'prismic/form'
 require 'prismic/fragments'
 require 'prismic/json_parsers'
+require 'prismic/cache'

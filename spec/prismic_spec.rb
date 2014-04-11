@@ -5,7 +5,7 @@ describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
     @oauth_initiate_url = "https://lesbonneschoses.prismic.io/auth"
-    @api = Prismic::API.new(json_representation, nil, Prismic::DefaultHTTPClient){|api|
+    @api = Prismic::API.new(json_representation, nil, Prismic::DefaultHTTPClient, false){|api|
       api.bookmarks = {}
       api.tags = {}
       api.types = {}
@@ -111,18 +111,18 @@ describe 'Api' do
     before do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
       @json = JSON.parse(@data)
-      @parsed = Prismic::API.parse_api_response(@json, nil, Prismic::DefaultHTTPClient)
+      @parsed = Prismic::API.parse_api_response(@json, nil, Prismic::DefaultHTTPClient, false)
     end
 
     it "does not allow to be created without master Ref" do
       expect {
-        Prismic::API.parse_api_response({"refs" => []}, nil, Prismic::DefaultHTTPClient)
+        Prismic::API.parse_api_response({"refs" => []}, nil, Prismic::DefaultHTTPClient, false)
       }.to raise_error(Prismic::API::BadPrismicResponseError, "No master Ref found")
     end
 
     it "does not allow to be created without any Ref" do
       expect {
-        Prismic::API.parse_api_response({}, nil, Prismic::DefaultHTTPClient)
+        Prismic::API.parse_api_response({}, nil, Prismic::DefaultHTTPClient, false)
       }.to raise_error(Prismic::API::BadPrismicResponseError, "No refs given")
     end
 
@@ -259,11 +259,11 @@ describe 'LinkResolver' do
       '/'+doc.link_type+'/'+doc.id+'/'+doc.slug
     end
   end
-  
+
   it "builds the right URL from a DocumentLink" do
     @link_resolver.link_to(@doc_link).should == '/blog-post/id/my-slug'
   end
-  
+
   it "builds the right URL from a Document" do
     @link_resolver.link_to(@document).should == '/blog-post/id/my-slug'
   end

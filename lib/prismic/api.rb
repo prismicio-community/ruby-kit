@@ -1,11 +1,31 @@
 # encoding: utf-8
+
 module Prismic
   class API
+    @@cache = nil
     @@warned_create_search_form = false
     @@warned_oauth_initiate_url = false
     @@warned_oauth_check_token = false
     attr_reader :json, :access_token, :http_client
-    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth
+    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth, :cache
+
+    # Is the cache enabled on this API object?
+    #
+    # @return [Boolean]
+    def has_cache?
+      !!cache
+    end
+
+    # Calls the given block if the provided key is not already cached
+    #
+    # If the cache is disabled, the block is always called
+    #
+    # @param key [String] the cache's key to test
+    #
+    # @return the return of the given block
+    def caching(key)
+      cache ? cache.get(key){ yield(key) } : yield(key)
+    end
 
     # Returns the master {Ref reference}
     # @api
@@ -14,11 +34,12 @@ module Prismic
     attr_accessor :master
     alias :master_ref :master
 
-    def initialize(json, access_token, http_client)
+    def initialize(json, access_token, http_client, cache)
       @json = json
       @access_token = access_token
       @http_client = http_client
       yield self if block_given?
+      @cache = cache
       self.master = refs.values && refs.values.map { |ref| ref if ref.master? }.compact.first
       raise BadPrismicResponseError, "No master Ref found" unless master
     end
@@ -93,15 +114,17 @@ module Prismic
     def self.start(url, opts={})
       http_client = opts[:http_client] || Prismic::DefaultHTTPClient
       access_token = opts[:access_token]
+      cache = opts[:cache]
+      cache ||= Prismic::DefaultCache unless cache == false
       resp = get(url, access_token, http_client)
       json = JSON.load(resp.body)
-      parse_api_response(json, access_token, http_client)
+      parse_api_response(json, access_token, http_client, cache)
     end
 
-    def self.parse_api_response(data, access_token, http_client)
+    def self.parse_api_response(data, access_token, http_client, cache)
       data_forms = data['forms'] || []
       data_refs = data.fetch('refs'){ raise BadPrismicResponseError, "No refs given" }
-      new(data, access_token, http_client) {|api|
+      new(data, access_token, http_client, cache) {|api|
         api.bookmarks = data['bookmarks']
         api.forms = Hash[data_forms.map { |k, form|
           [k, Form.new(
