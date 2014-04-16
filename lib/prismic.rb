@@ -121,7 +121,6 @@ module Prismic
     #   @return [SearchForm] self
 
     # @!method page_size(page_size)
-    #   @generated
     #   Specify a page size for this form.
     #   @param  page_size [String,Fixum] The page size
     #   @return [SearchForm] self
