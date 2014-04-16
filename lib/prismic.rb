@@ -68,11 +68,6 @@ module Prismic
     API.oauth_check_token(url, oauth_opts, api_opts)
   end
 
-  class ApiData
-    attr_accessor :refs, :bookmarks, :types, :tags, :forms
-  end
-
-
   # A SearchForm represent a Form returned by the prismic.io API.
   #
   # These forms depend on the prismic.io repository, and can be filled and sent
