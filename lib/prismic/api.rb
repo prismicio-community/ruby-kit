@@ -2,7 +2,6 @@
 
 module Prismic
   class API
-    @@cache = nil
     @@warned_create_search_form = false
     @@warned_oauth_initiate_url = false
     @@warned_oauth_check_token = false
