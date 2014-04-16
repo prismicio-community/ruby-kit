@@ -12,6 +12,12 @@ module Prismic
         @o_embed_json = o_embed_json
       end
 
+      # Generate an HTML representation of the fragment
+      #
+      # @param link_resolver [LinkResolver] The LinkResolver used to build
+      #     application's specific URL
+      #
+      # @return [String] the HTML representation
       def as_html(link_resolver=nil)
         <<-HTML
         <div data-oembed="#@url"

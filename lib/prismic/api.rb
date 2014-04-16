@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 module Prismic
+  # The API is the main class
   class API
     @@warned_create_search_form = false
     @@warned_oauth_initiate_url = false
@@ -20,6 +21,7 @@ module Prismic
     # If the cache is disabled, the block is always called
     #
     # @param key [String] the cache's key to test
+    # @yieldparam key [String] the key
     #
     # @return the return of the given block
     def caching(key)

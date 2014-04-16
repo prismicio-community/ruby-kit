@@ -8,6 +8,12 @@ module Prismic
         @value = value
       end
 
+      # Returns the RGB values in a Hash
+      #
+      # @example
+      #   color.asRGB  # => {'red' => 123, 'green' => 123, 'blue' => 123}
+      #
+      # @return [Hash]
       def asRGB
         Fragments::Color.asRGB(@value)
       end
@@ -20,6 +26,12 @@ module Prismic
         }
       end
 
+      # Generate an HTML representation of the fragment
+      #
+      # @param link_resolver [LinkResolver] The LinkResolver used to build
+      #     application's specific URL
+      #
+      # @return [String] the HTML representation
       def as_html(link_resolver=nil)
         %(<span class="color">##@value</span>)
       end

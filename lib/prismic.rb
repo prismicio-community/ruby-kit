@@ -49,6 +49,8 @@ module Prismic
   #   @param [String] url The URL of the prismic.io repository
   #   @param [String] access_token The access token
   #
+  # @raise PrismicWSConnectionError
+  #
   # @return [API] The API instance related to this repository
   def self.api(url, opts=nil)
     opts ||= {}
@@ -56,12 +58,48 @@ module Prismic
     API.start(url, opts)
   end
 
+  # Build the URL where the user can be redirected to authenticated himself
+  # using OAuth2.
+  # @api
+  #
+  # @note: The endpoint depends on the repository, so an API call is made to
+  # fetch it.
+  #
+  # @param url[String] The URL of the prismic.io repository
+  # @param oauth_opts [Hash] The OAuth2 options
+  # @param api_opts [Hash] The API options (the same than accepted by the {api}
+  #                        method)
+  #
+  # @option oauth_opts :client_id [String] The Application's client ID
+  # @option oauth_opts :redirect_uri [String] The Application's secret
+  # @option oauth_opts :scope [String] The desired scope
+  #
+  # @raise PrismicWSConnectionError
+  #
+  # @return [String] The built URL
   def self.oauth_initiate_url(url, oauth_opts, api_opts=nil)
     api_opts ||= {}
     api_opts = {access_token: api_opts} if api_opts.is_a?(String)
     API.oauth_initiate_url(url, oauth_opts, api_opts)
   end
 
+  # Check a token and return an access_token
+  #
+  # This method allows to check the token received when the user has been
+  # redirected from the OAuth2 server. It returns an access_token that can
+  # be used to authenticate the user on the API.
+  #
+  # @param url [String] The URL of the prismic.io repository
+  # @param oauth_opts [Hash] The OAuth2 options
+  # @param api_opts [Hash] The API options (the same than accepted by the
+  #                        {api} method)
+  #
+  # @option oauth_opts :client_id [String] The Application's client ID
+  # @option oauth_opts :redirect_uri [String] The Application's secret
+  #
+  # @raise PrismicWSConnectionError
+  #
+  # @return [String] the access_token
   def self.oauth_check_token(url, oauth_opts, api_opts=nil)
     api_opts ||= {}
     api_opts = {access_token: api_opts} if api_opts.is_a?(String)
@@ -77,6 +115,7 @@ module Prismic
   #
   # The SearchForm instance contains helper methods for each predefined form's fields.
   # Note that these methods are not created if they risk to add confusion:
+  #
   # - only letters, underscore and digits are authorized in the name
   # - name starting with a digit or an underscore are forbidden
   # - generated method can't override existing methods
@@ -135,26 +174,44 @@ module Prismic
     end
     private :create_field_helper_method
 
+    # Returns the form's name
+    #
+    # @return [String]
     def form_name
       form.name
     end
 
+    # Returns the form's HTTP method
+    #
+    # @return [String]
     def form_method
       form.form_method
     end
 
+    # Returns the form's relationship
+    #
+    # @return [String]
     def form_rel
       form.rel
     end
 
+    # Returns the form's encoding type
+    #
+    # @return [String]
     def form_enctype
       form.enctype
     end
 
+    # Returns the form's action (URL)
+    #
+    # @return [String]
     def form_action
       form.action
     end
 
+    # Returns the form's fields
+    #
+    # @return [String]
     def form_fields
       form.fields
     end
@@ -162,13 +219,17 @@ module Prismic
     # Submit the form
     # @api
     #
-    # @note The reference MUST be defined, either by setting it at
-    #       {API#create_search_form creation}, by using the {#ref} method or by
-    #       providing the ref parameter.
+    # @note The reference MUST be defined, either by:
     #
-    # @param  ref [Ref, String] The {Ref reference} to use (if not already defined)
+    #       - setting it at {API#create_search_form creation}
+    #       - using the {#ref} method
+    #       - providing the ref parameter.
     #
-    # @return [Documents] The results (array of Document object + pagination specifics)
+    # @param ref [Ref, String] The {Ref reference} to use (if not already
+    #     defined)
+    #
+    # @return [Documents] The results (array of Document object + pagination
+    #     specifics)
     def submit(ref = nil)
       self.ref(ref) if ref
       raise NoRefSetException unless @ref
@@ -266,11 +327,20 @@ module Prismic
     end
     alias :get :[]
 
+    # Iterates over received documents
+    #
+    # @yieldparam document [Document]
+    #
+    # This method _does not_ paginates by itself. So only the received document
+    # will be returned.
     def each(&blk)
       @results.each(&blk)
     end
     include Enumerable  # adds map, select, etc
 
+    # Return the number of returned documents
+    #
+    # @return [Fixum]
     def length
       @results.length
     end
@@ -289,20 +359,31 @@ module Prismic
       @fragments = (fragments.is_a? Hash) ? parse_fragments(fragments) : fragments
     end
 
+    # Returns the document's slug
+    #
+    # @return [String]
     def slug
       slugs.empty? ? '-' : slugs.first
     end
 
+    # Generate an HTML representation of the entire document
+    #
+    # @param link_resolver [LinkResolver] The LinkResolver used to build
+    #     application's specific URL
+    #
+    # @return [String] the HTML representation
     def as_html(link_resolver)
       fragments.map { |field, fragment|
         %(<section data-field="#{field}">#{fragment.as_html(link_resolver)}</section>)
       }.join("\n")
     end
 
-    # Finds the first highest title in a document
+    # Finds the first highest title in a document (if any)
     #
-    # It is impossible to reuse the StructuredText.first_title method, since we need to test the highest title across the whole document
+    # @return [String]
     def first_title
+      # It is impossible to reuse the StructuredText.first_title method, since
+      # we need to test the highest title across the whole document
       title = false
       max_level = 6 # any title with a higher level kicks the current one out
       @fragments.each do |_, fragment|
@@ -320,9 +401,12 @@ module Prismic
       title
     end
 
+    # Get a document's field
     def [](field)
       array = field.split('.')
-      raise ArgumentError, "Argument should contain one dot. Example: product.price" if array.length != 2
+      if array.length != 2
+        raise ArgumentError, "Argument should contain one dot. Example: product.price"
+      end
       return nil if array[0] != self.type
       fragments[array[1]]
     end
@@ -342,7 +426,26 @@ module Prismic
   # (except /api) and allow to assert that the URL you use will always
   # returns the same results.
   class Ref
-    attr_accessor :ref, :label, :is_master, :scheduled_at
+
+    # Returns the value of attribute ref.
+    #
+    # @return [String]
+    attr_accessor :ref
+
+    # Returns the value of attribute label.
+    #
+    # @return [String]
+    attr_accessor :label
+
+    # Returns the value of attribute is_master.
+    #
+    # @return [Boolean]
+    attr_accessor :is_master
+
+    # Returns the value of attribute scheduled_at.
+    #
+    # @return [Time]
+    attr_accessor :scheduled_at
 
     def initialize(ref, label, is_master = false, scheduled_at = nil)
       @ref = ref
@@ -354,8 +457,13 @@ module Prismic
     alias :master? :is_master
   end
 
+  # The LinkResolver will help to build URL specific to an application, based
+  # on a generic prismic.io's {Fragments::DocumentLink Document link}.
   class LinkResolver
     attr_reader :ref
+
+    # @yieldparam doc_link [Fragments::DocumentLink] A DocumentLink instance
+    # @yieldreturn [String] The application specific URL of the given document
     def initialize(ref, &blk)
       @ref = ref
       @blk = blk
@@ -427,11 +535,11 @@ module Prismic
   # The {LinkResolver} will help to build URL specific to an application, based
   # on a generic prismic.io's {Fragments::DocumentLink Document link}.
   #
-  # @param  ref [Ref] The ref to use
-  # @yieldparam  doc_link [Fragments::DocumentLink] A DocumentLink instance
+  # @param ref [Ref] The ref to use
+  # @yieldparam doc_link [Fragments::DocumentLink] A DocumentLink instance
   # @yieldreturn [String] The application specific URL of the given document
   #
-  # @return [LinkResolver] [description]
+  # @return [LinkResolver] the {LinkResolver} instance
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
   end
