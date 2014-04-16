@@ -264,6 +264,7 @@ module Prismic
     def [](i)
       @results[i]
     end
+    alias :get :[]
 
     def each(&blk)
       @results.each(&blk)
@@ -325,6 +326,7 @@ module Prismic
       return nil if array[0] != self.type
       fragments[array[1]]
     end
+    alias :get :[]
 
     private
 

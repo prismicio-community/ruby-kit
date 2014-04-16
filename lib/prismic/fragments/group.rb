@@ -19,6 +19,7 @@ module Prismic
       def [](i)
         @fragment_list_array[i]
       end
+      alias :get :[]
 
       def each(&blk)
         @fragment_list_array.each(&blk)
@@ -52,6 +53,7 @@ module Prismic
         def [](name)
           @fragments[name]
         end
+        alias :get :[]
 
         def each(&blk)
           @fragments.each(&blk)
