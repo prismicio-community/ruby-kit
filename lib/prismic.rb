@@ -235,7 +235,7 @@ module Prismic
       raise NoRefSetException unless @ref
 
       # cache_key is a mix of HTTP URL and HTTP method
-      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')
+      cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')+'?ref='+ref.ref
 
       api.caching(cache_key) {
         if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
