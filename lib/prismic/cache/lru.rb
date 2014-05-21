@@ -16,7 +16,7 @@ module Prismic
   # class you created as a :cache option. Therefore, to use this simple cache,
   # you can create your API object like this: `Prismic.api(url, cache:
   # Prismic::DefaultCache)`
-  class Cache
+  class LruCache
 
     # Based on http://stackoverflow.com/questions/1933866/efficient-ruby-lru-cache
     # The Hash are sorted, so the age is represented by the key order
@@ -127,5 +127,5 @@ module Prismic
 
   # This default instance is used by the API to avoid creating a new instance
   # per request (which would make the cache useless).
-  DefaultCache = Cache.new
+  DefaultCache = LruCache.new
 end
