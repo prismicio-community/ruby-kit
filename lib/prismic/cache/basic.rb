@@ -22,13 +22,11 @@ module Prismic
     end
 
     def get(key)
-      assert_valid_key!(key)
-      return unset(key) if expired?(key)
-      set?(key) ? @cache[key].data : nil
+      return delete(key) if expired?(key)
+      include?(key) ? @cache[key].data : nil
     end
 
     def set(key, value = nil, expired_in = 0)
-      assert_valid_key!(key)
       data = block_given? ? yield : value
       expired_in = (expired_in == 0) ? 0 : Time.now.getutc.to_i + expired_in
       entry = BasicCacheEntry.new(data, expired_in)
@@ -36,28 +34,24 @@ module Prismic
       entry.data
     end
 
-    def set?(key)
-      assert_valid_key!(key)
+    def include?(key)
       @cache.keys.include?(key)
     end
 
     def get_or_set(key, value = nil, expired_in = 0)
-      assert_valid_key!(key)
-      return get(key) if set?(key)
+      return get(key) if include?(key)
       set(key, block_given? ? yield : value, expired_in)
     end
 
-    def unset(key)
-      assert_valid_key!(key)
+    def delete(key)
       @cache.delete(key)
       nil
     end
 
     def expired?(key)
-      assert_valid_key!(key)
-      if set?(key)
+      if include?(key)
         expired_in = @cache[key].expired_in
-        (expired_in != 0) && expired_in < Time.now.getutc.to_i if set?(key)
+        (expired_in != 0) && expired_in < Time.now.getutc.to_i
       else
         false
       end
@@ -66,11 +60,7 @@ module Prismic
     def clear()
       @cache = {}
     end
-
-    def assert_valid_key!(key)
-      unless key.is_a?(String)
-        raise TypeError, "key must be a String"
-      end
-    end
   end
+
+  DefaultApiCache = BasicCache.new
 end

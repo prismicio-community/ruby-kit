@@ -103,7 +103,7 @@ describe "Basic Cache's" do
   it 'set & test value' do
 	cache = Prismic::BasicCache.new
 	cache.set('key', 'value')
-	cache.set?('key').should == true
+	cache.include?('key').should == true
   end
 
   it 'get or set value' do
@@ -116,11 +116,11 @@ describe "Basic Cache's" do
 	cache.get('key1').should == 'value2'
   end
 
-  it 'set, unset & get value' do
+  it 'set, delete & get value' do
 	cache = Prismic::BasicCache.new
 	cache.set('key', 'value')
 	cache.get('key').should == 'value'
-	cache.unset('key')
+	cache.delete('key')
 	cache.get('key').should == nil
   end
 

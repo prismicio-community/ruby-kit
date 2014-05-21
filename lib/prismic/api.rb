@@ -88,7 +88,7 @@ module Prismic
       @json
     end
 
-    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::BasicCache.new)
+    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultApiCache)
       data = {}
       data["access_token"] = access_token if access_token
       cache_key = url + (access_token ? ("#" + access_token) : "")
