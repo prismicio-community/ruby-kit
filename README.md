@@ -37,14 +37,26 @@ Also on our [prismic.io developer's portal](https://developers.prismic.io/), on 
  * get a thorough introduction of [how to use prismic.io kits](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one.
  * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby): starter projects, examples, ...
 
+### Using the kit
+
 #### Kit's detailed documentation
 
 To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames).
 
+#### Specific Ruby kit syntax
+
 Thanks to Ruby's syntax, this kit contains some mild differences and syntastic sugar over [the "Kits and helpers" section of our API documentation](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers) in general (which you should read first). They are listed here:
+
  * When calling the API, a faster way to pass the `ref`: directly as a parameter of the `submit` method (no need to use the `ref` method then): `api.form("everything").submit(@ref)`.
  * Accessing type-dependent fields from a `document` is done through the `[]` operator (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document["title_user_friendly"].as_html(link_resolver(@ref))`.
  * Two of the fields in the `DocumentLink` object (the one used to write your `link_resolver` method, for instance) were renamed to fit Ruby's best practice: `doc.type` is in fact `doc.link_type`, and `doc.isBroken` is in fact `doc.broken?`.
+
+Knowing all that, here is typical code written with the Ruby kit:
+
+ * A typical API object instantiation looks like this: `Prismic.api(url, opts)`
+ * A typical querying looks like this: `api.form('everything').query('[[:d = at(document.type, "product")]]').submit(@ref)`
+ * A typical fragment manipulation looks like this: `doc['article.image'].get_view('icon').url`
+ * A typical fragment serialization to HTML looks like this: `doc['article.body'].as_html(@link_resolver)`
 
 ### Changelog
 
