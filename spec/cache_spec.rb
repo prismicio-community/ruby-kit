@@ -5,14 +5,14 @@ describe "Cache's" do
 
 	describe 'on/off switch' do
 		before do
-			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::Cache.new(3))
+			@api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::LruCache.new(3))
 			@cache = @api.cache
 			@master_ref = @api.master_ref
 		end
 
 		it "is properly on" do
 			@api.has_cache?.should == true
-			@cache.is_a?(Prismic::Cache).should == true
+			@cache.is_a?(Prismic::LruCache).should == true
 		end
 
 		it "is properly off" do
@@ -83,4 +83,59 @@ describe "Cache's" do
 			end
 		end
 	end
+end
+
+describe "Basic Cache's" do
+
+  it 'set & get value' do
+	cache = Prismic::BasicCache.new
+	cache.set('key', 'value')
+	cache.get('key').should == 'value'
+  end
+
+  it 'set with expiration value & get value' do
+	cache = Prismic::BasicCache.new
+	cache.set('key', 'value', 2)
+	sleep(3)
+	cache.get('key').should == nil
+  end
+
+  it 'set & test value' do
+	cache = Prismic::BasicCache.new
+	cache.set('key', 'value')
+	cache.include?('key').should == true
+  end
+
+  it 'get or set value' do
+	cache = Prismic::BasicCache.new
+	cache.set('key', 'value')
+	cache.get('key').should == 'value'
+	cache.get_or_set('key', 'value1')
+	cache.get('key').should == 'value'
+	cache.get_or_set('key1', 'value2')
+	cache.get('key1').should == 'value2'
+  end
+
+  it 'set, delete & get value' do
+	cache = Prismic::BasicCache.new
+	cache.set('key', 'value')
+	cache.get('key').should == 'value'
+	cache.delete('key')
+	cache.get('key').should == nil
+  end
+
+  it 'set, clear & get value' do
+	cache = Prismic::BasicCache.new
+	cache.expired?('key')
+	cache.set('key', 'value')
+	cache.set('key1', 'value1')
+	cache.set('key2', 'value2')
+	cache.get('key').should == 'value'
+	cache.get('key1').should == 'value1'
+	cache.get('key2').should == 'value2'
+	cache.clear()
+	cache.get('key').should == nil
+	cache.get('key1').should == nil
+	cache.get('key2').should == nil
+  end
 end

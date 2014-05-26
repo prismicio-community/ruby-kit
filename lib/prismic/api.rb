@@ -88,28 +88,31 @@ module Prismic
       @json
     end
 
-    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient)
+    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultApiCache)
       data = {}
       data["access_token"] = access_token if access_token
-      res = http_client.get(url, data, 'Accept' => 'application/json')
-      case res.code
-      when '200'
-        res
-      when '401', '403'
-        begin
-          json = JSON.load(res.body)
-          raise PrismicWSAuthError.new(
-            json['error'],
-            json['oauth_initiate'],
-            json['oauth_token'],
-            http_client
-          )
-        rescue => e
-          raise PrismicWSConnectionError.new(res, e)
+      cache_key = url + (access_token ? ("#" + access_token) : "")
+      api_cache.get_or_set(cache_key, expired_in:5) {
+        res = http_client.get(url, data, 'Accept' => 'application/json')
+        case res.code
+        when '200'
+          res
+        when '401', '403'
+          begin
+            json = JSON.load(res.body)
+            raise PrismicWSAuthError.new(
+              json['error'],
+              json['oauth_initiate'],
+              json['oauth_token'],
+              http_client
+            )
+          rescue => e
+            raise PrismicWSConnectionError.new(res, e)
+          end
+        else
+          raise PrismicWSConnectionError, res
         end
-      else
-        raise PrismicWSConnectionError, res
-      end
+      }
     end
 
     def self.start(url, opts={})
