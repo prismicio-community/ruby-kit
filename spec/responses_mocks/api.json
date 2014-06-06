@@ -1,11 +1,13 @@
 {
    "refs":[
       {
+         "id":"master",
          "ref":"UfuJ2d_mqXoNBZDt",
          "label":"Master",
          "isMasterRef":true
       },
       {
+         "id":"release1",
          "ref":"foo",
          "label":"bar",
          "isMasterRef":false

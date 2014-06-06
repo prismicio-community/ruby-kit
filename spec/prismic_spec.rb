@@ -10,10 +10,10 @@ describe 'Api' do
       api.tags = {}
       api.types = {}
       api.refs = {
-        'key1' => Prismic::Ref.new('ref1', 'label1'),
-        'key2' => Prismic::Ref.new('ref2', 'label2'),
-        'key3' => Prismic::Ref.new('ref3', 'label3', true),
-        'key4' => Prismic::Ref.new('ref4', 'label4'),
+        'key1' => Prismic::Ref.new('id1', 'ref1', 'label1'),
+        'key2' => Prismic::Ref.new('id2', 'ref2', 'label2'),
+        'key3' => Prismic::Ref.new('id3', 'ref3', 'label3', true),
+        'key4' => Prismic::Ref.new('id4', 'ref4', 'label4'),
       }
       api.forms = {
         'form1' => Prismic::Form.new(@api, 'form1', {}, nil, nil, nil, nil),
@@ -26,6 +26,12 @@ describe 'Api' do
       }
       api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, "https://lesbonneschoses.prismic.io/auth/token", Prismic::DefaultHTTPClient)
     }
+  end
+
+  describe 'id' do
+    it "returns the right id" do
+      @api.ref('key1').id.should == 'id1'
+    end
   end
 
   describe 'ref' do
