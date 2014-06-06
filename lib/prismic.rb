@@ -427,6 +427,11 @@ module Prismic
   # returns the same results.
   class Ref
 
+    # Returns the value of attribute id.
+    #
+    # @return [String]
+    attr_accessor :id
+
     # Returns the value of attribute ref.
     #
     # @return [String]
@@ -447,7 +452,8 @@ module Prismic
     # @return [Time]
     attr_accessor :scheduled_at
 
-    def initialize(ref, label, is_master = false, scheduled_at = nil)
+    def initialize(id, ref, label, is_master = false, scheduled_at = nil)
+      @id = id
       @ref = ref
       @label = label
       @is_master = is_master
