@@ -209,9 +209,9 @@ module Prismic
         end
       end
 
-      def documents_parser(documents)
+      def response_parser(documents)
         raise FormSearchException, "Error : #{documents['error']}" if documents['error']
-        Prismic::Documents.new(
+        Prismic::Response.new(
           documents['page'],
           documents['results_per_page'],
           documents['results_size'],
