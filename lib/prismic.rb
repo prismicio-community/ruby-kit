@@ -228,7 +228,7 @@ module Prismic
     # @param ref [Ref, String] The {Ref reference} to use (if not already
     #     defined)
     #
-    # @return [Documents] The results (array of Document object + pagination
+    # @return [Response] The results (array of Document object + pagination
     #     specifics)
     def submit(ref = nil)
       self.ref(ref) if ref
@@ -246,7 +246,7 @@ module Prismic
           response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
           if response.code.to_s == "200"
-            Prismic::JsonParser.documents_parser(JSON.parse(response.body))
+            Prismic::JsonParser.response_parser(JSON.parse(response.body))
           else
             body = JSON.parse(response.body) rescue nil
             error = body.is_a?(Hash) ? body['error'] : response.body
@@ -307,7 +307,7 @@ module Prismic
     alias :repeatable? :repeatable
   end
 
-  class Documents
+  class Response
     attr_accessor :page, :results_per_page, :results_size, :total_results_size, :total_pages, :next_page, :prev_page, :results
 
     def initialize(page, results_per_page, results_size, total_results_size, total_pages, next_page, prev_page, results)

@@ -316,7 +316,7 @@ describe 'document_parser' do
   end
 end
 
-describe 'documents_parser' do
+describe 'response_parser' do
 
   it "accepts basic documents response" do
     @json = JSON.parse('{ "page": 1,
@@ -327,7 +327,7 @@ describe 'documents_parser' do
       "next_page": "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20",
       "prev_page": null,
       "results":[]}')
-    @documents = Prismic::JsonParser.documents_parser(@json)
+    @documents = Prismic::JsonParser.response_parser(@json)
     @documents.results.should == []
     @documents.page.should == 1
     @documents.results_per_page.should == 20
