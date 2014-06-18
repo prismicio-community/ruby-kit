@@ -51,6 +51,7 @@ Thanks to Ruby's syntax, this kit contains some mild differences and syntastic s
  * Accessing type-dependent fields from a `document` is done through the `[]` operator (rather than a `get()` method). Printing the HTML version of a field therefore looks like `document["title_user_friendly"].as_html(link_resolver(@ref))`.
  * Two of the fields in the `DocumentLink` object (the one used to write your `link_resolver` method, for instance) were renamed to fit Ruby's best practice: `doc.type` is in fact `doc.link_type`, and `doc.isBroken` is in fact `doc.broken?`.
  * You don't need to pass a `ctx` object in `as_html()`, you can use the `Prismic.link_resolver` static method to build a link resolver object that takes the `ref` into account, like this: `@link_resolver = Prismic.link_resolver(@ref) { |doc| ...  }`. Then you can simply go: `fragment.as_html(@link_resolver)`. Note: the Rails starter kit provides you with a helper allowing you to pass the ref each time you call the link resolver, like this: `fragment.as_html(link_resolver(@ref))`.
+ * the `Response` class is fit to work with the [Kaminari](https://github.com/amatsuda/kaminari) gem. So if you have a `@response` object in your controller, you can display a whole pagination for it in your view like this: `<%= paginate @response %>` (this works with any Rails 3 or 4 app with the Kaminari gem installed).
 
 Knowing all that, here is typical code written with the Ruby kit:
 
