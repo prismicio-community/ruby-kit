@@ -347,15 +347,26 @@ module Prismic
     alias :size :length
   end
 
-  class Document
-    attr_accessor :id, :type, :href, :tags, :slugs, :fragments
+  class LinkedDocument
+    attr_accessor :id, :type, :tags
 
-    def initialize(id, type, href, tags, slugs, fragments)
+    def initialize(id, type, tags)
+      @id = id
+      @type = type
+      @tags = tags
+    end
+  end
+
+  class Document
+    attr_accessor :id, :type, :href, :tags, :slugs, :linked_documents, :fragments
+
+    def initialize(id, type, href, tags, slugs, linked_documents, fragments)
       @id = id
       @type = type
       @href = href
       @tags = tags
       @slugs = slugs
+      @linked_documents = linked_documents
       @fragments = (fragments.is_a? Hash) ? parse_fragments(fragments) : fragments
     end
 

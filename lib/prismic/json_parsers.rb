@@ -199,8 +199,17 @@ module Prismic
           end
         }]
 
+        linked_documents = json['linked_documents']
+        if linked_documents
+          linked_documents.map! do |linked_doc|
+            LinkedDocument.new(linked_doc['id'], linked_doc['type'], linked_doc['tags'])
+          end
+        else
+          linked_documents = []
+        end
+
         Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
-                              json['slugs'], fragments)
+                              json['slugs'], linked_documents, fragments)
       end
 
       def results_parser(results)
