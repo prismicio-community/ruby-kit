@@ -310,6 +310,10 @@ module Prismic
   class Response
     attr_accessor :page, :results_per_page, :results_size, :total_results_size, :total_pages, :next_page, :prev_page, :results
 
+    # To be able to use Kaminari as a paginator in Rails out of the box
+    alias :current_page :page
+    alias :limit_value :results_per_page
+
     def initialize(page, results_per_page, results_size, total_results_size, total_pages, next_page, prev_page, results)
       @page = page
       @results_per_page = results_per_page
