@@ -352,10 +352,11 @@ module Prismic
   end
 
   class LinkedDocument
-    attr_accessor :id, :type, :tags
+    attr_accessor :id, :slug, :type, :tags
 
-    def initialize(id, type, tags)
+    def initialize(id, slug, type, tags)
       @id = id
+      @slug = slug
       @type = type
       @tags = tags
     end

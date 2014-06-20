@@ -202,7 +202,7 @@ module Prismic
         linked_documents = json['linked_documents']
         if linked_documents
           linked_documents.map! do |linked_doc|
-            LinkedDocument.new(linked_doc['id'], linked_doc['type'], linked_doc['tags'])
+            LinkedDocument.new(linked_doc['id'], linked_doc['slug'], linked_doc['type'], linked_doc['tags'])
           end
         else
           linked_documents = []
