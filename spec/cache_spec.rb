@@ -100,6 +100,14 @@ describe "Basic Cache's" do
 	cache.get('key').should == nil
   end
 
+  it 'set with expiration and a block' do
+    cache = Prismic::BasicCache.new
+    cache.get_or_set('key', nil, 2){ 'value' }
+    cache.get_or_set('key', nil, 2){ 'othervalue' }.should == 'value'
+    sleep(3)
+    cache.get_or_set('key', nil, 2){ 'othervalue' }.should == 'othervalue'
+  end
+
   it 'set & test value' do
 	cache = Prismic::BasicCache.new
 	cache.set('key', 'value')

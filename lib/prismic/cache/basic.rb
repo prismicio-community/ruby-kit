@@ -39,7 +39,7 @@ module Prismic
     end
 
     def get_or_set(key, value = nil, expired_in = 0)
-      return get(key) if include?(key)
+      return get(key) if include?(key) && !expired?(key)
       set(key, block_given? ? yield : value, expired_in)
     end
 

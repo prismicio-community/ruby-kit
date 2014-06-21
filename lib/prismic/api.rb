@@ -92,7 +92,7 @@ module Prismic
       data = {}
       data["access_token"] = access_token if access_token
       cache_key = url + (access_token ? ("#" + access_token) : "")
-      api_cache.get_or_set(cache_key, expired_in:5) {
+      api_cache.get_or_set(cache_key, nil, 5) {
         res = http_client.get(url, data, 'Accept' => 'application/json')
         case res.code
         when '200'
