@@ -446,4 +446,14 @@ describe 'SearchForm' do
       expect { @form.submit }.to raise_error Prismic::SearchForm::NoRefSetException
     end
   end
+
+  describe 'submit_raw' do
+    before do
+      @api = Prismic.api("https://lesbonneschoses.prismic.io/api")
+      @master_ref = @api.master_ref
+    end
+    it "returns a proper JSON string if all ok" do
+      @api.form("everything").page_size('1').submit_raw(@master_ref).should == "{\"page\":1,\"results_per_page\":1,\"results_size\":1,\"total_results_size\":40,\"total_pages\":40,\"next_page\":\"https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=1\",\"prev_page\":null,\"results\":[{\"id\":\"UkL0gMuvzYUANCpf\",\"type\":\"job-offer\",\"href\":\"https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22UkL0gMuvzYUANCpf%22%29+%5D%5D\",\"tags\":[],\"slugs\":[\"pastry-dresser\"],\"linked_documents\":[{\"id\":\"UkL0gMuvzYUANCpZ\",\"tags\":[],\"type\":\"store\",\"slug\":\"tokyo-roppongi-hills\"}],\"data\":{\"job-offer\":{\"name\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"heading1\",\"text\":\"Pastry Dresser\",\"spans\":[]}]},\"location\":[{\"type\":\"Link.document\",\"value\":{\"document\":{\"id\":\"UkL0gMuvzYUANCpZ\",\"type\":\"store\",\"tags\":[],\"slug\":\"tokyo-roppongi-hills\"},\"isBroken\":false}}],\"contract_type\":{\"type\":\"Select\",\"value\":\"Permanent\"},\"service\":{\"type\":\"Select\",\"value\":\"Workshop\"},\"profile\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"paragraph\",\"text\":\"If you are the kind of person who gets intense, insane, almost neurotic about perfection and details, you are exactly the type we're looking for; but be aware that this job will not make your condition better! With an art background and a perfect mastery of the finest paintbrushes, you can modify every bit of an object to make it shine even brighter.\",\"spans\":[]}]},\"job_description\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"paragraph\",\"text\":\"One sentence to let you feel the thrill of your responsibility: you're the last person to be able to make the pastry better before it ends up in the customer's hands. Yes, it's that serious. You get the piece from your teammates, and you're the one who is supposed to let the pastry express the kind of treasure it is. With a bit of dusting, an extra topping, or a chocolate drawing, you envision the pastry in its most seductive form, and are so precise with your brush that what you make of it simply enhances it to perfection.\",\"spans\":[]}]}}}}],\"license\":\"All Rights Reserved\"}"
+    end
+  end
 end

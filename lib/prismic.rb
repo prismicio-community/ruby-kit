@@ -231,6 +231,23 @@ module Prismic
     # @return [Response] The results (array of Document object + pagination
     #     specifics)
     def submit(ref = nil)
+      Prismic::JsonParser.response_parser(JSON.parse(submit_raw(ref)))
+    end
+
+    # Submit the form, returns a raw JSON string
+    # @api
+    #
+    # @note The reference MUST be defined, either by:
+    #
+    #       - setting it at {API#create_search_form creation}
+    #       - using the {#ref} method
+    #       - providing the ref parameter.
+    #
+    # @param ref [Ref, String] The {Ref reference} to use (if not already
+    #     defined)
+    #
+    # @return [string] The JSON string returned by the API
+    def submit_raw(ref = nil)
       self.ref(ref) if ref
       data['ref'] = @ref
       raise NoRefSetException unless @ref
@@ -246,7 +263,7 @@ module Prismic
           response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
           if response.code.to_s == "200"
-            Prismic::JsonParser.response_parser(JSON.parse(response.body))
+            response.body
           else
             body = JSON.parse(response.body) rescue nil
             error = body.is_a?(Hash) ? body['error'] : response.body
