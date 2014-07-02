@@ -379,7 +379,7 @@ describe 'timestamp_parser' do
   end
 
   it 'outputs correctly as HTML' do
-    @timestamp_fragment.as_html.should match /<time>2014-06-1\dT\d{2}:30:00\.000-\d{2}:00<\/time>/
+    @timestamp_fragment.as_html.should match /<time>2014-06-1\dT\d{2}:30:00\.000[-+]\d{2}:00<\/time>/
   end
 end
 
