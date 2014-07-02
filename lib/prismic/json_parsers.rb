@@ -8,9 +8,10 @@ module Prismic
           'Link.document'  => method(:document_link_parser),
           'Text'           => method(:text_parser),
           'Link.web'       => method(:web_link_parser),
-          'Link.image'       => method(:image_link_parser),
-          'Link.file'       => method(:file_link_parser),
+          'Link.image'     => method(:image_link_parser),
+          'Link.file'      => method(:file_link_parser),
           'Date'           => method(:date_parser),
+          'Timestamp'      => method(:timestamp_parser),
           'Number'         => method(:number_parser),
           'Embed'          => method(:embed_parser),
           'Image'          => method(:image_parser),
@@ -54,6 +55,10 @@ module Prismic
 
       def date_parser(json)
         Prismic::Fragments::Date.new(Time.parse(json['value']))
+      end
+
+      def timestamp_parser(json)
+        Prismic::Fragments::Timestamp.new(Time.parse(json['value']))
       end
 
       def number_parser(json)

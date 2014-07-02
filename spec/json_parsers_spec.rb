@@ -311,7 +311,7 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 11
+    @document.fragments.size.should == 12
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
   end
 end
@@ -362,6 +362,24 @@ json
     multiple.size.should == 2
     multiple[0].class.should == Prismic::Fragments::Text
     multiple[0].class.should == Prismic::Fragments::Text
+  end
+end
+
+describe 'timestamp_parser' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
+    json = JSON.parse(raw_json)
+    @document = Prismic::JsonParser.document_parser(json)
+    @timestamp_fragment = @document['product.some_timestamp']
+  end
+
+  it 'correctly parses and stores a Time object' do
+    @timestamp_fragment.value.wednesday?.should == true
+    @timestamp_fragment.value.min.should == 30
+  end
+
+  it 'outputs correctly as HTML' do
+    @timestamp_fragment.as_html.should match /<time>2014-06-1\dT\d{2}:30:00\.000-\d{2}:00<\/time>/
   end
 end
 
