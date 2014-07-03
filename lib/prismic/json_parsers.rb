@@ -77,7 +77,8 @@ module Prismic
                                               json['dimensions']['width'],
                                               json['dimensions']['height'],
                                               json['alt'],
-                                              json['copyright'])
+                                              json['copyright'],
+                                              json['linkTo'] ? link_parser(json['linkTo']) : nil)
         end
 
         main  = view_parser(json['value']['main'])
@@ -143,7 +144,8 @@ module Prismic
               block['dimensions']['width'],
               block['dimensions']['height'],
               block['alt'],
-              block['copyright']
+              block['copyright'],
+              block['linkTo'] ? link_parser(block['linkTo']) : nil
             )
             Prismic::Fragments::StructuredText::Block::Image.new(view)
           when 'embed'
