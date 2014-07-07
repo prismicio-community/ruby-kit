@@ -182,6 +182,23 @@ json
   end
 end
 
+describe 'geo_point_parser' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
+    json = JSON.parse(raw_json)
+    @document = Prismic::JsonParser.document_parser(json)
+  end
+
+  it 'correctly parses GeoPoint objects' do
+    @document['product.location'].latitude.should == 48.877108
+    @document['product.location'].longitude.should == -2.333879
+  end
+
+  it 'correctly serializes GeoPoint objects into HTML' do
+    @document['product.location'].as_html.should == "<div class=\"geopoint\"><span class=\"longitude\">-2.333879</span><span class=\"latitude\">48.877108</span></div>"
+  end
+end
+
 describe 'color_parser' do
   before do
     raw_json = <<json
@@ -311,7 +328,7 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 11
+    @document.fragments.size.should == 12
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
   end
 end
