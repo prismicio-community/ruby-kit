@@ -14,6 +14,7 @@ module Prismic
           'Timestamp'      => method(:timestamp_parser),
           'Number'         => method(:number_parser),
           'Embed'          => method(:embed_parser),
+          'GeoPoint'          => method(:geo_point_parser),
           'Image'          => method(:image_parser),
           'Color'          => method(:color_parser),
           'StructuredText' => method(:structured_text_parser),
@@ -73,6 +74,13 @@ module Prismic
           oembed['provider_url'],
           oembed['html'],
           oembed
+        )
+      end
+
+      def geo_point_parser(json)
+        Prismic::Fragments::GeoPoint.new(
+          json['value']['longitude'],
+          json['value']['latitude']
         )
       end
 
