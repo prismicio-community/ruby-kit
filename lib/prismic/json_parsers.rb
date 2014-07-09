@@ -8,11 +8,13 @@ module Prismic
           'Link.document'  => method(:document_link_parser),
           'Text'           => method(:text_parser),
           'Link.web'       => method(:web_link_parser),
-          'Link.image'       => method(:image_link_parser),
-          'Link.file'       => method(:file_link_parser),
+          'Link.image'     => method(:image_link_parser),
+          'Link.file'      => method(:file_link_parser),
           'Date'           => method(:date_parser),
+          'Timestamp'      => method(:timestamp_parser),
           'Number'         => method(:number_parser),
           'Embed'          => method(:embed_parser),
+          'GeoPoint'          => method(:geo_point_parser),
           'Image'          => method(:image_parser),
           'Color'          => method(:color_parser),
           'StructuredText' => method(:structured_text_parser),
@@ -56,6 +58,10 @@ module Prismic
         Prismic::Fragments::Date.new(Time.parse(json['value']))
       end
 
+      def timestamp_parser(json)
+        Prismic::Fragments::Timestamp.new(Time.parse(json['value']))
+      end
+
       def number_parser(json)
         Prismic::Fragments::Number.new(json['value'])
       end
@@ -68,6 +74,13 @@ module Prismic
           oembed['provider_url'],
           oembed['html'],
           oembed
+        )
+      end
+
+      def geo_point_parser(json)
+        Prismic::Fragments::GeoPoint.new(
+          json['value']['longitude'],
+          json['value']['latitude']
         )
       end
 
