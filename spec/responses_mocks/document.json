@@ -51,6 +51,13 @@
         }
         ]
       },
+      "location" : {
+        "type": "GeoPoint",
+        "value": {
+          "latitude": 48.877108,
+          "longitude": -2.3338790
+        }
+      },
       "image": {
         "type": "Image",
         "value": {
