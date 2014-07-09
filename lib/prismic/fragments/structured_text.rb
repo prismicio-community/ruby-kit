@@ -264,6 +264,10 @@ module Prismic
             @view.copyright
           end
 
+          def link_to
+            @view.link_to
+          end
+
           def as_html(link_resolver)
             view.as_html(link_resolver)
           end

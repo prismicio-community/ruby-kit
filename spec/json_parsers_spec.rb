@@ -199,6 +199,42 @@ describe 'geo_point_parser' do
   end
 end
 
+describe 'image_parser in StructuredText' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
+    json = JSON.parse(raw_json)
+    @document = Prismic::JsonParser.document_parser(json)
+    @image_st = @document['product.linked_images']
+  end
+
+  it 'parses properly with links' do
+    @image_st.blocks[2].link_to.url.should == 'http://google.com/'
+  end
+
+  it 'parses properly without links' do
+    @image_st.blocks[5].link_to.should be_nil
+  end
+
+  it 'serializes properly as HTML' do
+    expected = <<expected
+<p>Here is some introductory text.</p>
+
+<p>The following image is linked.</p>
+
+<a href="http://google.com/"><img src="http://fpoimg.com/129x260" alt="" width="260" height="129" /></a>
+
+<p><strong>More important stuff</strong></p>
+
+<p>One more image, this one is not linked:</p>
+
+<img src="http://fpoimg.com/199x300" alt="" width="300" height="199" />
+expected
+    expected.chomp!
+    link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    @image_st.as_html(link_resolver).should == expected
+  end
+end
+
 describe 'color_parser' do
   before do
     raw_json = <<json
@@ -328,7 +364,7 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 13
+    @document.fragments.size.should == 14
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
   end
 end
