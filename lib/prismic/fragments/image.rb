@@ -28,7 +28,7 @@ module Prismic
       class View < Fragment
         attr_accessor :url, :width, :height, :alt, :copyright, :link_to
 
-        def initialize(url, width, height, alt, copyright, link_to=nil)
+        def initialize(url, width, height, alt, copyright, link_to)
           @url = url
           @width = width
           @height = height

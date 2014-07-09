@@ -445,15 +445,6 @@ describe 'Image' do
     @image = Prismic::Fragments::Image.new(@main_view, { 'another_view' => @another_view })
   end
 
-  describe 'View' do
-    # retro-compatiblity
-    it "accepts being created without 'link_to'" do
-      expect {
-        Prismic::Fragments::Image::View.new('my_url', 10, 10, "Alternative", "CC-BY")
-      }.not_to raise_error
-    end
-  end
-
   describe 'get_view' do
     it "returns `main`'s value is asked for`" do
       @image.get_view('main').should == @main_view
