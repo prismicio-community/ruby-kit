@@ -113,7 +113,7 @@ module Prismic
             "</strong>"
           end
         end
-        
+
         class Hyperlink < Span
           attr_accessor :link
           def initialize(start, finish, link)
@@ -156,12 +156,20 @@ module Prismic
             # Initializing the browsing of the string
             output = []
             cursor = 0
+            tags = []  # the seen tags
 
             # Taking each text cut and inserting the closing tags and the opening tags if needed
             all_cuts.each do |cut|
               output << CGI::escapeHTML(text[cursor, cut-cursor])
-              output << end_spans[cut].map{|span| span.end_html} # this pushes an array into the array; we'll need to flatten later
-              output << start_spans[cut].map{|span| span.start_html(link_resolver)} # this pushes an array into the array; we'll need to flatten later
+              end_tags = end_spans[cut]
+              # reorder endings tags using creating order
+              split = tags.group_by {|t| end_tags.include?(t) }
+              end_tags, tags = split[true]||[], split[false]||[]
+              output += end_tags.map{|span| span.end_html }
+              # store created tags (in the right order)
+              start_tags = start_spans[cut].sort_by{|s| s.end }.reverse
+              tags += start_tags.reverse
+              output += start_tags.map{|span| span.start_html(link_resolver) }
               cursor = cut # cursor is now where the cut was
             end
 
@@ -169,7 +177,7 @@ module Prismic
             output << text[cursor..-1]
 
             # Making the array into a string
-            output.flatten.join
+            output.join
 
           end
 

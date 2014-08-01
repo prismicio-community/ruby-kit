@@ -533,6 +533,36 @@ describe 'StructuredText::Paragraph' do
     @spans = [em(4, 11), strong(0, 1)]
     block.as_html(nil).should =~ %r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
   end
+  it "espaces HTML content (many spans)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(1, 3), strong(5, 7), em(9, 11), strong(13, 15)]
+    block.as_html(nil).should =~ %r{^<[^>]+>a<em>bc</em>de<strong>fg</strong>hi<em>jk</em>lm<strong>no</strong>pqrstuvwxyz<[^>]+>$}
+  end
+  it "espaces HTML content (empty spans)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(2, 2)]
+    block.as_html(nil).should =~ %r{^<[^>]+>abcdefghijklmnopqrstuvwxyz<[^>]+>$}
+  end
+  it "espaces HTML content (2 spans on the same text)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(2, 4), strong(2, 4)]
+    block.as_html(nil).should =~ %r{^<[^>]+>ab<strong><em>cd</em></strong>efghijklmnopqrstuvwxyz<[^>]+>$}
+  end
+  it "espaces HTML content (2 spans on the same text - one bigger 1)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(2, 6), strong(2, 4)]
+    block.as_html(nil).should =~ %r{^<[^>]+>ab<em><strong>cd</strong>ef</em>ghijklmnopqrstuvwxyz<[^>]+>$}
+  end
+  it "espaces HTML content (2 spans on the same text - one bigger 2)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(2, 4), strong(2, 6)]
+    block.as_html(nil).should =~ %r{^<[^>]+>ab<strong><em>cd</em>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$}
+  end
+  it "espaces HTML content (span next to span)" do
+    @text  = 'abcdefghijklmnopqrstuvwxyz'
+    @spans = [em(2, 4), strong(4, 6)]
+    block.as_html(nil).should =~ %r{^<[^>]+>ab<em>cd</em><strong>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$}
+  end
 end
 
 describe 'StructuredText::Preformatted' do
