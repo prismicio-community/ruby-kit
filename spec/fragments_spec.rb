@@ -1,6 +1,13 @@
 # encoding: utf-8
 require 'spec_helper'
 
+def em(start, stop)
+  Prismic::Fragments::StructuredText::Span::Em.new(start, stop)
+end
+def strong(start, stop)
+  Prismic::Fragments::StructuredText::Span::Strong.new(start, stop)
+end
+
 describe 'WebLink' do
   before do
       @web_link = Prismic::Fragments::WebLink.new('my_url')
@@ -501,57 +508,39 @@ end
 describe 'StructuredText::Heading' do
   before do
     @text = "This is a simple test."
-    @spans = [
-      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
-      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
-    ]
+    @spans = [em(5, 7), strong(8, 9)]
   end
+  let :block do Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading) end
   it 'generates valid h1 html' do
     @heading = 1
-    @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
-    @block.as_html(nil).should == "<h1>This <em>is</em> <strong>a</strong> simple test.</h1>"
+    block.as_html(nil).should == "<h1>This <em>is</em> <strong>a</strong> simple test.</h1>"
   end
   it 'generates valid h2 html' do
     @heading = 2
-    @block = Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading)
-    @block.as_html(nil).should == "<h2>This <em>is</em> <strong>a</strong> simple test.</h2>"
+    block.as_html(nil).should == "<h2>This <em>is</em> <strong>a</strong> simple test.</h2>"
   end
 end
 
 describe 'StructuredText::Paragraph' do
-  before do
-    @text = "This is a simple test."
-    @spans = [
-      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
-      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
-    ]
-    @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
-  end
+  let :block do Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans) end
   it 'generates valid html' do
-    @block.as_html(nil).should == "<p>This <em>is</em> <strong>a</strong> simple test.</p>"
+    @text  = "This is a simple test."
+    @spans = [em(5, 7), strong(8, 9)]
+    block.as_html(nil).should == "<p>This <em>is</em> <strong>a</strong> simple test.</p>"
   end
   it "espaces HTML content" do
-    @text = '&my <value> #abcde'
-    @spans = [
-      Prismic::Fragments::StructuredText::Span::Em.new(4, 11),
-      Prismic::Fragments::StructuredText::Span::Strong.new(0, 1),
-    ]
-    @block = Prismic::Fragments::StructuredText::Block::Paragraph.new(@text, @spans)
-    @block.as_html(nil).should =~ %r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
+    @text  = '&my <value> #abcde'
+    @spans = [em(4, 11), strong(0, 1)]
+    block.as_html(nil).should =~ %r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
   end
 end
 
 describe 'StructuredText::Preformatted' do
-  before do
-    @text = "This is a simple test."
-    @spans = [
-      Prismic::Fragments::StructuredText::Span::Em.new(5, 7),
-      Prismic::Fragments::StructuredText::Span::Strong.new(8, 9),
-    ]
-    @block = Prismic::Fragments::StructuredText::Block::Preformatted.new(@text, @spans)
-  end
+  let :block do Prismic::Fragments::StructuredText::Block::Preformatted.new(@text, @spans) end
   it 'generates valid html' do
-    @block.as_html(nil).should == "<pre>This <em>is</em> <strong>a</strong> simple test.</pre>"
+    @text  = "This is a simple test."
+    @spans = [em(5, 7), strong(8, 9)]
+    block.as_html(nil).should == "<pre>This <em>is</em> <strong>a</strong> simple test.</pre>"
   end
 end
 
@@ -599,7 +588,7 @@ describe 'StructuredText::Hyperlink' do
       "product",
       ["Macaron"],
       "dark-chocolate-macaron",
-      false  # broken
+      false  # not broken
     )
     @hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @link)
     @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
