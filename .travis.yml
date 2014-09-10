@@ -1,12 +1,20 @@
 language: ruby
 rvm:
-  - 2.1.1
-  - 2.1.0
-  - 2.0.0
-  - 1.9.3
-  - 1.9.2
-  - jruby-19mode
+- 2.1.1
+- 2.1.0
+- 2.0.0
+- 1.9.3
+- 1.9.2
+- jruby-19mode
 script: bundle exec rspec spec
 notifications:
   email:
-    - evo@zenexity.com
+  - evo@zenexity.com
+deploy:
+  provider: rubygems
+  api_key:
+    secure: TBCtAi8FnlHzuiv86Me/YpMdGeAiG9d+J3ZpxWIY32jJv+t8dsW8Fej4jhGSW0aarPT7sarXan6cez0ssSDObUwWMYJfshmMsKykTi6TW4US2ZXtWxtglABYK2DJ/8N1fgkdXKO0NRMF7RVUoJNSw+91GX7ug/obNiCcmG/ms5I=
+  gemspec: prismic.gemspec
+  on:
+    tags: true
+    repo: prismicio/ruby-kit
