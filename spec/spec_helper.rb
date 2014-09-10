@@ -2,10 +2,15 @@
 require 'nokogiri'
 begin
   require 'yajl'
+  module JSON
+    def self.parse(str)
+      Yajl.load(str)
+    end
+  end
 rescue LoadError
   # ok not a big deal
+  require 'json'
 end
-require 'json'
 require 'simplecov'
 
 SimpleCov.start
