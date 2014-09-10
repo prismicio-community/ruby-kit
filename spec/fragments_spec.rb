@@ -105,7 +105,7 @@ describe 'FileLink' do
   describe 'in structured texts' do
     before do
       @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_linkfile.json")
-      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @json_structured_text = JSON.load(@raw_json_structured_text)
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
@@ -118,7 +118,7 @@ describe 'Span' do
   describe 'in structured texts when end is at the end of line' do
     before do
       @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_with_tricky_spans.json")
-      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @json_structured_text = JSON.load(@raw_json_structured_text)
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
@@ -128,7 +128,7 @@ describe 'Span' do
   describe 'in structured texts when multiple spans' do
     before do
       @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
-      @json_structured_text = JSON.parse(@raw_json_structured_text)
+      @json_structured_text = JSON.load(@raw_json_structured_text)
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do

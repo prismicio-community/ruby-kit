@@ -17,7 +17,7 @@ describe 'document_link_parser' do
         }
       }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses DocumentLinks" do
@@ -38,7 +38,7 @@ describe 'text_parser' do
       "value": "New York City, NY"
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Text objects" do
@@ -57,7 +57,7 @@ describe 'web_link_parser' do
       }
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses WebLinks objects" do
@@ -74,7 +74,7 @@ describe 'date_parser' do
       "value": "2013-09-19"
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Date objects" do
@@ -91,7 +91,7 @@ describe 'number_parser' do
       "value": 3.55
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Number objects" do
@@ -123,7 +123,7 @@ describe 'embed_parser' do
       }
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Embed objects" do
@@ -164,7 +164,7 @@ describe 'image_parser' do
       }
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Image objects" do
@@ -185,7 +185,7 @@ end
 describe 'geo_point_parser' do
   before do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
-    json = JSON.parse(raw_json)
+    json = JSON.load(raw_json)
     @document = Prismic::JsonParser.document_parser(json)
   end
 
@@ -202,7 +202,7 @@ end
 describe 'image_parser in StructuredText' do
   before do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
-    json = JSON.parse(raw_json)
+    json = JSON.load(raw_json)
     @document = Prismic::JsonParser.document_parser(json)
     @image_st = @document['product.linked_images']
   end
@@ -243,7 +243,7 @@ describe 'color_parser' do
       "value": "#ffeacd"
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses Color objects" do
@@ -267,7 +267,7 @@ describe 'file_link_parser' do
       }
     }
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
     @link_file = Prismic::JsonParser.file_link_parser(@json)
   end
 
@@ -283,11 +283,11 @@ end
 describe 'structured_text_parser' do
   before do
     raw_json_paragraph = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_paragraph.json")
-    json_paragraph = JSON.parse(raw_json_paragraph)
+    json_paragraph = JSON.load(raw_json_paragraph)
     @structured_text_paragraph = Prismic::JsonParser.structured_text_parser(json_paragraph)
 
     raw_json_heading = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_heading.json")
-    json_heading = JSON.parse(raw_json_heading)
+    json_heading = JSON.load(raw_json_heading)
     @structured_text_heading = Prismic::JsonParser.structured_text_parser(json_heading)
   end
 
@@ -299,7 +299,7 @@ describe 'structured_text_parser' do
     end
 
     it "correctly parses >h9 heading" do
-      json_heading = JSON.parse(<<-JSON)
+      json_heading = JSON.load(<<-JSON)
         {
           "type": "StructuredText",
           "value": [{
@@ -351,7 +351,7 @@ end
 describe 'document_parser' do
   before do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
-    json = JSON.parse(raw_json)
+    json = JSON.load(raw_json)
     @document = Prismic::JsonParser.document_parser(json)
   end
 
@@ -372,7 +372,7 @@ end
 describe 'response_parser' do
 
   it "accepts basic documents response" do
-    @json = JSON.parse('{ "page": 1,
+    @json = JSON.load('{ "page": 1,
       "results_per_page": 20,
       "results_size": 20,
       "total_results_size": 40,
@@ -407,7 +407,7 @@ describe 'multiple_parser' do
         }
       ]
 json
-    @json = JSON.parse(raw_json)
+    @json = JSON.load(raw_json)
   end
 
   it "correctly parses the Multiple object's elements" do
@@ -421,7 +421,7 @@ end
 describe 'timestamp_parser' do
   before do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
-    json = JSON.parse(raw_json)
+    json = JSON.load(raw_json)
     @document = Prismic::JsonParser.document_parser(json)
     @timestamp_fragment = @document['product.some_timestamp']
   end
@@ -439,7 +439,7 @@ end
 describe 'unknown_parser' do
   before do
     @raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document_with_unknown_fragment.json")
-    @json = JSON.parse(@raw_json)
+    @json = JSON.load(@raw_json)
   end
 
   it "raises the proper error" do

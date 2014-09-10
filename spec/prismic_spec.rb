@@ -116,7 +116,7 @@ describe 'Api' do
   describe 'parse_api_response' do
     before do
       @data = File.read("#{File.dirname(__FILE__)}/responses_mocks/api.json")
-      @json = JSON.parse(@data)
+      @json = JSON.load(@data)
       @parsed = Prismic::API.parse_api_response(@json, nil, Prismic::DefaultHTTPClient, false)
     end
 
@@ -225,11 +225,11 @@ describe 'Api' do
     end
 
     it "returns the json representation of the api" do
-      JSON.parse(@json)['foo'].should == 'bar'
+      JSON.load(@json)['foo'].should == 'bar'
     end
 
     it "returns the json representation of the api containing one single element" do
-      JSON.parse(@json).size.should == 1
+      JSON.load(@json).size.should == 1
     end
   end
 

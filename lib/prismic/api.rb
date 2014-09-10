@@ -230,7 +230,7 @@ module Prismic
         res = http_client.post(token, params)
         if res.code == '200'
           begin
-            JSON.parse(res.body)['access_token']
+            JSON.load(res.body)['access_token']
           rescue Exception => e
             raise PrismicWSConnectionError.new(res, e)
           end

@@ -234,7 +234,7 @@ module Prismic
     # @return [Response] The results (array of Document object + pagination
     #     specifics)
     def submit(ref = nil)
-      Prismic::JsonParser.response_parser(JSON.parse(submit_raw(ref)))
+      Prismic::JsonParser.response_parser(JSON.load(submit_raw(ref)))
     end
 
     # Submit the form, returns a raw JSON string
@@ -268,7 +268,7 @@ module Prismic
           if response.code.to_s == "200"
             response.body
           else
-            body = JSON.parse(response.body) rescue nil
+            body = JSON.load(response.body) rescue nil
             error = body.is_a?(Hash) ? body['error'] : response.body
             raise AuthenticationException, error if response.code.to_s == "401"
             raise AuthorizationException, error if response.code.to_s == "403"
