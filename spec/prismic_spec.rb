@@ -517,6 +517,7 @@ describe 'SearchForm' do
               }
             }
           }],
+          "version":"61d96e9",
           "license":"All Rights Reserved"
         }
       DATA
