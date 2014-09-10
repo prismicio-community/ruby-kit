@@ -453,7 +453,74 @@ describe 'SearchForm' do
       @master_ref = @api.master_ref
     end
     it "returns a proper JSON string if all ok" do
-      @api.form("everything").page_size('1').submit_raw(@master_ref).should == "{\"page\":1,\"results_per_page\":1,\"results_size\":1,\"total_results_size\":40,\"total_pages\":40,\"next_page\":\"https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=1\",\"prev_page\":null,\"results\":[{\"id\":\"UlfoxUnM0wkXYXbV\",\"type\":\"job-offer\",\"href\":\"https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22UlfoxUnM0wkXYXbV%22%29+%5D%5D\",\"tags\":[],\"slugs\":[\"art-director\"],\"linked_documents\":[{\"id\":\"UlfoxUnM0wkXYXbb\",\"tags\":[],\"type\":\"store\",\"slug\":\"paris-saint-lazare\"}],\"data\":{\"job-offer\":{\"name\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"heading1\",\"text\":\"Art Director\",\"spans\":[]}]},\"location\":[{\"type\":\"Link.document\",\"value\":{\"document\":{\"id\":\"UlfoxUnM0wkXYXbb\",\"type\":\"store\",\"tags\":[],\"slug\":\"paris-saint-lazare\"},\"isBroken\":false}}],\"contract_type\":{\"type\":\"Select\",\"value\":\"Permanent\"},\"service\":{\"type\":\"Select\",\"value\":\"Office\"},\"profile\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"paragraph\",\"text\":\"Brand visual identity must be vital to you, and you must have a thorough experience with working for/with great visual brands. We will ask you to present your previous work, and explain your choices, so be prepared. Previous work with luxury brands is a plus.\",\"spans\":[]}]},\"job_description\":{\"type\":\"StructuredText\",\"value\":[{\"type\":\"paragraph\",\"text\":\"As our only Art director, you will be the one in charge of every design aspect of Les Bonnes Choses, from the design of our pastry boxes, of our shop fronts, of our website, ... You will lead a team of more specialized people, and you will be expected to be able to travel from time to time.\",\"spans\":[]},{\"type\":\"paragraph\",\"text\":\"You will be the vessel that will bring emotions to our clientbase, before they tasted our pastries. We are aware the responsibility is huge, and we hope that you are too.\",\"spans\":[]}]}}}}],\"license\":\"All Rights Reserved\"}"
+      data = <<-DATA.gsub(/\n */, '').strip
+        {
+          "page":1,
+          "results_per_page":1,
+          "results_size":1,
+          "total_results_size":40,
+          "total_pages":40,
+          "next_page":"https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=1",
+          "prev_page":null,
+          "results":[{
+            "id":"UlfoxUnM0wkXYXbV",
+            "type":"job-offer",
+            "href":"https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22UlfoxUnM0wkXYXbV%22%29+%5D%5D",
+            "tags":[],
+            "slugs":["art-director"],
+            "linked_documents":[{
+              "id":"UlfoxUnM0wkXYXbb",
+              "tags":[],
+              "type":"store",
+              "slug":"paris-saint-lazare"
+            }],
+            "data":{
+              "job-offer":{
+                "name":{
+                  "type":"StructuredText",
+                  "value":[{"type":"heading1","text":"Art Director","spans":[]}]
+                },
+                "location":[{
+                  "type":"Link.document",
+                  "value":{
+                    "document":{
+                      "id":"UlfoxUnM0wkXYXbb",
+                      "type":"store",
+                      "tags":[],
+                      "slug":"paris-saint-lazare"
+                    },
+                    "isBroken":false
+                  }
+                }],
+                "contract_type":{"type":"Select","value":"Permanent"},
+                "service":{"type":"Select","value":"Office"},
+                "profile":{
+                  "type":"StructuredText",
+                  "value":[{
+                    "type":"paragraph",
+                    "text":"Brand visual identity must be vital to you, and you must have a thorough experience with working for/with great visual brands. We will ask you to present your previous work, and explain your choices, so be prepared. Previous work with luxury brands is a plus.",
+                    "spans":[]
+                  }]
+                },
+                "job_description":{
+                  "type":"StructuredText",
+                  "value":[{
+                    "type":"paragraph",
+                    "text":"As our only Art director, you will be the one in charge of every design aspect of Les Bonnes Choses, from the design of our pastry boxes, of our shop fronts, of our website, ... You will lead a team of more specialized people, and you will be expected to be able to travel from time to time.",
+                    "spans":[]
+                  },{
+                    "type":"paragraph",
+                    "text":"You will be the vessel that will bring emotions to our clientbase, before they tasted our pastries. We are aware the responsibility is huge, and we hope that you are too.",
+                    "spans":[]
+                  }]
+                }
+              }
+            }
+          }],
+          "license":"All Rights Reserved"
+        }
+      DATA
+      @api.form("everything").page_size('1').submit_raw(@master_ref).should == data
     end
   end
 end
