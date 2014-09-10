@@ -427,7 +427,7 @@ describe 'timestamp_parser' do
   end
 
   it 'correctly parses and stores a Time object' do
-    @timestamp_fragment.value.wednesday?.should == true
+    @timestamp_fragment.value.utc.wednesday?.should == true
     @timestamp_fragment.value.min.should == 30
   end
 
