@@ -1,6 +1,9 @@
 # encoding: utf-8
+require 'cgi'
 require 'net/http'
 require 'uri'
+
+require 'json' unless defined?(JSON)
 
 module Prismic
 
