@@ -95,17 +95,17 @@ describe "Basic Cache's" do
 
   it 'set with expiration value & get value' do
 	cache = Prismic::BasicCache.new
-	cache.set('key', 'value', 2)
-	sleep(3)
+	cache.set('key', 'value', 1)
+	sleep(2)
 	cache.get('key').should == nil
   end
 
   it 'set with expiration and a block' do
     cache = Prismic::BasicCache.new
-    cache.get_or_set('key', nil, 2){ 'value' }
-    cache.get_or_set('key', nil, 2){ 'othervalue' }.should == 'value'
-    sleep(3)
-    cache.get_or_set('key', nil, 2){ 'othervalue' }.should == 'othervalue'
+    cache.get_or_set('key', nil, 1){ 'value' }
+    cache.get_or_set('key', nil, 1){ 'othervalue' }.should == 'value'
+    sleep(2)
+    cache.get_or_set('key', nil, 1){ 'othervalue' }.should == 'othervalue'
   end
 
   it 'set & test value' do
