@@ -521,7 +521,8 @@ describe 'SearchForm' do
           "license":"All Rights Reserved"
         }
       DATA
-      @api.form("everything").page_size('1').submit_raw(@master_ref).should == data
+      rx = Regexp.escape(data).sub(/"version":"[^"]+"/, '"version":"[^"]+"')
+      @api.form("everything").page_size('1').submit_raw(@master_ref).should =~ /#{rx}/
     end
   end
 end
