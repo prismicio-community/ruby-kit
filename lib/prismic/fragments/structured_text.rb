@@ -31,7 +31,7 @@ module Prismic
       # it is not advised to override this method if you want to change the HTML output, you should
       # override the as_html method at the block level (like {Heading.as_html}, or {Preformatted.as_html},
       # for instance).
-      def as_html(link_resolver)
+      def as_html(link_resolver, html_serializer=nil)
         # Defining blocks that deserve grouping, assigning them "group kind" names
         block_group = ->(block){
           case block
@@ -52,7 +52,9 @@ module Prismic
         # HTML-serializing the groups object (delegating the serialization of Block objects),
         # without forgetting to frame the BlockGroup objects right if needed
         groups.map{|group|
-          html = group.blocks.map{|b| b.as_html(link_resolver) }.join
+          html = group.blocks.map { |b|
+            b.as_html(link_resolver)
+          }.join
           case group.kind
           when "ol"
             %(<ol>#{html}</ol>)
@@ -97,20 +99,14 @@ module Prismic
         end
 
         class Em < Span
-          def start_html(link_resolver=nil)
-            "<em>"
-          end
-          def end_html
-            "</em>"
+          def serialize(text, link_resolver = nil)
+            "<em>#{text}</em>"
           end
         end
 
         class Strong < Span
-          def start_html(link_resolver=nil)
-            "<strong>"
-          end
-          def end_html
-            "</strong>"
+          def serialize(text, link_resolver = nil)
+            "<strong>#{text}</strong>"
           end
         end
 
@@ -120,11 +116,12 @@ module Prismic
             super(start, finish)
             @link = link
           end
-          def start_html(link_resolver = nil)
-            link.start_html(link_resolver)
-          end
-          def end_html
-            link.end_html
+          def serialize(text, link_resolver = nil)
+            if link.is_a? Prismic::Fragments::DocumentLink and link.broken
+              "<span>#{text}</span>"
+            else
+              %(<a href="#{link.url(link_resolver)}">#{text}</a>)
+            end
           end
         end
       end
@@ -147,38 +144,43 @@ module Prismic
             @spans = spans.select{|span| span.start < span.end}
           end
 
-          def as_html(link_resolver=nil)
+          def as_html(link_resolver=nil, html_serializer=nil)
+            html = ''
             # Getting Hashes of spanning tags to insert, sorted by starting position, and by ending position
             start_spans, end_spans = prepare_spans
-            # All the positions in which we'll have to insert an opening or closing tag
-            all_cuts = (start_spans.keys | end_spans.keys).sort
-
-            # Initializing the browsing of the string
-            output = []
-            cursor = 0
-            tags = []  # the seen tags
-
-            # Taking each text cut and inserting the closing tags and the opening tags if needed
-            all_cuts.each do |cut|
-              output << CGI::escapeHTML(text[cursor, cut-cursor])
-              end_tags = end_spans[cut]
-              # reorder endings tags using creating order
-              split = tags.group_by {|t| end_tags.include?(t) }
-              end_tags, tags = split[true]||[], split[false]||[]
-              output += end_tags.map{|span| span.end_html }
-              # store created tags (in the right order)
-              start_tags = start_spans[cut].sort_by{|s| s.end }.reverse
-              tags += start_tags.reverse
-              output += start_tags.map{|span| span.start_html(link_resolver) }
-              cursor = cut # cursor is now where the cut was
+            # Open tags
+            stack = Array.new
+            (text.length + 1).times do |pos| # Looping to length + 1 to catch closing tags
+              end_spans[pos].each do |t|
+                # Close a tag
+                tag = stack.pop
+                inner_html = serialize(tag[:span], tag[:html], link_resolver, html_serializer)
+                if stack.empty?
+                  # The tag was top-level
+                  html += inner_html
+                else
+                  # Add the content to the parent tag
+                  stack[-1][:html] += inner_html
+                end
+              end
+              start_spans[pos].each do |tag|
+                # Open a tag
+                stack.push({
+                    :span => tag,
+                    :html => ''
+                })
+              end
+              if pos < text.length
+                if stack.empty?
+                  # Top level text
+                  html += CGI::escapeHTML(text[pos])
+                else
+                  # Inner text of a span
+                  stack[-1][:html] += CGI::escapeHTML(text[pos])
+                end
+              end
             end
-
-            # Inserting what's left of the string, if there is something
-            output << text[cursor..-1]
-
-            # Making the array into a string
-            output.join
-
+            html
           end
 
           # Building two span Hashes:
@@ -192,7 +194,8 @@ module Prismic
                 start_spans[span.start] << span
                 end_spans[span.end] << span
               }
-              @start_spans = start_spans
+              # Make sure the spans are sorted bigger first to respect the hierarchy
+              @start_spans = start_spans.each { |_, spans| spans.sort! { |a, b| b.end - b.start <=> a.end - a.start } }
               @end_spans = end_spans
             end
             [@start_spans, @end_spans]
@@ -204,6 +207,19 @@ module Prismic
           def as_text
             @text
           end
+
+          def serialize(elt, text, link_resolver, html_serializer)
+            custom_html = nil
+            unless html_serializer.nil?
+              custom_html = html_serializer(elt, text)
+            end
+            if custom_html.nil?
+              elt.serialize(text, link_resolver)
+            else
+              custom_html
+            end
+          end
+
         end
 
         class Heading < Text
@@ -214,19 +230,19 @@ module Prismic
             @level = level
           end
 
-          def as_html(link_resolver=nil)
+          def as_html(link_resolver=nil, html_serializer=nil)
             %(<h#{level}>#{super}</h#{level}>)
           end
         end
 
         class Paragraph < Text
-          def as_html(link_resolver=nil)
+          def as_html(link_resolver=nil, html_serializer=nil)
             %(<p>#{super}</p>)
           end
         end
 
         class Preformatted < Text
-          def as_html(link_resolver=nil)
+          def as_html(link_resolver=nil, html_serializer=nil)
             %(<pre>#{super}</pre>)
           end
         end
@@ -240,7 +256,7 @@ module Prismic
             @ordered = ordered
           end
 
-          def as_html(link_resolver)
+          def as_html(link_resolver, html_serializer=nil)
             %(<li>#{super}</li>)
           end
         end
@@ -287,8 +303,8 @@ module Prismic
             @embed
           end
 
-          def as_html(link_resolver)
-            embed.as_html(link_resolver)
+          def as_html(link_resolver, html_serializer=nil)
+            embed.as_html(link_resolver, html_serializer)
           end
 
         end

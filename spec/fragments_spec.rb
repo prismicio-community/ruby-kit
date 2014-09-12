@@ -109,7 +109,10 @@ describe 'FileLink' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should == "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</a></p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</a></p>\n\n<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</a></p>"
+      @structured_text.as_html(nil).should ==
+          "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</a></p>\n\n"\
+          "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</a></p>\n\n"\
+          "<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</a></p>"
     end
   end
 end
@@ -122,7 +125,10 @@ describe 'Span' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should == "<h3><strong>Powering Through 2013 </strong></h3>\n\n<h3><strong>Online Resources:</strong></h3>\n\n<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
+      @structured_text.as_html(nil).should ==
+          "<h3><strong>Powering Through 2013 </strong></h3>\n\n"\
+          "<h3><strong>Online Resources:</strong></h3>\n\n"\
+          "<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
     end
   end
   describe 'in structured texts when multiple spans' do
@@ -132,7 +138,9 @@ describe 'Span' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should == "<p>Experience <a href=\"http://prismic.io\">the</a> ultimate vanilla experience. Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>"
+      @structured_text.as_html(nil).should ==
+          "<p>Experience <a href=\"http://prismic.io\">the</a> ultimate vanilla experience. "\
+          "Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>"
     end
   end
 end
@@ -546,7 +554,7 @@ describe 'StructuredText::Paragraph' do
   it "espaces HTML content (2 spans on the same text)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 4), strong(2, 4)]
-    block.as_html(nil).should =~ %r{^<[^>]+>ab<strong><em>cd</em></strong>efghijklmnopqrstuvwxyz<[^>]+>$}
+    block.as_html(nil).should =~ %r{^<[^>]+>ab<em><strong>cd</strong></em>efghijklmnopqrstuvwxyz<[^>]+>$}
   end
   it "espaces HTML content (2 spans on the same text - one bigger 1)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
@@ -626,14 +634,14 @@ describe 'StructuredText::Hyperlink' do
 
   describe 'as_html' do
     it "can generate valid link" do
-      @hyperlink.start_html(@link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO">'
+      @hyperlink.serialize('', @link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO"></a>'
     end
     it "raises an error when no link_resolver provided" do
-      expect { @hyperlink.start_html(nil) }.to raise_error
+      expect { @hyperlink.serialize('', nil) }.to raise_error
     end
     it "can generate valid html for broken link" do
       @link.broken = true
-      @hyperlink.start_html(@link_resolver).should == "<span>"
+      @hyperlink.serialize('', @link_resolver).should == '<span></span>'
     end
   end
 end

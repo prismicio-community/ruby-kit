@@ -8,6 +8,11 @@ rescue LoadError
 end
 require 'simplecov'
 
+RSpec.configure do |c|
+  # Stop after the first failure
+  # c.fail_fast = true
+end
+
 SimpleCov.start
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
