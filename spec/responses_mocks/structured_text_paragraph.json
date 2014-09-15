@@ -1,30 +1,31 @@
 {
-  "type": "StructuredText",
-  "value": [{
-    "type": "paragraph",
-    "text": "Experience the ultimate vanilla experience. Our vanilla Macarons are made with our very own (in-house) pure extract of Madagascar vanilla, and subtly dusted with our own vanilla sugar (which we make from real vanilla beans).",
-    "spans": [
-      {
-      "start": 103,
-      "end": 137,
-      "type": "em"
-    },
-    {
-      "start": 11,
-      "end": 14,
-      "type": "hyperlink",
-      "data": {
-        "type": "Link.web",
-        "value": {
-          "url": "http://prismic.io"
-        }
-      }
-    },
-    {
-      "start": 162,
-      "end": 183,
-      "type": "strong"
-    }
-    ]}
-  ]
+    "type": "StructuredText",
+    "value": [{
+        "type": "paragraph",
+        "label": "vanilla",
+        "text": "Experience the ultimate vanilla experience. Our vanilla Macarons are made with our very own (in-house) pure extract of Madagascar vanilla, and subtly dusted with our own vanilla sugar (which we make from real vanilla beans).",
+        "spans": [
+            {
+                "start": 103,
+                "end": 137,
+                "type": "em"
+            },
+            {
+                "start": 11,
+                "end": 14,
+                "type": "hyperlink",
+                "data": {
+                    "type": "Link.web",
+                    "value": {
+                        "url": "http://prismic.io"
+                    }
+                }
+            },
+            {
+                "start": 162,
+                "end": 183,
+                "type": "strong"
+            }
+        ]
+    }]
 }

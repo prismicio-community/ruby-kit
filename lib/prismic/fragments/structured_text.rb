@@ -91,39 +91,46 @@ module Prismic
       end
 
       class Span
-        attr_accessor :start, :end
+        attr_accessor :start, :end, :label
 
-        def initialize(start, finish)
+        def initialize(start, finish, label = nil)
           @start = start
           @end = finish
+          @label = label
+        end
+
+        def class_code
+          (@label && %( class="#{label}")) || ''
         end
 
         class Em < Span
           def serialize(text, link_resolver = nil)
-            "<em>#{text}</em>"
+            "<em#{class_code}>#{text}</em>"
           end
         end
 
         class Strong < Span
           def serialize(text, link_resolver = nil)
-            "<strong>#{text}</strong>"
+            "<strong#{class_code}>#{text}</strong>"
           end
         end
 
         class Hyperlink < Span
           attr_accessor :link
-          def initialize(start, finish, link)
-            super(start, finish)
+          def initialize(start, finish, link, label = nil)
+            super(start, finish, label)
             @link = link
           end
           def serialize(text, link_resolver = nil)
             if link.is_a? Prismic::Fragments::DocumentLink and link.broken
-              "<span>#{text}</span>"
+              "<span#{class_code}>#{text}</span>"
             else
-              %(<a href="#{link.url(link_resolver)}">#{text}</a>)
+              %(<a#{class_code} href="#{link.url(link_resolver)}">#{text}</a>)
             end
           end
         end
+
+        private :class_code
       end
 
       class Block
@@ -137,11 +144,16 @@ module Prismic
         end
 
         class Text
-          attr_accessor :text, :spans
+          attr_accessor :text, :spans, :label
 
-          def initialize(text, spans)
+          def initialize(text, spans, label = nil)
             @text = text
             @spans = spans.select{|span| span.start < span.end}
+            @label = label
+          end
+
+          def class_code
+            (@label && %( class="#{label}")) || ''
           end
 
           def as_html(link_resolver=nil, html_serializer=nil)
@@ -209,10 +221,7 @@ module Prismic
           end
 
           def serialize(elt, text, link_resolver, html_serializer)
-            custom_html = nil
-            unless html_serializer.nil?
-              custom_html = html_serializer.serialize(elt, text)
-            end
+            custom_html = html_serializer && html_serializer.serialize(elt, text)
             if custom_html.nil?
               elt.serialize(text, link_resolver)
             else
@@ -220,53 +229,45 @@ module Prismic
             end
           end
 
+          private :class_code
         end
 
         class Heading < Text
           attr_accessor :level
 
-          def initialize(text, spans, level)
+          def initialize(text, spans, level, label = nil)
             super(text, spans)
             @level = level
           end
 
           def as_html(link_resolver=nil, html_serializer=nil)
-            custom = nil
-            unless html_serializer.nil?
-              custom = html_serializer.serialize(self, super)
-            end
-            if custom.nil?
-              %(<h#{level}>#{super}</h#{level}>)
+            custom_html = html_serializer && html_serializer.serialize(self, super)
+            if custom_html.nil?
+              %(<h#{level}#{class_code}>#{super}</h#{level}>)
             else
-              custom
+              custom_html
             end
           end
         end
 
         class Paragraph < Text
           def as_html(link_resolver=nil, html_serializer=nil)
-            custom = nil
-            unless html_serializer.nil?
-              custom = html_serializer.serialize(self, super)
-            end
-            if custom.nil?
-              %(<p>#{super}</p>)
+            custom_html = html_serializer && html_serializer.serialize(self, super)
+            if custom_html.nil?
+              %(<p#{class_code}>#{super}</p>)
             else
-              custom
+              custom_html
             end
           end
         end
 
         class Preformatted < Text
           def as_html(link_resolver=nil, html_serializer=nil)
-            custom = nil
-            unless html_serializer.nil?
-              custom = html_serializer.serialize(self, super)
-            end
-            if custom.nil?
-              %(<pre>#{super}</pre>)
+            custom_html = html_serializer && html_serializer.serialize(self, super)
+            if custom_html.nil?
+              %(<pre#{class_code}>#{super}</pre>)
             else
-              custom
+              custom_html
             end
           end
         end
@@ -275,29 +276,27 @@ module Prismic
           attr_accessor :ordered
           alias :ordered? :ordered
 
-          def initialize(text, spans, ordered)
+          def initialize(text, spans, ordered, label = nil)
             super(text, spans)
             @ordered = ordered
           end
 
           def as_html(link_resolver, html_serializer=nil)
-            custom = nil
-            unless html_serializer.nil?
-              custom = html_serializer.serialize(self, super)
-            end
-            if custom.nil?
-              %(<li>#{super}</li>)
+            custom_html = html_serializer && html_serializer.serialize(self, super)
+            if custom_html.nil?
+              %(<li#{class_code}>#{super}</li>)
             else
-              custom
+              custom_html
             end
           end
         end
 
         class Image < Block
-          attr_accessor :view
+          attr_accessor :view, :label
 
-          def initialize(view)
+          def initialize(view, label = nil)
             @view = view
+            @label = label
           end
 
           def url
@@ -330,7 +329,11 @@ module Prismic
               custom = html_serializer.serialize(self, '')
             end
             if custom.nil?
-              %(<p class="block-img">#{view.as_html(link_resolver)}</p>)
+              classes = ['block-img']
+              unless @label.nil?
+                classes.push(@label)
+              end
+              %(<p class="#{classes.join(' ')}">#{view.as_html(link_resolver)}</p>)
             else
               custom
             end
@@ -338,9 +341,11 @@ module Prismic
         end
 
         class Embed < Block
+          attr_accessor :label
 
-          def initialize(embed)
-            @embed
+          def initialize(embed, label)
+            @embed = embed
+            @label = label
           end
 
           def as_html(link_resolver, html_serializer = nil)

@@ -111,11 +111,11 @@ module Prismic
         def self.span_parser(span)
           case span['type']
           when 'em'
-            Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
+            Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'], span['label'])
           when 'strong'
-            Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
+            Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'], span['label'])
           when 'hyperlink'
-            Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
+            Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']), span['label'])
           else
             puts "Unknown span_parser type: #{span['type']}"
           end
@@ -125,31 +125,34 @@ module Prismic
           case block['type']
           when 'paragraph'
             spans = block['spans'].map {|span| span_parser(span) }
-            Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans)
+            Prismic::Fragments::StructuredText::Block::Paragraph.new(block['text'], spans, block['label'])
           when 'preformatted'
             spans = block['spans'].map {|span| span_parser(span) }
-            Prismic::Fragments::StructuredText::Block::Preformatted.new(block['text'], spans)
+            Prismic::Fragments::StructuredText::Block::Preformatted.new(block['text'], spans, block['label'])
           when /^heading(\d+)$/
             heading = $1
             spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::Heading.new(
               block['text'],
               spans,
-              heading.to_i
+              heading.to_i,
+              block['label']
             )
           when 'o-list-item'
             spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::ListItem.new(
               block['text'],
               spans,
-              true  # ordered
+              true,  # ordered
+              block['label']
             )
           when 'list-item'
             spans = block['spans'].map {|span| span_parser(span) }
             Prismic::Fragments::StructuredText::Block::ListItem.new(
               block['text'],
               spans,
-              false  # unordered
+              false,  # unordered
+              block['label']
             )
           when 'image'
             view = Prismic::Fragments::Image::View.new(
@@ -160,7 +163,7 @@ module Prismic
               block['copyright'],
               block['linkTo'] ? link_parser(block['linkTo']) : nil
             )
-            Prismic::Fragments::StructuredText::Block::Image.new(view)
+            Prismic::Fragments::StructuredText::Block::Image.new(view, block['label'])
           when 'embed'
             boembed = block['oembed']
             Prismic::Fragments::Embed.new(

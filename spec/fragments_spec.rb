@@ -4,8 +4,8 @@ require 'spec_helper'
 def em(start, stop)
   Prismic::Fragments::StructuredText::Span::Em.new(start, stop)
 end
-def strong(start, stop)
-  Prismic::Fragments::StructuredText::Span::Strong.new(start, stop)
+def strong(start, stop, label = nil)
+  Prismic::Fragments::StructuredText::Span::Strong.new(start, stop, label)
 end
 
 describe 'WebLink' do
@@ -139,8 +139,8 @@ describe 'Span' do
     end
     it 'serializes well into HTML' do
       @structured_text.as_html(nil).should ==
-          "<p>Experience <a href=\"http://prismic.io\">the</a> ultimate vanilla experience. "\
-          "Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>"
+          '<p class="vanilla">Experience <a href="http://prismic.io">the</a> ultimate vanilla experience. '\
+          'Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>'
     end
   end
 end
@@ -515,17 +515,17 @@ end
 
 describe 'StructuredText::Heading' do
   before do
-    @text = "This is a simple test."
-    @spans = [em(5, 7), strong(8, 9)]
+    @text = 'This is a simple test.'
+    @spans = [em(5, 7), strong(8, 9, 'important')]
   end
   let :block do Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading) end
   it 'generates valid h1 html' do
     @heading = 1
-    block.as_html(nil).should == "<h1>This <em>is</em> <strong>a</strong> simple test.</h1>"
+    block.as_html(nil).should == '<h1>This <em>is</em> <strong class="important">a</strong> simple test.</h1>'
   end
   it 'generates valid h2 html' do
     @heading = 2
-    block.as_html(nil).should == "<h2>This <em>is</em> <strong>a</strong> simple test.</h2>"
+    block.as_html(nil).should == '<h2>This <em>is</em> <strong class="important">a</strong> simple test.</h2>'
   end
 end
 
