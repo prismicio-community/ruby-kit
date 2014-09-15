@@ -53,7 +53,7 @@ module Prismic
         # without forgetting to frame the BlockGroup objects right if needed
         groups.map{|group|
           html = group.blocks.map { |b|
-            b.as_html(link_resolver)
+            b.as_html(link_resolver, html_serializer)
           }.join
           case group.kind
           when "ol"
@@ -211,7 +211,7 @@ module Prismic
           def serialize(elt, text, link_resolver, html_serializer)
             custom_html = nil
             unless html_serializer.nil?
-              custom_html = html_serializer(elt, text)
+              custom_html = html_serializer.serialize(elt, text)
             end
             if custom_html.nil?
               elt.serialize(text, link_resolver)
@@ -231,19 +231,43 @@ module Prismic
           end
 
           def as_html(link_resolver=nil, html_serializer=nil)
-            %(<h#{level}>#{super}</h#{level}>)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, super)
+            end
+            if custom.nil?
+              %(<h#{level}>#{super}</h#{level}>)
+            else
+              custom
+            end
           end
         end
 
         class Paragraph < Text
           def as_html(link_resolver=nil, html_serializer=nil)
-            %(<p>#{super}</p>)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, super)
+            end
+            if custom.nil?
+              %(<p>#{super}</p>)
+            else
+              custom
+            end
           end
         end
 
         class Preformatted < Text
           def as_html(link_resolver=nil, html_serializer=nil)
-            %(<pre>#{super}</pre>)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, super)
+            end
+            if custom.nil?
+              %(<pre>#{super}</pre>)
+            else
+              custom
+            end
           end
         end
 
@@ -257,7 +281,15 @@ module Prismic
           end
 
           def as_html(link_resolver, html_serializer=nil)
-            %(<li>#{super}</li>)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, super)
+            end
+            if custom.nil?
+              %(<li>#{super}</li>)
+            else
+              custom
+            end
           end
         end
 
@@ -292,8 +324,16 @@ module Prismic
             @view.link_to
           end
 
-          def as_html(link_resolver)
-            view.as_html(link_resolver)
+          def as_html(link_resolver, html_serializer = nil)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, '')
+            end
+            if custom.nil?
+              %(<p class="block-img">#{view.as_html(link_resolver)}</p>)
+            else
+              custom
+            end
           end
         end
 
@@ -303,8 +343,16 @@ module Prismic
             @embed
           end
 
-          def as_html(link_resolver, html_serializer=nil)
-            embed.as_html(link_resolver, html_serializer)
+          def as_html(link_resolver, html_serializer = nil)
+            custom = nil
+            unless html_serializer.nil?
+              custom = html_serializer.serialize(self, '')
+            end
+            if custom.nil?
+              embed.as_html(link_resolver)
+            else
+              custom
+            end
           end
 
         end

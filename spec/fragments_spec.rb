@@ -93,7 +93,7 @@ describe 'ImageLink' do
 
   describe 'url' do
     before do
-      @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+      @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.id}" }
     end
     it 'works in a unified way' do
       @image_link.url(@link_resolver).should == 'my_url'

@@ -520,6 +520,16 @@ module Prismic
     end
   end
 
+  class HtmlSerializer
+    def initialize(&blk)
+      @blk = blk
+    end
+
+    def serialize(element, content)
+      @blk.call(element, content)
+    end
+  end
+
   # Default HTTP client implementation, using the standard Net::HTTP library.
   module DefaultHTTPClient
     class << self
@@ -584,6 +594,10 @@ module Prismic
   # @return [LinkResolver] the {LinkResolver} instance
   def self.link_resolver(ref, &blk)
     LinkResolver.new(ref, &blk)
+  end
+
+  def self.html_serializer(&blk)
+    HtmlSerializer.new(&blk)
   end
 
 end

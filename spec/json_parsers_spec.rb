@@ -221,13 +221,13 @@ describe 'image_parser in StructuredText' do
 
 <p>The following image is linked.</p>
 
-<a href="http://google.com/"><img src="http://fpoimg.com/129x260" alt="" width="260" height="129" /></a>
+<p class="block-img"><a href="http://google.com/"><img src="http://fpoimg.com/129x260" alt="" width="260" height="129" /></a></p>
 
 <p><strong>More important stuff</strong></p>
 
 <p>One more image, this one is not linked:</p>
 
-<img src="http://fpoimg.com/199x300" alt="" width="300" height="199" />
+<p class="block-img"><img src="http://fpoimg.com/199x300" alt="" width="300" height="199" /></p>
 expected
     expected.chomp!
     link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
