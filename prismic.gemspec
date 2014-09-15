@@ -6,7 +6,7 @@ require 'prismic/version'
 Gem::Specification.new do |spec|
   spec.name          = "prismic.io"
   spec.version       = Prismic::VERSION
-  spec.authors       = ["Étienne Vallette d'Osia", "Samy Dindane", "Rudy Rigot"]
+  spec.authors       = ["Étienne Vallette d'Osia", "Erwan Loisant", "Samy Dindane", "Rudy Rigot"]
   spec.email         = ["evo@zenexity.com"]
   spec.description   = %q{The standard Prismic.io's API library.}
   spec.summary       = %q{Prismic.io development kit}
