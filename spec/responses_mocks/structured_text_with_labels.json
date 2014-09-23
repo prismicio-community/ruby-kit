@@ -1,0 +1,156 @@
+{
+    "type":"StructuredText",
+    "value":[
+        {
+            "type":"heading1",
+            "text":"Tips to dress a pastry",
+            "spans":[]
+        },
+        {
+            "type":"image",
+            "url":"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/381f3a78dfe952b229fb49ceaa9926f7009ae20a.jpg",
+            "alt":"",
+            "copyright":"",
+            "dimensions":{
+                "width":640,
+                "height":666
+            }
+        },
+        {
+            "type":"paragraph",
+            "text":"Our Pastry Dressers (yes, it is a full-time job in Les Bonnes Choses!) have it somewhat different from our other pastry artists: while the others keep their main focus on the taste, smell, and potentially touch of your pastries, the Pastry Dressers are mainly focused on their looks.",
+            "spans":[
+                {
+                    "start":32,
+                    "end":47,
+                    "type":"hyperlink",
+                    "data":{
+                        "type":"Link.document",
+                        "value":{
+                            "document":{
+                                "id":"UlfoxUnM0wkXYXbh",
+                                "type":"job-offer",
+                                "tags":[],
+                                "slug":"pastry-dresser"
+                            },
+                            "isBroken":false
+                        }
+                    }
+                },
+                {
+                    "start":51,
+                    "end":68,
+                    "type":"em"
+                }
+            ]
+        },
+        {
+            "type":"paragraph",
+            "text":"It sometimes makes them feem like they're doing a job that is reasonably different from plain old pastry, and to make the most of your pastry dressings, perhaps so should you!",
+            "spans":[]
+        },
+        {
+            "type":"heading2",
+            "text":"Step by step",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"From bottom to top, the steps towards a great dressing are pretty clear, and change rarely.",
+            "spans":[]
+        },
+        {
+            "type":"heading3",
+            "text":"Pastry Dresser, or speleologist?",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"One of the first handy phases of dressing your pastry will be about carving to get to a desired shape and size to build upon. This is very precise work, as you will need to clean the object without breaking it, to remove pieces of it while keeping intact the meaningful bits. Now you're ready to iterate upon it!",
+            "spans":[
+                {
+                    "start":173,
+                    "end":178,
+                    "type":"label",
+                    "data":{
+                        "label":"author"
+                    }
+                }
+            ]
+        },
+        {
+            "type":"heading3",
+            "text":"Pastry Dresser, or clay sculptor?",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"Then, you will need to shape your piece of art into the design you have in mind, by adding the right materials to just the right places. Ganache is your friend in such moments, such as any shape-free material. You'll have to master them, so they obey to the shapes you have in mind.",
+            "spans":[
+                {
+                    "start":47,
+                    "end":51,
+                    "type":"label",
+                    "data":{
+                        "label":"author"
+                    }
+                },
+                {
+                    "start":47,
+                    "end":51,
+                    "type":"strong"
+                }
+            ]
+        },
+        {
+            "type":"heading3",
+            "text":"Pastry Dresser, or hairdresser?",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"The top of the pastry is a priority zone for finalization. This is where your \"last touch\" goes, and it's tremendously important, as it gives the pastry most of its character. You will have to play with the details, to keep the top of your piece on the... top of your priorities!",
+            "spans":[]
+        },
+        {
+            "type":"heading2",
+            "text":"Before starting",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"Finishing by the beginning: what did we have to consider, before running towards the aforementioned steps?",
+            "spans":[]
+        },
+        {
+            "type":"image",
+            "url":"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/502ebb427b5eb45693800816fc778316c04935f5.jpg",
+            "alt":"",
+            "copyright":"",
+            "dimensions":{
+                "width":640,
+                "height":427
+            }
+        },
+        {
+            "type":"heading3",
+            "text":"Pastry Dresser, or illustrator?",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"We didn't mention color, but it's a very important component of the piece. Just like an illustrator will pick colors that add to the shape in a matching way to keep a perfect meaning, the colors must be perfect to be consistent with the taste of the piece (do not use green-colored sugar for a strawberry-flavored pastry, if you don't want to gross people out!)",
+            "spans":[]
+        },
+        {
+            "type":"heading3",
+            "text":"Pastry Dresser, or designer?",
+            "spans":[]
+        },
+        {
+            "type":"paragraph",
+            "text":"And even before the illustration and colors, you really need to take the time to think about your destination, to make sure it's nothing short of perfect. This may imply taking the time to sit down for a few minutes with a paper and a pen. The first skill of an imaginative Pastry Dresser is a drawing skill, just like a fashion stylist.",
+            "spans":[]
+        }
+    ]
+}

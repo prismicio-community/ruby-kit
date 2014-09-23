@@ -111,13 +111,14 @@ module Prismic
         def self.span_parser(span)
           case span['type']
           when 'em'
-            Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'], span['label'])
+            Prismic::Fragments::StructuredText::Span::Em.new(span['start'], span['end'])
           when 'strong'
-            Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'], span['label'])
+            Prismic::Fragments::StructuredText::Span::Strong.new(span['start'], span['end'])
           when 'hyperlink'
-            Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']), span['label'])
+            Prismic::Fragments::StructuredText::Span::Hyperlink.new(span['start'], span['end'], link_parser(span['data']))
           else
-            puts "Unknown span_parser type: #{span['type']}"
+            label = span['data'] && span['data']['label']
+            Prismic::Fragments::StructuredText::Span::Label.new(span['start'], span['end'], label)
           end
         end
 

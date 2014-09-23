@@ -91,46 +91,51 @@ module Prismic
       end
 
       class Span
-        attr_accessor :start, :end, :label
+        attr_accessor :start, :end
 
-        def initialize(start, finish, label = nil)
+        def initialize(start, finish)
           @start = start
           @end = finish
-          @label = label
         end
 
-        def class_code
-          (@label && %( class="#{label}")) || ''
+        class Label < Span
+          attr_accessor :label
+          def initialize(start, finish, label)
+            super(start, finish)
+            @label = label
+          end
+          def serialize(text, link_resolver = nil)
+            "<span class=\"#{@label}\">#{text}</span>"
+          end
         end
 
         class Em < Span
           def serialize(text, link_resolver = nil)
-            "<em#{class_code}>#{text}</em>"
+            "<em>#{text}</em>"
           end
         end
 
         class Strong < Span
           def serialize(text, link_resolver = nil)
-            "<strong#{class_code}>#{text}</strong>"
+            "<strong>#{text}</strong>"
           end
         end
 
         class Hyperlink < Span
           attr_accessor :link
-          def initialize(start, finish, link, label = nil)
-            super(start, finish, label)
+          def initialize(start, finish, link)
+            super(start, finish)
             @link = link
           end
           def serialize(text, link_resolver = nil)
             if link.is_a? Prismic::Fragments::DocumentLink and link.broken
-              "<span#{class_code}>#{text}</span>"
+              "<span>#{text}</span>"
             else
-              %(<a#{class_code} href="#{link.url(link_resolver)}">#{text}</a>)
+              %(<a href="#{link.url(link_resolver)}">#{text}</a>)
             end
           end
         end
 
-        private :class_code
       end
 
       class Block

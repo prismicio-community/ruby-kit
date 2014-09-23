@@ -442,8 +442,39 @@ describe 'unknown_parser' do
     @json = JSON.load(@raw_json)
   end
 
-  it "raises the proper error" do
+  it 'raises the proper error' do
     Prismic::JsonParser.should_receive(:warn).with("Type blabla is unknown, fragment was skipped; perhaps you should update your prismic.io gem?")
     Prismic::JsonParser.document_parser(@json).fragments.size.should == 2
   end
+end
+
+describe 'structured_text_label_parser' do
+  before do
+    raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_with_labels.json")
+    json = JSON.load(raw_json)
+    @structured_text = Prismic::JsonParser.structured_text_parser(json)
+  end
+
+  it 'outputs correctly as HTML' do
+    link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    @structured_text.as_html(link_resolver).should ==
+        "<h1>Tips to dress a pastry</h1>\n\n" +
+            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/381f3a78dfe952b229fb49ceaa9926f7009ae20a.jpg\" alt=\"\" width=\"640\" height=\"666\" /></p>\n\n" +
+            "<p>Our Pastry Dressers (yes, it is <a href=\"http://localhost/UlfoxUnM0wkXYXbh\">a full-time job</a> in <em>Les Bonnes Choses</em>!) have it somewhat different from our other pastry artists: while the others keep their main focus on the taste, smell, and potentially touch of your pastries, the Pastry Dressers are mainly focused on their looks.</p>\n\n" +
+            "<p>It sometimes makes them feem like they&#39;re doing a job that is reasonably different from plain old pastry, and to make the most of your pastry dressings, perhaps so should you!</p>\n\n" +
+            "<h2>Step by step</h2>\n\n" +
+            "<p>From bottom to top, the steps towards a great dressing are pretty clear, and change rarely.</p>\n\n" +
+            "<h3>Pastry Dresser, or speleologist?</h3>\n\n" +
+            "<p>One of the first handy phases of dressing your pastry will be about carving to get to a desired shape and size to build upon. This is very precise work, as you will need to <span class=\"author\">clean</span> the object without breaking it, to remove pieces of it while keeping intact the meaningful bits. Now you&#39;re ready to iterate upon it!</p>\n\n" +
+            "<h3>Pastry Dresser, or clay sculptor?</h3>\n\n<p>" +
+            "Then, you will need to shape your piece of art <span class=\"author\"><strong>into</strong></span> the design you have in mind, by adding the right materials to just the right places. Ganache is your friend in such moments, such as any shape-free material. You&#39;ll have to master them, so they obey to the shapes you have in mind.</p>\n\n" +
+            "<h3>Pastry Dresser, or hairdresser?</h3>\n\n" +
+            "<p>The top of the pastry is a priority zone for finalization. This is where your &quot;last touch&quot; goes, and it&#39;s tremendously important, as it gives the pastry most of its character. You will have to play with the details, to keep the top of your piece on the... top of your priorities!</p>\n\n<h2>Before starting</h2>\n\n<p>" +
+            "Finishing by the beginning: what did we have to consider, before running towards the aforementioned steps?</p>\n\n" +
+            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/502ebb427b5eb45693800816fc778316c04935f5.jpg\" alt=\"\" width=\"640\" height=\"427\" /></p>\n\n" +
+            "<h3>Pastry Dresser, or illustrator?</h3>\n\n" +
+            "<p>We didn&#39;t mention color, but it&#39;s a very important component of the piece. Just like an illustrator will pick colors that add to the shape in a matching way to keep a perfect meaning, the colors must be perfect to be consistent with the taste of the piece (do not use green-colored sugar for a strawberry-flavored pastry, if you don&#39;t want to gross people out!)</p>\n\n" +
+            "<h3>Pastry Dresser, or designer?</h3>\n\n<p>And even before the illustration and colors, you really need to take the time to think about your destination, to make sure it&#39;s nothing short of perfect. This may imply taking the time to sit down for a few minutes with a paper and a pen. The first skill of an imaginative Pastry Dresser is a drawing skill, just like a fashion stylist.</p>"
+  end
+
 end

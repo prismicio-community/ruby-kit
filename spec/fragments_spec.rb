@@ -4,8 +4,8 @@ require 'spec_helper'
 def em(start, stop)
   Prismic::Fragments::StructuredText::Span::Em.new(start, stop)
 end
-def strong(start, stop, label = nil)
-  Prismic::Fragments::StructuredText::Span::Strong.new(start, stop, label)
+def strong(start, stop)
+  Prismic::Fragments::StructuredText::Span::Strong.new(start, stop)
 end
 
 describe 'WebLink' do
@@ -516,16 +516,16 @@ end
 describe 'StructuredText::Heading' do
   before do
     @text = 'This is a simple test.'
-    @spans = [em(5, 7), strong(8, 9, 'important')]
+    @spans = [em(5, 7), strong(8, 9)]
   end
   let :block do Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading) end
   it 'generates valid h1 html' do
     @heading = 1
-    block.as_html(nil).should == '<h1>This <em>is</em> <strong class="important">a</strong> simple test.</h1>'
+    block.as_html(nil).should == '<h1>This <em>is</em> <strong>a</strong> simple test.</h1>'
   end
   it 'generates valid h2 html' do
     @heading = 2
-    block.as_html(nil).should == '<h2>This <em>is</em> <strong class="important">a</strong> simple test.</h2>'
+    block.as_html(nil).should == '<h2>This <em>is</em> <strong>a</strong> simple test.</h2>'
   end
 end
 
