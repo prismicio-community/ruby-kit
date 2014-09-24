@@ -190,14 +190,19 @@ module Prismic
               if pos < text.length
                 if stack.empty?
                   # Top level text
-                  html += CGI::escapeHTML(text[pos])
+                  html += cgi_escape_html(text[pos])
                 else
                   # Inner text of a span
-                  stack[-1][:html] += CGI::escapeHTML(text[pos])
+                  stack[-1][:html] += cgi_escape_html(text[pos])
                 end
               end
             end
             html
+          end
+
+          def cgi_escape_html(string)
+            # We don't use CGI::escapeHTML because the implementation changed from 1.9 to 2.0 and that break tests
+            string.gsub(/['&\"<>]/, CGI::TABLE_FOR_ESCAPE_HTML__)
           end
 
           # Building two span Hashes:
@@ -234,7 +239,7 @@ module Prismic
             end
           end
 
-          private :class_code
+          private :class_code, :cgi_escape_html
         end
 
         class Heading < Text
