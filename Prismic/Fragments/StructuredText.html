@@ -1,0 +1,640 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Prismic::Fragments::StructuredText
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!Prismic/Fragments/StructuredText.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Prismic.html" title="Prismic (module)">Prismic</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span></span>
+     &raquo; 
+    <span class="title">StructuredText</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Prismic::Fragments::StructuredText
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragment</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragment</a></span></li>
+          
+            <li class="next">Prismic::Fragments::StructuredText</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/prismic/fragments/structured_text.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="StructuredText/Block.html" title="Prismic::Fragments::StructuredText::Block (class)">Block</a></span>, <span class='object_link'><a href="StructuredText/BlockGroup.html" title="Prismic::Fragments::StructuredText::BlockGroup (class)">BlockGroup</a></span>, <span class='object_link'><a href="StructuredText/Span.html" title="Prismic::Fragments::StructuredText::Span (class)">Span</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blocks-instance_method" title="#blocks (instance method)">- (Object) <strong>blocks</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute blocks.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_html-instance_method" title="#as_html (instance method)">- (Object) <strong>as_html</strong>(link_resolver, html_serializer = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Serializes the current StructuredText fragment into a fully usable HTML
+code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_text-instance_method" title="#as_text (instance method)">- (String) <strong>as_text</strong>(separator = &#39; &#39;) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the StructuredText as plain text, with zero formatting.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#first_title-instance_method" title="#first_title (instance method)">- (Object) <strong>first_title</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Finds the first highest title in a structured text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (StructuredText) <strong>initialize</strong>(blocks) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of StructuredText.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Prismic::Fragments::StructuredText (class)">StructuredText</a></span></tt>) <strong>initialize</strong>(blocks) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of StructuredText</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/structured_text.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_blocks'>blocks</span><span class='rparen'>)</span>
+  <span class='ivar'>@blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_blocks'>blocks</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="blocks=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="blocks-instance_method">
+  
+    - (<tt>Object</tt>) <strong>blocks</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute blocks</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/structured_text.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_blocks'>blocks</span>
+  <span class='ivar'>@blocks</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="as_html-instance_method">
+  
+    - (<tt>Object</tt>) <strong>as_html</strong>(link_resolver, html_serializer = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Serializes the current StructuredText fragment into a fully usable HTML
+code.
+You need to pass a proper link_resolver so that internal links are
+turned into the proper URL in
+your website. If you use a starter kit, one
+is provided, that you can still update later.</p>
+
+<p>This method simply executes the as_html methods on blocks;
+it is not
+advised to override this method if you want to change the HTML output, you
+should
+override the as_html method at the block level (like
+Heading.as_html, or Preformatted.as_html,
+for instance).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/structured_text.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='comma'>,</span> <span class='id identifier rubyid_html_serializer'>html_serializer</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='comment'># Defining blocks that deserve grouping, assigning them &quot;group kind&quot; names
+</span>  <span class='id identifier rubyid_block_group'>block_group</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='tlambeg'>{</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span>
+    <span class='kw'>when</span> <span class='const'>Block</span><span class='op'>::</span><span class='const'>ListItem</span>
+      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_ordered?'>ordered?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ol</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ul</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+  <span class='rbrace'>}</span>
+  <span class='comment'># Initializing groups, which is an array of BlockGroup objects
+</span>  <span class='id identifier rubyid_groups'>groups</span><span class='comma'>,</span> <span class='id identifier rubyid_last'>last</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_blocks'>blocks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+    <span class='id identifier rubyid_group'>group</span> <span class='op'>=</span> <span class='id identifier rubyid_block_group'>block_group</span><span class='period'>.</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_groups'>groups</span> <span class='op'>&lt;&lt;</span> <span class='const'>BlockGroup</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_last'>last</span> <span class='op'>||</span> <span class='id identifier rubyid_group'>group</span> <span class='op'>!=</span> <span class='id identifier rubyid_last'>last</span>
+    <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_block'>block</span>
+    <span class='id identifier rubyid_last'>last</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span>
+  <span class='rbrace'>}</span>
+  <span class='comment'># HTML-serializing the groups object (delegating the serialization of Block objects),
+</span>  <span class='comment'># without forgetting to frame the BlockGroup objects right if needed
+</span>  <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='op'>|</span>
+    <span class='id identifier rubyid_html'>html</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_blocks'>blocks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_b'>b</span><span class='op'>|</span>
+      <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='comma'>,</span> <span class='id identifier rubyid_html_serializer'>html_serializer</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_kind'>kind</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ol</span><span class='tstring_end'>&quot;</span></span>
+      <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;ol&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_html'>html</span><span class='embexpr_end'>}</span><span class='tstring_content'>&lt;/ol&gt;</span><span class='tstring_end'>)</span></span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ul</span><span class='tstring_end'>&quot;</span></span>
+      <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;ul&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_html'>html</span><span class='embexpr_end'>}</span><span class='tstring_content'>&lt;/ul&gt;</span><span class='tstring_end'>)</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_html'>html</span>
+    <span class='kw'>end</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="as_text-instance_method">
+  
+    - (<tt>String</tt>) <strong>as_text</strong>(separator = &#39; &#39;) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the StructuredText as plain text, with zero formatting.
+Non-textual
+blocks (like images and embeds) are simply ignored.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>separator</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39; &#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The string separator inserted between the blocks (a blank space by default)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The complete string representing the textual value of the StructuredText
+field.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/structured_text.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_text'>as_text</span><span class='lparen'>(</span><span class='id identifier rubyid_separator'>separator</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_blocks'>blocks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_as_text'>as_text</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_separator'>separator</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="first_title-instance_method">
+  
+    - (<tt>Object</tt>) <strong>first_title</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Finds the first highest title in a structured text</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/structured_text.rb', line 79</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_first_title'>first_title</span>
+  <span class='id identifier rubyid_max_level'>max_level</span> <span class='op'>=</span> <span class='int'>6</span> <span class='comment'># any title with a higher level kicks the current one out
+</span>  <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@blocks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span><span class='op'>::</span><span class='const'>Block</span><span class='op'>::</span><span class='const'>Heading</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_max_level'>max_level</span>
+        <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
+        <span class='id identifier rubyid_max_level'>max_level</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='comment'># new maximum
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_title'>title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Thu Sep 25 10:16:47 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>
