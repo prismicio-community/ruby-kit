@@ -202,7 +202,13 @@ module Prismic
 
           def cgi_escape_html(string)
             # We don't use CGI::escapeHTML because the implementation changed from 1.9 to 2.0 and that break tests
-            string.gsub(/['&\"<>]/, CGI::TABLE_FOR_ESCAPE_HTML__)
+            string.gsub(/['&\"<>]/, {
+                "'" => '&#39;',
+                '&' => '&amp;',
+                '"' => '&quot;',
+                '<' => '&lt;',
+                '>' => '&gt;',
+            })
           end
 
           # Building two span Hashes:
