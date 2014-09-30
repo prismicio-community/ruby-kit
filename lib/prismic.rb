@@ -142,10 +142,33 @@ module Prismic
       @ref = ref
     end
 
-    # @!method query(query)
-    #   Specify a query for this form.
+    # Specify a query for this form.
     #   @param  query [String] The query
     #   @return [SearchForm] self
+    def query(*query)
+      q(*query)
+    end
+
+    def q(*query)
+      def serialize(field)
+        if field.kind_of?(String) and not (field.start_with?('my.') or field.start_with?('document.'))
+          %("#{field}")
+        elsif field.kind_of?(Array)
+          %([#{field.map{ |arg| serialize(arg) }.join(', ')}])
+        else
+          %(#{field})
+        end
+      end
+      if query[0].kind_of?(String)
+        set('q', query[0])
+      else
+        predicates = query.map { |q|
+          op = q.shift
+          "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
+        }
+        set('q', "[#{predicates * ''}]")
+      end
+    end
 
     # @!method orderings(orderings)
     #   Specify a orderings for this form.
@@ -169,11 +192,6 @@ module Prismic
       meth_name = name.gsub(/([A-Z])/, '_\1').downcase
       return if respond_to?(meth_name)
       define_singleton_method(meth_name){|value| set(name, value) }
-      if name == 'q'
-        class << self
-          alias :query :q
-        end
-      end
     end
     private :create_field_helper_method
 
@@ -605,6 +623,7 @@ end
 require 'prismic/api'
 require 'prismic/form'
 require 'prismic/fragments'
+require 'prismic/predicates'
 require 'prismic/json_parsers'
 require 'prismic/cache/lru'
 require 'prismic/cache/basic'
