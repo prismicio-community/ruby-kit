@@ -17,4 +17,5 @@ deploy:
   gemspec: prismic.gemspec
   on:
     tags: true
+    all_branches: true
     repo: prismicio/ruby-kit
