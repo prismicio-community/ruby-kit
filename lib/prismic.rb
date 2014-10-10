@@ -459,7 +459,7 @@ module Prismic
     def [](field)
       array = field.split('.')
       if array.length != 2
-        raise ArgumentError, "Argument should contain one dot. Example: product.price"
+        raise ArgumentError, 'Argument should contain one dot. Example: product.price'
       end
       return nil if array[0] != self.type
       fragments[array[1]]

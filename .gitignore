@@ -4,5 +4,5 @@ pkg/*.gem
 .idea/
 .yardoc/
 doc/
-
+node_modules/
 
