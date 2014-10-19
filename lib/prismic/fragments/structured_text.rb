@@ -252,7 +252,7 @@ module Prismic
           attr_accessor :level
 
           def initialize(text, spans, level, label = nil)
-            super(text, spans)
+            super(text, spans,label)
             @level = level
           end
 
@@ -293,7 +293,7 @@ module Prismic
           alias :ordered? :ordered
 
           def initialize(text, spans, ordered, label = nil)
-            super(text, spans)
+            super(text, spans, label)
             @ordered = ordered
           end
 
