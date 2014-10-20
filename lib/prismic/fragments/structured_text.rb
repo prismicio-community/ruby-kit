@@ -252,7 +252,7 @@ module Prismic
           attr_accessor :level
 
           def initialize(text, spans, level, label = nil)
-            super(text, spans,label)
+            super(text, spans, label)
             @level = level
           end
 
