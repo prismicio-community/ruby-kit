@@ -23,7 +23,7 @@ describe 'Documentation' do
     end
 
     it 'references' do
-      # startgist:11cb93472bc660d423f6:prismic-references.rb
+      # startgist:431e191cabf5e160c701:prismic-references.rb
       preview_token = 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70';
       api = Prismic.api('https://lesbonneschoses.prismic.io/api', preview_token)
       st_patrick_ref = api.ref('St-Patrick specials')
@@ -128,7 +128,7 @@ describe 'Documentation' do
         .ref(api.master_ref)
         .submit
       doc = response[0]
-      # startgist:ea2f95a70621f3e83032:prismic-getNumber.rb
+      # startgist:c6783e9789d3ff446876:prismic-getNumber.rb
       # Number predicates
       gt = Predicates::gt('my.product.price', 10)
       lt = Predicates::lt('my.product.price', 20)
