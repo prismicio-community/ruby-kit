@@ -19,11 +19,7 @@ module Prismic
       #
       # @return [String] the HTML representation
       def as_html(link_resolver=nil, html_serializer=nil)
-        <<-HTML
-        <div data-oembed="#@url"
-            data-oembed-type="#{@embed_type.downcase}"
-            data-oembed-provider="#{@provider.downcase}">#@html</div>
-        HTML
+        %Q|<div data-oembed="#{@url}" data-oembed-type="#{@embed_type.downcase}" data-oembed-provider="#{@provider.downcase}">#@html</div>|
       end
     end
   end

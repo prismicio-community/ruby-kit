@@ -185,9 +185,9 @@ module Prismic
     end
 
     def oauth_check_token(params)
-      if !@@warned_oauth_check_token
+      unless @@warned_oauth_check_token
         warn "[DEPRECATION] Method `API#oauth_check_token` is deprecated.  " +
-          "Please use `Prismic::API.oauth_check_token` instead."
+                 "Please use `Prismic::API.oauth_check_token` instead."
         @@warned_oauth_check_token = true
       end
       oauth.check_token(params)

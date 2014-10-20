@@ -277,20 +277,20 @@ module Prismic
       cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')
 
       api.caching(cache_key) {
-        if form_method == "GET" && form_enctype == "application/x-www-form-urlencoded"
+        if form_method == 'GET' && form_enctype == 'application/x-www-form-urlencoded'
           data['access_token'] = api.access_token if api.access_token
           data.delete_if { |k, v| v.nil? }
 
           response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
-          if response.code.to_s == "200"
+          if response.code.to_s == '200'
             response.body
           else
             body = JSON.load(response.body) rescue nil
             error = body.is_a?(Hash) ? body['error'] : response.body
-            raise AuthenticationException, error if response.code.to_s == "401"
-            raise AuthorizationException, error if response.code.to_s == "403"
-            raise RefNotFoundException, error if response.code.to_s == "404"
+            raise AuthenticationException, error if response.code.to_s == '401'
+            raise AuthorizationException, error if response.code.to_s == '403'
+            raise RefNotFoundException, error if response.code.to_s == '404'
             raise FormSearchException, error
           end
         else
@@ -308,9 +308,9 @@ module Prismic
       field = @form.fields[field_name]
       if field && field.repeatable?
         data[field_name] = [] unless data.include? field_name
-        data[field_name] << value
+        data[field_name] << value.to_s
       else
-        data[field_name] = value
+        data[field_name] = value.to_s
       end
       self
     end
@@ -465,6 +465,60 @@ module Prismic
       fragments[array[1]]
     end
     alias :get :[]
+
+    def get_text(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Text
+      fragment
+    end
+
+    def get_number(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Number
+      fragment
+    end
+
+    def get_date(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Date
+      fragment
+    end
+
+    def get_timestamp(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Timestamp
+      fragment
+    end
+
+    def get_group(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Group
+      fragment
+    end
+
+    def get_link(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Link
+      fragment
+    end
+
+    def get_embed(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Embed
+      fragment
+    end
+
+    def get_color(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Color
+      fragment
+    end
+
+    def get_geopoint(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::GeoPoint
+      fragment
+    end
 
     private
 

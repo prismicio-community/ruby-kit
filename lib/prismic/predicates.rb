@@ -30,15 +30,15 @@ module Prismic
     end
 
     def self.date_before(fragment, before)
-      ['date.before', fragment, before]
+      ['date.before', fragment, as_timestamp(before)]
     end
 
     def self.date_after(fragment, after)
-      ['date.after', fragment, after]
+      ['date.after', fragment, as_timestamp(after)]
     end
 
     def self.date_between(fragment, before, after)
-      ['date.between', fragment, before, after]
+      ['date.between', fragment, as_timestamp(before), as_timestamp(after)]
     end
 
     def self.day_of_month(fragment, day)
@@ -96,6 +96,18 @@ module Prismic
     def self.near(fragment, latitude, longitude, radius)
       ['geopoint.near', fragment, latitude, longitude, radius]
     end
+
+    def self.as_timestamp(date)
+      if date.is_a? Date or date.is_a? DateTime
+        date.to_time.to_i * 1000
+      elsif date.is_a? Time
+        date.to_i * 1000
+      else
+        date
+      end
+    end
+
+    private_class_method :as_timestamp
 
   end
 end
