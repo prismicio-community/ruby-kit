@@ -109,7 +109,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#draft-instance_method" title="#draft (instance method)">- (Object) <strong>draft</strong> </a>
+      <a href="#draft-instance_method" title="#draft (instance method)">- (Array&lt;Experiment&gt;) <strong>draft</strong> </a>
     
 
     
@@ -129,7 +129,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute draft.</p>
+<p>List of all experiments from Prismic.</p>
 </div></span>
   
 </li>
@@ -138,7 +138,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#running-instance_method" title="#running (instance method)">- (Object) <strong>running</strong> </a>
+      <a href="#running-instance_method" title="#running (instance method)">- (Array&lt;Experiments&gt;) <strong>running</strong> </a>
     
 
     
@@ -158,7 +158,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute running.</p>
+<p>List of all experiments from Prismic.</p>
 </div></span>
   
 </li>
@@ -180,7 +180,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parse-class_method" title="parse (class method)">+ (Object) <strong>parse</strong>(data) </a>
+      <a href="#parse-class_method" title="parse (class method)">+ (Experiments) <strong>parse</strong>(data) </a>
     
 
     
@@ -310,13 +310,13 @@
       <pre class="lines">
 
 
-7
-8
-9
-10</pre>
+10
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_draft'>draft</span><span class='comma'>,</span> <span class='id identifier rubyid_running'>running</span><span class='rparen'>)</span>
   <span class='ivar'>@draft</span> <span class='op'>=</span> <span class='id identifier rubyid_draft'>draft</span>
@@ -337,7 +337,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="draft-instance_method">
   
-    - (<tt>Object</tt>) <strong>draft</strong>  <span class="extras">(readonly)</span>
+    - (<tt>Array&lt;<span class='object_link'><a href="Experiment.html" title="Prismic::Experiment (class)">Experiment</a></span>&gt;</tt>) <strong>draft</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -346,13 +346,31 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute draft</p>
+<p>Returns list of all experiments from Prismic</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Experiment.html" title="Prismic::Experiment (class)">Experiment</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of all experiments from Prismic</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -360,12 +378,12 @@
       <pre class="lines">
 
 
-5
 6
-7</pre>
+7
+8</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 6</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draft'>draft</span>
   <span class='ivar'>@draft</span>
@@ -380,7 +398,7 @@
       <div class="method_details ">
   <h3 class="signature " id="running-instance_method">
   
-    - (<tt>Object</tt>) <strong>running</strong>  <span class="extras">(readonly)</span>
+    - (<tt>Array&lt;<span class='object_link'><a href="" title="Prismic::Experiments (class)">Experiments</a></span>&gt;</tt>) <strong>running</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -389,13 +407,31 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute running</p>
+<p>Returns list of all experiments from Prismic</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="" title="Prismic::Experiments (class)">Experiments</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of all experiments from Prismic</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -403,12 +439,12 @@
       <pre class="lines">
 
 
-5
-6
-7</pre>
+8
+9
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_running'>running</span>
   <span class='ivar'>@running</span>
@@ -428,22 +464,40 @@
       <div class="method_details first">
   <h3 class="signature first" id="parse-class_method">
   
-    + (<tt>Object</tt>) <strong>parse</strong>(data) 
+    + (<tt><span class='object_link'><a href="" title="Prismic::Experiments (class)">Experiments</a></span></tt>) <strong>parse</strong>(data) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Prismic::Experiments (class)">Experiments</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-34
-35
-36
-37
 38
 39
 40
@@ -452,10 +506,14 @@
 43
 44
 45
-46</pre>
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_draft'>draft</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -496,12 +554,12 @@
       <pre class="lines">
 
 
-12
-13
-14</pre>
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current'>current</span>
   <span class='id identifier rubyid_running'>running</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -526,9 +584,6 @@
       <pre class="lines">
 
 
-16
-17
-18
 19
 20
 21
@@ -542,10 +597,13 @@
 29
 30
 31
-32</pre>
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ref_from_cookie'>ref_from_cookie</span><span class='lparen'>(</span><span class='id identifier rubyid_cookie'>cookie</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_cookie'>cookie</span> <span class='op'>==</span> <span class='kw'>nil</span>
@@ -574,7 +632,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 28 15:11:46 2014 by
+  Generated on Tue Oct 28 15:18:48 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>
