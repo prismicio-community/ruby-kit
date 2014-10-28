@@ -7,7 +7,7 @@ module Prismic
     @@warned_oauth_initiate_url = false
     @@warned_oauth_check_token = false
     attr_reader :json, :access_token, :http_client
-    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :oauth, :cache
+    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :experiments, :oauth, :cache
 
     # Is the cache enabled on this API object?
     #
@@ -150,6 +150,7 @@ module Prismic
         api.tags = data['tags']
         api.types = data['types']
         api.oauth = OAuth.new(data['oauth_initiate'], data['oauth_token'], http_client)
+        api.experiments = Experiments.parse(data['experiments'])
       }
     end
 
