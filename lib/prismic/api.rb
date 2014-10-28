@@ -7,7 +7,15 @@ module Prismic
     @@warned_oauth_initiate_url = false
     @@warned_oauth_check_token = false
     attr_reader :json, :access_token, :http_client
-    attr_accessor :refs, :bookmarks, :forms, :tags, :types, :experiments, :oauth, :cache
+    # @return [Hash{String => Ref}] list of references, as label -> reference
+    attr_accessor :refs
+    # @return [Hash{String => String}] list of bookmarks, as name -> documentId
+    attr_accessor :bookmarks
+    # @return [Hash{String => SearchForm}] list of bookmarks, as name -> documentId
+    attr_accessor :forms
+    attr_accessor :tags, :types, :oauth, :cache
+    # @return [Experiments] list of all experiments from Prismic
+    attr_accessor :experiments
 
     # Is the cache enabled on this API object?
     #
@@ -47,9 +55,9 @@ module Prismic
 
     # Get a bookmark by its name
     # @api
-    # @param  name [String] The bookmark's name
+    # @param name [String] The bookmark's name
     #
-    # @return [Hash] The bookmark
+    # @return [String] The bookmark document id
     def bookmark(name)
       bookmarks[name]
     end
@@ -63,7 +71,7 @@ module Prismic
       refs[name.downcase]
     end
 
-    # Returns a {Prismic::SearchForm search form} by its name
+    # Returns a {Prismic::SearchForm search form} by its name. This is where you start to query a repository.
     # @api
     # @param  name [String] The name of the form
     # @param  data [Hash] Default values
@@ -77,7 +85,7 @@ module Prismic
 
     # @deprecated Use {#form} instead.
     def create_search_form(name, data={}, ref={})
-      if !@@warned_create_search_form
+      unless @@warned_create_search_form
         warn "[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead."
         @@warned_create_search_form = true
       end
@@ -88,10 +96,11 @@ module Prismic
       @json
     end
 
+    # Fetch the API information from the Prismic.io server
     def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultApiCache)
       data = {}
-      data["access_token"] = access_token if access_token
-      cache_key = url + (access_token ? ("#" + access_token) : "")
+      data['access_token'] = access_token if access_token
+      cache_key = url + (access_token ? ('#' + access_token) : '')
       api_cache.get_or_set(cache_key, nil, 5) {
         res = http_client.get(url, data, 'Accept' => 'application/json')
         case res.code
@@ -221,11 +230,11 @@ module Prismic
         @token = token
       end
       def initiate_url(opts)
-        initiate + "?" + {
-          "client_id" => opts.fetch(:client_id),
-          "redirect_uri" => opts.fetch(:redirect_uri),
-          "scope" => opts.fetch(:scope),
-        }.map{|kv| kv.map{|e| CGI.escape(e) }.join("=") }.join("&")
+        initiate + '?' + {
+          'client_id' => opts.fetch(:client_id),
+          'redirect_uri' => opts.fetch(:redirect_uri),
+          'scope' => opts.fetch(:scope),
+        }.map{|kv| kv.map{|e| CGI.escape(e) }.join('=') }.join('&')
       end
       def check_token(params)
         res = http_client.post(token, params)

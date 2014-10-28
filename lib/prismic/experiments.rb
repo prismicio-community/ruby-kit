@@ -2,7 +2,10 @@
 module Prismic
 
   class Experiments
-    attr_reader :draft, :running
+    # @return [Array<Experiment>] list of all experiments from Prismic
+    attr_reader :draft
+    # @return [Array<Experiments>] list of all experiments from Prismic
+    attr_reader :running
 
     def initialize(draft, running)
       @draft = draft
@@ -31,6 +34,7 @@ module Prismic
       nil
     end
 
+    # @return [Experiments]
     def self.parse(data)
       draft = []
       running = []
@@ -48,7 +52,14 @@ module Prismic
   end
 
   class Experiment
-    attr_reader :id, :google_id, :name, :variations
+    # @return [String]
+    attr_reader :id
+    # @return [String]
+    attr_reader :google_id
+    # @return [String]
+    attr_reader :name
+    # @return [Array<Variation>]
+    attr_reader :variations
 
     def initialize(id, google_id, name, variations)
       @id = id
@@ -57,6 +68,7 @@ module Prismic
       @variations = variations
     end
 
+    # @return [Experiment]
     def self.parse(data)
       new(data['id'], data['googleId'], data['name'], data['variations'].map { |variation|
         Variation.parse(variation)
@@ -65,7 +77,12 @@ module Prismic
   end
 
   class Variation
-    attr_reader :id, :ref, :label
+    # @return [String]
+    attr_reader :id
+    # @return [String]
+    attr_reader :ref
+    # @return [String]
+    attr_reader :label
 
     def initialize(id, ref, label)
       @id = id
@@ -73,6 +90,7 @@ module Prismic
       @label = label
     end
 
+    # @return [Variation]
     def self.parse(data)
       new(data['id'], data['ref'], data['label'])
     end

@@ -345,8 +345,25 @@ module Prismic
     alias :repeatable? :repeatable
   end
 
+  # Paginated response to a Prismic.io query. Note that you may not get all documents in the first page,
+  # and may need to retrieve more pages or increase the page size.
   class Response
-    attr_accessor :page, :results_per_page, :results_size, :total_results_size, :total_pages, :next_page, :prev_page, :results
+    # @return [Number] current page, starting at 1
+    attr_accessor :page
+    # @return [Number]
+    attr_accessor :results_per_page
+    # @return [Number]
+    attr_accessor :results_size
+    # @return [Number]
+    attr_accessor :total_results_size
+    # @return [Number]
+    attr_accessor :total_pages
+    # @return [String] URL to the next page - nil if current page is the last page
+    attr_accessor :next_page
+    # @return [String] URL to the previous page - nil if current page is the first page
+    attr_accessor :prev_page
+    # @return [Array<Document>] Documents of the current page
+    attr_accessor :results
 
     # To be able to use Kaminari as a paginator in Rails out of the box
     alias :current_page :page
@@ -401,7 +418,20 @@ module Prismic
   end
 
   class Document
-    attr_accessor :id, :type, :href, :tags, :slugs, :linked_documents, :fragments
+    # @return [String]
+    attr_accessor :id
+    # @return [String]
+    attr_accessor :type
+    # @return [String]
+    attr_accessor :href
+    # @return [Array<String>]
+    attr_accessor :tags
+    # @return [Array<String>]
+    attr_accessor :slugs
+    # @return [Array<LinkedDocument>]
+    attr_accessor :linked_documents
+    # @return [Hash{String => Fragment}]
+    attr_accessor :fragments
 
     def initialize(id, type, href, tags, slugs, linked_documents, fragments)
       @id = id
@@ -466,6 +496,7 @@ module Prismic
     end
     alias :get :[]
 
+    # @return [Fragments::Text]
     def get_text(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Text

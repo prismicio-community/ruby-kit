@@ -3,20 +3,20 @@ require 'spec_helper'
 
 describe 'LesBonnesChoses' do
   before do
-    @api = Prismic.api("https://lesbonneschoses.prismic.io/api", nil)
+    @api = Prismic.api('https://lesbonneschoses.prismic.io/api', nil)
     @master_ref = @api.master_ref
   end
 
   describe '/api' do
-    it "API works" do
+    it 'API works' do
       @api.should_not be_nil
     end
   end
 
   describe 'query' do
-    it "queries everything and returns 20 documents" do
-      @api.form("everything").submit(@master_ref).size.should == 20
-      @api.form("everything").submit(@master_ref).results.size.should == 20
+    it 'queries everything and returns 20 documents' do
+      @api.form('everything').submit(@master_ref).size.should == 20
+      @api.form('everything').submit(@master_ref).results.size.should == 20
     end
 
     it "queries macarons (using a predicate) and returns 7 documents" do
