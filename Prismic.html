@@ -80,7 +80,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/prismic.rb<span class="defines">,<br />
-  lib/prismic/api.rb,<br /> lib/prismic/form.rb,<br /> lib/prismic/version.rb,<br /> lib/prismic/cache/lru.rb,<br /> lib/prismic/cache/basic.rb,<br /> lib/prismic/json_parsers.rb,<br /> lib/prismic/fragments/text.rb,<br /> lib/prismic/fragments/date.rb,<br /> lib/prismic/fragments/link.rb,<br /> lib/prismic/fragments/image.rb,<br /> lib/prismic/fragments/group.rb,<br /> lib/prismic/fragments/color.rb,<br /> lib/prismic/fragments/embed.rb,<br /> lib/prismic/fragments/number.rb,<br /> lib/prismic/fragments/select.rb,<br /> lib/prismic/fragments/geopoint.rb,<br /> lib/prismic/fragments/fragment.rb,<br /> lib/prismic/fragments/multiple.rb,<br /> lib/prismic/fragments/timestamp.rb,<br /> lib/prismic/fragments/structured_text.rb</span>
+  lib/prismic/api.rb,<br /> lib/prismic/form.rb,<br /> lib/prismic/version.rb,<br /> lib/prismic/cache/lru.rb,<br /> lib/prismic/predicates.rb,<br /> lib/prismic/cache/basic.rb,<br /> lib/prismic/experiments.rb,<br /> lib/prismic/json_parsers.rb,<br /> lib/prismic/fragments/text.rb,<br /> lib/prismic/fragments/date.rb,<br /> lib/prismic/fragments/link.rb,<br /> lib/prismic/fragments/image.rb,<br /> lib/prismic/fragments/embed.rb,<br /> lib/prismic/fragments/color.rb,<br /> lib/prismic/fragments/group.rb,<br /> lib/prismic/fragments/select.rb,<br /> lib/prismic/fragments/number.rb,<br /> lib/prismic/fragments/geopoint.rb,<br /> lib/prismic/fragments/fragment.rb,<br /> lib/prismic/fragments/multiple.rb,<br /> lib/prismic/fragments/timestamp.rb,<br /> lib/prismic/fragments/structured_text.rb</span>
 </dd>
   
 </dl>
@@ -90,11 +90,11 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Prismic/DefaultHTTPClient.html" title="Prismic::DefaultHTTPClient (module)">DefaultHTTPClient</a></span>, <span class='object_link'><a href="Prismic/Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span>, <span class='object_link'><a href="Prismic/JsonParser.html" title="Prismic::JsonParser (module)">JsonParser</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Prismic/DefaultHTTPClient.html" title="Prismic::DefaultHTTPClient (module)">DefaultHTTPClient</a></span>, <span class='object_link'><a href="Prismic/Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span>, <span class='object_link'><a href="Prismic/JsonParser.html" title="Prismic::JsonParser (module)">JsonParser</a></span>, <span class='object_link'><a href="Prismic/Predicates.html" title="Prismic::Predicates (module)">Predicates</a></span>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span>, <span class='object_link'><a href="Prismic/BasicCache.html" title="Prismic::BasicCache (class)">BasicCache</a></span>, <span class='object_link'><a href="Prismic/BasicCacheEntry.html" title="Prismic::BasicCacheEntry (class)">BasicCacheEntry</a></span>, <span class='object_link'><a href="Prismic/Document.html" title="Prismic::Document (class)">Document</a></span>, <span class='object_link'><a href="Prismic/Error.html" title="Prismic::Error (class)">Error</a></span>, <span class='object_link'><a href="Prismic/Field.html" title="Prismic::Field (class)">Field</a></span>, <span class='object_link'><a href="Prismic/Form.html" title="Prismic::Form (class)">Form</a></span>, <span class='object_link'><a href="Prismic/HtmlSerializer.html" title="Prismic::HtmlSerializer (class)">HtmlSerializer</a></span>, <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span>, <span class='object_link'><a href="Prismic/LinkedDocument.html" title="Prismic::LinkedDocument (class)">LinkedDocument</a></span>, <span class='object_link'><a href="Prismic/LruCache.html" title="Prismic::LruCache (class)">LruCache</a></span>, <span class='object_link'><a href="Prismic/Ref.html" title="Prismic::Ref (class)">Ref</a></span>, <span class='object_link'><a href="Prismic/Response.html" title="Prismic::Response (class)">Response</a></span>, <span class='object_link'><a href="Prismic/SearchForm.html" title="Prismic::SearchForm (class)">SearchForm</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span>, <span class='object_link'><a href="Prismic/BasicCache.html" title="Prismic::BasicCache (class)">BasicCache</a></span>, <span class='object_link'><a href="Prismic/BasicCacheEntry.html" title="Prismic::BasicCacheEntry (class)">BasicCacheEntry</a></span>, <span class='object_link'><a href="Prismic/Document.html" title="Prismic::Document (class)">Document</a></span>, <span class='object_link'><a href="Prismic/Error.html" title="Prismic::Error (class)">Error</a></span>, <span class='object_link'><a href="Prismic/Experiment.html" title="Prismic::Experiment (class)">Experiment</a></span>, <span class='object_link'><a href="Prismic/Experiments.html" title="Prismic::Experiments (class)">Experiments</a></span>, <span class='object_link'><a href="Prismic/Field.html" title="Prismic::Field (class)">Field</a></span>, <span class='object_link'><a href="Prismic/Form.html" title="Prismic::Form (class)">Form</a></span>, <span class='object_link'><a href="Prismic/HtmlSerializer.html" title="Prismic::HtmlSerializer (class)">HtmlSerializer</a></span>, <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span>, <span class='object_link'><a href="Prismic/LinkedDocument.html" title="Prismic::LinkedDocument (class)">LinkedDocument</a></span>, <span class='object_link'><a href="Prismic/LruCache.html" title="Prismic::LruCache (class)">LruCache</a></span>, <span class='object_link'><a href="Prismic/Ref.html" title="Prismic::Ref (class)">Ref</a></span>, <span class='object_link'><a href="Prismic/Response.html" title="Prismic::Response (class)">Response</a></span>, <span class='object_link'><a href="Prismic/SearchForm.html" title="Prismic::SearchForm (class)">SearchForm</a></span>, <span class='object_link'><a href="Prismic/Variation.html" title="Prismic::Variation (class)">Variation</a></span>
     
   
 </p>
@@ -106,7 +106,7 @@
         <dt id="VERSION-constant" class="">VERSION =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.1</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.4</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
         <dt id="DefaultCache-constant" class="">DefaultCache =
           <div class="docstring">
@@ -591,12 +591,12 @@ caching</p>
       <pre class="lines">
 
 
-599
-600
-601</pre>
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 599</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 671</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_html_serializer'>html_serializer</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='const'>HtmlSerializer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
@@ -712,12 +712,12 @@ on a generic prismic.io&#39;s
       <pre class="lines">
 
 
-595
-596
-597</pre>
+667
+668
+669</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 595</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 667</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='const'>LinkResolver</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
@@ -1106,7 +1106,7 @@ method)</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Sep 25 10:16:44 2014 by
+  Generated on Tue Oct 28 15:11:44 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>

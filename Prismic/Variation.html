@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: Prismic::LinkedDocument
+  Class: Prismic::Variation
   
     &mdash; Documentation by YARD 0.8.7.4
   
@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!Prismic/LinkedDocument.html";
+  framesUrl = "../frames.html#!Prismic/Variation.html";
 </script>
 
 
@@ -31,10 +31,10 @@
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (L)</a> &raquo;
+    <a href="../_index.html">Index (V)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Prismic.html" title="Prismic (module)">Prismic</a></span></span>
      &raquo; 
-    <span class="title">LinkedDocument</span>
+    <span class="title">Variation</span>
   
 
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Class: Prismic::LinkedDocument
+    <div id="content"><h1>Class: Prismic::Variation
   
   
   
@@ -78,7 +78,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Prismic::LinkedDocument</li>
+            <li class="next">Prismic::Variation</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -94,7 +94,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/prismic.rb</dd>
+    <dd class="r2 last">lib/prismic/experiments.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -118,6 +118,8 @@
   
   
     
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -136,7 +138,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#slug-instance_method" title="#slug (instance method)">- (Object) <strong>slug</strong> </a>
+      <a href="#label-instance_method" title="#label (instance method)">- (Object) <strong>label</strong> </a>
     
 
     
@@ -144,6 +146,8 @@
   
   
   
+    
+      <span class="note title readonly">readonly</span>
     
     
   
@@ -154,7 +158,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute slug.</p>
+<p>Returns the value of attribute label.</p>
 </div></span>
   
 </li>
@@ -163,7 +167,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#tags-instance_method" title="#tags (instance method)">- (Object) <strong>tags</strong> </a>
+      <a href="#ref-instance_method" title="#ref (instance method)">- (Object) <strong>ref</strong> </a>
     
 
     
@@ -171,6 +175,8 @@
   
   
   
+    
+      <span class="note title readonly">readonly</span>
     
     
   
@@ -181,34 +187,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute tags.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#type-instance_method" title="#type (instance method)">- (Object) <strong>type</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute type.</p>
+<p>Returns the value of attribute ref.</p>
 </div></span>
   
 </li>
@@ -221,6 +200,37 @@
 
   
     <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse-class_method" title="parse (class method)">+ (Object) <strong>parse</strong>(data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
       Instance Method Summary
       <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
     </h2>
@@ -230,7 +240,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (LinkedDocument) <strong>initialize</strong>(id, slug, type, tags) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Variation) <strong>initialize</strong>(id, ref, label) </a>
     
 
     
@@ -247,7 +257,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of LinkedDocument.</p>
+<p>A new instance of Variation.</p>
 </div></span>
   
 </li>
@@ -262,7 +272,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Prismic::LinkedDocument (class)">LinkedDocument</a></span></tt>) <strong>initialize</strong>(id, slug, type, tags) 
+    - (<tt><span class='object_link'><a href="" title="Prismic::Variation (class)">Variation</a></span></tt>) <strong>initialize</strong>(id, ref, label) 
   
 
   
@@ -271,7 +281,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of LinkedDocument</p>
+<p>Returns a new instance of Variation</p>
 
 
   </div>
@@ -285,21 +295,19 @@
       <pre class="lines">
 
 
-395
-396
-397
-398
-399
-400</pre>
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 70</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_slug'>slug</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_tags'>tags</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span>
   <span class='ivar'>@id</span> <span class='op'>=</span> <span class='id identifier rubyid_id'>id</span>
-  <span class='ivar'>@slug</span> <span class='op'>=</span> <span class='id identifier rubyid_slug'>slug</span>
-  <span class='ivar'>@type</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='ivar'>@tags</span> <span class='op'>=</span> <span class='id identifier rubyid_tags'>tags</span>
+  <span class='ivar'>@ref</span> <span class='op'>=</span> <span class='id identifier rubyid_ref'>ref</span>
+  <span class='ivar'>@label</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -312,11 +320,11 @@
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="id=-instance_method"></span>
+      <span id=""></span>
       <div class="method_details first">
   <h3 class="signature first" id="id-instance_method">
   
-    - (<tt>Object</tt>) <strong>id</strong> 
+    - (<tt>Object</tt>) <strong>id</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -339,12 +347,12 @@
       <pre class="lines">
 
 
-393
-394
-395</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span>
   <span class='ivar'>@id</span>
@@ -355,11 +363,11 @@
 </div>
     
       
-      <span id="slug=-instance_method"></span>
+      <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="slug-instance_method">
+  <h3 class="signature " id="label-instance_method">
   
-    - (<tt>Object</tt>) <strong>slug</strong> 
+    - (<tt>Object</tt>) <strong>label</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -368,7 +376,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute slug</p>
+<p>Returns the value of attribute label</p>
 
 
   </div>
@@ -382,15 +390,15 @@
       <pre class="lines">
 
 
-393
-394
-395</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 68</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_slug'>slug</span>
-  <span class='ivar'>@slug</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_label'>label</span>
+  <span class='ivar'>@label</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -398,11 +406,11 @@
 </div>
     
       
-      <span id="tags=-instance_method"></span>
+      <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="tags-instance_method">
+  <h3 class="signature " id="ref-instance_method">
   
-    - (<tt>Object</tt>) <strong>tags</strong> 
+    - (<tt>Object</tt>) <strong>ref</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -411,7 +419,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute tags</p>
+<p>Returns the value of attribute ref</p>
 
 
   </div>
@@ -425,58 +433,52 @@
       <pre class="lines">
 
 
-393
-394
-395</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 68</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_tags'>tags</span>
-  <span class='ivar'>@tags</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_ref'>ref</span>
+  <span class='ivar'>@ref</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
     
-      
-      <span id="type=-instance_method"></span>
-      <div class="method_details ">
-  <h3 class="signature " id="type-instance_method">
-  
-    - (<tt>Object</tt>) <strong>type</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns the value of attribute type</p>
-
-
   </div>
-</div>
-<div class="tags">
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="parse-class_method">
+  
+    + (<tt>Object</tt>) <strong>parse</strong>(data) 
   
 
-</div><table class="source_code">
+  
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-393
-394
-395</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic/experiments.rb', line 76</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='ivar'>@type</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>label</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -484,12 +486,11 @@
 </div>
     
   </div>
-
 
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 28 15:11:45 2014 by
+  Generated on Tue Oct 28 15:11:46 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>

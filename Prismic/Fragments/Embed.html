@@ -668,22 +668,14 @@ application&#39;s specific URL</p>
 
 21
 22
-23
-24
-25
-26
-27</pre>
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/prismic/fragments/embed.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_html_serializer'>html_serializer</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='heredoc_beg'>&lt;&lt;-HTML</span>
-<span class='tstring_content'>  &lt;div data-oembed=&quot;</span><span class='embvar'>#</span><span class='ivar'>@url</span><span class='tstring_content'>&quot;
-      data-oembed-type=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@embed_type</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
-      data-oembed-provider=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@provider</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;&gt;</span><span class='embvar'>#</span><span class='ivar'>@html</span><span class='tstring_content'>&lt;/div&gt;
-</span><span class='heredoc_end'>  HTML
-</span><span class='kw'>end</span></pre>
+  <span class='tstring'><span class='tstring_beg'>%Q|</span><span class='tstring_content'>&lt;div data-oembed=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@url</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; data-oembed-type=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@embed_type</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; data-oembed-provider=&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@provider</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;&gt;</span><span class='embvar'>#</span><span class='ivar'>@html</span><span class='tstring_content'>&lt;/div&gt;</span><span class='tstring_end'>|</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -694,7 +686,7 @@ application&#39;s specific URL</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Sep 25 10:16:47 2014 by
+  Generated on Tue Oct 28 15:11:47 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>
