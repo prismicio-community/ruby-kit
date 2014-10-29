@@ -99,7 +99,22 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A class to override the default was to serialize HTML. Only needed if you
+want to override the default HTML serialization.</p>
 
+<p>The <span class='object_link'><a href="../Prismic.html#html_serializer-class_method" title="Prismic.html_serializer (method)">html_serializer</a></span> function is the recommended way to create an
+HtmlSerializer.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -194,12 +209,12 @@
       <pre class="lines">
 
 
-627
-628
-629</pre>
+633
+634
+635</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 627</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 633</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='ivar'>@blk</span> <span class='op'>=</span> <span class='id identifier rubyid_blk'>blk</span>
@@ -231,12 +246,12 @@
       <pre class="lines">
 
 
-631
-632
-633</pre>
+637
+638
+639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 631</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 637</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_serialize'>serialize</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
   <span class='ivar'>@blk</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
@@ -251,7 +266,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 28 18:00:42 2014 by
+  Generated on Wed Oct 29 11:12:47 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>

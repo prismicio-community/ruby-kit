@@ -221,16 +221,16 @@ String)</p>
       <pre class="lines">
 
 
-644
-645
-646
-647
-648
-649
-650</pre>
+650
+651
+652
+653
+654
+655
+656</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 644</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 650</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
@@ -276,16 +276,16 @@ String)</p>
       <pre class="lines">
 
 
-657
-658
-659
-660
-661
-662
-663</pre>
+663
+664
+665
+666
+667
+668
+669</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 657</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 663</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
@@ -314,20 +314,20 @@ String)</p>
       <pre class="lines">
 
 
-665
-666
-667
-668
-669
-670
 671
 672
 673
 674
-675</pre>
+675
+676
+677
+678
+679
+680
+681</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 665</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 671</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url_encode'>url_encode</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='comment'># Can&#39;t use URI.encode_www_form (doesn&#39;t support multi-values in 1.9.2)
@@ -350,7 +350,7 @@ String)</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 28 18:00:41 2014 by
+  Generated on Wed Oct 29 11:12:46 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>
