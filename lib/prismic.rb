@@ -512,6 +512,13 @@ module Prismic
       fragment
     end
 
+    # @return [Fragments::Image]
+    def get_image(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::Image
+      fragment
+    end
+
     # @return [Fragments::Date]
     def get_date(field)
       fragment = self[field]

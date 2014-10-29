@@ -140,6 +140,22 @@ describe 'Documentation' do
       price.should == 2.5
     end
 
+    it 'images' do
+      api = Prismic::api('https://lesbonneschoses.prismic.io/api')
+      response = api.form('everything')
+        .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbO'))
+        .ref(api.master_ref)
+        .submit
+      doc = response[0]
+      # startgist:825fa25b66355ce758fe:prismic-images.rb
+      # Accessing image fields
+      image = doc.get_image('product.image')
+      # Most of the time you will be using the "main" view
+      url = image.main.url
+      # endgist
+      url.should == 'https://prismic-io.s3.amazonaws.com/lesbonneschoses/f606ad513fcc2a73b909817119b84d6fd0d61a6d.png'
+    end
+
     it 'date and timestamp' do
       api = Prismic::api('https://lesbonneschoses.prismic.io/api')
       response = api.form('everything')
