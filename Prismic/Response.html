@@ -352,7 +352,7 @@ increase the page size.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Object) <strong>[]</strong>(i) </a>
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Document) <strong>[]</strong>(i) </a>
     
 
     
@@ -996,7 +996,7 @@ increase the page size.</p>
       <div class="method_details first">
   <h3 class="signature first" id="[]-instance_method">
   
-    - (<tt>Object</tt>) <strong>[]</strong>(i) 
+    - (<tt><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span></tt>) <strong>[]</strong>(i) 
   
 
   
@@ -1016,6 +1016,19 @@ increase the page size.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1023,12 +1036,12 @@ increase the page size.</p>
       <pre class="lines">
 
 
-384
 385
-386</pre>
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='rparen'>)</span>
   <span class='ivar'>@results</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span>
@@ -1083,12 +1096,12 @@ will be returned.</p>
       <pre class="lines">
 
 
-395
 396
-397</pre>
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
@@ -1141,12 +1154,12 @@ will be returned.</p>
       <pre class="lines">
 
 
-403
 404
-405</pre>
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 403</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 404</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_length'>length</span>
   <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
@@ -1161,7 +1174,7 @@ will be returned.</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Oct 29 11:12:47 2014 by
+  Generated on Wed Oct 29 11:21:08 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.4 (ruby-2.0.0).
 </div>
