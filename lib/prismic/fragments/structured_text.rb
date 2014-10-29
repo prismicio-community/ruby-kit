@@ -31,6 +31,10 @@ module Prismic
       # it is not advised to override this method if you want to change the HTML output, you should
       # override the as_html method at the block level (like {Heading.as_html}, or {Preformatted.as_html},
       # for instance).
+      # @param link_resolver [LinkResolver]
+      # @param html_serializer [HtmlSerializer]
+      # @return [String] the resulting html snippet
+
       def as_html(link_resolver, html_serializer=nil)
         # Defining blocks that deserve grouping, assigning them "group kind" names
         block_group = ->(block){
@@ -91,7 +95,10 @@ module Prismic
       end
 
       class Span
-        attr_accessor :start, :end
+        # @return [Number]
+        attr_accessor :start
+        # @return [Number]
+        attr_accessor :end
 
         def initialize(start, finish)
           @start = start
@@ -99,6 +106,7 @@ module Prismic
         end
 
         class Label < Span
+          # @return [String]
           attr_accessor :label
           def initialize(start, finish, label)
             super(start, finish)
@@ -149,7 +157,12 @@ module Prismic
         end
 
         class Text
-          attr_accessor :text, :spans, :label
+          # @return [String]
+          attr_accessor :text
+          # @return [Array<Span>]
+          attr_accessor :spans
+          # @return [String] may be nil
+          attr_accessor :label
 
           def initialize(text, spans, label = nil)
             @text = text

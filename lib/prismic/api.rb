@@ -6,7 +6,10 @@ module Prismic
     @@warned_create_search_form = false
     @@warned_oauth_initiate_url = false
     @@warned_oauth_check_token = false
-    attr_reader :json, :access_token, :http_client
+    attr_reader :json
+    # @return [String]
+    attr_reader :access_token
+    attr_reader :http_client
     # @return [Hash{String => Ref}] list of references, as label -> reference
     attr_accessor :refs
     # @return [Hash{String => String}] list of bookmarks, as name -> documentId

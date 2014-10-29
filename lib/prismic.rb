@@ -381,6 +381,7 @@ module Prismic
     end
 
     # Accessing the i-th document in the results
+    # @return [Document]
     def [](i)
       @results[i]
     end
@@ -486,6 +487,7 @@ module Prismic
     end
 
     # Get a document's field
+    # @return [Fragments::Fragment]
     def [](field)
       array = field.split('.')
       if array.length != 2
@@ -503,48 +505,56 @@ module Prismic
       fragment
     end
 
+    # @return [Fragments::Number]
     def get_number(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Number
       fragment
     end
 
+    # @return [Fragments::Date]
     def get_date(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Date
       fragment
     end
 
+    # @return [Fragments::Timestamp]
     def get_timestamp(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Timestamp
       fragment
     end
 
+    # @return [Fragments::Group]
     def get_group(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Group
       fragment
     end
 
+    # @return [Fragments::Link]
     def get_link(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Link
       fragment
     end
 
+    # @return [Fragments::Embed]
     def get_embed(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Embed
       fragment
     end
 
+    # @return [Fragments::Color]
     def get_color(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::Color
       fragment
     end
 
+    # @return [Fragments::GeoPoint]
     def get_geopoint(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::GeoPoint
@@ -604,6 +614,8 @@ module Prismic
 
   # The LinkResolver will help to build URL specific to an application, based
   # on a generic prismic.io's {Fragments::DocumentLink Document link}.
+  #
+  # The {Prismic.link_resolver} function is the recommended way to create a LinkResolver.
   class LinkResolver
     attr_reader :ref
 
@@ -623,6 +635,9 @@ module Prismic
     end
   end
 
+  # A class to override the default was to serialize HTML. Only needed if you want to override the default HTML serialization.
+  #
+  # The {Prismic.html_serializer} function is the recommended way to create an HtmlSerializer.
   class HtmlSerializer
     def initialize(&blk)
       @blk = blk
