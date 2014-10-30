@@ -306,11 +306,13 @@ module Prismic
     # @return [SearchForm] self
     def set(field_name, value)
       field = @form.fields[field_name]
-      if field && field.repeatable?
-        data[field_name] = [] unless data.include? field_name
-        data[field_name] << value.to_s
-      else
-        data[field_name] = value.to_s
+      unless value == nil
+        if field && field.repeatable?
+          data[field_name] = [] unless data.include? field_name
+          data[field_name] << value.to_s
+        else
+          data[field_name] = value.to_s
+        end
       end
       self
     end

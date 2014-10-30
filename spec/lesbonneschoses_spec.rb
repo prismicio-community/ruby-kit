@@ -54,6 +54,16 @@ describe 'LesBonnesChoses' do
       documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20"
       documents.prev_page.should == nil
     end
+    it "works when passing nil" do
+      documents = @api.form("everything").page(nil).submit(@master_ref)
+      documents.page.should == 1
+      documents.results_per_page.should == 20
+      documents.results_size.should == 20
+      documents.total_results_size.should == 40
+      documents.total_pages.should == 2
+      documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20"
+      documents.prev_page.should == nil
+    end
     it "works on page 2" do
       documents = @api.form("everything").page("2").submit(@master_ref)
       documents.page.should == 2
