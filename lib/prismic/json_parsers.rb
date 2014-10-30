@@ -192,7 +192,7 @@ module Prismic
         fragment_list_array = []
         json['value'].each do |group|
           fragments = Hash[ group.map {|name, fragment| [name, parsers[fragment['type']].call(fragment)] }]
-          fragment_list_array << Prismic::Fragments::Group::FragmentMapping.new(fragments)
+          fragment_list_array << Prismic::WithFragments.new(fragments)
         end
         Prismic::Fragments::Group.new(fragment_list_array)
       end
