@@ -308,9 +308,9 @@ module Prismic
       field = @form.fields[field_name]
       if field && field.repeatable?
         data[field_name] = [] unless data.include? field_name
-        data[field_name] << value.to_s
+        data[field_name] << value
       else
-        data[field_name] = value.to_s
+        data[field_name] = value
       end
       self
     end
