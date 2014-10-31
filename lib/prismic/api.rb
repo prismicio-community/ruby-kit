@@ -131,7 +131,7 @@ module Prismic
       http_client = opts[:http_client] || Prismic::DefaultHTTPClient
       access_token = opts[:access_token]
       cache = opts[:cache]
-      cache ||= Prismic::DefaultCache unless cache == false
+      cache ||= Prismic::DefaultCache unless !cache
       resp = get(url, access_token, http_client)
       json = JSON.load(resp.body)
       parse_api_response(json, access_token, http_client, cache)
@@ -143,17 +143,7 @@ module Prismic
       new(data, access_token, http_client, cache) {|api|
         api.bookmarks = data['bookmarks']
         api.forms = Hash[data_forms.map { |k, form|
-          [k, Form.new(
-            api,
-            form['name'],
-            Hash[form['fields'].map { |k2, field|
-              [k2, Field.new(field['type'], field['default'], k2 == 'q')]
-            }],
-            form['method'],
-            form['rel'],
-            form['enctype'],
-            form['action'],
-          )]
+          [k, Form.from_json(api, form)]
         }]
         api.refs = Hash[data_refs.map { |ref|
           scheduled_at = ref['scheduledAt']
@@ -168,12 +158,12 @@ module Prismic
 
     def self.oauth_initiate_url(url, oauth_opts, api_opts={})
       oauth =
-        begin
-          api = self.start(url, api_opts)
-          api.oauth
-        rescue PrismicWSAuthError => e
-          e.oauth
-        end
+          begin
+            api = self.start(url, api_opts)
+            api.oauth
+          rescue PrismicWSAuthError => e
+            e.oauth
+          end
       oauth.initiate_url(oauth_opts)
     end
 
@@ -188,12 +178,12 @@ module Prismic
 
     def self.oauth_check_token(url, oauth_params, api_opts={})
       oauth =
-        begin
-          api = self.start(url, api_opts)
-          api.oauth
-        rescue PrismicWSAuthError => e
-          e.oauth
-        end
+          begin
+            api = self.start(url, api_opts)
+            api.oauth
+          rescue PrismicWSAuthError => e
+            e.oauth
+          end
       oauth.check_token(oauth_params)
     end
 

@@ -85,15 +85,6 @@ module Prismic
       end
 
       def image_parser(json)
-        def self.view_parser(json)
-          Prismic::Fragments::Image::View.new(json['url'],
-                                              json['dimensions']['width'],
-                                              json['dimensions']['height'],
-                                              json['alt'],
-                                              json['copyright'],
-                                              json['linkTo'] ? link_parser(json['linkTo']) : nil)
-        end
-
         main  = view_parser(json['value']['main'])
         views = {}
         json['value']['views'].each do |name, view|
@@ -156,15 +147,10 @@ module Prismic
               block['label']
             )
           when 'image'
-            view = Prismic::Fragments::Image::View.new(
-              block['url'],
-              block['dimensions']['width'],
-              block['dimensions']['height'],
-              block['alt'],
-              block['copyright'],
-              block['linkTo'] ? link_parser(block['linkTo']) : nil
+            Prismic::Fragments::StructuredText::Block::Image.new(
+                view_parser(block),
+                block['label']
             )
-            Prismic::Fragments::StructuredText::Block::Image.new(view, block['label'])
           when 'embed'
             boembed = block['oembed']
             Prismic::Fragments::Embed.new(
@@ -218,14 +204,7 @@ module Prismic
           end
         }]
 
-        linked_documents = json['linked_documents']
-        if linked_documents
-          linked_documents.map! do |linked_doc|
-            LinkedDocument.new(linked_doc['id'], linked_doc['slug'], linked_doc['type'], linked_doc['tags'])
-          end
-        else
-          linked_documents = []
-        end
+        linked_documents = linked_documents_parser(json['linked_documents'])
 
         Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
                               json['slugs'], linked_documents, fragments)
@@ -252,6 +231,25 @@ module Prismic
       end
 
       private
+
+      def view_parser(json)
+        Prismic::Fragments::Image::View.new(json['url'],
+                                            json['dimensions']['width'],
+                                            json['dimensions']['height'],
+                                            json['alt'],
+                                            json['copyright'],
+                                            json['linkTo'] ? link_parser(json['linkTo']) : nil)
+      end
+
+      def linked_documents_parser(json)
+        if json
+          json.map! do |linked_doc|
+            LinkedDocument.new(linked_doc['id'], linked_doc['slug'], linked_doc['type'], linked_doc['tags'])
+          end
+        else
+          []
+        end
+      end
 
       def link_parser(json)
         if json['type'] == 'Link.document'

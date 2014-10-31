@@ -20,5 +20,20 @@ module Prismic
     def create_search_form(data={}, ref=nil)
       SearchForm.new(@api, self, data, ref)
     end
+
+    def self.from_json(api, json)
+      Form.new(
+          api,
+          json['name'],
+          Hash[json['fields'].map { |k2, field|
+            [k2, Field.new(field['type'], field['default'], k2 == 'q')]
+          }],
+          json['method'],
+          json['rel'],
+          json['enctype'],
+          json['action']
+      )
+    end
+
   end
 end
