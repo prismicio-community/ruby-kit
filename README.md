@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/prismic.io.png)](http://badge.fury.io/rb/prismic.io)
 [![Build Status](https://api.travis-ci.org/prismicio/ruby-kit.png)](https://travis-ci.org/prismicio/ruby-kit)
 [![Code Climate](https://codeclimate.com/github/prismicio/ruby-kit.png)](https://codeclimate.com/github/prismicio/ruby-kit)
+[![Test Coverage](https://codeclimate.com/github/prismicio/ruby-kit/badges/coverage.svg)](https://codeclimate.com/github/prismicio/ruby-kit)
 
 ### Getting Started
 
