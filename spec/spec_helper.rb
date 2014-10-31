@@ -1,4 +1,7 @@
 # encoding: utf-8
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 require 'nokogiri'
 begin
   require 'yajl/json_gem'
