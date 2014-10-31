@@ -1,5 +1,6 @@
 coverage/
 pkg/*.gem
+*.gem
 .bundle/
 .idea/
 .yardoc/
