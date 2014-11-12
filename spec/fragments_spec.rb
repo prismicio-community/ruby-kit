@@ -139,7 +139,7 @@ describe 'Span' do
     end
     it 'serializes well into HTML' do
       @structured_text.as_html(nil).should ==
-          '<p class="vanilla">Experience <a href="http://prismic.io">the</a> ultimate vanilla experience. '\
+          '<p class="vanilla">Experience <a href="http://prismic.io">the</a> ultimate vanilla experience.<br>'\
           'Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>'
     end
   end

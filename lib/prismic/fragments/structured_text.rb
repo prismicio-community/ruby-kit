@@ -210,7 +210,7 @@ module Prismic
                 end
               end
             end
-            html
+            html.gsub("\n", '<br>')
           end
 
           def cgi_escape_html(string)
@@ -220,7 +220,7 @@ module Prismic
                 '&' => '&amp;',
                 '"' => '&quot;',
                 '<' => '&lt;',
-                '>' => '&gt;',
+                '>' => '&gt;'
             })
           end
 
