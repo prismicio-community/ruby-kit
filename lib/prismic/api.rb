@@ -53,7 +53,7 @@ module Prismic
       yield self if block_given?
       @cache = cache
       self.master = refs.values && refs.values.map { |ref| ref if ref.master? }.compact.first
-      raise BadPrismicResponseError, "No master Ref found" unless master
+      raise BadPrismicResponseError, 'No master Ref found' unless master
     end
 
     # Get a bookmark by its name
@@ -89,10 +89,31 @@ module Prismic
     # @deprecated Use {#form} instead.
     def create_search_form(name, data={}, ref={})
       unless @@warned_create_search_form
-        warn "[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead."
+        warn '[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead.'
         @@warned_create_search_form = true
       end
       form(name, data, ref)
+    end
+
+    # Return the URL to display a given preview
+    # @param token [String] as received from Prismic server to identify the content to preview
+    # @param link_resolver the link resolver to build URL for your site
+    # @param default_url [String] the URL to default to return if the preview doesn't correspond to a document
+    # (usually the home page of your site)
+    #
+    # @return [String] the URL to redirect the user to
+    def preview_session(token, link_resolver, default_url)
+      response = self.http_client.get(token, {}, 'Accept' => 'application/json')
+      if response.code.to_s == '200'
+        documents = self.form('everything').query(Prismic::Predicates.at('document.id', response['mainDocument'])).submit(token)
+        if documents.results > 0
+          link_resolver.link_to(response.results[0])
+        else
+          default_url
+        end
+      else
+        default_url
+      end
     end
 
     def as_json

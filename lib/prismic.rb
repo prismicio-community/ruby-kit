@@ -9,6 +9,10 @@ require 'prismic/with_fragments'
 
 module Prismic
 
+  EXPERIMENTS_COOKIE = 'io.prismic.experiment'
+
+  PREVIEW_COOKIE = 'io.prismic.preview'
+
   # These exception can contains an error cause and is able to show them
   class Error < Exception
     attr_reader :cause

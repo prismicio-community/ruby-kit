@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
-    @oauth_initiate_url = "https://lesbonneschoses.prismic.io/auth"
+    @oauth_initiate_url = 'https://lesbonneschoses.prismic.io/auth'
     @api = Prismic::API.new(json_representation, nil, Prismic::DefaultHTTPClient, false){|api|
       api.bookmarks = {}
       api.tags = {}
