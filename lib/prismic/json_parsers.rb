@@ -1,4 +1,7 @@
 # encoding: utf-8
+
+require 'uri'
+
 module Prismic
   module JsonParser
     class << self
@@ -30,7 +33,7 @@ module Prismic
           doc['id'],
           doc['type'],
           doc['tags'],
-          doc['slug'],
+          URI.unescape(doc['slug']),
           json['value']['isBroken'])
       end
 
@@ -206,8 +209,14 @@ module Prismic
 
         linked_documents = linked_documents_parser(json['linked_documents'])
 
-        Prismic::Document.new(json['id'], json['type'], json['href'], json['tags'],
-                              json['slugs'], linked_documents, fragments)
+        Prismic::Document.new(
+            json['id'],
+            json['type'],
+            json['href'],
+            json['tags'],
+            json['slugs'].map { |slug| URI.unescape(slug) },
+            linked_documents,
+            fragments)
       end
 
       def results_parser(results)

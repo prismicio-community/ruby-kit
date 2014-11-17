@@ -360,7 +360,7 @@ describe 'document_parser' do
     @document.type.should == 'product'
     @document.href.should == 'doc-url'
     @document.tags.should == ['Macaron']
-    @document.slugs.should == ['vanilla-macaron']
+    @document.slugs.should == ['vanilla-macaron', '南大沢']
   end
 
   it "correctly parses the document's fragments" do
