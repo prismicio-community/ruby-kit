@@ -104,14 +104,13 @@ module Prismic
     # @return [String] the URL to redirect the user to
     def preview_session(token, link_resolver, default_url)
       response = self.http_client.get(token, {}, 'Accept' => 'application/json')
-      if response.code.to_s == '200'
-        json = JSON.load(response.body)
-        documents = self.form('everything').query(Prismic::Predicates.at('document.id', json['mainDocument'])).submit(token)
-        if documents.results.size > 0
-          link_resolver.link_to(documents.results[0])
-        else
-          default_url
-        end
+      if response.code.to_s != '200'
+        return default_url
+      end
+      json = JSON.load(response.body)
+      documents = self.form('everything').query(Prismic::Predicates.at('document.id', json['mainDocument'])).submit(token)
+      if documents.results.size > 0
+        link_resolver.link_to(documents.results[0])
       else
         default_url
       end
