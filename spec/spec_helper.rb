@@ -13,7 +13,7 @@ require 'simplecov'
 
 RSpec.configure do |c|
   # Stop after the first failure
-  c.fail_fast = true
+  # c.fail_fast = true
 end
 
 SimpleCov.start

@@ -7,7 +7,7 @@ describe 'Documentation' do
 
     it 'api.get' do
       # startgist:31cf4b514778d5d9d9cc:prismic-api.rb
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.wroom.io/api')
       # endgist
       api.should_not be_nil
     end
@@ -16,16 +16,16 @@ describe 'Documentation' do
       expect {
         # startgist:10822fc1befeeea1191a:prismic-apiPrivate.rb
         # This will fail because the token is invalid, but this is how to access a private API
-        api = Prismic.api('https://lesbonneschoses.prismic.io/api', 'MC5-XXXXXXX-vRfvv70')
+        api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', 'MC5-XXXXXXX-vRfvv70')
         # endgist
-        # err.message, "Unexpected status code [401] on URL https://lesbonneschoses.prismic.io/api?access_token=MC5-XXXXXXX-vRfvv70"); // gisthide
+        # err.message, "Unexpected status code [401] on URL https://lesbonneschoses.cdn.prismic.io/api?access_token=MC5-XXXXXXX-vRfvv70"); // gisthide
       }.to raise_error(Prismic::API::PrismicWSAuthError, "Can't connect to Prismic's API: Invalid access token")
     end
 
     it 'references' do
       # startgist:431e191cabf5e160c701:prismic-references.rb
       preview_token = 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70';
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api', preview_token)
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', preview_token)
       st_patrick_ref = api.ref('St-Patrick specials')
       # Now we'll use this reference for all our calls
       response = api.form('everything')
@@ -44,7 +44,7 @@ describe 'Documentation' do
 
     it 'simple query' do
       # startgist:8943931ba0cf2bb2c873:prismic-simplequery.rb
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
         .form('everything')
         .query(Prismic::Predicates::at('document.type', 'product'))
@@ -56,7 +56,7 @@ describe 'Documentation' do
 
     it 'orderings' do
       # startgist:2866b2e2cae0221f2188:prismic-orderings.rb
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .ref(api.master_ref)
         .query(Prismic::Predicates::at('document.type', 'product'))
@@ -71,7 +71,7 @@ describe 'Documentation' do
 
     it 'predicates' do
       # startgist:e0501cce9a12fa4b83db:prismic-predicates.rb
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
         .form('everything')
         .query(
@@ -104,7 +104,7 @@ describe 'Documentation' do
   describe 'fragments' do
 
     it 'text' do
-      api = Prismic::api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbl'))
         .ref(api.master_ref)
@@ -122,7 +122,7 @@ describe 'Documentation' do
     end
 
     it 'number' do
-      api = Prismic::api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbO'))
         .ref(api.master_ref)
@@ -141,7 +141,7 @@ describe 'Documentation' do
     end
 
     it 'images' do
-      api = Prismic::api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbO'))
         .ref(api.master_ref)
@@ -153,11 +153,11 @@ describe 'Documentation' do
       # Most of the time you will be using the "main" view
       url = image.main.url
       # endgist
-      url.should == 'https://prismic-io.s3.amazonaws.com/lesbonneschoses/f606ad513fcc2a73b909817119b84d6fd0d61a6d.png'
+      url.should == 'https://lesbonneschoses.cdn.prismic.io/lesbonneschoses/f606ad513fcc2a73b909817119b84d6fd0d61a6d.png'
     end
 
     it 'date and timestamp' do
-      api = Prismic::api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbl'))
         .ref(api.master_ref)
@@ -254,7 +254,7 @@ describe 'Documentation' do
     end
 
     it 'asHtml' do
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
         .form('everything')
         .query(Prismic::Predicates::at('document.id', 'UlfoxUnM0wkXYXbX'))
@@ -268,7 +268,7 @@ describe 'Documentation' do
     end
 
     it 'HtmlSerializer' do
-      api = Prismic.api('https://lesbonneschoses.prismic.io/api')
+      api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
       .form('everything')
       .query(Prismic::Predicates::at('document.id', 'UlfoxUnM0wkXYXbX'))
@@ -294,7 +294,7 @@ describe 'Documentation' do
       # You can pass any object implementing the same methods as the BasicCache
       # https://github.com/prismicio/ruby-kit/blob/master/lib/prismic/cache/basic.rb
       cache = Prismic::BasicCache.new
-      api = Prismic::api('https://lesbonneschoses.prismic.io/api', { :cache => cache })
+      api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api', { :cache => cache })
       # The Api will use the custom cache object
       # endgist
       api.should_not be_nil

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'LesBonnesChoses' do
   before do
-    @api = Prismic.api('https://lesbonneschoses.prismic.io/api', nil)
+    @api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', nil)
     @master_ref = @api.master_ref
   end
 
@@ -19,86 +19,86 @@ describe 'LesBonnesChoses' do
       @api.form('everything').submit(@master_ref).results.size.should == 20
     end
 
-    it "queries macarons (using a predicate) and returns 7 documents" do
-      @api.form("everything")
-        .query(%([[:d = any(document.tags, ["Macaron"])]]))
+    it 'queries macarons (using a predicate) and returns 7 documents' do
+      @api.form('everything')
+        .query('[[:d = any(document.tags, ["Macaron"])]]')
         .submit(@master_ref).results.size.should == 7
-      @api.form("everything")
-        .query(%([[:d = any(document.tags, ["Macaron"])]]))
+      @api.form('everything')
+        .query('[[:d = any(document.tags, ["Macaron"])]]')
         .submit(@master_ref).size.should == 7
     end
 
-    it "queries macarons (using a form) and returns 7 documents" do
-      @api.form("macarons").submit(@master_ref).results.size.should == 7
-      @api.form("macarons").submit(@master_ref).size.should == 7
+    it 'queries macarons (using a form) and returns 7 documents' do
+      @api.form('macarons').submit(@master_ref).results.size.should == 7
+      @api.form('macarons').submit(@master_ref).size.should == 7
     end
 
-    it "queries macarons or cupcakes (using a form + a predicate) and returns 11 documents" do
-      @api.form("products")
-        .query(%([[:d = any(document.tags, ["Cupcake", "Macaron"])]]))
+    it 'queries macarons or cupcakes (using a form + a predicate) and returns 11 documents' do
+      @api.form('products')
+        .query('[[:d = any(document.tags, ["Cupcake", "Macaron"])]]')
         .submit(@master_ref).results.size.should == 11
-      @api.form("products")
-        .query(%([[:d = any(document.tags, ["Cupcake", "Macaron"])]]))
+      @api.form('products')
+        .query('[[:d = any(document.tags, ["Cupcake", "Macaron"])]]')
         .submit(@master_ref).size.should == 11
     end
   end
 
   describe 'pagination' do
-    it "works in basic cases" do
-      documents = @api.form("everything").submit(@master_ref)
+    it 'works in basic cases' do
+      documents = @api.form('everything').submit(@master_ref)
       documents.page.should == 1
       documents.results_per_page.should == 20
       documents.results_size.should == 20
       documents.total_results_size.should == 40
       documents.total_pages.should == 2
-      documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20"
+      documents.next_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20'
       documents.prev_page.should == nil
     end
-    it "works when passing nil" do
-      documents = @api.form("everything").page(nil).submit(@master_ref)
+    it 'works when passing nil' do
+      documents = @api.form('everything').page(nil).submit(@master_ref)
       documents.page.should == 1
       documents.results_per_page.should == 20
       documents.results_size.should == 20
       documents.total_results_size.should == 40
       documents.total_pages.should == 2
-      documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20"
+      documents.next_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20'
       documents.prev_page.should == nil
     end
-    it "works on page 2" do
-      documents = @api.form("everything").page("2").submit(@master_ref)
+    it 'works on page 2' do
+      documents = @api.form('everything').page("2").submit(@master_ref)
       documents.page.should == 2
       documents.results_per_page.should == 20
       documents.results_size.should == 20
       documents.total_results_size.should == 40
       documents.total_pages.should == 2
       documents.next_page.should == nil
-      documents.prev_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=1&pageSize=20"
+      documents.prev_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=1&pageSize=20'
     end
-    it "works on page 2 with a pagination step of 10" do
-      documents = @api.form("everything").page("2").page_size("10").submit(@master_ref)
+    it 'works on page 2 with a pagination step of 10' do
+      documents = @api.form('everything').page('2').page_size('10').submit(@master_ref)
       documents.page.should == 2
       documents.results_per_page.should == 10
       documents.results_size.should == 10
       documents.total_results_size.should == 40
       documents.total_pages.should == 4
-      documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=3&pageSize=10"
-      documents.prev_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=1&pageSize=10"
+      documents.next_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=3&pageSize=10'
+      documents.prev_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=1&pageSize=10'
     end
-    it "works when passing nil" do
-      documents = @api.form("everything").page(nil).submit(@master_ref)
+    it 'works when passing nil' do
+      documents = @api.form('everything').page(nil).submit(@master_ref)
       documents.page.should == 1
       documents.results_per_page.should == 20
       documents.results_size.should == 20
       documents.total_results_size.should == 40
       documents.total_pages.should == 2
-      documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20"
+      documents.next_page.should == 'https://lesbonneschoses.cdn.prismic.io/api/documents/search?ref=UlfoxUnM08QWYXdl&page=2&pageSize=20'
       documents.prev_page.should == nil
     end
   end
 
   describe 'API::Document' do
     before do
-      @document = @api.form('everything').query(%([[:d = at(document.id, "UlfoxUnM0wkXYXbh")]])).submit(@master_ref)[0]
+      @document = @api.form('everything').query('[[:d = at(document.id, "UlfoxUnM0wkXYXbh")]]').submit(@master_ref)[0]
     end
 
     it 'Operator [] works on document' do
@@ -112,7 +112,7 @@ describe 'LesBonnesChoses' do
     it 'Operator [] raises error if field is nonsense' do
       expect {
         @document['blablabla']
-      }.to raise_error(ArgumentError, "Argument should contain one dot. Example: product.price")
+      }.to raise_error(ArgumentError, 'Argument should contain one dot. Example: product.price')
     end
   end
 
@@ -158,7 +158,7 @@ describe 'LesBonnesChoses' do
             "<p>A lot of people touch base with us to know about one of our key ingredients, and the essential role it plays in our creations: ganache.</p>\n\n"\
             "<p>Indeed, ganache is the macaron's softener, or else, macarons would be but tough biscuits; it is the cupcake's wrapper, or else, cupcakes would be but plain old cake. We even sometimes use ganache within our cupcakes, to soften the cake itself, or as a support to our pies' content.</p>\n\n"\
             "<h2>How to approach ganache</h2>\n\n"\
-            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses/ee7b984b98db4516aba2eabd54ab498293913c6c.jpg\" alt=\"\" width=\"640\" height=\"425\" /></p>\n\n"\
+            "<p class=\"block-img\"><img src=\"https://lesbonneschoses.cdn.prismic.io/lesbonneschoses/ee7b984b98db4516aba2eabd54ab498293913c6c.jpg\" alt=\"\" width=\"640\" height=\"425\" /></p>\n\n"\
             "<p>Apart from the taste balance, which is always a challenge when it comes to pastry, the tough part about ganache is about thickness. It is even harder to predict through all the phases the ganache gets to meet (how long will it get melted? how long will it remain in the fridge?). "\
             "Things get a hell of a lot easier to get once you consider that there are two main ways to get the perfect ganache:</p>\n\n"\
             "<ul><li><strong>working from the top down</strong>: start with a thick, almost hard material, and soften it by manipulating it, or by mixing it with a more liquid ingredient (like milk)</li>"\
@@ -180,7 +180,7 @@ describe 'LesBonnesChoses' do
               "<p>As a child, Jean-Michel Pastranova learned the art of fine cuisine from his grand-father, Jacques Pastranova, who was the creator of the &quot;taste-design&quot; art current, and still today an unmissable reference of forward-thinking in cuisine. At first an assistant in his grand-father's kitchen, Jean-Michel soon found himself fascinated by sweet flavors and the tougher art of pastry, drawing his own path in the ever-changing cuisine world.</p>\n\n"\
               "<p>In 1992, the first Les Bonnes Choses store opened on rue Saint-Lazare, in Paris (<a href=\"http://localhost/UlfoxUnM0wkXYXbb\">we're still there!</a>), much to everyone's surprise; indeed, back then, it was very surprising for a highly promising young man with a preordained career as a restaurant chef, to open a pastry shop instead. But soon enough, contemporary chefs understood that Jean-Michel had the drive to redefine a new nobility to pastry, the same way many other kinds of cuisine were being qualified as &quot;fine&quot;.</p>\n\n"\
               "<p>In 1996, meeting an overwhelming demand, Jean-Michel Pastranova opened <a href=\"http://localhost/UlfoxUnM0wkXYXbP\">a second shop on Paris's Champs-Élysées</a>, and <a href=\"http://localhost/UlfoxUnM0wkXYXbr\">a third one in London</a>, the same week! Eventually, Les Bonnes Choses gained an international reputation as &quot;a perfection so familiar and new at the same time, that it will feel like a taste travel&quot; (New York Gazette), &quot;the finest balance between surprise and comfort, enveloped in sweetness&quot; (The Tokyo Tribune), &quot;a renewal of the pastry genre (...), the kind that changed the way pastry is approached globally&quot; (The San Francisco Gourmet News). Therefore, it was only a matter of time before Les Bonnes Choses opened shops in <a href=\"http://localhost/UlfoxUnM0wkXYXbc\">New York</a> (2000) and <a href=\"http://localhost/UlfoxUnM0wkXYXbU\">Tokyo</a> (2004).</p>\n\n"\
-              "<p>In 2013, Jean-Michel Pastranova stepped down as the CEO and Director of Workshops, remaining a senior advisor to the board and to the workshop artists; he passed the light on to Selena, his daugther, who initially learned the art of pastry from him. Passion for great food runs in the Pastranova family...</p>\n\n<img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses/df6c1d87258a5bfadf3479b163fd85c829a5c0b8.jpg\" alt=\"\" width=\"800\" height=\"533\" />\n\n"\
+              "<p>In 2013, Jean-Michel Pastranova stepped down as the CEO and Director of Workshops, remaining a senior advisor to the board and to the workshop artists; he passed the light on to Selena, his daugther, who initially learned the art of pastry from him. Passion for great food runs in the Pastranova family...</p>\n\n<img src=\"https://lesbonneschoses.cdn.prismic.io/lesbonneschoses/df6c1d87258a5bfadf3479b163fd85c829a5c0b8.jpg\" alt=\"\" width=\"800\" height=\"533\" />\n\n"\
               "<h2>Our main value: our customers' delight</h2>\n\n"\
               "<p>Our every action is driven by the firm belief that there is art in pastry, and that this art is one of the dearest pleasures one can experience.</p>\n\n"\
               "<p>At Les Bonnes Choses, people preparing your macarons are not simply &quot;pastry chefs&quot;: they are &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXba\">ganache specialists</a>&quot;, &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXbQ\">fruit experts</a>&quot;, or &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXbn\">oven instrumentalists</a>&quot;. They are the best people out there to perform the tasks they perform to create your pastry, giving it the greatest value. And they just love to make their specialized pastry skill better and better until perfection.</p>\n\n"\
@@ -196,7 +196,7 @@ describe 'LesBonnesChoses' do
               "<p>As a child, Jean-Michel Pastranova learned the art of fine cuisine from his grand-father, Jacques Pastranova, who was the creator of the &quot;taste-design&quot; art current, and still today an unmissable reference of forward-thinking in cuisine. At first an assistant in his grand-father's kitchen, Jean-Michel soon found himself fascinated by sweet flavors and the tougher art of pastry, drawing his own path in the ever-changing cuisine world.</p>\n\n"\
               "<p>In 1992, the first Les Bonnes Choses store opened on rue Saint-Lazare, in Paris (<a href=\"http://localhost/UlfoxUnM0wkXYXbb\">we're still there!</a>), much to everyone's surprise; indeed, back then, it was very surprising for a highly promising young man with a preordained career as a restaurant chef, to open a pastry shop instead. But soon enough, contemporary chefs understood that Jean-Michel had the drive to redefine a new nobility to pastry, the same way many other kinds of cuisine were being qualified as &quot;fine&quot;.</p>\n\n"\
               "<p>In 1996, meeting an overwhelming demand, Jean-Michel Pastranova opened <a href=\"http://localhost/UlfoxUnM0wkXYXbP\">a second shop on Paris's Champs-Élysées</a>, and <a href=\"http://localhost/UlfoxUnM0wkXYXbr\">a third one in London</a>, the same week! Eventually, Les Bonnes Choses gained an international reputation as &quot;a perfection so familiar and new at the same time, that it will feel like a taste travel&quot; (New York Gazette), &quot;the finest balance between surprise and comfort, enveloped in sweetness&quot; (The Tokyo Tribune), &quot;a renewal of the pastry genre (...), the kind that changed the way pastry is approached globally&quot; (The San Francisco Gourmet News). Therefore, it was only a matter of time before Les Bonnes Choses opened shops in <a href=\"http://localhost/UlfoxUnM0wkXYXbc\">New York</a> (2000) and <a href=\"http://localhost/UlfoxUnM0wkXYXbU\">Tokyo</a> (2004).</p>\n\n"\
-              "<p>In 2013, Jean-Michel Pastranova stepped down as the CEO and Director of Workshops, remaining a senior advisor to the board and to the workshop artists; he passed the light on to Selena, his daugther, who initially learned the art of pastry from him. Passion for great food runs in the Pastranova family...</p>\n\n<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses/df6c1d87258a5bfadf3479b163fd85c829a5c0b8.jpg\" alt=\"\" width=\"800\" height=\"533\" /></p>\n\n"\
+              "<p>In 2013, Jean-Michel Pastranova stepped down as the CEO and Director of Workshops, remaining a senior advisor to the board and to the workshop artists; he passed the light on to Selena, his daugther, who initially learned the art of pastry from him. Passion for great food runs in the Pastranova family...</p>\n\n<p class=\"block-img\"><img src=\"https://lesbonneschoses.cdn.prismic.io/lesbonneschoses/df6c1d87258a5bfadf3479b163fd85c829a5c0b8.jpg\" alt=\"\" width=\"800\" height=\"533\" /></p>\n\n"\
               "<h2>Our main value: our customers' delight</h2>\n\n"\
               "<p>Our every action is driven by the firm belief that there is art in pastry, and that this art is one of the dearest pleasures one can experience.</p>\n\n"\
               "<p>At Les Bonnes Choses, people preparing your macarons are not simply &quot;pastry chefs&quot;: they are &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXba\">ganache specialists</a>&quot;, &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXbQ\">fruit experts</a>&quot;, or &quot;<a href=\"http://localhost/UlfoxUnM0wkXYXbn\">oven instrumentalists</a>&quot;. They are the best people out there to perform the tasks they perform to create your pastry, giving it the greatest value. And they just love to make their specialized pastry skill better and better until perfection.</p>\n\n"\
