@@ -136,6 +136,27 @@ module Prismic
       fragment
     end
 
+    # @return [Array<LinkedDocument>]
+    def linked_documents
+      self.fragments.map { |name, fragment|
+        if fragment.is_a? Prismic::Fragments::DocumentLink
+          [fragment]
+        elsif fragment.is_a? Prismic::Fragments::StructuredText
+          fragment.blocks
+            .select { |block| block.is_a? Prismic::Fragments::StructuredText::Block::Text}
+            .map { |block| block.spans }.flatten
+            .select { |span| span.is_a? Prismic::Fragments::StructuredText::Span::Hyperlink }
+            .map { |span| span.link }
+            .select { |link| link.is_a? Prismic::Fragments::DocumentLink }
+        elsif fragment.is_a? Prismic::Fragments::Group
+          fragment.group_documents
+            .map { |groupDoc| groupDoc.linked_documents }
+            .flatten
+        else
+          []
+        end
+      }.flatten
+    end
   end
 
 end

@@ -425,17 +425,6 @@ module Prismic
     alias :size :length
   end
 
-  class LinkedDocument
-    attr_accessor :id, :slug, :type, :tags
-
-    def initialize(id, slug, type, tags)
-      @id = id
-      @slug = slug
-      @type = type
-      @tags = tags
-    end
-  end
-
   class Document
     include Prismic::WithFragments
 
@@ -451,19 +440,16 @@ module Prismic
     attr_accessor :tags
     # @return [Array<String>]
     attr_accessor :slugs
-    # @return [Array<LinkedDocument>]
-    attr_accessor :linked_documents
     # @return [Array<Fragment>]
     attr_accessor :fragments
 
-    def initialize(id, uid, type, href, tags, slugs, linked_documents, fragments)
+    def initialize(id, uid, type, href, tags, slugs, fragments)
       @id = id
       @uid = uid
       @type = type
       @href = href
       @tags = tags
       @slugs = slugs
-      @linked_documents = linked_documents
       @fragments = fragments
     end
 

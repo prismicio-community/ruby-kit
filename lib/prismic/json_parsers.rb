@@ -220,8 +220,6 @@ module Prismic
           end
         }]
 
-        linked_documents = linked_documents_parser(json['linked_documents'])
-
         Prismic::Document.new(
             json['id'],
             json['uid'],
@@ -229,7 +227,6 @@ module Prismic
             json['href'],
             json['tags'],
             json['slugs'].map { |slug| URI.unescape(slug) },
-            linked_documents,
             fragments)
       end
 
