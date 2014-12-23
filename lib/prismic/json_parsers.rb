@@ -29,11 +29,24 @@ module Prismic
 
       def document_link_parser(json)
         doc = json['value']['document']
+        type = doc['type']
+        fragments = {}
+        if doc['data'] and doc['data'][type]
+          fragments = Hash[doc['data'][type].map { |name, fragment|
+            if fragment.is_a? Array
+              [name, multiple_parser(fragment)]
+            else
+              [name, parsers[fragment['type']].call(fragment)]
+            end
+          }]
+        end
         Prismic::Fragments::DocumentLink.new(
           doc['id'],
-          doc['type'],
+          doc['uid'],
+          type,
           doc['tags'],
           URI.unescape(doc['slug']),
+          fragments,
           json['value']['isBroken'])
       end
 
@@ -181,7 +194,7 @@ module Prismic
         fragment_list_array = []
         json['value'].each do |group|
           fragments = Hash[ group.map {|name, fragment| [name, parsers[fragment['type']].call(fragment)] }]
-          fragment_list_array << Prismic::WithFragments.new(fragments)
+          fragment_list_array << Prismic::Fragments::GroupDocument.new(fragments)
         end
         Prismic::Fragments::Group.new(fragment_list_array)
       end
@@ -211,6 +224,7 @@ module Prismic
 
         Prismic::Document.new(
             json['id'],
+            json['uid'],
             json['type'],
             json['href'],
             json['tags'],

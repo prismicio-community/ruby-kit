@@ -95,13 +95,16 @@ module Prismic
     end
 
     class DocumentLink < Link
-      attr_accessor :id, :link_type, :tags, :slug, :broken
+      include Prismic::WithFragments
+      attr_accessor :id, :uid, :type, :tags, :slug, :fragments, :broken
 
-      def initialize(id, link_type, tags, slug, broken)
+      def initialize(id, uid, type, tags, slug, fragments, broken)
         @id = id
-        @link_type = link_type
+        @uid = uid
+        @type = type
         @tags = tags
         @slug = slug
+        @fragments = fragments
         @broken = broken
       end
 
@@ -115,6 +118,11 @@ module Prismic
 
       def as_html(link_resolver=nil)
         %(#{start_html(link_resolver)}#{slug}#{end_html})
+      end
+
+      def link_type
+        warn('WARNING: DocumentLink.link_type is deprecated, use DocumentLink.type instead')
+        self.type
       end
 
       # Returns the URL of the link

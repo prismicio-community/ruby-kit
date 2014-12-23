@@ -2,13 +2,9 @@
 module Prismic
 
   # A document with Fragments: usually a Prismic.io Document, or a Document within a Group
-  class WithFragments
+  module WithFragments
     # @return [Hash{String => Fragment}]
     attr_accessor :fragments
-
-    def initialize(fragments)
-      @fragments = fragments
-    end
 
     # Generate an HTML representation of the entire document
     #
@@ -48,7 +44,12 @@ module Prismic
     # Get a document's field
     # @return [Fragments::Fragment]
     def [](field)
-      @fragments[field]
+      array = field.split('.')
+      if array.length != 2
+        raise ArgumentError, 'Argument should contain one dot. Example: product.price'
+      end
+      return nil if array[0] != self.type
+      fragments[array[1]]
     end
     alias :get :[]
 

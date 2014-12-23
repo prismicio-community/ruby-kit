@@ -48,7 +48,7 @@ end
 
 describe 'DocumentLink' do
   before do
-    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", "product", ["Macaron"], "dark-chocolate-macaron", false)
+    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", nil, "product", ["Macaron"], "dark-chocolate-macaron", {}, false)
   end
 
   describe 'url' do
@@ -623,9 +623,11 @@ describe 'StructuredText::Hyperlink' do
   before do
     @link = Prismic::Fragments::DocumentLink.new(
       "UdUjvt_mqVNObPeO",
+      nil,
       "product",
       ["Macaron"],
       "dark-chocolate-macaron",
+      {},
       false  # not broken
     )
     @hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @link)

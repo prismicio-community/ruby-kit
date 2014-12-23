@@ -138,6 +138,17 @@ describe 'LesBonnesChoses' do
     end
   end
 
+  describe 'FetchLinks' do
+    it 'Fetches additional data with DocumentLink' do
+      documents = @api.form('everything')
+        .query(Prismic::Predicates::at('document.id', 'UlfoxUnM0wkXYXbt'))
+        .fetch_links('blog-post.author')
+        .submit(@master_ref).results
+      link = documents[0].get('blog-post.relatedpost')[0]
+      link.get_text('blog-post.author').value.should == 'John M. Martelle, Fine Pastry Magazine'
+    end
+  end
+
   describe 'Fragments' do
     before do
       @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }

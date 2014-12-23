@@ -191,6 +191,16 @@ module Prismic
     #   @param  page_size [String,Fixum] The page size
     #   @return [SearchForm] self
 
+    # @!method fetch(fields)
+    #   Restrict the document fragments to the specified fields
+    #   @param  fields [String] The fields separated by commas (,)
+    #   @return [SearchForm] self
+
+    # @!method fetch_links(fields)
+    #   Include the document fragments correspondong to the specified fields for DocumentLink
+    #   @param  fields [String] The fields separated by commas (,)
+    #   @return [SearchForm] self
+
     # Create the fields'helper methods
     def create_field_helper_method(name)
       return if name == 'ref'
@@ -426,9 +436,13 @@ module Prismic
     end
   end
 
-  class Document < Prismic::WithFragments
+  class Document
+    include Prismic::WithFragments
+
     # @return [String]
     attr_accessor :id
+    # @return [String]
+    attr_accessor :uid
     # @return [String]
     attr_accessor :type
     # @return [String]
@@ -439,28 +453,19 @@ module Prismic
     attr_accessor :slugs
     # @return [Array<LinkedDocument>]
     attr_accessor :linked_documents
+    # @return [Array<Fragment>]
+    attr_accessor :fragments
 
-    def initialize(id, type, href, tags, slugs, linked_documents, fragments)
-      super(fragments)
+    def initialize(id, uid, type, href, tags, slugs, linked_documents, fragments)
       @id = id
+      @uid = uid
       @type = type
       @href = href
       @tags = tags
       @slugs = slugs
       @linked_documents = linked_documents
+      @fragments = fragments
     end
-
-    # Get a document's field
-    # @return [Fragments::Fragment]
-    def [](field)
-      array = field.split('.')
-      if array.length != 2
-        raise ArgumentError, 'Argument should contain one dot. Example: product.price'
-      end
-      return nil if array[0] != self.type
-      fragments[array[1]]
-    end
-    alias :get :[]
 
     # Returns the document's slug
     #
@@ -532,7 +537,7 @@ module Prismic
       if doc.is_a? Prismic::Fragments::DocumentLink
         @blk.call(doc)
       elsif doc.is_a? Prismic::Document
-        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.type, doc.tags, doc.slug, false)
+        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.uid, doc.type, doc.tags, doc.slug, doc.fragments, false)
         @blk.call(doc_link)
       end
     end

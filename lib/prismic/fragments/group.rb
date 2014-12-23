@@ -2,6 +2,23 @@
 module Prismic
   module Fragments
 
+    class GroupDocument
+      include Prismic::WithFragments
+      attr_accessor :fragments
+
+      def initialize(fragments)
+        @fragments = fragments
+      end
+
+      # Get a document's field
+      # @return [Fragments::Fragment]
+      def [](field)
+        @fragments[field]
+      end
+      alias :get :[]
+
+    end
+
     # A fragment of type Group, which contains an array of FragmentList (which
     # itself is a Hash of fragments).
     #
