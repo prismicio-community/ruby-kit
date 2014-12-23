@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prismic.io (1.0.9)
+    prismic.io (1.1.0)
 
 GEM
   remote: https://rubygems.org/
