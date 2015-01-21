@@ -284,7 +284,7 @@ describe 'Documentation' do
         end
       end
       doc = response.results[0]
-      html = doc['blog-post.body'].as_html(resolver, serializer)
+      html = doc.get_structured_text('blog-post.body').as_html(resolver, serializer)
       # endgist
       html.should_not be_nil
     end

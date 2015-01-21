@@ -66,6 +66,13 @@ module Prismic
     end
     alias :size :length
 
+    # @return [Fragments::StructuredText]
+    def get_structured_text(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::StructuredText
+      fragment
+    end
+
     # @return [Fragments::Text]
     def get_text(field)
       fragment = self[field]
