@@ -63,4 +63,16 @@ module Prismic
   end
 
   DefaultApiCache = BasicCache.new
+  
+  # Available as an api cache for testing purposes (no caching)
+  class BasicNullCache
+    def get(key)
+    end
+
+    def set(key, value = nil, expired_in = nil)
+      block_given? ? yield : value
+    end
+    alias_method :get_or_set, :set
+
+  end
 end

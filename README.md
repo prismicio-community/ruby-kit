@@ -63,6 +63,11 @@ Knowing all that, here is typical code written with the Ruby kit:
  * A typical fragment manipulation looks like this: `doc['article.image'].get_view('icon').url`
  * A typical fragment serialization to HTML looks like this: `doc['article.body'].as_html(@link_resolver)`
 
+#### Configuring Alternative API Caches
+
+It can be an advantage to have controll over both document and api caches.  The default api cache is perfect for development and production uses but can cause issues in certain test environments (such as using VCR to capture/replay Prismic.io interactions).  A null cache (does no caching) is available to be used as an alternative api cache.  To configure it (or any other compliant cache), simply add `api_cache => Prismic::BasicNullCache.new`
+to the options passed to `Prismic.api`.
+
 ### Changelog
 
 Need to see what changed, or to upgrade your kit? We keep our changelog on [this repository's "Releases" tab](https://github.com/prismicio/ruby-kit/releases).
