@@ -6,7 +6,7 @@ describe 'Documentation' do
   describe 'api' do
 
     it 'api.get' do
-      # startgist:31cf4b514778d5d9d9cc:prismic-api.rb
+      # startgist:983989438334c8bf7967:prismic-api.rb
       api = Prismic.api('https://lesbonneschoses.cdn.wroom.io/api')
       # endgist
       api.should_not be_nil
@@ -14,7 +14,7 @@ describe 'Documentation' do
 
     it 'apiPrivate' do
       expect {
-        # startgist:10822fc1befeeea1191a:prismic-apiPrivate.rb
+        # startgist:efecc8f60b1f69bada81:prismic-apiPrivate.rb
         # This will fail because the token is invalid, but this is how to access a private API
         api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', 'MC5-XXXXXXX-vRfvv70')
         # endgist
@@ -23,7 +23,7 @@ describe 'Documentation' do
     end
 
     it 'references' do
-      # startgist:431e191cabf5e160c701:prismic-references.rb
+      # startgist:55a7ef6bc691bf3c4929:prismic-references.rb
       preview_token = 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70';
       api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', preview_token)
       st_patrick_ref = api.ref('St-Patrick specials')
@@ -43,7 +43,7 @@ describe 'Documentation' do
   describe 'queries' do
 
     it 'simple query' do
-      # startgist:8943931ba0cf2bb2c873:prismic-simplequery.rb
+      # startgist:f1007f1c4c4bc94f9fc6:prismic-simplequery.rb
       api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
         .form('everything')
@@ -55,7 +55,7 @@ describe 'Documentation' do
     end
 
     it 'orderings' do
-      # startgist:2866b2e2cae0221f2188:prismic-orderings.rb
+      # startgist:f987025745dbbf26e817:prismic-orderings.rb
       api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api.form('everything')
         .ref(api.master_ref)
@@ -70,7 +70,7 @@ describe 'Documentation' do
     end
 
     it 'predicates' do
-      # startgist:e0501cce9a12fa4b83db:prismic-predicates.rb
+      # startgist:7b93db67fa25ac386603:prismic-predicates.rb
       api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api')
       response = api
         .form('everything')
@@ -83,7 +83,7 @@ describe 'Documentation' do
     end
 
     it 'all predicates' do
-      # startgist:e4875d732426a7b9fd09:prismic-allPredicates.rb
+      # startgist:1efb7363a5f573627308:prismic-allPredicates.rb
       # 'at' predicate: equality of a fragment to a value.
       at = Predicates::at('document.type', 'article')
       # 'any' predicate: equality of a fragment to a value.
@@ -110,7 +110,7 @@ describe 'Documentation' do
         .ref(api.master_ref)
         .submit
       doc = response[0]
-      # startgist:cd0d4559870f5f88b90f:prismic-getText.rb
+      # startgist:4cbc1abffe7cc1209f95:prismic-getText.rb
       author = doc.get_text('blog-post.author')
       if author == nil
         name = 'Anonymous'
@@ -128,7 +128,7 @@ describe 'Documentation' do
         .ref(api.master_ref)
         .submit
       doc = response[0]
-      # startgist:c6783e9789d3ff446876:prismic-getNumber.rb
+      # startgist:4e263ac039e0b0cea0be:prismic-getNumber.rb
       # Number predicates
       gt = Predicates::gt('my.product.price', 10)
       lt = Predicates::lt('my.product.price', 20)
@@ -147,7 +147,7 @@ describe 'Documentation' do
         .ref(api.master_ref)
         .submit
       doc = response[0]
-      # startgist:825fa25b66355ce758fe:prismic-images.rb
+      # startgist:154ba379a5000f14b3ea:prismic-images.rb
       # Accessing image fields
       image = doc.get_image('product.image')
       # Most of the time you will be using the "main" view
@@ -163,7 +163,7 @@ describe 'Documentation' do
         .ref(api.master_ref)
         .submit
       doc = response[0]
-      # startgist:aa956ac3d7fb9c221011:prismic-dateTimestamp.rb
+      # startgist:4ac2db89bde0ca0c2b33:prismic-dateTimestamp.rb
       # Date and Timestamp predicates
       dateBefore = Predicates::date_before('my.product.releaseDate', Time.new(2014, 6, 1))
       dateAfter = Predicates::date_after('my.product.releaseDate', Time.new(2014, 1, 1))
@@ -195,7 +195,7 @@ describe 'Documentation' do
       json = '{"id":"abcd","type":"article","href":"","slugs":[],"tags":[],"data":{"article":{"documents":{"type":"Group","value":[{"linktodoc":{"type":"Link.document","value":{"document":{"id":"UrDejAEAAFwMyrW9","type":"doc","tags":[],"slug":"installing-meta-micro"},"isBroken":false}},"desc":{"type":"StructuredText","value":[{"type":"paragraph","text":"A detailed step by step point of view on how installing happens.","spans":[]}]}},{"linktodoc":{"type":"Link.document","value":{"document":{"id":"UrDmKgEAALwMyrXA","type":"doc","tags":[],"slug":"using-meta-micro"},"isBroken":false}}}]}}}}'
       document = Prismic::JsonParser.document_parser(JSON.load(json))
       resolver = Prismic.link_resolver('master') { |doc_link| "http://localhost/#{doc_link.id}" }
-      # startgist:825cff092f082058520d:prismic-group.rb
+      # startgist:4c87bd640086b9094151:prismic-group.rb
       group = document.get_group('article.documents')
       docs = group ? group : []
       docs.each do |doc|
@@ -210,7 +210,7 @@ describe 'Documentation' do
     it 'link' do
       json = '{"id":"abcd","type":"article","href":"","slugs":[],"tags":[],"data":{"article":{"source":{"type":"Link.document","value":{"document":{"id":"UlfoxUnM0wkXYXbE","type":"product","tags":["Macaron"],"slug":"dark-chocolate-macaron"},"isBroken":false}}}}}'
       document = Prismic::JsonParser.document_parser(JSON.load(json))
-      # startgist:6c7ae8d7ab6dc057a8b0:prismic-link.rb
+      # startgist:762dfce77d215e6c70b0:prismic-link.rb
       resolver = Prismic.link_resolver('master') { |doc_link| "http://localhost/#{doc_link.id}/#{doc_link.slug}" }
       source = document.get_link('article.source')
       url = source ? source.url(resolver) : nil
@@ -221,7 +221,7 @@ describe 'Documentation' do
     it 'embed' do
       json = '{"id":"abcd","type":"article","href":"","slugs":[],"tags":[],"data":{"article":{"video":{"type":"Embed","value":{"oembed":{"provider_url":"http://www.youtube.com/","type":"video","thumbnail_height":360,"height":270,"thumbnail_url":"http://i1.ytimg.com/vi/baGfM6dBzs8/hqdefault.jpg","width":480,"provider_name":"YouTube","html":"<iframe width=\\"480\\" height=\\"270\\" src=\\"http://www.youtube.com/embed/baGfM6dBzs8?feature=oembed\\" frameborder=\\"0\\" allowfullscreen></iframe>","author_name":"Siobhan Wilson","version":"1.0","author_url":"http://www.youtube.com/user/siobhanwilsonsongs","thumbnail_width":480,"title":"Siobhan Wilson - All Dressed Up","embed_url":"https://www.youtube.com/watch?v=baGfM6dBzs8"}}}}}}'
       document = Prismic::JsonParser.document_parser(JSON.load(json))
-      # startgist:d5a6c0715c9a8df984e4:prismic-embed.rb
+      # startgist:86d937da7ba242ea981f:prismic-embed.rb
       video = document.get_embed('article.video')
       # Html is the code to include to embed the object, and depends on the embedded service
       html = video ? video.as_html : ''
@@ -232,7 +232,7 @@ describe 'Documentation' do
     it 'color' do
       json = '{"id":"abcd","type":"article","href":"","slugs":[],"tags":[],"data":{"article":{"background":{"type":"Color","value":"#000000"}}}}'
       document = Prismic::JsonParser.document_parser(JSON.load(json))
-      # startgist:ccafcdcbcd6ef6f2fce8:prismic-color.rb
+      # startgist:2b41f3a75f129a0d6903:prismic-color.rb
       bgcolor = document.get_color('article.background')
       hex = '#' + (bgcolor ? bgcolor.value : 'FFFFFF')
       # endgist
@@ -242,7 +242,7 @@ describe 'Documentation' do
     it 'GeoPoint' do
       json = '{"id":"abcd","type":"article","href":"","slugs":[],"tags":[],"data":{"article":{"location":{"type":"GeoPoint","value":{"latitude":48.877108,"longitude":2.333879}}}}}'
       document = Prismic::JsonParser.document_parser(JSON.load(json))
-      # startgist:c70626752d00669ee18f:prismic-geopoint.rb
+      # startgist:f221a2396c079a7d291f:prismic-geopoint.rb
       # "near" predicate for GeoPoint fragments
       near = Predicates::near('my.store.location', 48.8768767, 2.3338802, 10)
 
@@ -259,7 +259,7 @@ describe 'Documentation' do
         .form('everything')
         .query(Prismic::Predicates::at('document.id', 'UlfoxUnM0wkXYXbX'))
         .submit(api.master_ref)
-      # startgist:7bc04d4690b74e4d4a39:prismic-asHtml.rb
+      # startgist:7b93db67fa25ac386603:prismic-asHtml.rb
       resolver = Prismic.link_resolver('master'){ |doc_link| "http:#localhost/#{doc_link.id}" }
       doc = response.results[0]
       html = doc['blog-post.body'].as_html(resolver)
@@ -273,7 +273,7 @@ describe 'Documentation' do
       .form('everything')
       .query(Prismic::Predicates::at('document.id', 'UlfoxUnM0wkXYXbX'))
       .submit(api.master_ref)
-      # startgist:db34a3847be03315da55:prismic-htmlSerializer.rb
+      # startgist:e7944fe6ecdd8956b72:prismic-htmlSerializer.rb
       resolver = Prismic.link_resolver('master'){ |doc_link| "http:#localhost/#{doc_link.id}" }
       serializer = Prismic.html_serializer do |element, html|
         if element.is_a?(Prismic::Fragments::StructuredText::Block::Image)
@@ -290,7 +290,7 @@ describe 'Documentation' do
     end
 
     it 'cache' do
-      # startgist:a6b898cc3af15d7def0a:prismic-cache.rb
+      # startgist:388900d4e9e7a444e0a2:prismic-cache.rb
       # You can pass any object implementing the same methods as the BasicCache
       # https://github.com/prismicio/ruby-kit/blob/master/lib/prismic/cache/basic.rb
       cache = Prismic::BasicCache.new
