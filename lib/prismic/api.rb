@@ -124,8 +124,8 @@ module Prismic
     def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultApiCache)
       data = {}
       data['access_token'] = access_token if access_token
-      cache_key = url + (access_token ? ('#' + access_api) : '')
-      token_cache.get_or_set(cache_key, nil, 5) {
+      cache_key = url + (access_token ? ('#' + access_token) : '')
+      api_cache.get_or_set(cache_key, nil, 5) {
         res = http_client.get(url, data, 'Accept' => 'application/json')
         case res.code
         when '200'
