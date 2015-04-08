@@ -157,7 +157,7 @@ module Prismic
 
     def q(*query)
       def serialize(field)
-        if field.kind_of?(String) and not (field.start_with?('my.') or field.start_with?('document.'))
+        if field.kind_of?(String) and not (field.start_with?('my.') or field.start_with?('document'))
           %("#{field}")
         elsif field.kind_of?(Array)
           %([#{field.map{ |arg| serialize(arg) }.join(', ')}])
