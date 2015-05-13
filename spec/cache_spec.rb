@@ -83,6 +83,18 @@ describe "Cache's" do
       end
     end
   end
+
+  describe 'configurable api cache' do
+    let(:api_cache) { Prismic::BasicNullCache.new }
+    it 'uses api_cache if provided' do
+      expect(api_cache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
+      Prismic.api("https://lesbonneschoses.prismic.io/api", api_cache: api_cache)
+    end
+    it 'uses default cache if not provided' do
+      expect(Prismic::DefaultApiCache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
+      Prismic.api("https://lesbonneschoses.prismic.io/api")
+    end
+  end
 end
 
 describe "Basic Cache's" do
@@ -145,5 +157,26 @@ describe "Basic Cache's" do
     cache.get('key').should == nil
     cache.get('key1').should == nil
     cache.get('key2').should == nil
+  end
+end
+
+describe 'BasicNullCache' do
+  subject { Prismic::BasicNullCache.new }
+  it 'always misses' do
+    subject.get('key').should == nil
+    subject.set('key', 'value').should == 'value'
+    subject.get('key').should == nil
+  end
+  it 'set uses value if no block' do
+    subject.set('key', 'value').should == 'value'
+  end
+  it 'set uses block if provided' do
+    subject.set('key', 'value'){'value2'}.should == 'value2'
+  end
+  it 'get_or_set uses value if no block' do
+    subject.get_or_set('key', 'value').should == 'value'
+  end
+  it 'get_or_set uses block if provided' do
+    subject.get_or_set('key', 'value'){'value2'}.should == 'value2'
   end
 end
