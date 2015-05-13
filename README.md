@@ -65,7 +65,7 @@ Knowing all that, here is typical code written with the Ruby kit:
 
 #### Configuring Alternative API Caches
 
-It can be an advantage to have controll over both document and api caches.  The default api cache is perfect for development and production uses but can cause issues in certain test environments (such as using VCR to capture/replay Prismic.io interactions).  A null cache (does no caching) is available to be used as an alternative api cache.  To configure it (or any other compliant cache), simply add `api_cache => Prismic::BasicNullCache.new`
+The default cache stores data in-memory, in the server. You may want to use a different cache, for example to share it between several servers (with memcached or similar). A null cache (does no caching) is also available if you need a predictible behavior for testing or VCR. To use it (or any other compliant cache), simply add `api_cache => Prismic::BasicNullCache.new`
 to the options passed to `Prismic.api`.
 
 ### Changelog
