@@ -49,19 +49,6 @@ describe "Cache's" do
       it 'can return all keys' do
         @cache.keys.should == %w(fake_key1 fake_key2 fake_key3)
       end
-      it 'deletes oldest key when updating max_size' do
-        @cache.max_size = 1
-        @cache.size.should == 1
-        @cache.include?('fake_key1').should be_false
-        @cache.include?('fake_key2').should be_false
-        @cache.include?('fake_key3').should be_true
-      end
-      it 'deletes oldest key when adding new one (at max_size)' do
-        @cache['fake_key4'] = 4
-        @cache.max_size = 3
-        @cache.size.should == 3
-        @cache.include?('fake_key1').should be_false
-      end
       it 'keeps readed keys alive' do
         @cache['fake_key1']
         @cache['fake_key4'] = 4
@@ -91,29 +78,29 @@ describe "Cache's" do
       Prismic.api("https://lesbonneschoses.prismic.io/api", api_cache: api_cache)
     end
     it 'uses default cache if not provided' do
-      expect(Prismic::DefaultApiCache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
+      expect(Prismic::DefaultCache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
       Prismic.api("https://lesbonneschoses.prismic.io/api")
     end
   end
 end
 
-describe "Basic Cache's" do
+describe "LRU Cache's" do
 
   it 'set & get value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.set('key', 'value')
     cache.get('key').should == 'value'
   end
 
   it 'set with expiration value & get value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.set('key', 'value', 1)
     sleep(2)
     cache.get('key').should == nil
   end
 
   it 'set with expiration and a block' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.get_or_set('key', nil, 1){ 'value' }
     cache.get_or_set('key', nil, 1){ 'othervalue' }.should == 'value'
     sleep(2)
@@ -121,13 +108,13 @@ describe "Basic Cache's" do
   end
 
   it 'set & test value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.set('key', 'value')
     cache.include?('key').should == true
   end
 
   it 'get or set value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.set('key', 'value')
     cache.get('key').should == 'value'
     cache.get_or_set('key', 'value1')
@@ -137,7 +124,7 @@ describe "Basic Cache's" do
   end
 
   it 'set, delete & get value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.set('key', 'value')
     cache.get('key').should == 'value'
     cache.delete('key')
@@ -145,7 +132,7 @@ describe "Basic Cache's" do
   end
 
   it 'set, clear & get value' do
-    cache = Prismic::BasicCache.new
+    cache = Prismic::LruCache.new
     cache.expired?('key')
     cache.set('key', 'value')
     cache.set('key1', 'value1')
@@ -153,7 +140,7 @@ describe "Basic Cache's" do
     cache.get('key').should == 'value'
     cache.get('key1').should == 'value1'
     cache.get('key2').should == 'value2'
-    cache.clear()
+    cache.clear!
     cache.get('key').should == nil
     cache.get('key1').should == nil
     cache.get('key2').should == nil

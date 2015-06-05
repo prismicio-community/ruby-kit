@@ -292,7 +292,10 @@ module Prismic
       # cache_key is a mix of HTTP URL and HTTP method
       cache_key = form_method+'::'+form_action+'?'+data.map{|k,v|"#{k}=#{v}"}.join('&')
 
-      api.caching(cache_key) {
+      from_cache = api.has_cache? && api.cache.get(cache_key)
+      if (from_cache)
+        from_cache
+      else
         if form_method == 'GET' && form_enctype == 'application/x-www-form-urlencoded'
           data['access_token'] = api.access_token if api.access_token
           data.delete_if { |k, v| v.nil? }
@@ -300,6 +303,10 @@ module Prismic
           response = api.http_client.get(form_action, data, 'Accept' => 'application/json')
 
           if response.code.to_s == '200'
+            ttl = (response['Cache-Control'] || '').scan(/max-age\s*=\s*(\d+)/).flatten.first
+            if ttl != nil && api.has_cache?
+              api.cache.set(cache_key, response.body, ttl.to_i)
+            end
             response.body
           else
             body = JSON.load(response.body) rescue nil
@@ -312,7 +319,7 @@ module Prismic
         else
           raise UnsupportedFormKind, "Unsupported kind of form: #{form_method} / #{enctype}"
         end
-      }
+      end
     end
 
     # Specify a parameter for this form
@@ -621,4 +628,3 @@ require 'prismic/predicates'
 require 'prismic/experiments'
 require 'prismic/json_parsers'
 require 'prismic/cache/lru'
-require 'prismic/cache/basic'

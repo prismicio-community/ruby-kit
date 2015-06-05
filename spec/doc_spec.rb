@@ -293,7 +293,7 @@ describe 'Documentation' do
       # startgist:388900d4e9e7a444e0a2:prismic-cache.rb
       # You can pass any object implementing the same methods as the BasicCache
       # https://github.com/prismicio/ruby-kit/blob/master/lib/prismic/cache/basic.rb
-      cache = Prismic::BasicCache.new
+      cache = Prismic::LruCache.new
       api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api', { :cache => cache })
       # The Api will use the custom cache object
       # endgist

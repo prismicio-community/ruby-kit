@@ -27,18 +27,6 @@ module Prismic
       !!cache
     end
 
-    # Calls the given block if the provided key is not already cached
-    #
-    # If the cache is disabled, the block is always called
-    #
-    # @param key [String] the cache's key to test
-    # @yieldparam key [String] the key
-    #
-    # @return the return of the given block
-    def caching(key)
-      cache ? cache.get(key){ yield(key) } : yield(key)
-    end
-
     # Returns the master {Ref reference}
     # @api
     #
@@ -121,7 +109,7 @@ module Prismic
     end
 
     # Fetch the API information from the Prismic.io server
-    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultApiCache)
+    def self.get(url, access_token=nil, http_client=Prismic::DefaultHTTPClient, api_cache=Prismic::DefaultCache)
       data = {}
       data['access_token'] = access_token if access_token
       cache_key = url + (access_token ? ('#' + access_token) : '')
@@ -153,7 +141,7 @@ module Prismic
       access_token = opts[:access_token]
       cache = opts[:cache]
       api_cache = opts[:api_cache]
-      api_cache = Prismic::DefaultApiCache unless api_cache
+      api_cache = Prismic::DefaultCache unless api_cache
       cache ||= Prismic::DefaultCache unless !cache
       resp = get(url, access_token, http_client, api_cache)
       json = JSON.load(resp.body)
