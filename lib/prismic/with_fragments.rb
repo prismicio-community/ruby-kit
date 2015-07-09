@@ -6,6 +6,13 @@ module Prismic
     # @return [Hash{String => Fragment}]
     attr_accessor :fragments
 
+    # Generate a Text representation of the entire document
+    #
+    # @return [String] the text representation
+    def as_text
+      fragments.map { |field, fragment| fragment.as_text }.join("\n")
+    end
+
     # Generate an HTML representation of the entire document
     #
     # @param link_resolver [LinkResolver] The LinkResolver used to build
@@ -140,6 +147,12 @@ module Prismic
     def get_geopoint(field)
       fragment = self[field]
       return nil unless fragment.is_a? Prismic::Fragments::GeoPoint
+      fragment
+    end
+
+    def get_slice_zone(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::SliceZone
       fragment
     end
 

@@ -23,7 +23,8 @@ module Prismic
           'StructuredText' => method(:structured_text_parser),
           'Select'         => method(:select_parser),
           'Multiple'       => method(:multiple_parser),
-          'Group'          => method(:group_parser)
+          'Group'          => method(:group_parser),
+          'SliceZone'      => method(:slices_parser)
         }
       end
 
@@ -199,6 +200,24 @@ module Prismic
         Prismic::Fragments::Group.new(fragment_list_array)
       end
 
+      def slices_parser(json)
+        slices = []
+        json['value'].each do |data|
+          slice_type = data['slice_type']
+          fragment = data['value']
+          slices << Prismic::Fragments::Slice.new(slice_type, fragment_parser(fragment))
+        end
+        Prismic::Fragments::SliceZone.new(slices)
+      end
+
+      def fragment_parser(fragment)
+        if fragment.is_a? Array
+          multiple_parser(fragment)
+        else
+          parsers[fragment['type']].call(fragment)
+        end
+      end
+
       def document_parser(json)
         data_json = json['data'].values.first  # {"doc_type": data}
 
@@ -213,11 +232,7 @@ module Prismic
         }
 
         fragments = Hash[data_json.map { |name, fragment|
-          if fragment.is_a? Array
-            [name, multiple_parser(fragment)]
-          else
-            [name, parsers[fragment['type']].call(fragment)]
-          end
+          [name, fragment_parser(fragment)]
         }]
 
         Prismic::Document.new(

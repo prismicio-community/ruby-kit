@@ -13,6 +13,10 @@ module Prismic
         main.as_html(link_resolver)
       end
 
+      def as_text
+        ""
+      end
+
       def get_view(key)
         if key == 'main'
           main

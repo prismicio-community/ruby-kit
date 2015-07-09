@@ -485,8 +485,8 @@ describe 'Image' do
   end
 
   describe 'as_text' do
-    it 'raises an NotImplementedError' do
-      expect { @image.as_text }.to raise_error NotImplementedError
+    it 'is empty' do
+      @image.as_text.should == ""
     end
   end
 end
@@ -698,6 +698,22 @@ describe 'Group' do
   it 'returns the proper length of the sunfragment list' do
     @docchapter['docchapter.docs'][0].length.should == 1
     @docchapter['docchapter.docs'][0].size.should == 1
+  end
+
+end
+
+describe 'Slices' do
+  before do
+    @raw_json_slices = File.read("#{File.dirname(__FILE__)}/responses_mocks/slices.json")
+    @json_slices = JSON.load(@raw_json_slices)
+    @doc = Prismic::JsonParser.document_parser(@json_slices)
+    @slices = @doc.get_slice_zone("article.blocks")
+    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
+  end
+
+  it 'parses correctly' do
+    @slices.as_text.should == "\nc'est un bloc features\nC'est un bloc content"
+    @slices.as_html(@link_resolver).should == %[<section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c&#39;est un bloc features</span></section>\n<p>C&#39;est un bloc content</p>]
   end
 
 end
