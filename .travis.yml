@@ -5,13 +5,20 @@ rvm:
 - 2.0.0
 - 1.9.3
 - jruby-19mode
+
+sudo: false
+cache: bundler
+
 script: bundle exec rspec spec
+
 notifications:
   email:
   - evo@zenexity.com
+
 addons:
   code_climate:
     repo_token: f46a7e216896abddbc4877ce065239e8ac9f575af7a120bdaa61a42be70777e9
+
 deploy:
   provider: rubygems
   api_key:
