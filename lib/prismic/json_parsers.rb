@@ -203,9 +203,7 @@ module Prismic
       def slices_parser(json)
         slices = []
         json['value'].each do |data|
-          slice_type = data['slice_type']
-          fragment = data['value']
-          slices << Prismic::Fragments::Slice.new(slice_type, fragment_parser(fragment))
+          slices << Prismic::Fragments::Slice.new(data['slice_type'], data['label'], fragment_parser(data['value']))
         end
         Prismic::Fragments::SliceZone.new(slices)
       end
