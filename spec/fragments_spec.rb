@@ -712,8 +712,8 @@ describe 'Slices' do
   end
 
   it 'parses correctly' do
-    @slices.as_text.should == "\nc'est un bloc features\nC'est un bloc content"
-    @slices.as_html(@link_resolver).gsub('&#39;', "'").should == %[<div data-slicetype="features" class="slice features-label"><section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c'est un bloc features</span></section></div>\n<div data-slicetype="text" class="slice"><p>C'est un bloc content</p></div>]
+    @slices.as_text.should == "\nc'est un bloc features\nC'est un bloc content\n"
+    @slices.as_html(@link_resolver).gsub('&#39;', "'").should == %[<section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c'est un bloc features</span></section>\n<p>C'est un bloc content</p>\n<section data-field="sep"><hr class="separator" /></section>]
   end
 
 end

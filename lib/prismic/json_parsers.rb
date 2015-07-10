@@ -17,14 +17,15 @@ module Prismic
           'Timestamp'      => method(:timestamp_parser),
           'Number'         => method(:number_parser),
           'Embed'          => method(:embed_parser),
-          'GeoPoint'          => method(:geo_point_parser),
+          'GeoPoint'       => method(:geo_point_parser),
           'Image'          => method(:image_parser),
           'Color'          => method(:color_parser),
           'StructuredText' => method(:structured_text_parser),
           'Select'         => method(:select_parser),
           'Multiple'       => method(:multiple_parser),
           'Group'          => method(:group_parser),
-          'SliceZone'      => method(:slices_parser)
+          'SliceZone'      => method(:slices_parser),
+          'Separator'      => method(:separator_parser)
         }
       end
 
@@ -61,6 +62,10 @@ module Prismic
 
       def text_parser(json)
         Prismic::Fragments::Text.new(json['value'])
+      end
+
+      def separator_parser(json)
+        Prismic::Fragments::Separator.new('')
       end
 
       def select_parser(json)

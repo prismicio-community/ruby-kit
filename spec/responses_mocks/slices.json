@@ -91,6 +91,20 @@
                             "spans":[]
                         }]
                     }
+                },{
+                    "type": "Slice",
+                    "slice_type": "separator",
+                    "slice_label": null,
+                    "value": {
+                        "type": "Group",
+                        "value": [
+                            {
+                                "sep": {
+                                   "type": "Separator"
+                                }
+                            }
+                        ]
+                    }
                 }]
             }
         }
