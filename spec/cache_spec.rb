@@ -16,7 +16,7 @@ describe "Cache's" do
     end
 
     it "is properly off" do
-      api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: false)
+      api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: nil)
       api.has_cache?.should == false
     end
 

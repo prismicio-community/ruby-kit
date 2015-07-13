@@ -139,10 +139,10 @@ module Prismic
     def self.start(url, opts={})
       http_client = opts[:http_client] || Prismic::DefaultHTTPClient
       access_token = opts[:access_token]
-      cache = opts[:cache]
-      api_cache = opts[:api_cache]
-      api_cache = Prismic::DefaultCache unless api_cache
-      cache ||= Prismic::DefaultCache unless !cache
+      # We don't use ||= because we want to keep the DefaultCache if nil was explicitly passed
+      api_cache = opts.has_key?(:api_cache) ? opts[:api_cache] : Prismic::DefaultCache
+      cache = opts.has_key?(:cache) ? opts[:cache] : Prismic::DefaultCache
+
       resp = get(url, access_token, http_client, api_cache)
       json = JSON.load(resp.body)
       parse_api_response(json, access_token, http_client, cache)
