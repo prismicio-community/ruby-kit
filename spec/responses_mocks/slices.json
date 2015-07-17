@@ -57,6 +57,7 @@
                 "value":[{
                     "type":"Slice",
                     "slice_type": "features",
+                    "slice_label": "features-label",
                     "value":{
                         "type":"Group",
                         "value":[{
@@ -81,6 +82,7 @@
                 },{
                     "type":"Slice",
                     "slice_type":"text",
+                    "slice_label": null,
                     "value":{
                         "type":"StructuredText",
                         "value":[{

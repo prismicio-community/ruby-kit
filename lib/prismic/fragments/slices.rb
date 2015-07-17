@@ -5,12 +5,12 @@ module Prismic
     # A fragment of type Slice, an item in a SliceZone
     class Slice < Fragment
       attr_accessor :slice_type
-      attr_accessor :label
+      attr_accessor :slice_label
       attr_accessor :value
 
-      def initialize(slice_type, label, value)
+      def initialize(slice_type, slice_label, value)
         @slice_type = slice_type
-        @label = label
+        @slice_label = slice_label
         @value = value
       end
 
@@ -29,8 +29,8 @@ module Prismic
       # @return [String] the HTML representation
       def as_html(link_resolver=nil)
         classes = ['slice']
-        unless (@label.nil?)
-          classes.push(@label)
+        unless (@slice_label.nil?)
+          classes.push(@slice_label)
         end
         %[<div data-slicetype="#{@slice_type}" class="#{classes.join(' ')}">#{@value.as_html(link_resolver)}</div>]
       end
