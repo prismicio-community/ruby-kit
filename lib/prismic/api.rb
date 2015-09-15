@@ -14,7 +14,7 @@ module Prismic
     attr_accessor :refs
     # @return [Hash{String => String}] list of bookmarks, as name -> documentId
     attr_accessor :bookmarks
-    # @return [Hash{String => SearchForm}] list of bookmarks, as name -> documentId
+    # @return [Hash{String => Form}] list of forms, as name -> Form
     attr_accessor :forms
     attr_accessor :tags, :types, :oauth, :cache
     # @return [Experiments] list of all experiments from Prismic
