@@ -28,6 +28,15 @@ describe 'Api' do
     }
   end
 
+  describe 'errors' do
+    it 'is correct when passing a nil URL' do
+      expect { Prismic.api(nil) }.to raise_error ArgumentError
+    end
+    it 'is correct when passing a wrong URL' do
+      expect { Prismic.api("foobar") }.to raise_error ArgumentError
+    end
+  end
+
   describe 'id' do
     it 'returns the right id' do
       @api.ref('key1').id.should == 'id1'

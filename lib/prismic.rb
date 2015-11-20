@@ -62,6 +62,9 @@ module Prismic
   #
   # @return [API] The API instance related to this repository
   def self.api(url, opts=nil)
+    if (not url =~ /\A#{URI::regexp(['http', 'https'])}\z/)
+      raise ArgumentError.new("Valid web URI expected")
+    end
     opts ||= {}
     opts = {access_token: opts} if opts.is_a?(String)
     API.start(url, opts)
