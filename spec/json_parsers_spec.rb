@@ -23,7 +23,7 @@ json
   it "correctly parses DocumentLinks" do
     document_link = Prismic::JsonParser.document_link_parser(@json)
     document_link.id.should == "UdUjvt_mqVNObPeO"
-    document_link.link_type.should == "product"
+    document_link.type.should == "product"
     document_link.tags.should == ['Macaron']
     document_link.slug.should == "dark-chocolate-macaron"
     document_link.broken?.should == false

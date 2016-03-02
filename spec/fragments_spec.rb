@@ -668,11 +668,11 @@ describe 'Group' do
     @micro_api = Prismic.api('https://micro.prismic.io/api', nil)
     @master_ref = @micro_api.master_ref
     @docchapter = @micro_api.form('everything').query('[[:d = at(document.type, "docchapter")]]').orderings('[my.docchapter.priority]').submit(@master_ref)[0]
-    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
+    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.type}/#{doc_link.id}" }
   end
 
   it 'accesses fields the proper way' do
-    @docchapter['docchapter.docs'][0]['linktodoc'].link_type.should == 'doc'
+    @docchapter['docchapter.docs'][0]['linktodoc'].type.should == 'doc'
   end
 
   it 'serializes towards HTML as expected' do
@@ -708,7 +708,7 @@ describe 'Slices' do
     @json_slices = JSON.load(@raw_json_slices)
     @doc = Prismic::JsonParser.document_parser(@json_slices)
     @slices = @doc.get_slice_zone("article.blocks")
-    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.link_type}/#{doc_link.id}" }
+    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.type}/#{doc_link.id}" }
   end
 
   it 'parses correctly' do
