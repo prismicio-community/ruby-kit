@@ -117,7 +117,7 @@ describe 'predicates' do
       form = @api.form('everything').query(
           Predicates.date_before('my.blog-post.publication-date', Date.parse('2016-03-02') )
       )
-      form.data['q'].should == ['[[:d = date.before(my.blog-post.publication-date, 1456898400000)]]']
+      form.data['q'].should == ["[[:d = date.before(my.blog-post.publication-date, #{Date.parse('2016-03-02').to_time.to_i * 1000})]]"]
     end
   end
 
@@ -126,7 +126,7 @@ describe 'predicates' do
       form = @api.form('everything').query(
           Predicates.date_after('my.blog-post.publication-date', Date.parse('2016-03-02') )
       )
-      form.data['q'].should == ['[[:d = date.after(my.blog-post.publication-date, 1456898400000)]]']
+      form.data['q'].should == ["[[:d = date.after(my.blog-post.publication-date, #{Date.parse('2016-03-02').to_time.to_i * 1000})]]"]
     end
   end
 
@@ -135,7 +135,7 @@ describe 'predicates' do
       form = @api.form('everything').query(
           Predicates.date_between('my.blog-post.publication-date', Date.parse('2016-03-02'), Date.parse('2016-03-04') )
       )
-      form.data['q'].should == ['[[:d = date.between(my.blog-post.publication-date, 1456898400000, 1457071200000)]]']
+      form.data['q'].should == ["[[:d = date.between(my.blog-post.publication-date, #{Date.parse('2016-03-02').to_time.to_i * 1000}, #{Date.parse('2016-03-04').to_time.to_i * 1000})]]"]
     end
   end
 
