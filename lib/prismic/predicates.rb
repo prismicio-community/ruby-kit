@@ -17,6 +17,14 @@ module Prismic
       ['similar', fragment, value]
     end
 
+    def self.has(fragment)
+      ['has', fragment]
+    end
+
+    def self.missing(fragment)
+      ['missing', fragment]
+    end
+
     def self.gt(fragment, value)
       ['number.gt', fragment, value]
     end
@@ -79,6 +87,14 @@ module Prismic
 
     def self.year(fragment, year)
       ['date.year', fragment, year]
+    end
+
+    def self.year_before(fragment, year)
+      ['date.year-before', fragment, year]
+    end
+
+    def self.year_after(fragment, year)
+      ['date.year-after', fragment, year]
     end
 
     def self.hour(fragment, hour)

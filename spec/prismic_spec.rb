@@ -271,7 +271,7 @@ describe 'LinkResolver' do
     @document = Prismic::Document.new('id', nil, 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil)
 
     @link_resolver = Prismic::LinkResolver.new(nil) do |doc|
-      '/'+doc.link_type+'/'+doc.id+'/'+doc.slug
+      '/'+doc.type+'/'+doc.id+'/'+doc.slug
     end
   end
 
