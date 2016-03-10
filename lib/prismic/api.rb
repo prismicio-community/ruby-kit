@@ -91,6 +91,30 @@ module Prismic
       form('everything', data).query(q).submit(ref)
     end
 
+    # Retrieve one document by its id
+    # @param q [String] the query to perform
+    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @return the document, or nil if not found
+    def getByID(id, data={})
+      query(Prismic::Predicates::at('document.id', id), data)[0]
+    end
+
+    # Retrieve one document by its uid
+    # @param q [String] the query to perform
+    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @return the document, or nil if not found
+    def getByUID(typ, uid, data={})
+      query(Prismic::Predicates::at('my.'+typ+'.uid', uid), data)[0]
+    end
+
+    # Retrieve multiple documents by their ids
+    # @param q [String] the query to perform
+    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @return the document, or nil if not found
+    def getByIDs(ids, data={})
+      query(Prismic::Predicates::in('document.id', ids), data)
+    end
+
     # Return the URL to display a given preview
     # @param token [String] as received from Prismic server to identify the content to preview
     # @param link_resolver the link resolver to build URL for your site

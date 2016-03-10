@@ -102,11 +102,7 @@ describe 'Documentation' do
 
     it 'text' do
       api = Prismic::api('https://lesbonneschoses.cdn.prismic.io/api')
-      response = api.form('everything')
-        .query(Predicates::at('document.id', 'UlfoxUnM0wkXYXbl'))
-        .ref(api.master_ref)
-        .submit
-      doc = response[0]
+      doc = api.getByID('UlfoxUnM0wkXYXbl')
       # startgist:4cbc1abffe7cc1209f95:prismic-getText.rb
       author = doc.get_text('blog-post.author')
       if author == nil

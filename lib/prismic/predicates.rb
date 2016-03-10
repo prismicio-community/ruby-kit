@@ -5,6 +5,10 @@ module Prismic
       ['at', fragment, value]
     end
 
+    def self.in(fragment, value)
+      ['in', fragment, value]
+    end
+
     def self.any(fragment, values)
       ['any', fragment, values]
     end
