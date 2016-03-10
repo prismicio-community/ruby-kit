@@ -83,6 +83,14 @@ module Prismic
       form(name, data, ref)
     end
 
+    # Perform a query on this API. Use the master reference is no ref is specified in data.
+    # @param q [String] the query to perform
+    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    def query(q, data={})
+      ref = data['ref'] || self.master.ref
+      form('everything', data).query(q).submit(ref)
+    end
+
     # Return the URL to display a given preview
     # @param token [String] as received from Prismic server to identify the content to preview
     # @param link_resolver the link resolver to build URL for your site

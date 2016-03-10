@@ -28,10 +28,7 @@ describe 'Documentation' do
       api = Prismic.api('https://lesbonneschoses.cdn.prismic.io/api', preview_token)
       st_patrick_ref = api.ref('St-Patrick specials')
       # Now we'll use this reference for all our calls
-      response = api.form('everything')
-      .ref(st_patrick_ref)
-      .query(Prismic::Predicates::at('document.type', 'product'))
-      .submit
+      response = api.query(Prismic::Predicates::at('document.type', 'product'), 'ref' => st_patrick_ref)
       # The Response object contains all documents of type "product"
       # including the new "Saint-Patrick's Cupcake"
       # endgist

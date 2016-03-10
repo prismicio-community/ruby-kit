@@ -20,12 +20,9 @@ describe 'LesBonnesChoses' do
     end
 
     it 'queries macarons (using a predicate) and returns 7 documents' do
-      @api.form('everything')
-        .query('[[:d = any(document.tags, ["Macaron"])]]')
-        .submit(@master_ref).results.size.should == 7
-      @api.form('everything')
-        .query('[[:d = any(document.tags, ["Macaron"])]]')
-        .submit(@master_ref).size.should == 7
+      @api.query('[[:d = any(document.tags, ["Macaron"])]]')
+        .results.size.should == 7
+      @api.query('[[:d = any(document.tags, ["Macaron"])]]').size.should == 7
     end
 
     it 'queries macarons (using a form) and returns 7 documents' do
