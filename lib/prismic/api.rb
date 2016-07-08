@@ -91,6 +91,13 @@ module Prismic
       form('everything', data).query(q).submit(ref)
     end
 
+    # Retrieve all documents (paginated)
+    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    def all(data={})
+      ref = data['ref'] || self.master.ref
+      form('everything', data).submit(ref)
+    end
+
     # Retrieve one document by its id
     # @param q [String] the query to perform
     # @param data [Hash] query options (page, pageSize, ref, etc.)
