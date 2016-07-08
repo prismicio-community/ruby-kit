@@ -169,7 +169,7 @@ json
 
   it "correctly parses Image objects" do
     image = Prismic::JsonParser.image_parser(@json)
-    image.main.url.should == "url1"
+    image.url.should == "url1"
     image.main.width.should == 500
     image.main.height.should == 500
     image.main.alt.should == "Alternative"

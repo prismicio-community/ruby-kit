@@ -17,6 +17,12 @@ module Prismic
         ""
       end
 
+      def url() main.url end
+      def width() main.width end
+      def height() main.height end
+      def alt() main.alt end
+      def copyright() main.copyright end
+
       def get_view(key)
         if key == 'main'
           main
