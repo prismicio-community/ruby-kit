@@ -59,14 +59,17 @@ describe "Cache's" do
 
     describe 'caching on a real repository' do
       before do
-        @api = Prismic.api("https://lesbonneschoses.prismic.io/api", access_token: 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70')
+        @api = Prismic.api("https://lesbonneschoses.prismic.io/api", access_token: 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70', cache: Prismic::DefaultCache)
         @cache = @api.cache
+        @cache.should_not be_nil
         @master_ref = @api.master_ref
         @other_ref = @api.refs['announcement of new sf shop']
       end
       it 'works on different refs' do
         @api.form('everything').submit(@master_ref).total_results_size.should == 40
+        @cache.size.should eq(1)
         @api.form('everything').submit(@other_ref).total_results_size.should == 43
+        @cache.size.should eq(2)
       end
     end
   end
