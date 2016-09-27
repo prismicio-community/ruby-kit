@@ -1,0 +1,1803 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Prismic::WithFragments
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Prismic/WithFragments.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (W)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Prismic.html" title="Prismic (module)">Prismic</a></span></span>
+     &raquo; 
+    <span class="title">WithFragments</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Prismic::WithFragments
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1">Enumerable</dd>
+      
+    
+  
+  
+    <dt class="r2">Included in:</dt>
+    <dd class="r2"><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span>, <span class='object_link'><a href="Fragments/DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">Fragments::DocumentLink</a></span>, <span class='object_link'><a href="Fragments/GroupDocument.html" title="Prismic::Fragments::GroupDocument (class)">Fragments::GroupDocument</a></span></dd>
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/prismic/with_fragments.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A document with Fragments: usually a Prismic.io Document, or a Document within a Group</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fragments-instance_method" title="#fragments (instance method)">- (Hash{String =&gt; Fragment}) <strong>fragments</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Fragments::Fragment) <strong>[]</strong>(field) </a>
+    
+
+    
+      (also: #get)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get a document&#39;s field.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_html-instance_method" title="#as_html (instance method)">- (String) <strong>as_html</strong>(link_resolver) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Generate an HTML representation of the entire document.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_text-instance_method" title="#as_text (instance method)">- (String) <strong>as_text</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Generate a Text representation of the entire document.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong> {|name, fragment| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#first_title-instance_method" title="#first_title (instance method)">- (String) <strong>first_title</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Finds the first highest title in a document (if any).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_color-instance_method" title="#get_color (instance method)">- (Fragments::Color) <strong>get_color</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_date-instance_method" title="#get_date (instance method)">- (Fragments::Date) <strong>get_date</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_embed-instance_method" title="#get_embed (instance method)">- (Fragments::Embed) <strong>get_embed</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_geopoint-instance_method" title="#get_geopoint (instance method)">- (Fragments::GeoPoint) <strong>get_geopoint</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_group-instance_method" title="#get_group (instance method)">- (Fragments::Group) <strong>get_group</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_image-instance_method" title="#get_image (instance method)">- (Fragments::Image) <strong>get_image</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_link-instance_method" title="#get_link (instance method)">- (Fragments::Link) <strong>get_link</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_number-instance_method" title="#get_number (instance method)">- (Fragments::Number) <strong>get_number</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_slice_zone-instance_method" title="#get_slice_zone (instance method)">- (Object) <strong>get_slice_zone</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_structured_text-instance_method" title="#get_structured_text (instance method)">- (Fragments::StructuredText) <strong>get_structured_text</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_text-instance_method" title="#get_text (instance method)">- (Fragments::Text) <strong>get_text</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_timestamp-instance_method" title="#get_timestamp (instance method)">- (Fragments::Timestamp) <strong>get_timestamp</strong>(field) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#length-instance_method" title="#length (instance method)">- (Fixum) <strong>length</strong> </a>
+    
+
+    
+      (also: #size)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#linked_documents-instance_method" title="#linked_documents (instance method)">- (Array&lt;LinkedDocument&gt;) <strong>linked_documents</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="fragments=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="fragments-instance_method">
+  
+    - (<tt>Hash{String =&gt; Fragment}</tt>) <strong>fragments</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{String =&gt; Fragment}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_fragments'>fragments</span>
+  <span class='ivar'>@fragments</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragments::Fragment</a></span></tt>) <strong>[]</strong>(field) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='get-instance_method'>get</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get a document&#39;s field</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragments::Fragment</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_array'>array</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>!=</span> <span class='int'>2</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Argument should contain one dot. Example: product.price</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+  <span class='id identifier rubyid_fragments'>fragments</span><span class='lbracket'>[</span><span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="as_html-instance_method">
+  
+    - (<tt>String</tt>) <strong>as_html</strong>(link_resolver) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generate an HTML representation of the entire document</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>link_resolver</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The LinkResolver used to build
+application&#39;s specific URL</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the HTML representation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragments'>fragments</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='op'>|</span>
+    <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;section data-field=&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&lt;/section&gt;</span><span class='tstring_end'>)</span></span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="as_text-instance_method">
+  
+    - (<tt>String</tt>) <strong>as_text</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generate a Text representation of the entire document</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the text representation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_text'>as_text</span>
+  <span class='id identifier rubyid_fragments'>fragments</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='op'>|</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_as_text'>as_text</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each-instance_method">
+  
+    - (<tt>Object</tt>) <strong>each</strong> {|name, fragment| ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>fragment</span>
+      
+      
+        <span class='type'>(<tt>Fragment</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 65</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+  <span class='ivar'>@fragments</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="first_title-instance_method">
+  
+    - (<tt>String</tt>) <strong>first_title</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Finds the first highest title in a document (if any)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_first_title'>first_title</span>
+  <span class='comment'># It is impossible to reuse the StructuredText.first_title method, since
+</span>  <span class='comment'># we need to test the highest title across the whole document
+</span>  <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_max_level'>max_level</span> <span class='op'>=</span> <span class='int'>6</span> <span class='comment'># any title with a higher level kicks the current one out
+</span>  <span class='ivar'>@fragments</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span>
+      <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_blocks'>blocks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span><span class='op'>::</span><span class='const'>Block</span><span class='op'>::</span><span class='const'>Heading</span><span class='rparen'>)</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_max_level'>max_level</span>
+            <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span>
+            <span class='id identifier rubyid_max_level'>max_level</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='comment'># new maximum
+</span>          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_title'>title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_color-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Color.html" title="Prismic::Fragments::Color (class)">Fragments::Color</a></span></tt>) <strong>get_color</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Color.html" title="Prismic::Fragments::Color (class)">Fragments::Color</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_color'>get_color</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Color</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_date-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Date.html" title="Prismic::Fragments::Date (class)">Fragments::Date</a></span></tt>) <strong>get_date</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Date.html" title="Prismic::Fragments::Date (class)">Fragments::Date</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_date'>get_date</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Date</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_embed-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Embed.html" title="Prismic::Fragments::Embed (class)">Fragments::Embed</a></span></tt>) <strong>get_embed</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Embed.html" title="Prismic::Fragments::Embed (class)">Fragments::Embed</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 133</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_embed'>get_embed</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Embed</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_geopoint-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/GeoPoint.html" title="Prismic::Fragments::GeoPoint (class)">Fragments::GeoPoint</a></span></tt>) <strong>get_geopoint</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/GeoPoint.html" title="Prismic::Fragments::GeoPoint (class)">Fragments::GeoPoint</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+147
+148
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 147</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_geopoint'>get_geopoint</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>GeoPoint</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_group-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Group.html" title="Prismic::Fragments::Group (class)">Fragments::Group</a></span></tt>) <strong>get_group</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Group.html" title="Prismic::Fragments::Group (class)">Fragments::Group</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_group'>get_group</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Group</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_image-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Image.html" title="Prismic::Fragments::Image (class)">Fragments::Image</a></span></tt>) <strong>get_image</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Image.html" title="Prismic::Fragments::Image (class)">Fragments::Image</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_image'>get_image</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Image</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_link-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Link.html" title="Prismic::Fragments::Link (class)">Fragments::Link</a></span></tt>) <strong>get_link</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Link.html" title="Prismic::Fragments::Link (class)">Fragments::Link</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_link'>get_link</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Link</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_number-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Number.html" title="Prismic::Fragments::Number (class)">Fragments::Number</a></span></tt>) <strong>get_number</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Number.html" title="Prismic::Fragments::Number (class)">Fragments::Number</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_number'>get_number</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Number</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_slice_zone-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_slice_zone</strong>(field) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+153
+154
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 153</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_slice_zone'>get_slice_zone</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>SliceZone</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_structured_text-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/StructuredText.html" title="Prismic::Fragments::StructuredText (class)">Fragments::StructuredText</a></span></tt>) <strong>get_structured_text</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/StructuredText.html" title="Prismic::Fragments::StructuredText (class)">Fragments::StructuredText</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_structured_text'>get_structured_text</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_text-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Text.html" title="Prismic::Fragments::Text (class)">Fragments::Text</a></span></tt>) <strong>get_text</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Text.html" title="Prismic::Fragments::Text (class)">Fragments::Text</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 84</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_text'>get_text</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Text</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_timestamp-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Fragments/Timestamp.html" title="Prismic::Fragments::Timestamp (class)">Fragments::Timestamp</a></span></tt>) <strong>get_timestamp</strong>(field) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Fragments/Timestamp.html" title="Prismic::Fragments::Timestamp (class)">Fragments::Timestamp</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_timestamp'>get_timestamp</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fragment'>fragment</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Timestamp</span>
+  <span class='id identifier rubyid_fragment'>fragment</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="length-instance_method">
+  
+    - (<tt>Fixum</tt>) <strong>length</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='size-instance_method'>size</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_length'>length</span>
+  <span class='ivar'>@fragments</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="linked_documents-instance_method">
+  
+    - (<tt>Array&lt;LinkedDocument&gt;</tt>) <strong>linked_documents</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;LinkedDocument&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/with_fragments.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_linked_documents'>linked_documents</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fragments'>fragments</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>DocumentLink</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_fragment'>fragment</span><span class='rbracket'>]</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span>
+      <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_blocks'>blocks</span><span class='period'>
+</span><span class='id identifier rubyid_        .select'>        .select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span><span class='op'>::</span><span class='const'>Block</span><span class='op'>::</span><span class='const'>Text</span><span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_        .map'>        .map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_spans'>spans</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>
+</span><span class='id identifier rubyid_        .select'>        .select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_span'>span</span><span class='op'>|</span> <span class='id identifier rubyid_span'>span</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>StructuredText</span><span class='op'>::</span><span class='const'>Span</span><span class='op'>::</span><span class='const'>Hyperlink</span> <span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_        .map'>        .map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_span'>span</span><span class='op'>|</span> <span class='id identifier rubyid_span'>span</span><span class='period'>.</span><span class='id identifier rubyid_link'>link</span> <span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_        .select'>        .select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_link'>link</span><span class='op'>|</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>DocumentLink</span> <span class='rbrace'>}</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Prismic</span><span class='op'>::</span><span class='const'>Fragments</span><span class='op'>::</span><span class='const'>Group</span>
+      <span class='id identifier rubyid_fragment'>fragment</span><span class='period'>.</span><span class='id identifier rubyid_group_documents'>group_documents</span><span class='period'>
+</span><span class='id identifier rubyid_        .map'>        .map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_groupDoc'>groupDoc</span><span class='op'>|</span> <span class='id identifier rubyid_groupDoc'>groupDoc</span><span class='period'>.</span><span class='id identifier rubyid_linked_documents'>linked_documents</span> <span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_        .flatten'>        .flatten</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Sep 27 10:47:05 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

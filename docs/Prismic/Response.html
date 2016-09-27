@@ -1,0 +1,1159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Prismic::Response
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Prismic/Response.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Prismic.html" title="Prismic (module)">Prismic</a></span></span>
+     &raquo; 
+    <span class="title">Response</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Prismic::Response
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Prismic::Response</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2">Enumerable</dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/prismic.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Paginated response to a Prismic.io query. Note that you may not get all documents in the first page,
+and may need to retrieve more pages or increase the page size.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#next_page-instance_method" title="#next_page (instance method)">- (String) <strong>next_page</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>URL to the next page - nil if current page is the last page.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#page-instance_method" title="#page (instance method)">- (Number) <strong>page</strong> </a>
+    
+
+    
+      (also: #current_page)
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Current page, starting at 1.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prev_page-instance_method" title="#prev_page (instance method)">- (String) <strong>prev_page</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>URL to the previous page - nil if current page is the first page.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#results-instance_method" title="#results (instance method)">- (Array&lt;Document&gt;) <strong>results</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Documents of the current page.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#results_per_page-instance_method" title="#results_per_page (instance method)">- (Number) <strong>results_per_page</strong> </a>
+    
+
+    
+      (also: #limit_value)
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#results_size-instance_method" title="#results_size (instance method)">- (Number) <strong>results_size</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#total_pages-instance_method" title="#total_pages (instance method)">- (Number) <strong>total_pages</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#total_results_size-instance_method" title="#total_results_size (instance method)">- (Number) <strong>total_results_size</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Document) <strong>[]</strong>(i) </a>
+    
+
+    
+      (also: #get)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Accessing the i-th document in the results.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong> {|document| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates over received documents.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Response) <strong>initialize</strong>(page, results_per_page, results_size, total_results_size, total_pages, next_page, prev_page, results) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Response.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#length-instance_method" title="#length (instance method)">- (Fixum) <strong>length</strong> </a>
+    
+
+    
+      (also: #size)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the number of returned documents.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Prismic::Response (class)">Response</a></span></tt>) <strong>initialize</strong>(page, results_per_page, results_size, total_results_size, total_pages, next_page, prev_page, results) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of Response</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 400</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_results_per_page'>results_per_page</span><span class='comma'>,</span> <span class='id identifier rubyid_results_size'>results_size</span><span class='comma'>,</span> <span class='id identifier rubyid_total_results_size'>total_results_size</span><span class='comma'>,</span> <span class='id identifier rubyid_total_pages'>total_pages</span><span class='comma'>,</span> <span class='id identifier rubyid_next_page'>next_page</span><span class='comma'>,</span> <span class='id identifier rubyid_prev_page'>prev_page</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
+  <span class='ivar'>@page</span> <span class='op'>=</span> <span class='id identifier rubyid_page'>page</span>
+  <span class='ivar'>@results_per_page</span> <span class='op'>=</span> <span class='id identifier rubyid_results_per_page'>results_per_page</span>
+  <span class='ivar'>@results_size</span> <span class='op'>=</span> <span class='id identifier rubyid_results_size'>results_size</span>
+  <span class='ivar'>@total_results_size</span> <span class='op'>=</span> <span class='id identifier rubyid_total_results_size'>total_results_size</span>
+  <span class='ivar'>@total_pages</span> <span class='op'>=</span> <span class='id identifier rubyid_total_pages'>total_pages</span>
+  <span class='ivar'>@next_page</span> <span class='op'>=</span> <span class='id identifier rubyid_next_page'>next_page</span>
+  <span class='ivar'>@prev_page</span> <span class='op'>=</span> <span class='id identifier rubyid_prev_page'>prev_page</span>
+  <span class='ivar'>@results</span> <span class='op'>=</span> <span class='id identifier rubyid_results'>results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="next_page=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="next_page-instance_method">
+  
+    - (<tt>String</tt>) <strong>next_page</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns URL to the next page - nil if current page is the last page</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>URL to the next page - nil if current page is the last page</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+390
+391
+392</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 390</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_next_page'>next_page</span>
+  <span class='ivar'>@next_page</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="page=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="page-instance_method">
+  
+    - (<tt>Number</tt>) <strong>page</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='current_page-instance_method'>current_page</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns current page, starting at 1</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>current page, starting at 1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+380
+381
+382</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 380</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_page'>page</span>
+  <span class='ivar'>@page</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="prev_page=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="prev_page-instance_method">
+  
+    - (<tt>String</tt>) <strong>prev_page</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns URL to the previous page - nil if current page is the first page</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>URL to the previous page - nil if current page is the first page</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+392
+393
+394</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 392</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_prev_page'>prev_page</span>
+  <span class='ivar'>@prev_page</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="results=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="results-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span>&gt;</tt>) <strong>results</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns Documents of the current page</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Documents of the current page</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+394
+395
+396</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 394</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_results'>results</span>
+  <span class='ivar'>@results</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="results_per_page=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="results_per_page-instance_method">
+  
+    - (<tt>Number</tt>) <strong>results_per_page</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='limit_value-instance_method'>limit_value</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+382
+383
+384</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 382</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_results_per_page'>results_per_page</span>
+  <span class='ivar'>@results_per_page</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="results_size=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="results_size-instance_method">
+  
+    - (<tt>Number</tt>) <strong>results_size</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+384
+385
+386</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 384</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_results_size'>results_size</span>
+  <span class='ivar'>@results_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="total_pages=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="total_pages-instance_method">
+  
+    - (<tt>Number</tt>) <strong>total_pages</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+388
+389
+390</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 388</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_total_pages'>total_pages</span>
+  <span class='ivar'>@total_pages</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="total_results_size=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="total_results_size-instance_method">
+  
+    - (<tt>Number</tt>) <strong>total_results_size</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Number</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+386
+387
+388</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 386</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_total_results_size'>total_results_size</span>
+  <span class='ivar'>@total_results_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span></tt>) <strong>[]</strong>(i) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='get-instance_method'>get</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Accessing the i-th document in the results</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+413
+414
+415</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 413</span>
+
+<span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='rparen'>)</span>
+  <span class='ivar'>@results</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each-instance_method">
+  
+    - (<tt>Object</tt>) <strong>each</strong> {|document| ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Iterates over received documents</p>
+
+<p>This method <em>does not</em> paginates by itself. So only the received document
+will be returned.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>document</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Document.html" title="Prismic::Document (class)">Document</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+424
+425
+426</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 424</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+  <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="length-instance_method">
+  
+    - (<tt>Fixum</tt>) <strong>length</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='size-instance_method'>size</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the number of returned documents</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Fixum</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+432
+433
+434</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 432</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_length'>length</span>
+  <span class='ivar'>@results</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Sep 27 10:47:06 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

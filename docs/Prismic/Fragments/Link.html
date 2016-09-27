@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Prismic::Fragments::Link
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!Prismic/Fragments/Link.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (L)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Prismic.html" title="Prismic (module)">Prismic</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span></span>
+     &raquo; 
+    <span class="title">Link</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Prismic::Fragments::Link
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragment</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragment</a></span></li>
+          
+            <li class="next">Prismic::Fragments::Link</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/prismic/fragments/link.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">DocumentLink</a></span>, <span class='object_link'><a href="FileLink.html" title="Prismic::Fragments::FileLink (class)">FileLink</a></span>, <span class='object_link'><a href="ImageLink.html" title="Prismic::Fragments::ImageLink (class)">ImageLink</a></span>, <span class='object_link'><a href="WebLink.html" title="Prismic::Fragments::WebLink (class)">WebLink</a></span></p>
+</div>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_html-instance_method" title="#as_html (instance method)">- (Object) <strong>as_html</strong>(link_resolver = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#end_html-instance_method" title="#end_html (instance method)">- (Object) <strong>end_html</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#start_html-instance_method" title="#start_html (instance method)">- (Object) <strong>start_html</strong>(link_resolver = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url-instance_method" title="#url (instance method)">- (Object) <strong>url</strong>(link_resolver = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  <span class="abstract note title">abstract</span>
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the URL of the link.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Fragment.html" title="Prismic::Fragments::Fragment (class)">Fragment</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Fragment.html#as_text-instance_method" title="Prismic::Fragments::Fragment#as_text (method)">#as_text</a></span></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="as_html-instance_method">
+  
+    - (<tt>Object</tt>) <strong>as_html</strong>(link_resolver = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/link.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_html'>as_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_start_html'>start_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_end_html'>end_html</span><span class='embexpr_end'>}</span><span class='tstring_end'>)</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="end_html-instance_method">
+  
+    - (<tt>Object</tt>) <strong>end_html</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/link.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_end_html'>end_html</span>
+  <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;/a&gt;</span><span class='tstring_end'>)</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="start_html-instance_method">
+  
+    - (<tt>Object</tt>) <strong>start_html</strong>(link_resolver = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/link.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_start_html'>start_html</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>&lt;a href=&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;&gt;</span><span class='tstring_end'>)</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="url-instance_method">
+  
+    - (<tt>Object</tt>) <strong>url</strong>(link_resolver = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note abstract">
+  <strong>This method is abstract.</strong>
+  <div class='inline'><p>See <span class='object_link'><a href="WebLink.html#url-instance_method" title="Prismic::Fragments::WebLink#url (method)">WebLink#url</a></span>, <span class='object_link'><a href="FileLink.html#url-instance_method" title="Prismic::Fragments::FileLink#url (method)">FileLink#url</a></span>, <span class='object_link'><a href="ImageLink.html#url-instance_method" title="Prismic::Fragments::ImageLink#url (method)">ImageLink#url</a></span> or <span class='object_link'><a href="DocumentLink.html#url-instance_method" title="Prismic::Fragments::DocumentLink#url (method)">DocumentLink#url</a></span></p>
+</div>
+</div>
+<p>Returns the URL of the link</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>link_resolver</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The link resolver</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NotImplementedError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/prismic/fragments/link.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_link_resolver'>link_resolver</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Method </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid___method__'>__method__</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not implemented for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_caller'>caller</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Sep 27 10:47:06 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>
