@@ -19,7 +19,7 @@ describe 'OAuth' do
 
   describe "Public API" do
 
-    PUBLIC_URL = "https://lesbonneschoses.prismic.io/api"
+    PUBLIC_URL = "https://micro.prismic.io/api"
 
     it "should accept unauthenticated requests" do
       expect {
@@ -32,7 +32,7 @@ describe 'OAuth' do
       it "should returns the URL" do
         url = Prismic::API.oauth_initiate_url(PUBLIC_URL, OAUTH_INITIATE_OPTS)
         expected_url = [
-          "https://lesbonneschoses.prismic.io/auth?client_id=client_id",
+          "https://micro.prismic.io/auth?client_id=client_id",
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")
@@ -42,7 +42,7 @@ describe 'OAuth' do
       it "should returns the URL (with access_token)" do
         url = Prismic.oauth_initiate_url(PUBLIC_URL, OAUTH_INITIATE_OPTS, "token")
         expected_url = [
-          "https://lesbonneschoses.prismic.io/auth?client_id=client_id",
+          "https://micro.prismic.io/auth?client_id=client_id",
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")

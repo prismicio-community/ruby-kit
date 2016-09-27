@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'Api' do
   before do
     json_representation = '{"foo": "bar"}'
-    @oauth_initiate_url = 'https://lesbonneschoses.cdn.prismic.io/auth'
+    @oauth_initiate_url = 'https://micro.prismic.io/auth'
     @api = Prismic::API.new(json_representation, nil, Prismic::DefaultHTTPClient, false){|api|
       api.bookmarks = {}
       api.tags = {}
@@ -24,7 +24,7 @@ describe 'Api' do
         'form3' => Prismic::Form.new(@api, 'form3', {}, nil, nil, nil, nil),
         'form4' => Prismic::Form.new(@api, 'form4', {}, nil, nil, nil, nil),
       }
-      api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, 'https://lesbonneschoses.cdn.prismic.io/auth/token', Prismic::DefaultHTTPClient)
+      api.oauth =  Prismic::API::OAuth.new(@oauth_initiate_url, 'https://micro.prismic.io/auth/token', Prismic::DefaultHTTPClient)
     }
   end
 
@@ -202,7 +202,7 @@ describe 'Api' do
     end
 
     it "creates the right form's action" do
-      @parsed.forms['pies'].action.should == 'http://lesbonneschoses.cdn.prismic.io/api/documents/search'
+      @parsed.forms['pies'].action.should == 'http://micro.prismic.io/api/documents/search'
     end
 
     it 'creates forms with the right fields' do
@@ -249,7 +249,7 @@ describe 'Api' do
       @scope = 'none'
     end
     def oauth_initiate_url
-      Prismic.oauth_initiate_url('https://lesbonneschoses.cdn.prismic.io/api', {
+      Prismic.oauth_initiate_url('https://micro.prismic.io/api', {
         client_id: @client_id,
         redirect_uri: @redirect_uri,
         scope: @scope
@@ -259,7 +259,7 @@ describe 'Api' do
       CGI.escape(@redirect_uri)
     end
     it 'build a valid url' do
-      oauth_initiate_url.should == "https://lesbonneschoses.prismic.io/auth?client_id=#@client_id&redirect_uri=#{redirect_uri_encoded}&scope=#@scope"
+      oauth_initiate_url.should == "https://micro.prismic.io/auth?client_id=#@client_id&redirect_uri=#{redirect_uri_encoded}&scope=#@scope"
     end
   end
 

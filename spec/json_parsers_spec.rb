@@ -377,7 +377,7 @@ describe 'response_parser' do
       "results_size": 20,
       "total_results_size": 40,
       "total_pages": 2,
-      "next_page": "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20",
+      "next_page": "https://micro.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20",
       "prev_page": null,
       "results":[]}')
     @documents = Prismic::JsonParser.response_parser(@json)
@@ -387,7 +387,7 @@ describe 'response_parser' do
     @documents.results_size.should == 20
     @documents.total_results_size.should == 40
     @documents.total_pages.should == 2
-    @documents.next_page.should == "https://lesbonneschoses.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20"
+    @documents.next_page.should == "https://micro.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20"
     @documents.prev_page.should == nil
   end
 
@@ -459,7 +459,7 @@ describe 'structured_text_label_parser' do
     link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
     @structured_text.as_html(link_resolver).should ==
         "<h1>Tips to dress a pastry</h1>\n\n" +
-            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/381f3a78dfe952b229fb49ceaa9926f7009ae20a.jpg\" alt=\"\" width=\"640\" height=\"666\" /></p>\n\n" +
+            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/micro-vcerzcwaaohojzo/381f3a78dfe952b229fb49ceaa9926f7009ae20a.jpg\" alt=\"\" width=\"640\" height=\"666\" /></p>\n\n" +
             "<p>Our Pastry Dressers (yes, it is <a href=\"http://localhost/UlfoxUnM0wkXYXbh\">a full-time job</a> in <em>Les Bonnes Choses</em>!) have it somewhat different from our other pastry artists: while the others keep their main focus on the taste, smell, and potentially touch of your pastries, the Pastry Dressers are mainly focused on their looks.</p>\n\n" +
             "<p>It sometimes makes them feem like they&#39;re doing a job that is reasonably different from plain old pastry, and to make the most of your pastry dressings, perhaps so should you!</p>\n\n" +
             "<h2>Step by step</h2>\n\n" +
@@ -471,7 +471,7 @@ describe 'structured_text_label_parser' do
             "<h3>Pastry Dresser, or hairdresser?</h3>\n\n" +
             "<p>The top of the pastry is a priority zone for finalization. This is where your &quot;last touch&quot; goes, and it&#39;s tremendously important, as it gives the pastry most of its character. You will have to play with the details, to keep the top of your piece on the... top of your priorities!</p>\n\n<h2>Before starting</h2>\n\n<p>" +
             "Finishing by the beginning: what did we have to consider, before running towards the aforementioned steps?</p>\n\n" +
-            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/lesbonneschoses-vcerzcwaaohojzo/502ebb427b5eb45693800816fc778316c04935f5.jpg\" alt=\"\" width=\"640\" height=\"427\" /></p>\n\n" +
+            "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/micro-vcerzcwaaohojzo/502ebb427b5eb45693800816fc778316c04935f5.jpg\" alt=\"\" width=\"640\" height=\"427\" /></p>\n\n" +
             "<h3>Pastry Dresser, or illustrator?</h3>\n\n" +
             "<p>We didn&#39;t mention color, but it&#39;s a very important component of the piece. Just like an illustrator will pick colors that add to the shape in a matching way to keep a perfect meaning, the colors must be perfect to be consistent with the taste of the piece (do not use green-colored sugar for a strawberry-flavored pastry, if you don&#39;t want to gross people out!)</p>\n\n" +
             "<h3>Pastry Dresser, or designer?</h3>\n\n<p>And even before the illustration and colors, you really need to take the time to think about your destination, to make sure it&#39;s nothing short of perfect. This may imply taking the time to sit down for a few minutes with a paper and a pen. The first skill of an imaginative Pastry Dresser is a drawing skill, just like a fashion stylist.</p>"

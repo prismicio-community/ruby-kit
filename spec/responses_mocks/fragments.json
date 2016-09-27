@@ -1,7 +1,7 @@
 {
   "id": "UdUkXt_mqZBObPeS",
   "type": "product",
-  "href": "https://lesbonneschoses.prismic.io/api/documents/search?ref=UiTGnLGIJxwAucN8&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22UdUkXt_mqZBObPeS%22%29+%5D%5D",
+  "href": "https://micro.prismic.io/api/documents/search?ref=UiTGnLGIJxwAucN8&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22UdUkXt_mqZBObPeS%22%29+%5D%5D",
   "tags": [
     "Macaron"
   ],
@@ -59,7 +59,7 @@
         "type": "Image",
         "value": {
           "main": {
-            "url": "https://wroomio.s3.amazonaws.com/lesbonneschoses/0417110ebf2dc34a3e8b7b28ee4e06ac82473b70.png",
+            "url": "https://wroomio.s3.amazonaws.com/micro/0417110ebf2dc34a3e8b7b28ee4e06ac82473b70.png",
             "alt" : "Alternative text to image",
             "copyright" : "CC-BY",
             "dimensions": {
@@ -69,7 +69,7 @@
           },
           "views": {
             "icon": {
-              "url": "https://wroomio.s3.amazonaws.com/lesbonneschoses/babdc3421037f9af77720d8f5dcf1b84c912c6ba.png",
+              "url": "https://wroomio.s3.amazonaws.com/micro/babdc3421037f9af77720d8f5dcf1b84c912c6ba.png",
               "alt" : "Alternative text to view",
               "copyright" : "CC-BY",
               "dimensions": {

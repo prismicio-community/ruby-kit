@@ -5,9 +5,9 @@ describe "Cache's" do
 
   describe 'on/off switch' do
     before do
-      @api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: Prismic::LruCache.new(3))
+      @api = Prismic.api("https://micro.prismic.io/api", cache: Prismic::LruCache.new(3))
       @cache = @api.cache
-      @master_ref = @api.master_ref
+      @master_ref = @api.master
     end
 
     it "is properly on" do
@@ -16,14 +16,14 @@ describe "Cache's" do
     end
 
     it "is properly off" do
-      api = Prismic.api("https://lesbonneschoses.prismic.io/api", cache: nil)
+      api = Prismic.api("https://micro.prismic.io/api", cache: nil)
       api.has_cache?.should == false
     end
 
     describe 'storage and retrieval' do
       it 'stores properly' do
         @cache.intern.size.should == 0
-        @api.form('products').submit(@master_ref)
+        @api.form('arguments').submit(@master_ref)
         @cache.intern.size.should == 1
       end
 
@@ -59,14 +59,14 @@ describe "Cache's" do
 
     describe 'caching on a real repository' do
       before do
-        @api = Prismic.api("https://lesbonneschoses.prismic.io/api", access_token: 'MC5VbDdXQmtuTTB6Z0hNWHF3.c--_vVbvv73vv73vv73vv71EA--_vS_vv73vv70T77-9Ke-_ve-_vWfvv70ebO-_ve-_ve-_vQN377-9ce-_vRfvv70')
+        @api = Prismic.api("https://micro.prismic.io/api", access_token: 'MC5VcXBHWHdFQUFONDZrbWp4.77-9cDx6C3lgJu-_vXZafO-_vXPvv73vv73vv70777-9Ju-_ve-_vSLvv73vv73vv73vv70O77-977-9Me-_vQ')
         @cache = @api.cache
         @master_ref = @api.master_ref
-        @other_ref = @api.refs['announcement of new sf shop']
+        @other_ref = @api.refs['adding jason']
       end
       it 'works on different refs' do
-        @api.form('everything').submit(@master_ref).total_results_size.should == 40
-        @api.form('everything').submit(@other_ref).total_results_size.should == 43
+        @api.form('everything').submit(@master_ref).total_results_size.should == 18
+        @api.form('everything').submit(@other_ref).total_results_size.should == 19
       end
     end
   end
@@ -74,12 +74,12 @@ describe "Cache's" do
   describe 'configurable api cache' do
     let(:api_cache) { Prismic::BasicNullCache.new }
     it 'uses api_cache if provided' do
-      expect(api_cache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
-      Prismic.api("https://lesbonneschoses.prismic.io/api", api_cache: api_cache)
+      expect(api_cache).to receive(:get_or_set).with("https://micro.prismic.io/api", nil, 5).and_call_original.once
+      Prismic.api("https://micro.prismic.io/api", api_cache: api_cache)
     end
     it 'uses default cache if not provided' do
-      expect(Prismic::DefaultCache).to receive(:get_or_set).with("https://lesbonneschoses.prismic.io/api", nil, 5).and_call_original.once
-      Prismic.api("https://lesbonneschoses.prismic.io/api")
+      expect(Prismic::DefaultCache).to receive(:get_or_set).with("https://micro.prismic.io/api", nil, 5).and_call_original.once
+      Prismic.api("https://micro.prismic.io/api")
     end
   end
 end
