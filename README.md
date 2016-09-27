@@ -30,21 +30,13 @@ To add the gem as a dependency to your project with [Bundler](http://bundler.io/
 gem 'prismic.io', require: 'prismic'
 ```
 
-#### Get started with prismic.io
+#### Get started
 
-You can find out [how to get started with prismic.io](https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started) on our [prismic.io developer's portal](https://developers.prismic.io/).
+- [developer documentation](https://prismic.io/docs)
+- [quickstart](https://prismic.io/quickstart)
+- [API reference](http://prismicio.github.io/ruby-kit/)
 
-#### Get started using the kit
-
-Also on our [prismic.io developer's portal](https://developers.prismic.io/), on top of our full documentation, you will:
- * get a thorough introduction of [how to use prismic.io kits](https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers), including this one.
- * see [what else is available for Ruby](https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby): starter projects, examples, ...
-
-### Using the kit
-
-#### Kit's detailed documentation
-
-To get a detailed documentation of the Ruby kit's variables and methods, please check out the [prismic.io Ruby kit's documentation](http://rubydoc.info/github/prismicio/ruby-kit/master/frames).
+The quickstart is not available for Ruby yet, but if you understand Javascript you can easily adapt the code.
 
 #### Specific Ruby kit syntax
 
@@ -59,7 +51,7 @@ Thanks to Ruby's syntax, this kit contains some mild differences and syntastic s
 Knowing all that, here is typical code written with the Ruby kit:
 
  * A typical API object instantiation looks like this: `Prismic.api(url, opts)`
- * A typical querying looks like this: `api.form('everything').query('[[:d = at(document.type, "product")]]').submit(@ref)`
+ * A typical querying looks like this: `api.query('[[:d = at(document.type, "product")]]')`
  * A typical fragment manipulation looks like this: `doc['article.image'].get_view('icon').url`
  * A typical fragment serialization to HTML looks like this: `doc['article.body'].as_html(@link_resolver)`
 
