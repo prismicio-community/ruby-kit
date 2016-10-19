@@ -125,6 +125,15 @@ module Prismic
     end
     alias :getByIDs :get_by_ids
 
+    # Retrieve one single typed document by its type
+    # @param q [String] the query to perform
+    # @param data [Hash] query options (ref, etc.)
+    # @return the document, or nil if not found
+    def get_single(typ, data={})
+      query(Prismic::Predicates::at('document.type', typ), data)[0]
+    end
+    alias :getSingle :get_single
+
     # Return the URL to display a given preview
     # @param token [String] as received from Prismic server to identify the content to preview
     # @param link_resolver the link resolver to build URL for your site
