@@ -363,6 +363,11 @@ describe 'document_parser' do
     @document.slugs.should == ['vanilla-macaron', '南大沢']
   end
 
+  it "correctly parses the document's publication dates" do
+    @document.first_publication_date.should == Time.at(1476845881)
+    @document.last_publication_date.should == Time.at(1476846111)
+  end
+
   it "correctly parses the document's fragments" do
     @document.fragments.size.should == 14
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText

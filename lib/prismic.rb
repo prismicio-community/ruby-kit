@@ -450,16 +450,32 @@ module Prismic
     attr_accessor :tags
     # @return [Array<String>]
     attr_accessor :slugs
+    # @return Time
+    attr_accessor :first_publication_date
+    # @return Time
+    attr_accessor :last_publication_date
     # @return [Array<Fragment>]
     attr_accessor :fragments
 
-    def initialize(id, uid, type, href, tags, slugs, fragments)
+    def initialize(
+      id,
+      uid,
+      type,
+      href,
+      tags,
+      slugs,
+      first_publication_date,
+      last_publication_date,
+      fragments
+    )
       @id = id
       @uid = uid
       @type = type
       @href = href
       @tags = tags
       @slugs = slugs
+      @first_publication_date = first_publication_date
+      @last_publication_date = last_publication_date
       @fragments = fragments
     end
 

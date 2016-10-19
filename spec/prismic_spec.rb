@@ -268,7 +268,7 @@ end
 describe 'LinkResolver' do
   before do
     @doc_link = Prismic::Fragments::DocumentLink.new('id', nil, 'blog-post', ['tag1', 'tag2'], 'my-slug', {}, false)
-    @document = Prismic::Document.new('id', nil, 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil)
+    @document = Prismic::Document.new('id', nil, 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil, nil, nil)
 
     @link_resolver = Prismic::LinkResolver.new(nil) do |doc|
       '/'+doc.type+'/'+doc.id+'/'+doc.slug
@@ -290,7 +290,7 @@ describe 'Document' do
       'field1' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil, {}, nil),
       'field2' => Prismic::Fragments::WebLink.new('weburl')
     }
-    @document = Prismic::Document.new(nil, nil, nil, nil, nil, ['my-slug'], fragments)
+    @document = Prismic::Document.new(nil, nil, nil, nil, nil, ['my-slug'], nil, nil, fragments)
     @link_resolver = Prismic::LinkResolver.new('master'){|doc_link|
       "http://host/#{doc_link.id}"
     }

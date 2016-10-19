@@ -245,6 +245,8 @@ module Prismic
             json['href'],
             json['tags'],
             json['slugs'].map { |slug| URI.unescape(slug) },
+            json['first_publication_date'] && Time.parse(json['first_publication_date']),
+            json['last_publication_date'] && Time.parse(json['last_publication_date']),
             fragments)
       end
 
