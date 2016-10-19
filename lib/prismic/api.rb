@@ -99,28 +99,31 @@ module Prismic
     end
 
     # Retrieve one document by its id
-    # @param q [String] the query to perform
+    # @param id [String] the id to search
     # @param data [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
-    def getByID(id, data={})
+    def get_by_id(id, data={})
       query(Prismic::Predicates::at('document.id', id), data)[0]
     end
+    alias :getByID :get_by_id
 
     # Retrieve one document by its uid
-    # @param q [String] the query to perform
-    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @param uid [String] the uid to search
+    # @param data [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
-    def getByUID(typ, uid, data={})
+    def get_by_uid(typ, uid, data={})
       query(Prismic::Predicates::at('my.'+typ+'.uid', uid), data)[0]
     end
+    alias :getByUID :get_by_uid
 
     # Retrieve multiple documents by their ids
-    # @param q [String] the query to perform
+    # @param ids [String] the ids to fetch
     # @param data [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
-    def getByIDs(ids, data={})
+    def get_by_ids(ids, data={})
       query(Prismic::Predicates::in('document.id', ids), data)
     end
+    alias :getByIDs :get_by_ids
 
     # Return the URL to display a given preview
     # @param token [String] as received from Prismic server to identify the content to preview
