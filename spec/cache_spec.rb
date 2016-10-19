@@ -65,8 +65,8 @@ describe "Cache's" do
         @other_ref = @api.refs['adding jason']
       end
       it 'works on different refs' do
-        @api.form('everything').submit(@master_ref).total_results_size.should == 18
-        @api.form('everything').submit(@other_ref).total_results_size.should == 19
+        @api.form('everything').submit(@master_ref).total_results_size.should == 20
+        @api.form('everything').submit(@other_ref).total_results_size.should == 21
       end
     end
   end
