@@ -85,45 +85,54 @@ module Prismic
 
     # Perform a query on this API. Use the master reference is no ref is specified in data.
     # @param q [String] the query to perform
-    # @param data [Hash] query options (page, pageSize, ref, etc.)
-    def query(q, data={})
-      ref = data['ref'] || self.master.ref
-      form('everything', data).query(q).submit(ref)
+    # @param opts [Hash] query options (page, pageSize, ref, etc.)
+    def query(q, opts={})
+      ref = opts['ref'] || opts[:ref] || self.master.ref
+      form('everything', opts).query(q).submit(ref)
     end
 
     # Retrieve all documents (paginated)
-    # @param data [Hash] query options (page, pageSize, ref, etc.)
-    def all(data={})
-      ref = data['ref'] || self.master.ref
-      form('everything', data).submit(ref)
+    # @param opts [Hash] query options (page, pageSize, ref, etc.)
+    def all(opts={})
+      ref = opts['ref'] || opts[:ref] || self.master.ref
+      form('everything', opts).submit(ref)
     end
 
     # Retrieve one document by its id
     # @param id [String] the id to search
-    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @param opts [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
-    def get_by_id(id, data={})
-      query(Prismic::Predicates::at('document.id', id), data)[0]
+    def get_by_id(id, opts={})
+      query(Prismic::Predicates::at('document.id', id), opts)[0]
     end
     alias :getByID :get_by_id
 
     # Retrieve one document by its uid
     # @param uid [String] the uid to search
-    # @param data [Hash] query options (ref, etc.)
+    # @param opts [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
-    def get_by_uid(typ, uid, data={})
-      query(Prismic::Predicates::at('my.'+typ+'.uid', uid), data)[0]
+    def get_by_uid(typ, uid, opts={})
+      query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)[0]
     end
     alias :getByUID :get_by_uid
 
     # Retrieve multiple documents by their ids
     # @param ids [String] the ids to fetch
-    # @param data [Hash] query options (page, pageSize, ref, etc.)
+    # @param opts [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
-    def get_by_ids(ids, data={})
-      query(Prismic::Predicates::in('document.id', ids), data)
+    def get_by_ids(ids, opts={})
+      query(Prismic::Predicates::in('document.id', ids), opts)
     end
     alias :getByIDs :get_by_ids
+
+    # Retrieve one single typed document by its type
+    # @param q [String] the query to perform
+    # @param opts [Hash] query options (ref, etc.)
+    # @return the document, or nil if not found
+    def get_single(typ, opts={})
+      query(Prismic::Predicates::at('document.type', typ), opts)[0]
+    end
+    alias :getSingle :get_single
 
     # Return the URL to display a given preview
     # @param token [String] as received from Prismic server to identify the content to preview
