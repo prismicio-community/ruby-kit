@@ -108,6 +108,7 @@ module Prismic
     alias :getByID :get_by_id
 
     # Retrieve one document by its uid
+    # @param typ [String] the document type's name
     # @param uid [String] the uid to search
     # @param opts [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
@@ -126,7 +127,7 @@ module Prismic
     alias :getByIDs :get_by_ids
 
     # Retrieve one single typed document by its type
-    # @param q [String] the query to perform
+    # @param typ [String] the document type's name
     # @param opts [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
     def get_single(typ, opts={})
