@@ -143,6 +143,17 @@ describe 'Span' do
           'Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>'
     end
   end
+  describe 'in structured texts when image with link' do
+    before do
+      @raw_json_structured_text = File.read("#{File.dirname(__FILE__)}/responses_mocks/structured_text_image_with_link.json")
+      @json_structured_text = JSON.load(@raw_json_structured_text)
+      @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
+    end
+    it 'serializes well into HTML' do
+      @structured_text.as_html(nil).should ==
+          '<p class="block-img"><a href="http://prismic.io"><img src="https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif" alt="" width="960" height="800" /></a></p>'
+    end
+  end
 end
 
 describe 'Text' do

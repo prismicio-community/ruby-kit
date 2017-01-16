@@ -1,0 +1,21 @@
+{
+    "type": "StructuredText",
+    "value": [
+        {
+            "type": "image",
+            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif",
+            "alt": null,
+            "copyright": null,
+            "dimensions": {
+              "width": 960,
+              "height": 800
+            },
+            "linkTo": {
+                "type": "Link.web",
+                "value": {
+                    "url": "http://prismic.io"
+                }
+            }
+        }
+    ]
+}
