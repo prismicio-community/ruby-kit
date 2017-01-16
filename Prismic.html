@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   Module: Prismic
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.9.8
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "Prismic";
   relpath = '';
-  framesUrl = "frames.html#!Prismic.html";
 </script>
 
 
@@ -28,92 +27,99 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="_index.html">Index (P)</a> &raquo;
     
     
     <span class="title">Prismic</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
-
-    <div id="content"><h1>Module: Prismic
+      <div id="content"><h1>Module: Prismic
   
   
   
 </h1>
+<div class="box_info">
+  
 
-<dl class="box">
-  
-  
-    
-  
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/prismic.rb<span class="defines">,<br />
-  lib/prismic/api.rb,<br /> lib/prismic/form.rb,<br /> lib/prismic/version.rb,<br /> lib/prismic/cache/lru.rb,<br /> lib/prismic/predicates.rb,<br /> lib/prismic/cache/basic.rb,<br /> lib/prismic/experiments.rb,<br /> lib/prismic/json_parsers.rb,<br /> lib/prismic/fragments/text.rb,<br /> lib/prismic/fragments/date.rb,<br /> lib/prismic/fragments/link.rb,<br /> lib/prismic/fragments/image.rb,<br /> lib/prismic/fragments/embed.rb,<br /> lib/prismic/fragments/color.rb,<br /> lib/prismic/fragments/group.rb,<br /> lib/prismic/fragments/select.rb,<br /> lib/prismic/fragments/number.rb,<br /> lib/prismic/fragments/geopoint.rb,<br /> lib/prismic/fragments/fragment.rb,<br /> lib/prismic/fragments/multiple.rb,<br /> lib/prismic/fragments/timestamp.rb,<br /> lib/prismic/fragments/structured_text.rb</span>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/prismic.rb<span class="defines">,<br />
+  lib/prismic/api.rb,<br /> lib/prismic/form.rb,<br /> lib/prismic/version.rb,<br /> lib/prismic/cache/lru.rb,<br /> lib/prismic/predicates.rb,<br /> lib/prismic/experiments.rb,<br /> lib/prismic/json_parsers.rb,<br /> lib/prismic/fragments/date.rb,<br /> lib/prismic/fragments/link.rb,<br /> lib/prismic/fragments/text.rb,<br /> lib/prismic/with_fragments.rb,<br /> lib/prismic/fragments/color.rb,<br /> lib/prismic/fragments/embed.rb,<br /> lib/prismic/fragments/group.rb,<br /> lib/prismic/fragments/image.rb,<br /> lib/prismic/fragments/number.rb,<br /> lib/prismic/fragments/select.rb,<br /> lib/prismic/fragments/slices.rb,<br /> lib/prismic/fragments/fragment.rb,<br /> lib/prismic/fragments/geopoint.rb,<br /> lib/prismic/fragments/multiple.rb,<br /> lib/prismic/fragments/separator.rb,<br /> lib/prismic/fragments/timestamp.rb,<br /> lib/prismic/fragments/structured_text.rb</span>
 </dd>
+  </dl>
   
-</dl>
-<div class="clear"></div>
+</div>
 
 <h2>Defined Under Namespace</h2>
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Prismic/DefaultHTTPClient.html" title="Prismic::DefaultHTTPClient (module)">DefaultHTTPClient</a></span>, <span class='object_link'><a href="Prismic/Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span>, <span class='object_link'><a href="Prismic/JsonParser.html" title="Prismic::JsonParser (module)">JsonParser</a></span>, <span class='object_link'><a href="Prismic/Predicates.html" title="Prismic::Predicates (module)">Predicates</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Prismic/DefaultHTTPClient.html" title="Prismic::DefaultHTTPClient (module)">DefaultHTTPClient</a></span>, <span class='object_link'><a href="Prismic/Fragments.html" title="Prismic::Fragments (module)">Fragments</a></span>, <span class='object_link'><a href="Prismic/JsonParser.html" title="Prismic::JsonParser (module)">JsonParser</a></span>, <span class='object_link'><a href="Prismic/Predicates.html" title="Prismic::Predicates (module)">Predicates</a></span>, <span class='object_link'><a href="Prismic/WithFragments.html" title="Prismic::WithFragments (module)">WithFragments</a></span>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span>, <span class='object_link'><a href="Prismic/BasicCache.html" title="Prismic::BasicCache (class)">BasicCache</a></span>, <span class='object_link'><a href="Prismic/BasicCacheEntry.html" title="Prismic::BasicCacheEntry (class)">BasicCacheEntry</a></span>, <span class='object_link'><a href="Prismic/Document.html" title="Prismic::Document (class)">Document</a></span>, <span class='object_link'><a href="Prismic/Error.html" title="Prismic::Error (class)">Error</a></span>, <span class='object_link'><a href="Prismic/Experiment.html" title="Prismic::Experiment (class)">Experiment</a></span>, <span class='object_link'><a href="Prismic/Experiments.html" title="Prismic::Experiments (class)">Experiments</a></span>, <span class='object_link'><a href="Prismic/Field.html" title="Prismic::Field (class)">Field</a></span>, <span class='object_link'><a href="Prismic/Form.html" title="Prismic::Form (class)">Form</a></span>, <span class='object_link'><a href="Prismic/HtmlSerializer.html" title="Prismic::HtmlSerializer (class)">HtmlSerializer</a></span>, <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span>, <span class='object_link'><a href="Prismic/LinkedDocument.html" title="Prismic::LinkedDocument (class)">LinkedDocument</a></span>, <span class='object_link'><a href="Prismic/LruCache.html" title="Prismic::LruCache (class)">LruCache</a></span>, <span class='object_link'><a href="Prismic/Ref.html" title="Prismic::Ref (class)">Ref</a></span>, <span class='object_link'><a href="Prismic/Response.html" title="Prismic::Response (class)">Response</a></span>, <span class='object_link'><a href="Prismic/SearchForm.html" title="Prismic::SearchForm (class)">SearchForm</a></span>, <span class='object_link'><a href="Prismic/Variation.html" title="Prismic::Variation (class)">Variation</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span>, <span class='object_link'><a href="Prismic/BasicNullCache.html" title="Prismic::BasicNullCache (class)">BasicNullCache</a></span>, <span class='object_link'><a href="Prismic/Document.html" title="Prismic::Document (class)">Document</a></span>, <span class='object_link'><a href="Prismic/Error.html" title="Prismic::Error (class)">Error</a></span>, <span class='object_link'><a href="Prismic/Experiment.html" title="Prismic::Experiment (class)">Experiment</a></span>, <span class='object_link'><a href="Prismic/Experiments.html" title="Prismic::Experiments (class)">Experiments</a></span>, <span class='object_link'><a href="Prismic/Field.html" title="Prismic::Field (class)">Field</a></span>, <span class='object_link'><a href="Prismic/Form.html" title="Prismic::Form (class)">Form</a></span>, <span class='object_link'><a href="Prismic/HtmlSerializer.html" title="Prismic::HtmlSerializer (class)">HtmlSerializer</a></span>, <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span>, <span class='object_link'><a href="Prismic/LruCache.html" title="Prismic::LruCache (class)">LruCache</a></span>, <span class='object_link'><a href="Prismic/Ref.html" title="Prismic::Ref (class)">Ref</a></span>, <span class='object_link'><a href="Prismic/Response.html" title="Prismic::Response (class)">Response</a></span>, <span class='object_link'><a href="Prismic/SearchForm.html" title="Prismic::SearchForm (class)">SearchForm</a></span>, <span class='object_link'><a href="Prismic/Variation.html" title="Prismic::Variation (class)">Variation</a></span>
     
   
 </p>
 
   <h2>Constant Summary</h2>
-  
-    <dl class="constants">
-      
-        <dt id="VERSION-constant" class="">VERSION =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.4</span><span class='tstring_end'>&#39;</span></span></pre></dd>
-      
-        <dt id="DefaultCache-constant" class="">DefaultCache =
-          <div class="docstring">
-  <div class="discussion">
+  <dl class="constants">
     
-<p>This default instance is used by the API to avoid creating a new
-instance
+      <dt id="EXPERIMENTS_COOKIE-constant" class="">EXPERIMENTS_COOKIE =
+        
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>io.prismic.experiment</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+    
+      <dt id="PREVIEW_COOKIE-constant" class="">PREVIEW_COOKIE =
+        
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>io.prismic.preview</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+    
+      <dt id="VERSION-constant" class="">VERSION =
+        
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.4.3</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+    
+      <dt id="DefaultCache-constant" class="">DefaultCache =
+        <div class="docstring">
+  <div class="discussion">
+    <p>This default instance is used by the API to avoid creating a new instance
 per request (which would make the cache useless).</p>
 
 
@@ -123,16 +129,10 @@ per request (which would make the cache useless).</p>
   
 
 </div>
-        </dt>
-        <dd><pre class="code"><span class='const'>LruCache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
-      
-        <dt id="DefaultApiCache-constant" class="">DefaultApiCache =
-          
-        </dt>
-        <dd><pre class="code"><span class='const'>BasicCache</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre></dd>
-      
-    </dl>
-  
+      </dt>
+      <dd><pre class="code"><span class='const'><span class='object_link'><a href="Prismic/LruCache.html" title="Prismic::LruCache (class)">LruCache</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Prismic/LruCache.html#initialize-instance_method" title="Prismic::LruCache#initialize (method)">new</a></span></span></pre></dd>
+    
+  </dl>
 
 
 
@@ -143,7 +143,7 @@ per request (which would make the cache useless).</p>
   
     <h2>
       Class Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
     <ul class="summary">
@@ -151,7 +151,7 @@ per request (which would make the cache useless).</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#api-class_method" title="api (class method)">+ (API) <strong>api</strong>(url, opts = nil) </a>
+      <a href="#api-class_method" title="api (class method)">.<strong>api</strong>(url, opts = nil)  &#x21d2; API </a>
     
 
     
@@ -165,8 +165,7 @@ per request (which would make the cache useless).</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Return an API instance The access token and HTTP client can be provided.</p>
+    <span class="summary_desc"><div class='inline'><p>Return an API instance The access token and HTTP client can be provided.</p>
 </div></span>
   
 </li>
@@ -175,7 +174,7 @@ per request (which would make the cache useless).</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#html_serializer-class_method" title="html_serializer (class method)">+ (Object) <strong>html_serializer</strong>(&amp;blk) </a>
+      <a href="#html_serializer-class_method" title="html_serializer (class method)">.<strong>html_serializer</strong>(&amp;blk)  &#x21d2; Object </a>
     
 
     
@@ -197,7 +196,7 @@ per request (which would make the cache useless).</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#link_resolver-class_method" title="link_resolver (class method)">+ (LinkResolver) <strong>link_resolver</strong>(ref) {|doc_link| ... }</a>
+      <a href="#link_resolver-class_method" title="link_resolver (class method)">.<strong>link_resolver</strong>(ref) {|doc_link| ... } &#x21d2; LinkResolver </a>
     
 
     
@@ -211,10 +210,7 @@ per request (which would make the cache useless).</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Build a <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance The <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> will help to build URL
-specific to an application, based on a generic prismic.io&#39;s
-<span class='object_link'><a href="Prismic/Fragments/DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">Document link</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>Build a <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance The <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> will help to build URL specific to an application, based on a generic prismic.io&#39;s <span class='object_link'><a href="Prismic/Fragments/DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">Document link</a></span>.</p>
 </div></span>
   
 </li>
@@ -223,7 +219,7 @@ specific to an application, based on a generic prismic.io&#39;s
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#oauth_check_token-class_method" title="oauth_check_token (class method)">+ (String) <strong>oauth_check_token</strong>(url, oauth_opts, api_opts = nil) </a>
+      <a href="#oauth_check_token-class_method" title="oauth_check_token (class method)">.<strong>oauth_check_token</strong>(url, oauth_opts, api_opts = nil)  &#x21d2; String </a>
     
 
     
@@ -237,8 +233,7 @@ specific to an application, based on a generic prismic.io&#39;s
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Check a token and return an access_token.</p>
+    <span class="summary_desc"><div class='inline'><p>Check a token and return an access_token.</p>
 </div></span>
   
 </li>
@@ -247,7 +242,7 @@ specific to an application, based on a generic prismic.io&#39;s
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#oauth_initiate_url-class_method" title="oauth_initiate_url (class method)">+ (String) <strong>oauth_initiate_url</strong>(url, oauth_opts, api_opts = nil) </a>
+      <a href="#oauth_initiate_url-class_method" title="oauth_initiate_url (class method)">.<strong>oauth_initiate_url</strong>(url, oauth_opts, api_opts = nil)  &#x21d2; String </a>
     
 
     
@@ -261,9 +256,7 @@ specific to an application, based on a generic prismic.io&#39;s
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Build the URL where the user can be redirected to authenticated himself
-using OAuth2.</p>
+    <span class="summary_desc"><div class='inline'><p>Build the URL where the user can be redirected to authenticated himself using OAuth2.</p>
 </div></span>
   
 </li>
@@ -282,11 +275,11 @@ using OAuth2.</p>
   <h3 class="signature first" id="api-class_method">
   
     
-      <span class="overload">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url) </span>
+      <span class="overload">.<strong>api</strong>(url)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
     
-      <span class="overload">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url, opts) </span>
+      <span class="overload">.<strong>api</strong>(url, opts)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
     
-      <span class="overload">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url, access_token) </span>
+      <span class="overload">.<strong>api</strong>(url, access_token)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
     
   
 
@@ -295,8 +288,7 @@ using OAuth2.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Return an API instance
+    <p>Return an API instance
 The access token and HTTP client can be provided.</p>
 
 <p>The HTTP Client must responds to same method than <span class='object_link'><a href="Prismic/DefaultHTTPClient.html" title="Prismic::DefaultHTTPClient (module)">DefaultHTTPClient</a></span>.</p>
@@ -311,11 +303,10 @@ The access token and HTTP client can be provided.</p>
     
       
       <li class="overload_item">
-        <span class="signature">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url) </span>
+        <span class="signature">.<strong>api</strong>(url)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
         <div class="docstring">
   <div class="discussion">
-    
-<p>Simpler syntax (no configuration)</p>
+    <p>Simpler syntax (no configuration)</p>
 
 
   </div>
@@ -334,8 +325,7 @@ The access token and HTTP client can be provided.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The URL of the prismic.io repository</p>
+        <div class='inline'><p>The URL of the prismic.io repository</p>
 </div>
       
     </li>
@@ -348,11 +338,10 @@ The access token and HTTP client can be provided.</p>
     
       
       <li class="overload_item">
-        <span class="signature">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url, opts) </span>
+        <span class="signature">.<strong>api</strong>(url, opts)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
         <div class="docstring">
   <div class="discussion">
-    
-<p>Standard use</p>
+    <p>Standard use</p>
 
 
   </div>
@@ -371,8 +360,7 @@ The access token and HTTP client can be provided.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The URL of the prismic.io repository</p>
+        <div class='inline'><p>The URL of the prismic.io repository</p>
 </div>
       
     </li>
@@ -387,8 +375,7 @@ The access token and HTTP client can be provided.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The options</p>
+        <div class='inline'><p>The options</p>
 </div>
       
     </li>
@@ -413,8 +400,7 @@ The access token and HTTP client can be provided.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The access_token</p>
+            &mdash; <div class='inline'><p>The access_token</p>
 </div>
           
         </li>
@@ -429,8 +415,7 @@ The access token and HTTP client can be provided.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The HTTP client to use</p>
+            &mdash; <div class='inline'><p>The HTTP client to use</p>
 </div>
           
         </li>
@@ -445,9 +430,7 @@ The access token and HTTP client can be provided.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The caching object (for instance Prismic::Cache) to use, or false for no
-caching</p>
+            &mdash; <div class='inline'><p>The caching object (for instance Prismic::Cache) to use, or false for no caching</p>
 </div>
           
         </li>
@@ -461,11 +444,10 @@ caching</p>
     
       
       <li class="overload_item">
-        <span class="signature">+ (<tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt>) <strong>api</strong>(url, access_token) </span>
+        <span class="signature">.<strong>api</strong>(url, access_token)  &#x21d2; <tt><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></tt> </span>
         <div class="docstring">
   <div class="discussion">
-    
-<p>Provide the access_token (only)</p>
+    <p>Provide the access_token (only)</p>
 
 
   </div>
@@ -484,8 +466,7 @@ caching</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The URL of the prismic.io repository</p>
+        <div class='inline'><p>The URL of the prismic.io repository</p>
 </div>
       
     </li>
@@ -500,8 +481,7 @@ caching</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The access token</p>
+        <div class='inline'><p>The access token</p>
 </div>
       
     </li>
@@ -525,8 +505,7 @@ caching</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The API instance related to this repository</p>
+        <div class='inline'><p>The API instance related to this repository</p>
 </div>
       
     </li>
@@ -543,8 +522,7 @@ caching</p>
       
       
         
-        <div class='inline'>
-<p>PrismicWSConnectionError</p>
+        <div class='inline'><p>PrismicWSConnectionError</p>
 </div>
       
     </li>
@@ -557,19 +535,25 @@ caching</p>
       <pre class="lines">
 
 
-58
-59
-60
-61
-62</pre>
+64
+65
+66
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_api'>api</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='kw'>not</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A</span><span class='embexpr_beg'>#{</span><span class='const'>URI</span><span class='op'>::</span><span class='id identifier rubyid_regexp'>regexp</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Valid web URI expected</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_opts'>opts</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>access_token:</span> <span class='id identifier rubyid_opts'>opts</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
-  <span class='const'>API</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_start'><span class='object_link'><a href="Prismic/API.html#start-class_method" title="Prismic::API.start (method)">start</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -579,7 +563,7 @@ caching</p>
       <div class="method_details ">
   <h3 class="signature " id="html_serializer-class_method">
   
-    + (<tt>Object</tt>) <strong>html_serializer</strong>(&amp;blk) 
+    .<strong>html_serializer</strong>(&amp;blk)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -591,15 +575,15 @@ caching</p>
       <pre class="lines">
 
 
-717
-718
-719</pre>
+637
+638
+639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 717</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 637</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_html_serializer'>html_serializer</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
-  <span class='const'>HtmlSerializer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Prismic/HtmlSerializer.html" title="Prismic::HtmlSerializer (class)">HtmlSerializer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Prismic/HtmlSerializer.html#initialize-instance_method" title="Prismic::HtmlSerializer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -609,7 +593,7 @@ caching</p>
       <div class="method_details ">
   <h3 class="signature " id="link_resolver-class_method">
   
-    + (<tt><span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span></tt>) <strong>link_resolver</strong>(ref) {|doc_link| ... }
+    .<strong>link_resolver</strong>(ref) {|doc_link| ... } &#x21d2; <tt><span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span></tt> 
   
 
   
@@ -617,12 +601,9 @@ caching</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Build a <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance
-The <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> will help to build URL
-specific to an application, based
-on a generic prismic.io&#39;s
-<span class='object_link'><a href="Prismic/Fragments/DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">Document link</a></span>.</p>
+    <p>Build a <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance
+The <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> will help to build URL specific to an application, based
+on a generic prismic.io&#39;s <span class='object_link'><a href="Prismic/Fragments/DocumentLink.html" title="Prismic::Fragments::DocumentLink (class)">Document link</a></span>.</p>
 
 
   </div>
@@ -641,8 +622,7 @@ on a generic prismic.io&#39;s
       
       
         &mdash;
-        <div class='inline'>
-<p>The ref to use</p>
+        <div class='inline'><p>The ref to use</p>
 </div>
       
     </li>
@@ -662,8 +642,7 @@ on a generic prismic.io&#39;s
       
       
         &mdash;
-        <div class='inline'>
-<p>A DocumentLink instance</p>
+        <div class='inline'><p>A DocumentLink instance</p>
 </div>
       
     </li>
@@ -680,8 +659,7 @@ on a generic prismic.io&#39;s
       
       
         &mdash;
-        <div class='inline'>
-<p>The application specific URL of the given document</p>
+        <div class='inline'><p>The application specific URL of the given document</p>
 </div>
       
     </li>
@@ -698,8 +676,7 @@ on a generic prismic.io&#39;s
       
       
         &mdash;
-        <div class='inline'>
-<p>the <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance</p>
+        <div class='inline'><p>the <span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span> instance</p>
 </div>
       
     </li>
@@ -712,15 +689,15 @@ on a generic prismic.io&#39;s
       <pre class="lines">
 
 
-713
-714
-715</pre>
+633
+634
+635</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 713</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 633</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_link_resolver'>link_resolver</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
-  <span class='const'>LinkResolver</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Prismic/LinkResolver.html" title="Prismic::LinkResolver (class)">LinkResolver</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Prismic/LinkResolver.html#initialize-instance_method" title="Prismic::LinkResolver#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -730,7 +707,7 @@ on a generic prismic.io&#39;s
       <div class="method_details ">
   <h3 class="signature " id="oauth_check_token-class_method">
   
-    + (<tt>String</tt>) <strong>oauth_check_token</strong>(url, oauth_opts, api_opts = nil) 
+    .<strong>oauth_check_token</strong>(url, oauth_opts, api_opts = nil)  &#x21d2; <tt>String</tt> 
   
 
   
@@ -738,13 +715,10 @@ on a generic prismic.io&#39;s
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Check a token and return an access_token</p>
+    <p>Check a token and return an access_token</p>
 
-<p>This method allows to check the token received when the user has
-been
-redirected from the OAuth2 server. It returns an access_token that
-can
+<p>This method allows to check the token received when the user has been
+redirected from the OAuth2 server. It returns an access_token that can
 be used to authenticate the user on the API.</p>
 
 
@@ -764,8 +738,7 @@ be used to authenticate the user on the API.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The URL of the prismic.io repository</p>
+        <div class='inline'><p>The URL of the prismic.io repository</p>
 </div>
       
     </li>
@@ -780,8 +753,7 @@ be used to authenticate the user on the API.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The OAuth2 options</p>
+        <div class='inline'><p>The OAuth2 options</p>
 </div>
       
     </li>
@@ -798,8 +770,7 @@ be used to authenticate the user on the API.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The API options (the same than accepted by the
+        <div class='inline'><p>The API options (the same than accepted by the
 <span class='object_link'><a href="#api-class_method" title="Prismic.api (method)">api</a></span> method)</p>
 </div>
       
@@ -822,8 +793,7 @@ be used to authenticate the user on the API.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The Application&#39;s client ID</p>
+            &mdash; <div class='inline'><p>The Application&#39;s client ID</p>
 </div>
           
         </li>
@@ -835,8 +805,7 @@ be used to authenticate the user on the API.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The Application&#39;s secret</p>
+            &mdash; <div class='inline'><p>The Application&#39;s secret</p>
 </div>
           
         </li>
@@ -857,8 +826,7 @@ be used to authenticate the user on the API.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>the access_token</p>
+        <div class='inline'><p>the access_token</p>
 </div>
       
     </li>
@@ -875,8 +843,7 @@ be used to authenticate the user on the API.</p>
       
       
         
-        <div class='inline'>
-<p>PrismicWSConnectionError</p>
+        <div class='inline'><p>PrismicWSConnectionError</p>
 </div>
       
     </li>
@@ -889,19 +856,19 @@ be used to authenticate the user on the API.</p>
       <pre class="lines">
 
 
-106
-107
-108
-109
-110</pre>
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_oauth_check_token'>oauth_check_token</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_api_opts'>api_opts</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_api_opts'>api_opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>access_token:</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
-  <span class='const'>API</span><span class='period'>.</span><span class='id identifier rubyid_oauth_check_token'>oauth_check_token</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_oauth_check_token'><span class='object_link'><a href="Prismic/API.html#oauth_check_token-class_method" title="Prismic::API.oauth_check_token (method)">oauth_check_token</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -911,7 +878,7 @@ be used to authenticate the user on the API.</p>
       <div class="method_details ">
   <h3 class="signature " id="oauth_initiate_url-class_method">
   
-    + (<tt>String</tt>) <strong>oauth_initiate_url</strong>(url, oauth_opts, api_opts = nil) 
+    .<strong>oauth_initiate_url</strong>(url, oauth_opts, api_opts = nil)  &#x21d2; <tt>String</tt> 
   
 
   
@@ -919,12 +886,9 @@ be used to authenticate the user on the API.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Build the URL where the user can be redirected to authenticated
-himself
+    <p>Build the URL where the user can be redirected to authenticated himself
 using OAuth2.
-@note: The endpoint depends on the repository, so an
-API call is made to
+@note: The endpoint depends on the repository, so an API call is made to
 fetch it.</p>
 
 
@@ -944,8 +908,7 @@ fetch it.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The URL of the prismic.io repository</p>
+        <div class='inline'><p>The URL of the prismic.io repository</p>
 </div>
       
     </li>
@@ -960,8 +923,7 @@ fetch it.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The OAuth2 options</p>
+        <div class='inline'><p>The OAuth2 options</p>
 </div>
       
     </li>
@@ -978,8 +940,7 @@ fetch it.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The API options (the same than accepted by the <span class='object_link'><a href="#api-class_method" title="Prismic.api (method)">api</a></span>
+        <div class='inline'><p>The API options (the same than accepted by the <span class='object_link'><a href="#api-class_method" title="Prismic.api (method)">api</a></span>
 method)</p>
 </div>
       
@@ -1002,8 +963,7 @@ method)</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The Application&#39;s client ID</p>
+            &mdash; <div class='inline'><p>The Application&#39;s client ID</p>
 </div>
           
         </li>
@@ -1015,8 +975,7 @@ method)</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The Application&#39;s secret</p>
+            &mdash; <div class='inline'><p>The Application&#39;s secret</p>
 </div>
           
         </li>
@@ -1028,8 +987,7 @@ method)</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The desired scope</p>
+            &mdash; <div class='inline'><p>The desired scope</p>
 </div>
           
         </li>
@@ -1050,8 +1008,7 @@ method)</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The built URL</p>
+        <div class='inline'><p>The built URL</p>
 </div>
       
     </li>
@@ -1068,8 +1025,7 @@ method)</p>
       
       
         
-        <div class='inline'>
-<p>PrismicWSConnectionError</p>
+        <div class='inline'><p>PrismicWSConnectionError</p>
 </div>
       
     </li>
@@ -1082,19 +1038,19 @@ method)</p>
       <pre class="lines">
 
 
-83
-84
-85
-86
-87</pre>
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/prismic.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_oauth_initiate_url'>oauth_initiate_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_api_opts'>api_opts</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_api_opts'>api_opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>access_token:</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
-  <span class='const'>API</span><span class='period'>.</span><span class='id identifier rubyid_oauth_initiate_url'>oauth_initiate_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Prismic/API.html" title="Prismic::API (class)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_oauth_initiate_url'><span class='object_link'><a href="Prismic/API.html#oauth_initiate_url-class_method" title="Prismic::API.oauth_initiate_url (method)">oauth_initiate_url</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_oauth_opts'>oauth_opts</span><span class='comma'>,</span> <span class='id identifier rubyid_api_opts'>api_opts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1105,11 +1061,12 @@ method)</p>
 
 </div>
 
-    <div id="footer">
-  Generated on Wed Oct 29 11:21:08 2014 by
+      <div id="footer">
+  Generated on Mon Jan 16 16:05:08 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.0.0).
+  0.9.8 (ruby-2.3.1).
 </div>
 
+    </div>
   </body>
 </html>
