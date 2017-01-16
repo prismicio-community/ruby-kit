@@ -21,6 +21,17 @@ describe 'predicates' do
     end
   end
 
+  describe 'not predicate' do
+    it 'as an array serializes well' do
+      form = @api.form('everything').query(['not', 'document.id', 'UrjI1gEAALOCeO5i'])
+      form.data['q'].should == ['[[:d = not(document.id, "UrjI1gEAALOCeO5i")]]']
+    end
+    it 'with helper serializes well' do
+      form = @api.form('everything').query(Predicates.not('document.id', 'UrjI1gEAALOCeO5i'))
+      form.data['q'].should == ['[[:d = not(document.id, "UrjI1gEAALOCeO5i")]]']
+    end
+  end
+
   describe 'any predicate' do
     it 'with helper serializes well' do
       form = @api.form('everything').query(Predicates.any('document.type', ['article', 'blog-post']))
