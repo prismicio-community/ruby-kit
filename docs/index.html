@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.9.8
   
 </title>
 
@@ -15,9 +15,8 @@
   <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  hasFrames = window.top.frames.main ? true : false;
+  pathId = "README";
   relpath = '';
-  framesUrl = "frames.html#!file.README.html";
 </script>
 
 
@@ -28,40 +27,37 @@
 
   </head>
   <body>
-    <div id="header">
-      <div id="menu">
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
   
     <a href="_index.html">Index</a> &raquo; 
     <span class="title">File: README</span>
   
-
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
-      <div id="search">
+        <div id="search">
   
     <a class="full_list_link" id="class_list_link"
         href="class_list.html">
-      Class List
-    </a>
-  
-    <a class="full_list_link" id="method_list_link"
-        href="method_list.html">
-      Method List
-    </a>
-  
-    <a class="full_list_link" id="file_list_link"
-        href="file_list.html">
-      File List
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
     </a>
   
 </div>
-      <div class="clear"></div>
-    </div>
+        <div class="clear"></div>
+      </div>
 
-    <iframe id="search_frame"></iframe>
-
-    <div id="content"><div id='filecontents'><h2>Ruby development kit for prismic.io</h2>
+      <div id="content"><div id='filecontents'><h2>Ruby development kit for prismic.io</h2>
 
 <p><a href="http://badge.fury.io/rb/prismic.io"><img src="https://badge.fury.io/rb/prismic.io.png" alt="Gem Version"></a>
 <a href="https://travis-ci.org/prismicio/ruby-kit"><img src="https://api.travis-ci.org/prismicio/ruby-kit.png" alt="Build Status"></a>
@@ -81,65 +77,33 @@
 <pre class="code sh"><code class="sh">gem install prismic.io --pre
 </code></pre>
 
-<p>then add in your code:
-<code>ruby
-require &#39;prismic&#39;
-</code></p>
+<p>then add in your code:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>prismic</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>To add the gem as a dependency to your project with <a href="http://bundler.io/">Bundler</a>, you can add this line in your Gemfile:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>prismic.io</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>require:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>prismic</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<h4>Get started with prismic.io</h4>
-
-<p>You can find out <a href="https://developers.prismic.io/documentation/UjBaQsuvzdIHvE4D/getting-started">how to get started with prismic.io</a> on our <a href="https://developers.prismic.io/">prismic.io developer&#39;s portal</a>.</p>
-
-<h4>Get started using the kit</h4>
-
-<p>Also on our <a href="https://developers.prismic.io/">prismic.io developer&#39;s portal</a>, on top of our full documentation, you will:
- * get a thorough introduction of <a href="https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers">how to use prismic.io kits</a>, including this one.
- * see <a href="https://developers.prismic.io/technologies/UjBh6MuvzeMJvE4m/ruby">what else is available for Ruby</a>: starter projects, examples, ...</p>
-
-<h3>Using the kit</h3>
-
-<h4>Kit&#39;s detailed documentation</h4>
-
-<p>To get a detailed documentation of the Ruby kit&#39;s variables and methods, please check out the <a href="http://rubydoc.info/github/prismicio/ruby-kit/master/frames">prismic.io Ruby kit&#39;s documentation</a>.</p>
-
-<h4>Specific Ruby kit syntax</h4>
-
-<p>Thanks to Ruby&#39;s syntax, this kit contains some mild differences and syntastic sugar over <a href="https://developers.prismic.io/documentation/UjBe8bGIJ3EKtgBZ/api-documentation#kits-and-helpers">the &quot;Kits and helpers&quot; section of our API documentation</a> in general (which you should read first). They are listed here:</p>
+<h4>Get started</h4>
 
 <ul>
-<li>When calling the API, a faster way to pass the <code>ref</code>: directly as a parameter of the <code>submit</code> method (no need to use the <code>ref</code> method then): <code>api.form(&quot;everything&quot;).submit(@ref)</code>.</li>
-<li>Accessing type-dependent fields from a <code>document</code> is done through the <code>[]</code> operator (rather than a <code>get()</code> method). Printing the HTML version of a field therefore looks like <code>document[&quot;title_user_friendly&quot;].as_html(link_resolver(@ref))</code>.</li>
-<li>Two of the fields in the <code>DocumentLink</code> object (the one used to write your <code>link_resolver</code> method, for instance) were renamed to fit Ruby&#39;s best practice: <code>doc.type</code> is in fact <code>doc.link_type</code>, and <code>doc.isBroken</code> is in fact <code>doc.broken?</code>.</li>
-<li>You don&#39;t need to pass a <code>ctx</code> object in <code>as_html()</code>, you can use the <code>Prismic.link_resolver</code> static method to build a link resolver object that takes the <code>ref</code> into account, like this: <code>@link_resolver = Prismic.link_resolver(@ref) { |doc| ...  }</code>. Then you can simply go: <code>fragment.as_html(@link_resolver)</code>. Note: the Rails starter kit provides you with a helper allowing you to pass the ref each time you call the link resolver, like this: <code>fragment.as_html(link_resolver(@ref))</code>.</li>
-<li>the <code>Response</code> class is fit to work with the <a href="https://github.com/amatsuda/kaminari">Kaminari</a> gem. So if you have a <code>@response</code> object in your controller, you can display a whole pagination for it in your view like this: <code>&lt;%= paginate @response %&gt;</code> (this works with any Rails 3 or 4 app with the Kaminari gem installed).</li>
+<li><a href="https://prismic.io/docs">developer documentation</a></li>
+<li><a href="https://prismic.io/quickstart">quickstart</a></li>
+<li><a href="http://prismicio.github.io/ruby-kit/">API reference</a></li>
 </ul>
 
-<p>Knowing all that, here is typical code written with the Ruby kit:</p>
-
-<ul>
-<li>A typical API object instantiation looks like this: <code>Prismic.api(url, opts)</code></li>
-<li>A typical querying looks like this: <code>api.form(&#39;everything&#39;).query(&#39;[[:d = at(document.type, &quot;product&quot;)]]&#39;).submit(@ref)</code></li>
-<li>A typical fragment manipulation looks like this: <code>doc[&#39;article.image&#39;].get_view(&#39;icon&#39;).url</code></li>
-<li>A typical fragment serialization to HTML looks like this: <code>doc[&#39;article.body&#39;].as_html(@link_resolver)</code></li>
-</ul>
+<p>The quickstart is not available for Ruby yet, but if you understand Javascript you can easily adapt the code.</p>
 
 <h4>Configuring Alternative API Caches</h4>
 
-<p>The default cache stores data in-memory, in the server. You may want to use a different cache, for example to share it between several servers (with memcached or similar). A null cache (does no caching) is also available if you need a predictible behavior for testing or VCR. To use it (or any other compliant cache), simply add <code>api_cache =&gt; Prismic::BasicNullCache.new</code>
-to the options passed to <code>Prismic.api</code>.</p>
+<p>The default cache stores data in-memory, in the server. You may want to use a different cache, for example to share it between several servers (with memcached or similar). A null cache (does no caching) is also available if you need a predictible behavior for testing or VCR. To use it (or any other compliant cache), simply add <code>api_cache: Prismic::BasicNullCache.new</code> to the options passed to <code>Prismic.api</code>.</p>
 
 <h3>Changelog</h3>
 
 <p>Need to see what changed, or to upgrade your kit? We keep our changelog on <a href="https://github.com/prismicio/ruby-kit/releases">this repository&#39;s &quot;Releases&quot; tab</a>.</p>
-
-<h3>Contribute to the kit</h3>
-
-<p>Contribution is open to all developer levels, read our &quot;<a href="https://developers.prismic.io/documentation/UszOeAEAANUlwFpp/contribute-to-the-official-kits">Contribute to the official kits</a>&quot; documentation to learn more.</p>
 
 <h4>Install the kit locally</h4>
 
@@ -149,7 +113,7 @@ to the options passed to <code>Prismic.api</code>.</p>
 
 <h4>Test</h4>
 
-<p>Please write tests for any bugfix or new feature, by placing your tests in the <a href="spec/">spec/</a> folder, following the <a href="http://rspec.info/">RSpec</a> syntax. Launch the tests by running <code>bundle exec rspec</code></p>
+<p>Please write tests for any bugfix or new feature, by placing your tests in the <a href="spec/">spec/</a> folder, following the <a href="http://rspec.info/">RSpec</a> syntax. Launch the tests by running <code>rspec</code></p>
 
 <p>If you find existing code that is not optimally tested and wish to make it better, we really appreciate it; but you should document it on its own branch and its own pull request.</p>
 
@@ -170,11 +134,12 @@ to the options passed to <code>Prismic.api</code>.</p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
 </div></div>
 
-    <div id="footer">
-  Generated on Tue Sep 27 10:47:05 2016 by
+      <div id="footer">
+  Generated on Mon Jan 16 16:05:08 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.0.0).
+  0.9.8 (ruby-2.3.1).
 </div>
 
+    </div>
   </body>
 </html>
