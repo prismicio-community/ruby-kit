@@ -333,7 +333,9 @@ module Prismic
     def set(field_name, value)
       field = @form.fields[field_name]
       unless value == nil
-        if field && field.repeatable?
+        if value == ""
+          data[field_name] = nil
+        elsif field && field.repeatable?
           data[field_name] = [] unless data.include? field_name
           data[field_name] << value.to_s
         else
