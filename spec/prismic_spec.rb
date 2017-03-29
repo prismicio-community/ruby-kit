@@ -423,6 +423,13 @@ describe 'SearchForm' do
       @form.data.should == { 'q' => 'baz' }  # test an other
     end
 
+    it 'replace empty string value with nil' do
+      @field = Prismic::Field.new('String', nil, true)
+      @form = create_form('q' => @field)
+      @form.set('q', '')
+      @form.data.should == { 'q' => nil }
+    end
+
     it 'create value array for repeatable fields without value' do
       @field = Prismic::Field.new('String', nil, true)
       @form = create_form('q' => @field)
