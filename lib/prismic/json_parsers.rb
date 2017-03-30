@@ -221,6 +221,10 @@ module Prismic
         end
       end
 
+      def alternate_language_parser(alternate_language)
+        Prismic::AlternateLanguage.new(alternate_language) 
+      end
+
       def document_parser(json)
         data_json = json['data'].values.first  # {"doc_type": data}
 
@@ -233,6 +237,10 @@ module Prismic
           end
           known_type
         }
+
+        alternate_languages = Hash[json['alternate_languages'].map { |doc| 
+          [doc['lang'], alternate_language_parser(doc)]
+        }]
 
         fragments = Hash[data_json.map { |name, fragment|
           [name, fragment_parser(fragment)]
@@ -247,6 +255,8 @@ module Prismic
             json['slugs'].map { |slug| URI.unescape(slug) },
             json['first_publication_date'] && Time.parse(json['first_publication_date']),
             json['last_publication_date'] && Time.parse(json['last_publication_date']),
+            json['lang'],
+            alternate_languages,
             fragments)
       end
 

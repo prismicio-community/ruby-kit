@@ -461,6 +461,10 @@ module Prismic
     attr_accessor :first_publication_date
     # @return Time
     attr_accessor :last_publication_date
+    # @return [String]
+    attr_accessor :lang
+    # @return [Array<AlternateLanguage>]
+    attr_accessor :alternate_languages
     # @return [Array<Fragment>]
     attr_accessor :fragments
 
@@ -473,6 +477,8 @@ module Prismic
       slugs,
       first_publication_date,
       last_publication_date,
+      lang,
+      alternate_languages,
       fragments
     )
       @id = id
@@ -483,6 +489,8 @@ module Prismic
       @slugs = slugs
       @first_publication_date = first_publication_date
       @last_publication_date = last_publication_date
+      @lang = lang
+      @alternate_languages = alternate_languages
       @fragments = fragments
     end
 
@@ -572,6 +580,28 @@ module Prismic
 
     def serialize(element, content)
       @blk.call(element, content)
+    end
+  end
+  
+
+  # A class for the alternate language versions of a document 
+  #
+  # The {Prismic.alternate_language} function is the recommended way to create an AlternateLanguage.
+  class AlternateLanguage
+    # @return [String]
+    attr_accessor :id
+    # @return [String]
+    attr_accessor :uid
+    # @return [String]
+    attr_accessor :type
+    # @return [String]
+    attr_accessor :lang
+
+    def initialize(json)
+      @id = json['id']
+      @uid = json['uid']
+      @type = json['type']
+      @lang = json['lang']
     end
   end
 
