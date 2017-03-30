@@ -170,18 +170,15 @@ module Prismic
       end
       if query[0].kind_of?(String)
         set('q', query[0])
-      elsif query[0][0].kind_of?(Array)
+      else
+        unless query[0][0].kind_of?(Array)
+          query = [query]
+        end
         predicates = query.map { |predicate|
           predicate.map { |q|
             op = q.shift
             "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
           }.join('')
-        }
-        set('q', "[#{predicates * ''}]")
-      else
-        predicates = query.map { |q|
-          op = q.shift
-          "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
         }
         set('q', "[#{predicates * ''}]")
       end
