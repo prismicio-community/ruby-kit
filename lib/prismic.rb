@@ -209,6 +209,11 @@ module Prismic
     #   @param  fields [String] The fields separated by commas (,)
     #   @return [SearchForm] self
 
+    # @!method lang(lang)
+    #   Specify a language for this form.
+    #   @param  lang [String] The document language
+    #   @return [SearchForm] self
+
     # Create the fields'helper methods
     def create_field_helper_method(name)
       return if name == 'ref'
