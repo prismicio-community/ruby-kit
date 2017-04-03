@@ -11,6 +11,19 @@
     "vanilla-macaron",
     "%E5%8D%97%E5%A4%A7%E6%B2%A2"
   ],
+  "lang": "en-us",
+  "alternate_languages": [
+    {
+      "id": "WL6VySoAACwA_H9r",
+      "type": "product",
+      "lang": "es-es"
+    },
+    {
+      "id": "WL2IziIAACIAem32",
+      "type": "product",
+      "lang": "fr-fr"
+    }
+  ],
   "data": {
     "product": {
       "name": {

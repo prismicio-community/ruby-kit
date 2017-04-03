@@ -267,30 +267,30 @@ end
 
 describe 'LinkResolver' do
   before do
-    @doc_link = Prismic::Fragments::DocumentLink.new('id', nil, 'blog-post', ['tag1', 'tag2'], 'my-slug', {}, false)
-    @document = Prismic::Document.new('id', nil, 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil, nil, nil)
+    @doc_link = Prismic::Fragments::DocumentLink.new('id', nil, 'blog-post', ['tag1', 'tag2'], 'my-slug', "fr-fr", {}, false)
+    @document = Prismic::Document.new('id', nil, 'blog-post', nil, ['tag1', 'tag2'], ['my-slug', 'my-other-slug'], nil, nil, "en-us", nil, nil)
 
     @link_resolver = Prismic::LinkResolver.new(nil) do |doc|
-      '/'+doc.type+'/'+doc.id+'/'+doc.slug
+      '/'+doc.lang+'/'+doc.type+'/'+doc.id+'/'+doc.slug
     end
   end
 
   it 'builds the right URL from a DocumentLink' do
-    @link_resolver.link_to(@doc_link).should == '/blog-post/id/my-slug'
+    @link_resolver.link_to(@doc_link).should == '/fr-fr/blog-post/id/my-slug'
   end
 
   it 'builds the right URL from a Document' do
-    @link_resolver.link_to(@document).should == '/blog-post/id/my-slug'
+    @link_resolver.link_to(@document).should == '/en-us/blog-post/id/my-slug'
   end
 end
 
 describe 'Document' do
   before do
     fragments = {
-      'field1' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil, {}, nil),
+      'field1' => Prismic::Fragments::DocumentLink.new(nil, nil, nil, nil, nil, "fr-fr", {}, nil),
       'field2' => Prismic::Fragments::WebLink.new('weburl')
     }
-    @document = Prismic::Document.new(nil, nil, nil, nil, nil, ['my-slug'], nil, nil, fragments)
+    @document = Prismic::Document.new(nil, nil, nil, nil, nil, ['my-slug'], nil, nil, "fr-fr", nil, fragments)
     @link_resolver = Prismic::LinkResolver.new('master'){|doc_link|
       "http://host/#{doc_link.id}"
     }

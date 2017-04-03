@@ -11,7 +11,8 @@ describe 'document_link_parser' do
             "id": "UdUjvt_mqVNObPeO",
             "type": "product",
             "tags": ["Macaron"],
-            "slug": "dark-chocolate-macaron"
+            "slug": "dark-chocolate-macaron",
+            "lang": "en-us"
           },
           "isBroken": false
         }
@@ -26,6 +27,7 @@ json
     document_link.type.should == "product"
     document_link.tags.should == ['Macaron']
     document_link.slug.should == "dark-chocolate-macaron"
+    document_link.lang.should == "en-us"
     document_link.broken?.should == false
   end
 end
@@ -361,11 +363,21 @@ describe 'document_parser' do
     @document.href.should == 'doc-url'
     @document.tags.should == ['Macaron']
     @document.slugs.should == ['vanilla-macaron', '南大沢']
+    @document.lang.should == 'en-us'
   end
 
   it "correctly parses the document's publication dates" do
     @document.first_publication_date.should == Time.at(1476845881)
     @document.last_publication_date.should == Time.at(1476846111)
+  end
+
+  it "correctly parses the document's alternate languages" do
+    @document.alternate_languages.size.should == 2
+    @document.alternate_languages['fr-fr'].should be_a Prismic::AlternateLanguage
+    @document.alternate_languages['fr-fr'].id.should == "WL2IziIAACIAem32"
+    @document.alternate_languages['fr-fr'].type.should == "product"
+    @document.alternate_languages['fr-fr'].lang.should == "fr-fr"
+    @document.alternate_languages['fr-fr'].uid.should == nil
   end
 
   it "correctly parses the document's fragments" do
