@@ -569,7 +569,7 @@ module Prismic
       if doc.is_a? Prismic::Fragments::DocumentLink
         @blk.call(doc)
       elsif doc.is_a? Prismic::Document
-        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.uid, doc.type, doc.tags, doc.slug, doc.fragments, false)
+        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.uid, doc.type, doc.tags, doc.slug, doc.lang, doc.fragments, false)
         @blk.call(doc_link)
       end
     end
