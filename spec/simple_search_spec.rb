@@ -12,6 +12,15 @@ describe Prismic::API do
       docs.size.should == 1
       docs[0].id.should == 'UrDejAEAAFwMyrW9'
     end
+    
+    it 'handles multiple predicates' do
+      docs = @api.query([
+        Prismic::Predicates::at('document.type', 'all'),
+        Prismic::Predicates::at('my.all.uid', 'all')
+      ])
+      docs.size.should == 1
+      docs[0].id.should == 'WHx-gSYAAMkyXYX_'
+    end
   end
 
   describe '#all' do

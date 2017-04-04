@@ -171,9 +171,14 @@ module Prismic
       if query[0].kind_of?(String)
         set('q', query[0])
       else
-        predicates = query.map { |q|
-          op = q.shift
-          "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
+        unless query[0][0].kind_of?(Array)
+          query = [query]
+        end
+        predicates = query.map { |predicate|
+          predicate.map { |q|
+            op = q.shift
+            "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
+          }.join('')
         }
         set('q', "[#{predicates * ''}]")
       end
@@ -333,7 +338,9 @@ module Prismic
     def set(field_name, value)
       field = @form.fields[field_name]
       unless value == nil
-        if field && field.repeatable?
+        if value == ""
+          data[field_name] = nil
+        elsif field && field.repeatable?
           data[field_name] = [] unless data.include? field_name
           data[field_name] << value.to_s
         else
