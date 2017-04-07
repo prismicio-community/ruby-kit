@@ -48,7 +48,7 @@ end
 
 describe 'DocumentLink' do
   before do
-    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", nil, "product", ["Macaron"], "dark-chocolate-macaron", {}, false)
+    @document_link = Prismic::Fragments::DocumentLink.new("UdUjvt_mqVNObPeO", nil, "product", ["Macaron"], "dark-chocolate-macaron", "en-us", {}, false)
   end
 
   describe 'url' do
@@ -57,6 +57,12 @@ describe 'DocumentLink' do
     end
     it 'works in a unified way' do
       @document_link.url(@link_resolver).should == 'http://localhost/UdUjvt_mqVNObPeO'
+    end
+  end
+
+  describe 'lang' do
+    it 'is available' do
+      @document_link.lang.should == 'en-us'
     end
   end
 end
@@ -638,6 +644,7 @@ describe 'StructuredText::Hyperlink' do
       "product",
       ["Macaron"],
       "dark-chocolate-macaron",
+      "fr-fr",
       {},
       false  # not broken
     )

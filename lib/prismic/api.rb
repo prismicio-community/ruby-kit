@@ -103,6 +103,9 @@ module Prismic
     # @param opts [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
     def get_by_id(id, opts={})
+      unless opts.key?("lang")
+        opts["lang"] = '*'
+      end
       query(Prismic::Predicates::at('document.id', id), opts)[0]
     end
     alias :getByID :get_by_id
@@ -113,6 +116,9 @@ module Prismic
     # @param opts [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
     def get_by_uid(typ, uid, opts={})
+      unless opts.key?("lang")
+        opts["lang"] = '*'
+      end
       query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)[0]
     end
     alias :getByUID :get_by_uid
@@ -122,6 +128,9 @@ module Prismic
     # @param opts [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
     def get_by_ids(ids, opts={})
+      unless opts.key?("lang")
+        opts["lang"] = '*'
+      end
       query(Prismic::Predicates::in('document.id', ids), opts)
     end
     alias :getByIDs :get_by_ids
@@ -148,7 +157,7 @@ module Prismic
         return default_url
       end
       json = JSON.load(response.body)
-      documents = self.form('everything').query(Prismic::Predicates.at('document.id', json['mainDocument'])).submit(token)
+      documents = self.form('everything').query(Prismic::Predicates.at('document.id', json['mainDocument'])).lang("*").submit(token)
       if documents.results.size > 0
         link_resolver.link_to(documents.results[0])
       else

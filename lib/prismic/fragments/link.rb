@@ -96,14 +96,15 @@ module Prismic
 
     class DocumentLink < Link
       include Prismic::WithFragments
-      attr_accessor :id, :uid, :type, :tags, :slug, :fragments, :broken
+      attr_accessor :id, :uid, :type, :tags, :slug, :lang, :fragments, :broken
 
-      def initialize(id, uid, type, tags, slug, fragments, broken)
+      def initialize(id, uid, type, tags, slug, lang, fragments, broken)
         @id = id
         @uid = uid
         @type = type
         @tags = tags
         @slug = slug
+        @lang = lang
         @fragments = fragments
         @broken = broken
       end

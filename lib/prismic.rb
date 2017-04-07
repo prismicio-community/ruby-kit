@@ -209,6 +209,11 @@ module Prismic
     #   @param  fields [String] The fields separated by commas (,)
     #   @return [SearchForm] self
 
+    # @!method lang(lang)
+    #   Specify a language for this form.
+    #   @param  lang [String] The document language
+    #   @return [SearchForm] self
+
     # Create the fields'helper methods
     def create_field_helper_method(name)
       return if name == 'ref'
@@ -461,6 +466,10 @@ module Prismic
     attr_accessor :first_publication_date
     # @return Time
     attr_accessor :last_publication_date
+    # @return [String]
+    attr_accessor :lang
+    # @return [Array<AlternateLanguage>]
+    attr_accessor :alternate_languages
     # @return [Array<Fragment>]
     attr_accessor :fragments
 
@@ -473,6 +482,8 @@ module Prismic
       slugs,
       first_publication_date,
       last_publication_date,
+      lang,
+      alternate_languages,
       fragments
     )
       @id = id
@@ -483,6 +494,8 @@ module Prismic
       @slugs = slugs
       @first_publication_date = first_publication_date
       @last_publication_date = last_publication_date
+      @lang = lang
+      @alternate_languages = alternate_languages
       @fragments = fragments
     end
 
@@ -556,7 +569,7 @@ module Prismic
       if doc.is_a? Prismic::Fragments::DocumentLink
         @blk.call(doc)
       elsif doc.is_a? Prismic::Document
-        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.uid, doc.type, doc.tags, doc.slug, doc.fragments, false)
+        doc_link = Prismic::Fragments::DocumentLink.new(doc.id, doc.uid, doc.type, doc.tags, doc.slug, doc.lang, doc.fragments, false)
         @blk.call(doc_link)
       end
     end
@@ -572,6 +585,28 @@ module Prismic
 
     def serialize(element, content)
       @blk.call(element, content)
+    end
+  end
+  
+
+  # A class for the alternate language versions of a document 
+  #
+  # The {Prismic.alternate_language} function is the recommended way to create an AlternateLanguage.
+  class AlternateLanguage
+    # @return [String]
+    attr_accessor :id
+    # @return [String]
+    attr_accessor :uid
+    # @return [String]
+    attr_accessor :type
+    # @return [String]
+    attr_accessor :lang
+
+    def initialize(json)
+      @id = json['id']
+      @uid = json['uid']
+      @type = json['type']
+      @lang = json['lang']
     end
   end
 
