@@ -176,8 +176,9 @@ module Prismic
         end
         predicates = query.map { |predicate|
           predicate.map { |q|
-            op = q.shift
-            "[:d = #{op}(#{q.map { |arg| serialize(arg) }.join(', ')})]"
+            op = q[0]
+            rest = q[1..-1]
+            "[:d = #{op}(#{rest.map { |arg| serialize(arg) }.join(', ')})]"
           }.join('')
         }
         set('q', "[#{predicates * ''}]")
