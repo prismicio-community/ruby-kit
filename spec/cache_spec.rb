@@ -11,25 +11,25 @@ describe "Cache's" do
     end
 
     it "is properly on" do
-      @api.has_cache?.should == true
-      @cache.is_a?(Prismic::LruCache).should == true
+      expect(@api.has_cache?).to be(true)
+      expect(@cache.is_a?(Prismic::LruCache)).to be(true)
     end
 
     it "is properly off" do
       api = Prismic.api("https://micro.prismic.io/api", cache: nil)
-      api.has_cache?.should == false
+      expect(api.has_cache?).to be(false)
     end
 
     describe 'storage and retrieval' do
       it 'stores properly' do
-        @cache.intern.size.should == 0
+        expect(@cache.intern.size).to eq(0)
         @api.form('arguments').submit(@master_ref)
-        @cache.intern.size.should == 1
+        expect(@cache.intern.size).to eq(1)
       end
 
       it 'does not cache /api' do
         # do not call anything, so the only request made is the /api one
-        @cache.intern.size.should == 0
+        expect(@cache.intern.size).to eq(0)
       end
     end
 
@@ -41,19 +41,19 @@ describe "Cache's" do
         @cache['fake_key3'] = 3
       end
       it 'contains some keys' do
-        @cache.include?('fake_key1').should be_true
+        expect(@cache.include?('fake_key1')).to be(true)
       end
       it 'contains all keys' do
-        @cache.intern.size.should == 3
+        expect(@cache.intern.size).to eq(3)
       end
       it 'can return all keys' do
-        @cache.keys.should == %w(fake_key1 fake_key2 fake_key3)
+        expect(@cache.keys).to eq(%w(fake_key1 fake_key2 fake_key3))
       end
       it 'keeps readed keys alive' do
         @cache['fake_key1']
         @cache['fake_key4'] = 4
-        @cache.include?('fake_key1').should be_true
-        @cache.include?('fake_key2').should be_false
+        expect(@cache.include?('fake_key1')).to be(true)
+        expect(@cache.include?('fake_key2')).to be(false)
       end
     end
 
@@ -65,8 +65,8 @@ describe "Cache's" do
         @other_ref = @api.refs['adding jason']
       end
       it 'works on different refs' do
-        @api.form('everything').submit(@master_ref).total_results_size.should == 24
-        @api.form('everything').submit(@other_ref).total_results_size.should == 25
+        expect(@api.form('everything').submit(@master_ref).total_results_size).to eq(24)
+        expect(@api.form('everything').submit(@other_ref).total_results_size).to eq(25)
       end
     end
   end
@@ -89,46 +89,46 @@ describe "LRU Cache's" do
   it 'set & get value' do
     cache = Prismic::LruCache.new
     cache.set('key', 'value')
-    cache.get('key').should == 'value'
+    expect(cache.get('key')).to eq('value')
   end
 
   it 'set with expiration value & get value' do
     cache = Prismic::LruCache.new
     cache.set('key', 'value', 1)
     sleep(2)
-    cache.get('key').should == nil
+    expect(cache.get('key')).to be(nil)
   end
 
   it 'set with expiration and a block' do
     cache = Prismic::LruCache.new
     cache.get_or_set('key', nil, 1){ 'value' }
-    cache.get_or_set('key', nil, 1){ 'othervalue' }.should == 'value'
+    expect(cache.get_or_set('key', nil, 1){ 'othervalue' }).to eq('value')
     sleep(2)
-    cache.get_or_set('key', nil, 1){ 'othervalue' }.should == 'othervalue'
+    expect(cache.get_or_set('key', nil, 1){ 'othervalue' }).to eq('othervalue')
   end
 
   it 'set & test value' do
     cache = Prismic::LruCache.new
     cache.set('key', 'value')
-    cache.include?('key').should == true
+    expect(cache.include?('key')).to be(true)
   end
 
   it 'get or set value' do
     cache = Prismic::LruCache.new
     cache.set('key', 'value')
-    cache.get('key').should == 'value'
+    expect(cache.get('key')).to eq('value')
     cache.get_or_set('key', 'value1')
-    cache.get('key').should == 'value'
+    expect(cache.get('key')).to eq('value')
     cache.get_or_set('key1', 'value2')
-    cache.get('key1').should == 'value2'
+    expect(cache.get('key1')).to eq('value2')
   end
 
   it 'set, delete & get value' do
     cache = Prismic::LruCache.new
     cache.set('key', 'value')
-    cache.get('key').should == 'value'
+    expect(cache.get('key')).to eq('value')
     cache.delete('key')
-    cache.get('key').should == nil
+    expect(cache.get('key')).to be(nil)
   end
 
   it 'set, clear & get value' do
@@ -137,33 +137,33 @@ describe "LRU Cache's" do
     cache.set('key', 'value')
     cache.set('key1', 'value1')
     cache.set('key2', 'value2')
-    cache.get('key').should == 'value'
-    cache.get('key1').should == 'value1'
-    cache.get('key2').should == 'value2'
+    expect(cache.get('key')).to eq('value')
+    expect(cache.get('key1')).to eq('value1')
+    expect(cache.get('key2')).to eq('value2')
     cache.clear!
-    cache.get('key').should == nil
-    cache.get('key1').should == nil
-    cache.get('key2').should == nil
+    expect(cache.get('key')).to be(nil)
+    expect(cache.get('key1')).to be(nil)
+    expect(cache.get('key2')).to be(nil)
   end
 end
 
 describe 'BasicNullCache' do
   subject { Prismic::BasicNullCache.new }
   it 'always misses' do
-    subject.get('key').should == nil
-    subject.set('key', 'value').should == 'value'
-    subject.get('key').should == nil
+    expect(subject.get('key')).to be(nil)
+    expect(subject.set('key', 'value')).to eq('value')
+    expect(subject.get('key')).to be(nil)
   end
   it 'set uses value if no block' do
-    subject.set('key', 'value').should == 'value'
+    expect(subject.set('key', 'value')).to eq('value')
   end
   it 'set uses block if provided' do
-    subject.set('key', 'value'){'value2'}.should == 'value2'
+    expect(subject.set('key', 'value'){'value2'}).to eq('value2')
   end
   it 'get_or_set uses value if no block' do
-    subject.get_or_set('key', 'value').should == 'value'
+    expect(subject.get_or_set('key', 'value')).to eq('value')
   end
   it 'get_or_set uses block if provided' do
-    subject.get_or_set('key', 'value'){'value2'}.should == 'value2'
+    expect(subject.get_or_set('key', 'value'){'value2'}).to eq('value2')
   end
 end

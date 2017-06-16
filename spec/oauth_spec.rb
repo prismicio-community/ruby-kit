@@ -36,7 +36,7 @@ describe 'OAuth' do
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")
-        url.should == expected_url
+        expect(url).to eq(expected_url)
       end
 
       it "should returns the URL (with access_token)" do
@@ -46,7 +46,7 @@ describe 'OAuth' do
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")
-        url.should == expected_url
+        expect(url).to eq(expected_url)
       end
 
     end
@@ -85,17 +85,17 @@ describe 'OAuth' do
 
     it "should provide the error" do
       error = catch_wserror(PRIVATE_URL)
-      error.error.should == "Invalid access token"
+      expect(error.error).to eq("Invalid access token")
     end
 
     it "should provide oauth entry points" do
       error = catch_wserror(PRIVATE_URL)
-      error.oauth.initiate.should == "https://privaterepository.prismic.io/auth"
+      expect(error.oauth.initiate).to eq("https://privaterepository.prismic.io/auth")
     end
 
     it "should provide oauth token" do
       error = catch_wserror(PRIVATE_URL)
-      error.oauth.token.should == "https://privaterepository.prismic.io/auth/token"
+      expect(error.oauth.token).to eq("https://privaterepository.prismic.io/auth/token")
     end
 
     describe "oauth_initiate_url" do
@@ -107,7 +107,7 @@ describe 'OAuth' do
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")
-        url.should == expected_url
+        expect(url).to eq(expected_url)
       end
 
       it "should returns the URL (with access_token)" do
@@ -117,7 +117,7 @@ describe 'OAuth' do
           "redirect_uri=http%3A%2F%2Fmyapp.com%2Fcallback",
           "scope=master%2Breleases",
         ].join("&")
-        url.should == expected_url
+        expect(url).to eq(expected_url)
       end
 
     end

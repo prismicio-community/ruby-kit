@@ -23,12 +23,12 @@ json
 
   it "correctly parses DocumentLinks" do
     document_link = Prismic::JsonParser.document_link_parser(@json)
-    document_link.id.should == "UdUjvt_mqVNObPeO"
-    document_link.type.should == "product"
-    document_link.tags.should == ['Macaron']
-    document_link.slug.should == "dark-chocolate-macaron"
-    document_link.lang.should == "en-us"
-    document_link.broken?.should == false
+    expect(document_link.id).to eq("UdUjvt_mqVNObPeO")
+    expect(document_link.type).to eq("product")
+    expect(document_link.tags).to eq(['Macaron'])
+    expect(document_link.slug).to eq("dark-chocolate-macaron")
+    expect(document_link.lang).to eq("en-us")
+    expect(document_link.broken?).to be(false)
   end
 end
 
@@ -45,7 +45,7 @@ json
 
   it "correctly parses Text objects" do
     text = Prismic::JsonParser.text_parser(@json)
-    text.value.should == "New York City, NY"
+    expect(text.value).to eq("New York City, NY")
   end
 end
 
@@ -64,7 +64,7 @@ json
 
   it "correctly parses WebLinks objects" do
     web_link = Prismic::JsonParser.web_link_parser(@json)
-    web_link.url.should == "http://prismic.io"
+    expect(web_link.url).to eq("http://prismic.io")
   end
 end
 
@@ -81,7 +81,7 @@ json
 
   it "correctly parses Date objects" do
     date = Prismic::JsonParser.date_parser(@json)
-    date.value.should == Time.new(2013, 9, 19)
+    expect(date.value).to eq(Time.new(2013, 9, 19))
   end
 end
 
@@ -98,7 +98,7 @@ json
 
   it "correctly parses Number objects" do
     number = Prismic::JsonParser.number_parser(@json)
-    number.value.should == 3.55
+    expect(number.value).to eq(3.55)
   end
 end
 
@@ -130,10 +130,10 @@ json
 
   it "correctly parses Embed objects" do
     embed = Prismic::JsonParser.embed_parser(@json)
-    embed.embed_type.should == @embed_type
-    embed.provider.should == @provider
-    embed.url.should == @url
-    embed.html.should == @html
+    expect(embed.embed_type).to eq(@embed_type)
+    expect(embed.provider).to eq(@provider)
+    expect(embed.url).to eq(@url)
+    expect(embed.html).to eq(@html)
   end
 end
 
@@ -171,16 +171,16 @@ json
 
   it "correctly parses Image objects" do
     image = Prismic::JsonParser.image_parser(@json)
-    image.url.should == "url1"
-    image.main.width.should == 500
-    image.main.height.should == 500
-    image.main.alt.should == "Alternative"
-    image.main.copyright.should == "CC-BY"
-    image.views['icon'].url.should == "url2"
-    image.views['icon'].width.should == 250
-    image.views['icon'].height.should == 250
-    image.views['icon'].alt.should == "Alternative2"
-    image.views['icon'].copyright.should == "CC-0"
+    expect(image.url).to eq("url1")
+    expect(image.main.width).to eq(500)
+    expect(image.main.height).to eq(500)
+    expect(image.main.alt).to eq("Alternative")
+    expect(image.main.copyright).to eq("CC-BY")
+    expect(image.views['icon'].url).to eq("url2")
+    expect(image.views['icon'].width).to eq(250)
+    expect(image.views['icon'].height).to eq(250)
+    expect(image.views['icon'].alt).to eq("Alternative2")
+    expect(image.views['icon'].copyright).to eq("CC-0")
   end
 end
 
@@ -192,12 +192,12 @@ describe 'geo_point_parser' do
   end
 
   it 'correctly parses GeoPoint objects' do
-    @document['product.location'].latitude.should == 48.877108
-    @document['product.location'].longitude.should == -2.333879
+    expect(@document['product.location'].latitude).to eq(48.877108)
+    expect(@document['product.location'].longitude).to eq(-2.333879)
   end
 
   it 'correctly serializes GeoPoint objects into HTML' do
-    @document['product.location'].as_html.should == "<div class=\"geopoint\"><span class=\"longitude\">-2.333879</span><span class=\"latitude\">48.877108</span></div>"
+    expect(@document['product.location'].as_html).to eq("<div class=\"geopoint\"><span class=\"longitude\">-2.333879</span><span class=\"latitude\">48.877108</span></div>")
   end
 end
 
@@ -210,11 +210,11 @@ describe 'image_parser in StructuredText' do
   end
 
   it 'parses properly with links' do
-    @image_st.blocks[2].link_to.url.should == 'http://google.com/'
+    expect(@image_st.blocks[2].link_to.url).to eq('http://google.com/')
   end
 
   it 'parses properly without links' do
-    @image_st.blocks[5].link_to.should be_nil
+    expect(@image_st.blocks[5].link_to).to be(nil)
   end
 
   it 'serializes properly as HTML' do
@@ -233,7 +233,7 @@ describe 'image_parser in StructuredText' do
 expected
     expected.chomp!
     link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
-    @image_st.as_html(link_resolver).should == expected
+    expect(@image_st.as_html(link_resolver)).to eq(expected)
   end
 end
 
@@ -250,7 +250,7 @@ json
 
   it "correctly parses Color objects" do
     color = Prismic::JsonParser.color_parser(@json)
-    color.value.should == "ffeacd"
+    expect(color.value).to eq("ffeacd")
   end
 end
 
@@ -274,11 +274,11 @@ json
   end
 
   it 'correctly parses file links' do
-    @link_file.url.should == "https://prismic-io.s3.amazonaws.com/annual.report.pdf"
-    @link_file.kind.should == "document"
-    @link_file.name.should == "2012_annual.report.pdf"
-    @link_file.size.should == "1282484"
-    @link_file.as_html.should == "<a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012_annual.report.pdf</a>"
+    expect(@link_file.url).to eq("https://prismic-io.s3.amazonaws.com/annual.report.pdf")
+    expect(@link_file.kind).to eq("document")
+    expect(@link_file.name).to eq("2012_annual.report.pdf")
+    expect(@link_file.size).to eq("1282484")
+    expect(@link_file.as_html).to eq("<a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012_annual.report.pdf</a>")
   end
 end
 
@@ -295,9 +295,9 @@ describe 'structured_text_parser' do
 
   describe 'headings parsing' do
     it "correctly parses headings" do
-      @structured_text_heading.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Heading
-      @structured_text_heading.blocks[0].text.should == "Salted Caramel Macaron"
-      @structured_text_heading.blocks[0].level.should == 1
+      expect(@structured_text_heading.blocks[0]).to be_a(Prismic::Fragments::StructuredText::Block::Heading)
+      expect(@structured_text_heading.blocks[0].text).to eq("Salted Caramel Macaron")
+      expect(@structured_text_heading.blocks[0].level).to eq(1)
     end
 
     it "correctly parses >h9 heading" do
@@ -312,40 +312,40 @@ describe 'structured_text_parser' do
         }
       JSON
       @structured_text_heading = Prismic::JsonParser.structured_text_parser(json_heading)
-      @structured_text_heading.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Heading
-      @structured_text_heading.blocks[0].level.should == 10
+      expect(@structured_text_heading.blocks[0]).to be_a(Prismic::Fragments::StructuredText::Block::Heading)
+      expect(@structured_text_heading.blocks[0].level).to eq(10)
     end
 
     it "parses all the spans" do
-      @structured_text_heading.blocks[0].spans.size.should == 1
+      expect(@structured_text_heading.blocks[0].spans.size).to eq(1)
     end
   end
 
   describe 'paragraphs parsing' do
     it "correctly parses paragraphs" do
-      @structured_text_paragraph.blocks[0].should be_a Prismic::Fragments::StructuredText::Block::Paragraph
-      @structured_text_paragraph.blocks[0].text.size.should == 224
+      expect(@structured_text_paragraph.blocks[0]).to be_a(Prismic::Fragments::StructuredText::Block::Paragraph)
+      expect(@structured_text_paragraph.blocks[0].text.size).to eq(224)
     end
   end
 
   describe 'spans parsing' do
     it "parses all the spans" do
-      @structured_text_paragraph.blocks[0].spans.size.should == 3
+      expect(@structured_text_paragraph.blocks[0].spans.size).to eq(3)
     end
 
     it "correctly parses the em spans" do
-      @structured_text_paragraph.blocks[0].spans[0].start.should == 103
-      @structured_text_paragraph.blocks[0].spans[0].end.should == 137
-      @structured_text_paragraph.blocks[0].spans[0].should be_a Prismic::Fragments::StructuredText::Span::Em
+      expect(@structured_text_paragraph.blocks[0].spans[0].start).to eq(103)
+      expect(@structured_text_paragraph.blocks[0].spans[0].end).to eq(137)
+      expect(@structured_text_paragraph.blocks[0].spans[0]).to be_a(Prismic::Fragments::StructuredText::Span::Em)
     end
 
     it "correctly parses the strong spans" do
-      @structured_text_paragraph.blocks[0].spans[2].should be_a Prismic::Fragments::StructuredText::Span::Strong
+      expect(@structured_text_paragraph.blocks[0].spans[2]).to be_a(Prismic::Fragments::StructuredText::Span::Strong)
     end
 
     it "correctly parses the hyperlink spans" do
-      @structured_text_paragraph.blocks[0].spans[1].should be_a Prismic::Fragments::StructuredText::Span::Hyperlink
-      @structured_text_paragraph.blocks[0].spans[1].link.should be_a Prismic::Fragments::WebLink
+      expect(@structured_text_paragraph.blocks[0].spans[1]).to be_a(Prismic::Fragments::StructuredText::Span::Hyperlink)
+      expect(@structured_text_paragraph.blocks[0].spans[1].link).to be_a(Prismic::Fragments::WebLink)
     end
   end
 end
@@ -358,31 +358,31 @@ describe 'document_parser' do
   end
 
   it "correctly parses Document objects" do
-    @document.id.should == 'UdUkXt_mqZBObPeS'
-    @document.type.should == 'product'
-    @document.href.should == 'doc-url'
-    @document.tags.should == ['Macaron']
-    @document.slugs.should == ['vanilla-macaron', '南大沢']
-    @document.lang.should == 'en-us'
+    expect(@document.id).to eq('UdUkXt_mqZBObPeS')
+    expect(@document.type).to eq('product')
+    expect(@document.href).to eq('doc-url')
+    expect(@document.tags).to eq(['Macaron'])
+    expect(@document.slugs).to eq(['vanilla-macaron', '南大沢'])
+    expect(@document.lang).to eq('en-us')
   end
 
   it "correctly parses the document's publication dates" do
-    @document.first_publication_date.should == Time.at(1476845881)
-    @document.last_publication_date.should == Time.at(1476846111)
+    expect(@document.first_publication_date).to eq(Time.at(1476845881))
+    expect(@document.last_publication_date).to eq(Time.at(1476846111))
   end
 
   it "correctly parses the document's alternate languages" do
-    @document.alternate_languages.size.should == 2
-    @document.alternate_languages['fr-fr'].should be_a Prismic::AlternateLanguage
-    @document.alternate_languages['fr-fr'].id.should == "WL2IziIAACIAem32"
-    @document.alternate_languages['fr-fr'].type.should == "product"
-    @document.alternate_languages['fr-fr'].lang.should == "fr-fr"
-    @document.alternate_languages['fr-fr'].uid.should == nil
+    expect(@document.alternate_languages.size).to eq(2)
+    expect(@document.alternate_languages['fr-fr']).to be_a(Prismic::AlternateLanguage)
+    expect(@document.alternate_languages['fr-fr'].id).to eq("WL2IziIAACIAem32")
+    expect(@document.alternate_languages['fr-fr'].type).to eq("product")
+    expect(@document.alternate_languages['fr-fr'].lang).to eq("fr-fr")
+    expect(@document.alternate_languages['fr-fr'].uid).to be(nil)
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 14
-    @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
+    expect(@document.fragments.size).to eq(14)
+    expect(@document.fragments['name']).to be_a(Prismic::Fragments::StructuredText)
   end
 end
 
@@ -398,14 +398,14 @@ describe 'response_parser' do
       "prev_page": null,
       "results":[]}')
     @documents = Prismic::JsonParser.response_parser(@json)
-    @documents.results.should == []
-    @documents.page.should == 1
-    @documents.results_per_page.should == 20
-    @documents.results_size.should == 20
-    @documents.total_results_size.should == 40
-    @documents.total_pages.should == 2
-    @documents.next_page.should == "https://micro.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20"
-    @documents.prev_page.should == nil
+    expect(@documents.results).to eq([])
+    expect(@documents.page).to eq(1)
+    expect(@documents.results_per_page).to eq(20)
+    expect(@documents.results_size).to eq(20)
+    expect(@documents.total_results_size).to eq(40)
+    expect(@documents.total_pages).to eq(2)
+    expect(@documents.next_page).to eq("https://micro.prismic.io/api/documents/search?ref=UkL0hcuvzYUANCrm&page=2&pageSize=20")
+    expect(@documents.prev_page).to be(nil)
   end
 
 end
@@ -429,9 +429,9 @@ json
 
   it "correctly parses the Multiple object's elements" do
     multiple = Prismic::JsonParser.multiple_parser(@json)
-    multiple.size.should == 2
-    multiple[0].class.should == Prismic::Fragments::Text
-    multiple[0].class.should == Prismic::Fragments::Text
+    expect(multiple.size).to eq(2)
+    expect(multiple[0].class).to eq(Prismic::Fragments::Text)
+    expect(multiple[0].class).to eq(Prismic::Fragments::Text)
   end
 end
 
@@ -444,12 +444,12 @@ describe 'timestamp_parser' do
   end
 
   it 'correctly parses and stores a Time object' do
-    @timestamp_fragment.value.utc.wednesday?.should == true
-    @timestamp_fragment.value.min.should == 30
+    expect(@timestamp_fragment.value.utc.wednesday?).to be(true)
+    expect(@timestamp_fragment.value.min).to eq(30)
   end
 
   it 'outputs correctly as HTML' do
-    @timestamp_fragment.as_html.should match /<time>2014-06-1\dT\d{2}:30:00\.000[-+]\d{2}:00<\/time>/
+    expect(@timestamp_fragment.as_html).to match(/<time>2014-06-1\dT\d{2}:30:00\.000[-+]\d{2}:00<\/time>/)
   end
 end
 
@@ -460,8 +460,8 @@ describe 'unknown_parser' do
   end
 
   it 'raises the proper error' do
-    Prismic::JsonParser.should_receive(:warn).with("Type blabla is unknown, fragment was skipped; perhaps you should update your prismic.io gem?")
-    Prismic::JsonParser.document_parser(@json).fragments.size.should == 2
+    expect(Prismic::JsonParser).to receive(:warn).with("Type blabla is unknown, fragment was skipped; perhaps you should update your prismic.io gem?")
+    expect(Prismic::JsonParser.document_parser(@json).fragments.size).to eq(2)
   end
 end
 
@@ -474,8 +474,8 @@ describe 'structured_text_label_parser' do
 
   it 'outputs correctly as HTML' do
     link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
-    @structured_text.as_html(link_resolver).should ==
-        "<h1>Tips to dress a pastry</h1>\n\n" +
+
+    block = "<h1>Tips to dress a pastry</h1>\n\n" +
             "<p class=\"block-img\"><img src=\"https://prismic-io.s3.amazonaws.com/micro-vcerzcwaaohojzo/381f3a78dfe952b229fb49ceaa9926f7009ae20a.jpg\" alt=\"\" width=\"640\" height=\"666\" /></p>\n\n" +
             "<p>Our Pastry Dressers (yes, it is <a href=\"http://localhost/UlfoxUnM0wkXYXbh\">a full-time job</a> in <em>Les Bonnes Choses</em>!) have it somewhat different from our other pastry artists: while the others keep their main focus on the taste, smell, and potentially touch of your pastries, the Pastry Dressers are mainly focused on their looks.</p>\n\n" +
             "<p>It sometimes makes them feem like they&#39;re doing a job that is reasonably different from plain old pastry, and to make the most of your pastry dressings, perhaps so should you!</p>\n\n" +
@@ -492,6 +492,8 @@ describe 'structured_text_label_parser' do
             "<h3>Pastry Dresser, or illustrator?</h3>\n\n" +
             "<p>We didn&#39;t mention color, but it&#39;s a very important component of the piece. Just like an illustrator will pick colors that add to the shape in a matching way to keep a perfect meaning, the colors must be perfect to be consistent with the taste of the piece (do not use green-colored sugar for a strawberry-flavored pastry, if you don&#39;t want to gross people out!)</p>\n\n" +
             "<h3>Pastry Dresser, or designer?</h3>\n\n<p>And even before the illustration and colors, you really need to take the time to think about your destination, to make sure it&#39;s nothing short of perfect. This may imply taking the time to sit down for a few minutes with a paper and a pen. The first skill of an imaginative Pastry Dresser is a drawing skill, just like a fashion stylist.</p>"
+
+    expect(@structured_text.as_html(link_resolver)).to eq(block)
   end
 
 end

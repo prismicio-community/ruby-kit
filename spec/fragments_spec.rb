@@ -14,19 +14,19 @@ describe 'WebLink' do
   end
   describe 'as_html' do
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@web_link.as_html).child.name.should == 'a'
+      expect(Nokogiri::XML(@web_link.as_html).child.name).to eq('a')
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@web_link.as_html).child.has_attribute?('href').should be_true
+      expect(Nokogiri::XML(@web_link.as_html).child.has_attribute?('href')).to be(true)
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@web_link.as_html).child.attribute('href').value.should == 'my_url'
+      expect(Nokogiri::XML(@web_link.as_html).child.attribute('href').value).to eq('my_url')
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@web_link.as_html).child.content.should == 'my_url'
+      expect(Nokogiri::XML(@web_link.as_html).child.content).to eq('my_url')
     end
   end
 
@@ -41,7 +41,7 @@ describe 'WebLink' do
       @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
     end
     it 'works in a unified way' do
-      @web_link.url(@link_resolver).should == 'my_url'
+      expect(@web_link.url(@link_resolver)).to eq('my_url')
     end
   end
 end
@@ -56,13 +56,13 @@ describe 'DocumentLink' do
       @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
     end
     it 'works in a unified way' do
-      @document_link.url(@link_resolver).should == 'http://localhost/UdUjvt_mqVNObPeO'
+      expect(@document_link.url(@link_resolver)).to eq('http://localhost/UdUjvt_mqVNObPeO')
     end
   end
 
   describe 'lang' do
     it 'is available' do
-      @document_link.lang.should == 'en-us'
+      expect(@document_link.lang).to eq('en-us')
     end
   end
 end
@@ -75,19 +75,19 @@ describe 'ImageLink' do
   describe 'as_html' do
 
     it "returns an <a> HTML element" do
-      Nokogiri::XML(@image_link.as_html).child.name.should == 'a'
+      expect(Nokogiri::XML(@image_link.as_html).child.name).to eq('a')
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@image_link.as_html).child.has_attribute?('href').should be_true
+      expect(Nokogiri::XML(@image_link.as_html).child.has_attribute?('href')).to be(true)
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
-      Nokogiri::XML(@image_link.as_html).child.attribute('href').value.should == 'my_url'
+      expect(Nokogiri::XML(@image_link.as_html).child.attribute('href').value).to eq('my_url')
     end
 
     it "returns a HTML element whose content is the link" do
-      Nokogiri::XML(@image_link.as_html).child.content.should == 'my_url'
+      expect(Nokogiri::XML(@image_link.as_html).child.content).to eq('my_url')
     end
   end
 
@@ -102,7 +102,7 @@ describe 'ImageLink' do
       @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.id}" }
     end
     it 'works in a unified way' do
-      @image_link.url(@link_resolver).should == 'my_url'
+      expect(@image_link.url(@link_resolver)).to eq('my_url')
     end
   end
 end
@@ -115,10 +115,10 @@ describe 'FileLink' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should ==
-          "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</a></p>\n\n"\
-          "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</a></p>\n\n"\
-          "<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</a></p>"
+      block = "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.report.pdf\">2012 Annual Report</a></p>\n\n"\
+              "<p><a href=\"https://prismic-io.s3.amazonaws.com/annual.budget.pdf\">2012 Annual Budget</a></p>\n\n"\
+              "<p><a href=\"https://prismic-io.s3.amazonaws.com/vision.strategic.plan_.sm_.pdf\">2015 Vision &amp; Strategic Plan</a></p>"
+      expect(@structured_text.as_html(nil)).to eq(block)
     end
   end
 end
@@ -131,10 +131,10 @@ describe 'Span' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should ==
-          "<h3><strong>Powering Through 2013 </strong></h3>\n\n"\
-          "<h3><strong>Online Resources:</strong></h3>\n\n"\
-          "<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
+      block = "<h3><strong>Powering Through 2013 </strong></h3>\n\n"\
+              "<h3><strong>Online Resources:</strong></h3>\n\n"\
+              "<ul><li>Hear more from our executive team as they reflect on 2013 and share their vision for 2014 on our blog <a href=\"http://prismic.io\">here</a></li></ul>"
+      expect(@structured_text.as_html(nil)).to eq(block)
     end
   end
   describe 'in structured texts when multiple spans' do
@@ -144,9 +144,9 @@ describe 'Span' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should ==
-          '<p class="vanilla">Experience <a href="http://prismic.io">the</a> ultimate vanilla experience.<br>'\
-          'Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>'
+      block = '<p class="vanilla">Experience <a href="http://prismic.io">the</a> ultimate vanilla experience.<br>'\
+              'Our vanilla Macarons are made with our very own (in-house) <em>pure extract of Madagascar vanilla</em>, and subtly dusted with <strong>our own vanilla sugar</strong> (which we make from real vanilla beans).</p>'
+      expect(@structured_text.as_html(nil)).to eq(block)
     end
   end
   describe 'in structured texts when image with link' do
@@ -156,8 +156,8 @@ describe 'Span' do
       @structured_text = Prismic::JsonParser.structured_text_parser(@json_structured_text)
     end
     it 'serializes well into HTML' do
-      @structured_text.as_html(nil).should ==
-          '<p class="block-img"><a href="http://prismic.io"><img src="https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif" alt="" width="960" height="800" /></a></p>'
+      block = '<p class="block-img"><a href="http://prismic.io"><img src="https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif" alt="" width="960" height="800" /></a></p>'
+      expect(@structured_text.as_html(nil)).to eq(block)
     end
   end
 end
@@ -170,26 +170,26 @@ describe 'Text' do
   describe 'as_html' do
 
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@text.as_html).child.name.should == 'span'
+      expect(Nokogiri::XML(@text.as_html).child.name).to eq('span')
     end
 
     it "returns a HTML element with the 'text' class" do
-      Nokogiri::XML(@text.as_html).child.attribute('class').value.split.should include 'text'
+      expect(Nokogiri::XML(@text.as_html).child.attribute('class').value.split).to include('text')
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@text.as_html).child.content.should == 'my_value'
+      expect(Nokogiri::XML(@text.as_html).child.content).to eq('my_value')
     end
 
     it "espaces HTML content" do
       @text = Prismic::Fragments::Text.new('&my <value> #abcde')
-      @text.as_html.should =~ /^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$/
+      expect(@text.as_html).to match(/^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$/)
     end
   end
 
   describe 'as_text' do
     it 'return the value' do
-      @text.as_text.should == 'my_value'
+      expect(@text.as_text).to eq('my_value')
     end
   end
 end
@@ -202,20 +202,20 @@ describe 'Select' do
   describe 'as_html' do
 
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@select.as_html).child.name.should == 'span'
+      expect(Nokogiri::XML(@select.as_html).child.name).to eq('span')
     end
 
     it "returns a HTML element with the 'text' class" do
-      Nokogiri::XML(@select.as_html).child.attribute('class').value.split.should include 'text'
+      expect(Nokogiri::XML(@select.as_html).child.attribute('class').value.split).to include('text')
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@select.as_html).child.content.should == 'my_value'
+      expect(Nokogiri::XML(@select.as_html).child.content).to eq('my_value')
     end
 
     it "escapes HTML" do
       @select = Prismic::Fragments::Select.new('&my <value> #abcde')
-      @select.as_html(nil).should =~ %r{^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$}
+      expect(@select.as_html(nil)).to match(%r{^<[^>]+>&amp;my &lt;value&gt; #abcde<[^>]+>$})
     end
   end
 
@@ -233,11 +233,11 @@ describe 'Date' do
 
   describe 'as_html' do
     it "returns a <time> HTML element" do
-      Nokogiri::XML(@date.as_html).child.name.should == 'time'
+      expect(Nokogiri::XML(@date.as_html).child.name).to eq('time')
     end
 
     it "returns a HTML element whose content is the date in the ISO8601 format" do
-      Nokogiri::XML(@date.as_html).child.content.should == '2013-08-07T11:13:07.000+02:00'
+      expect(Nokogiri::XML(@date.as_html).child.content).to eq('2013-08-07T11:13:07.000+02:00')
     end
   end
 
@@ -255,25 +255,25 @@ describe 'Number' do
 
   describe 'as_int' do
     it "returns an Integer" do
-      @number.as_int.should be_kind_of Integer
+      expect(@number.as_int).to be_a_kind_of(Integer)
     end
 
     it "returns the integer representation of the number" do
-      @number.as_int.should == 10
+      expect(@number.as_int).to eq(10)
     end
   end
 
   describe 'as_html' do
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@number.as_html).child.name.should == 'span'
+      expect(Nokogiri::XML(@number.as_html).child.name).to eq('span')
     end
 
     it "returns a HTML element with the class 'number'" do
-      Nokogiri::XML(@number.as_html).child.attribute('class').value.split.should include 'number'
+      expect(Nokogiri::XML(@number.as_html).child.attribute('class').value.split).to include('number')
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@number.as_html).child.content.should == 10.2.to_s
+      expect(Nokogiri::XML(@number.as_html).child.content).to eq(10.2.to_s)
     end
   end
 
@@ -292,23 +292,23 @@ describe 'Color' do
 
   describe 'asRGB' do
     it "returns a hash" do
-      @color.asRGB.should be_kind_of Hash
+      expect(@color.asRGB).to be_a_kind_of(Hash)
     end
 
     it "returns a hash of 3 elements" do
-      @color.asRGB.size.should == 3
+      expect(@color.asRGB.size).to eq(3)
     end
 
     it "returns the correct red value" do
-      @color.asRGB['red'].should == 0
+      expect(@color.asRGB['red']).to eq(0)
     end
 
     it "returns the correct green value" do
-      @color.asRGB['green'].should == 255
+      expect(@color.asRGB['green']).to eq(255)
     end
 
     it "returns the correct blue value" do
-      @color.asRGB['blue'].should == 153
+      expect(@color.asRGB['blue']).to eq(153)
     end
   end
 
@@ -318,37 +318,37 @@ describe 'Color' do
     end
 
     it "returns a hash" do
-      @color.asRGB(@hex_value).should be_kind_of Hash
+      expect(@color.asRGB(@hex_value)).to be_a_kind_of(Hash)
     end
 
     it "returns a hash of 3 elements" do
-      @color.asRGB(@hex_value).size.should == 3
+      expect(@color.asRGB(@hex_value).size).to eq(3)
     end
 
     it "returns the correct red value" do
-      @color.asRGB(@hex_value)['red'].should == 0
+      expect(@color.asRGB(@hex_value)['red']).to eq(0)
     end
 
     it "returns the correct green value" do
-      @color.asRGB(@hex_value)['green'].should == 255
+      expect(@color.asRGB(@hex_value)['green']).to eq(255)
     end
 
     it "returns the correct blue value" do
-      @color.asRGB(@hex_value)['blue'].should == 153
+      expect(@color.asRGB(@hex_value)['blue']).to eq(153)
     end
   end
 
   describe 'as_html' do
     it "returns a <span> HTML element" do
-      Nokogiri::XML(@color.as_html).child.name.should == 'span'
+      expect(Nokogiri::XML(@color.as_html).child.name).to eq('span')
     end
 
     it "returns a HTML element with the class 'color'" do
-      Nokogiri::XML(@color.as_html).child.attribute('class').value.split.should include 'color'
+      expect(Nokogiri::XML(@color.as_html).child.attribute('class').value.split).to include('color')
     end
 
     it "returns a HTML element whose content is the value" do
-      Nokogiri::XML(@color.as_html).child.content.should == "##@hex_value"
+      expect(Nokogiri::XML(@color.as_html).child.content).to eq("##@hex_value")
     end
   end
 
@@ -360,11 +360,11 @@ describe 'Color' do
 
   describe 'self.valid?' do
     it "returns true if the color is valid" do
-      Prismic::Fragments::Color.valid?(@hex_value).should be_true
+      expect(Prismic::Fragments::Color.valid?(@hex_value)).to be(true)
     end
 
     it "returns false if the color is not valid" do
-      Prismic::Fragments::Color.valid?("I'm a murloc").should be_false
+      expect(Prismic::Fragments::Color.valid?("I'm a murloc")).to be(false)
     end
   end
 end
@@ -382,35 +382,35 @@ describe 'Embed' do
 
   describe 'as_html' do
     it "returns a div element" do
-      Nokogiri::XML(@embed.as_html).child.name.should == 'div'
+      expect(Nokogiri::XML(@embed.as_html).child.name).to eq('div')
     end
 
     it "returns an element with a data-oembed attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed').should be_true
+      expect(Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed')).to be(true)
     end
 
     it "returns an element with a data-oembed attribute containing the url" do
-      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed').value.should == 'my_url'
+      expect(Nokogiri::XML(@embed.as_html).child.attribute('data-oembed').value).to eq('my_url')
     end
 
     it "returns an element with a data-oembed-type attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-type').should be_true
+      expect(Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-type')).to be(true)
     end
 
     it "returns an element with a data-oembed-type attribute containing the type in lowercase" do
-      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-type').value.should == 'my_type'
+      expect(Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-type').value).to eq('my_type')
     end
 
     it "returns an element with a data-oembed-provider attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-provider').should be_true
+      expect(Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-provider')).to be(true)
     end
 
     it "returns an element with a data-oembed-provider attribute containing the provider in lowercase" do
-      Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-provider').value.should == 'my_provider'
+      expect(Nokogiri::XML(@embed.as_html).child.attribute('data-oembed-provider').value).to eq('my_provider')
     end
 
     it "returns an element wrapping the `html` value" do
-      Nokogiri::XML(@embed.as_html).child.content.should == 'my_html'
+      expect(Nokogiri::XML(@embed.as_html).child.content).to eq('my_html')
     end
   end
 
@@ -431,35 +431,35 @@ describe 'Image::View' do
 
   describe 'ratio' do
     it "returns the width/height ratio of the image" do
-      @view.ratio.should == @width / @height
+      expect(@view.ratio).to eq(@width / @height)
     end
   end
 
   describe 'as_html' do
     it "return an <img> HTML element" do
-      Nokogiri::XML(@view.as_html).child.name.should == 'img'
+      expect(Nokogiri::XML(@view.as_html).child.name).to eq('img')
     end
 
     it "returns an element whose `src` attribute equals the url" do
-      Nokogiri::XML(@view.as_html).child.attribute('src').value.should == @url
+      expect(Nokogiri::XML(@view.as_html).child.attribute('src').value).to eq(@url)
     end
 
     it "returns an element whose `width` attribute equals the width" do
-      Nokogiri::XML(@view.as_html).child.attribute('width').value.should == @width.to_s
+      expect(Nokogiri::XML(@view.as_html).child.attribute('width').value).to eq(@width.to_s)
     end
 
     it "returns an element whose `height` attribute equals the height" do
-      Nokogiri::XML(@view.as_html).child.attribute('height').value.should == @height.to_s
+      expect(Nokogiri::XML(@view.as_html).child.attribute('height').value).to eq(@height.to_s)
     end
 
     it "if set, returns an element whose `alt` attribute equals the alt" do
       @alt = "Alternative text"
       @view.alt = @alt
-      Nokogiri::XML(@view.as_html).child.attribute('alt').value.should == @alt
+      expect(Nokogiri::XML(@view.as_html).child.attribute('alt').value).to eq(@alt)
     end
 
     # it "if not set, alt attribute is absent" do
-    #   Nokogiri::XML(@view.as_html).child.attribute('alt').should == nil
+    #   Nokogiri::XML(@view.as_html).child.attribute('alt')).to eq(nil)
     # end
   end
 
@@ -479,11 +479,11 @@ describe 'Image' do
 
   describe 'get_view' do
     it "returns `main`'s value is asked for`" do
-      @image.get_view('main').should == @main_view
+      expect(@image.get_view('main')).to eq(@main_view)
     end
 
     it "returns the value of the specified key" do
-      @image.get_view('another_view').should == @another_view
+      expect(@image.get_view('another_view')).to eq(@another_view)
     end
 
     it "raises an error if the key does not exist" do
@@ -493,17 +493,17 @@ describe 'Image' do
 
   describe 'as_html' do
     it "returns the HTML representation of the main view" do
-      Nokogiri::XML(@image.as_html).child.name.should == Nokogiri::XML(@main_view.as_html).child.name
-      Nokogiri::XML(@image.as_html).child.attribute('src').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('src').value
-      Nokogiri::XML(@image.as_html).child.attribute('width').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('width').value
-      Nokogiri::XML(@image.as_html).child.attribute('height').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('height').value
-      Nokogiri::XML(@image.as_html).child.attribute('alt').value.should == Nokogiri::XML(@main_view.as_html).child.attribute('alt').value
+      expect(Nokogiri::XML(@image.as_html).child.name).to eq(Nokogiri::XML(@main_view.as_html).child.name)
+      expect(Nokogiri::XML(@image.as_html).child.attribute('src').value).to eq(Nokogiri::XML(@main_view.as_html).child.attribute('src').value)
+      expect(Nokogiri::XML(@image.as_html).child.attribute('width').value).to eq(Nokogiri::XML(@main_view.as_html).child.attribute('width').value)
+      expect(Nokogiri::XML(@image.as_html).child.attribute('height').value).to eq(Nokogiri::XML(@main_view.as_html).child.attribute('height').value)
+      expect(Nokogiri::XML(@image.as_html).child.attribute('alt').value).to eq(Nokogiri::XML(@main_view.as_html).child.attribute('alt').value)
     end
   end
 
   describe 'as_text' do
     it 'is empty' do
-      @image.as_text.should == ""
+      expect(@image.as_text).to eq("")
     end
   end
 end
@@ -518,15 +518,15 @@ describe 'StructuredText' do
     ])
   end
   it 'finds the text of the first block' do
-    @structuredtext.blocks[0].text.should == "This is not a title"
+    expect(@structuredtext.blocks[0].text).to eq("This is not a title")
   end
   it 'finds the right title if exists' do
-    @structuredtext.first_title.should == "Document's title"
+    expect(@structuredtext.first_title).to eq("Document's title")
   end
   it 'returns false if no title' do
     @structuredtext.blocks[1] = Prismic::Fragments::StructuredText::Block::Text.new("This is not a title either", [])
     @structuredtext.blocks[2] = Prismic::Fragments::StructuredText::Block::Text.new("And this is not a title either", [])
-    @structuredtext.first_title.should == false
+    expect(@structuredtext.first_title).to eq(false)
   end
 end
 
@@ -538,11 +538,11 @@ describe 'StructuredText::Heading' do
   let :block do Prismic::Fragments::StructuredText::Block::Heading.new(@text, @spans, @heading) end
   it 'generates valid h1 html' do
     @heading = 1
-    block.as_html(nil).should == '<h1>This <em>is</em> <strong>a</strong> simple test.</h1>'
+    expect(block.as_html(nil)).to eq('<h1>This <em>is</em> <strong>a</strong> simple test.</h1>')
   end
   it 'generates valid h2 html' do
     @heading = 2
-    block.as_html(nil).should == '<h2>This <em>is</em> <strong>a</strong> simple test.</h2>'
+    expect(block.as_html(nil)).to eq('<h2>This <em>is</em> <strong>a</strong> simple test.</h2>')
   end
 end
 
@@ -551,42 +551,42 @@ describe 'StructuredText::Paragraph' do
   it 'generates valid html' do
     @text  = "This is a simple test."
     @spans = [em(5, 7), strong(8, 9)]
-    block.as_html(nil).should == "<p>This <em>is</em> <strong>a</strong> simple test.</p>"
+    expect(block.as_html(nil)).to eq("<p>This <em>is</em> <strong>a</strong> simple test.</p>")
   end
   it "espaces HTML content" do
     @text  = '&my <value> #abcde'
     @spans = [em(4, 11), strong(0, 1)]
-    block.as_html(nil).should =~ %r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+><strong>&amp;</strong>my <em>&lt;value&gt;</em> #abcde<[^>]+>$})
   end
   it "espaces HTML content (many spans)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(1, 3), strong(5, 7), em(9, 11), strong(13, 15)]
-    block.as_html(nil).should =~ %r{^<[^>]+>a<em>bc</em>de<strong>fg</strong>hi<em>jk</em>lm<strong>no</strong>pqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>a<em>bc</em>de<strong>fg</strong>hi<em>jk</em>lm<strong>no</strong>pqrstuvwxyz<[^>]+>$})
   end
   it "espaces HTML content (empty spans)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 2)]
-    block.as_html(nil).should =~ %r{^<[^>]+>abcdefghijklmnopqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>abcdefghijklmnopqrstuvwxyz<[^>]+>$})
   end
   it "espaces HTML content (2 spans on the same text)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 4), strong(2, 4)]
-    block.as_html(nil).should =~ %r{^<[^>]+>ab<em><strong>cd</strong></em>efghijklmnopqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>ab<em><strong>cd</strong></em>efghijklmnopqrstuvwxyz<[^>]+>$})
   end
   it "espaces HTML content (2 spans on the same text - one bigger 1)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 6), strong(2, 4)]
-    block.as_html(nil).should =~ %r{^<[^>]+>ab<em><strong>cd</strong>ef</em>ghijklmnopqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>ab<em><strong>cd</strong>ef</em>ghijklmnopqrstuvwxyz<[^>]+>$})
   end
   it "espaces HTML content (2 spans on the same text - one bigger 2)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 4), strong(2, 6)]
-    block.as_html(nil).should =~ %r{^<[^>]+>ab<strong><em>cd</em>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>ab<strong><em>cd</em>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$})
   end
   it "espaces HTML content (span next to span)" do
     @text  = 'abcdefghijklmnopqrstuvwxyz'
     @spans = [em(2, 4), strong(4, 6)]
-    block.as_html(nil).should =~ %r{^<[^>]+>ab<em>cd</em><strong>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$}
+    expect(block.as_html(nil)).to match(%r{^<[^>]+>ab<em>cd</em><strong>ef</strong>ghijklmnopqrstuvwxyz<[^>]+>$})
   end
 end
 
@@ -595,7 +595,7 @@ describe 'StructuredText::Preformatted' do
   it 'generates valid html' do
     @text  = "This is a simple test."
     @spans = [em(5, 7), strong(8, 9)]
-    block.as_html(nil).should == "<pre>This <em>is</em> <strong>a</strong> simple test.</pre>"
+    expect(block.as_html(nil)).to eq("<pre>This <em>is</em> <strong>a</strong> simple test.</pre>")
   end
 end
 
@@ -607,31 +607,31 @@ describe 'StructuredText::Image' do
 
   describe 'url' do
     it "returns the view's url" do
-      @image.url.should == @view.url
+      expect(@image.url).to eq(@view.url)
     end
   end
 
   describe 'width' do
     it "returns the view's width" do
-      @image.width.should == @view.width
+      expect(@image.width).to eq(@view.width)
     end
   end
 
   describe 'height' do
     it "returns the view's height" do
-      @image.height.should == @view.height
+      expect(@image.height).to eq(@view.height)
     end
   end
 
   describe 'alt' do
     it "returns the view's alt" do
-      @image.alt.should == @view.alt
+      expect(@image.alt).to eq(@view.alt)
     end
   end
 
   describe 'copyright' do
     it "returns the view's copyright" do
-      @image.copyright.should == @view.copyright
+      expect(@image.copyright).to eq(@view.copyright)
     end
   end
 end
@@ -654,14 +654,14 @@ describe 'StructuredText::Hyperlink' do
 
   describe 'as_html' do
     it "can generate valid link" do
-      @hyperlink.serialize('', @link_resolver).should == '<a href="http://localhost/UdUjvt_mqVNObPeO"></a>'
+      expect(@hyperlink.serialize('', @link_resolver)).to eq('<a href="http://localhost/UdUjvt_mqVNObPeO"></a>')
     end
     it "raises an error when no link_resolver provided" do
-      expect { @hyperlink.serialize('', nil) }.to raise_error
+      expect { @hyperlink.serialize('', nil) }.to raise_error(RuntimeError)
     end
     it "can generate valid html for broken link" do
       @link.broken = true
-      @hyperlink.serialize('', @link_resolver).should == '<span></span>'
+      expect(@hyperlink.serialize('', @link_resolver)).to eq('<span></span>')
     end
   end
 end
@@ -674,9 +674,9 @@ describe 'Multiple' do
   describe 'push' do
     it "adds the element to the collection" do
       @multiple.push(:something)
-      @multiple.size.should == 1
+      expect(@multiple.size).to eq(1)
       @multiple.push(:something_else)
-      @multiple.size.should == 2
+      expect(@multiple.size).to eq(2)
     end
   end
 end
@@ -690,32 +690,32 @@ describe 'Group' do
   end
 
   it 'accesses fields the proper way' do
-    @docchapter['docchapter.docs'][0]['linktodoc'].type.should == 'doc'
+    expect(@docchapter['docchapter.docs'][0]['linktodoc'].type).to eq('doc')
   end
 
   it 'serializes towards HTML as expected' do
-    @docchapter['docchapter.docs'].as_html(@link_resolver).should == "<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>"
+    expect(@docchapter['docchapter.docs'].as_html(@link_resolver)).to eq("<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDofwEAALAdpbNH\">with-jquery</a></section>\n<section data-field=\"linktodoc\"><a href=\"http://localhost/doc/UrDp8AEAAPUdpbNL\">with-bootstrap</a></section>")
   end
 
   it 'loops through the group fragment properly' do
-    @docchapter['docchapter.docs']
-      .map{ |fragments| fragments['linktodoc'].slug }
-      .join(' ').should == "with-jquery with-bootstrap"
+    expect(@docchapter['docchapter.docs']
+           .map{ |fragments| fragments['linktodoc'].slug }
+           .join(' ')).to eq("with-jquery with-bootstrap")
   end
 
   it 'returns the proper length of a group fragment' do
-    @docchapter['docchapter.docs'].length.should == 2
-    @docchapter['docchapter.docs'].size.should == 2
+    expect(@docchapter['docchapter.docs'].length).to eq(2)
+    expect(@docchapter['docchapter.docs'].size).to eq(2)
   end
 
   it 'loops through the subfragment list properly' do
-    @docchapter['docchapter.docs'][0].count.should == 1
-    @docchapter['docchapter.docs'][0].first[0].should == "linktodoc"
+    expect(@docchapter['docchapter.docs'][0].count).to eq(1)
+    expect(@docchapter['docchapter.docs'][0].first[0]).to eq("linktodoc")
   end
 
   it 'returns the proper length of the sunfragment list' do
-    @docchapter['docchapter.docs'][0].length.should == 1
-    @docchapter['docchapter.docs'][0].size.should == 1
+    expect(@docchapter['docchapter.docs'][0].length).to eq(1)
+    expect(@docchapter['docchapter.docs'][0].size).to eq(1)
   end
 
 end
@@ -730,8 +730,8 @@ describe 'Slices' do
   end
 
   it 'parses correctly' do
-    @slices.as_text.should == "\nc'est un bloc features\nC'est un bloc content\n"
-    @slices.as_html(@link_resolver).gsub('&#39;', "'").should == %[<div data-slicetype="features" class="slice features-label"><section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c'est un bloc features</span></section></div>\n<div data-slicetype="text" class="slice"><p>C'est un bloc content</p></div>\n<div data-slicetype="separator" class="slice"><section data-field="sep"><hr class="separator" /></section></div>]
+    expect(@slices.as_text).to eq("\nc'est un bloc features\nC'est un bloc content\n")
+    expect(@slices.as_html(@link_resolver).gsub('&#39;', "'")).to eq(%[<div data-slicetype="features" class="slice features-label"><section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c'est un bloc features</span></section></div>\n<div data-slicetype="text" class="slice"><p>C'est un bloc content</p></div>\n<div data-slicetype="separator" class="slice"><section data-field="sep"><hr class="separator" /></section></div>])
   end
 
 end

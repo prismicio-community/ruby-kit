@@ -39,19 +39,19 @@ describe 'Api' do
 
   describe 'id' do
     it 'returns the right id' do
-      @api.ref('key1').id.should == 'id1'
+      expect(@api.ref('key1').id).to eq('id1')
     end
   end
 
   describe 'ref' do
     it 'returns the right Ref' do
-      @api.ref('key2').label.should == 'label2'
+      expect(@api.ref('key2').label).to eq('label2')
     end
   end
 
   describe 'refs' do
     it 'returns the correct number of elements' do
-      @api.refs.size.should == 4
+      expect(@api.refs.size).to eq(4)
     end
   end
 
@@ -63,62 +63,62 @@ describe 'Api' do
 
   describe 'master_ref' do
     it 'returns the right Ref' do
-      @api.master_ref.label.should == 'label3'
+      expect(@api.master_ref.label).to eq('label3')
     end
   end
 
   describe 'master' do
     it 'returns the right Ref' do
-      @api.master.label.should == 'label3'
+      expect(@api.master.label).to eq('label3')
     end
   end
 
   describe 'forms' do
     it 'return the right Form' do
-      @api.forms['form2'].name.should == 'form2'
+      expect(@api.forms['form2'].name).to eq('form2')
     end
   end
 
   describe 'create_search_form' do
     it 'create a new search form for the right form' do
       @form = @api.form('form2')
-      @form.form.name.should == 'form2'
+      expect(@form.form.name).to eq('form2')
     end
     it 'store default value as simple value when the field is not repeatable' do
       @form = @api.form('form2')
-      @form.data['param1'].should == 'value1'
+      expect(@form.data['param1']).to eq('value1')
     end
     it 'store default value as array when the field is repeatable' do
       @form = @api.form('form2')
-      @form.data['q'].should == ['[[any(document.type, [\"product\"])]]']
+      expect(@form.data['q']).to eq(['[[any(document.type, [\"product\"])]]'])
     end
   end
 
   describe 'deprecated create_search_form' do
     it 'create a new search form for the right form' do
-      @api.should_receive(:warn).with('[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead.')
+      expect(@api).to receive(:warn).with('[DEPRECATION] `create_search_form` is deprecated.  Please use `form` instead.')
       @form = @api.create_search_form('form2')
-      @form.form.name.should == 'form2'
+      expect(@form.form.name).to eq('form2')
     end
     it 'store default value as simple value when the field is not repeatable' do
       @form = @api.create_search_form('form2')
-      @form.data['param1'].should == 'value1'
+      expect(@form.data['param1']).to eq('value1')
     end
     it 'store default value as array when the field is repeatable' do
       @form = @api.create_search_form('form2')
-      @form.data['q'].should == ['[[any(document.type, [\"product\"])]]']
+      expect(@form.data['q']).to eq(['[[any(document.type, [\"product\"])]]'])
     end
   end
 
   describe 'forms' do
     it 'returns the correct number of elements' do
-      @api.forms.size.should == 4
+      expect(@api.forms.size).to eq(4)
     end
   end
 
   describe 'master' do
     it 'returns a master Ref' do
-      @api.master.master?.should be_true
+      expect(@api.master.master?).to be(true)
     end
   end
 
@@ -142,88 +142,87 @@ describe 'Api' do
     end
 
     it 'creates 2 refs' do
-      @parsed.refs.size.should == 2
+      expect(@parsed.refs.size).to eq(2)
     end
 
     it "creates the right ref's ref" do
-      @parsed.refs['bar'].ref.should == 'foo'
+      expect(@parsed.refs['bar'].ref).to eq('foo')
     end
 
     it "creates the right ref's label" do
-      @parsed.refs['bar'].label.should == 'bar'
+      expect(@parsed.refs['bar'].label).to eq('bar')
     end
 
     it "creates the right ref's 'master' value" do
-      @parsed.refs['bar'].master?.should == false
+      expect(@parsed.refs['bar'].master?).to be(false)
     end
 
     it 'creates 3 bookmarks' do
-      @parsed.bookmarks.size.should == 3
+      expect(@parsed.bookmarks.size).to eq(3)
     end
 
     it 'creates the right bookmarks' do
-      @parsed.bookmarks['about'].should == 'Ue0EDd_mqb8Dhk3j'
+      expect(@parsed.bookmarks['about']).to eq('Ue0EDd_mqb8Dhk3j')
     end
 
     it 'creates 6 types' do
-      @parsed.types.size.should == 6
+      expect(@parsed.types.size).to eq(6)
     end
 
     it 'creates the right types' do
-      @parsed.types['blog-post'].should == 'Blog post'
+      expect(@parsed.types['blog-post']).to eq('Blog post')
     end
 
     it 'creates 4 tags' do
-      @parsed.tags.size.should == 4
+      expect(@parsed.tags.size).to eq(4)
     end
 
     it 'creates the right tags' do
-      @parsed.tags.should include 'Cupcake'
+      expect(@parsed.tags).to include('Cupcake')
     end
 
     it 'creates 10 forms' do
-      @parsed.forms.size.should == 10
+      expect(@parsed.forms.size).to eq(10)
     end
 
     it "creates the right form's name" do
-      @parsed.forms['pies'].name.should == 'Little Pies'
+      expect(@parsed.forms['pies'].name).to eq('Little Pies')
     end
 
     it "creates the right form's method" do
-      @parsed.forms['pies'].form_method.should == 'GET'
+      expect(@parsed.forms['pies'].form_method).to eq('GET')
     end
 
     it "creates the right form's rel" do
-      @parsed.forms['pies'].rel.should == 'collection'
+      expect(@parsed.forms['pies'].rel).to eq('collection')
     end
 
     it "creates the right form's enctype" do
-      @parsed.forms['pies'].enctype.should == 'application/x-www-form-urlencoded'
+      expect(@parsed.forms['pies'].enctype).to eq('application/x-www-form-urlencoded')
     end
 
     it "creates the right form's action" do
-      @parsed.forms['pies'].action.should == 'http://micro.prismic.io/api/documents/search'
+      expect(@parsed.forms['pies'].action).to eq('http://micro.prismic.io/api/documents/search')
     end
 
     it 'creates forms with the right fields' do
-      @parsed.forms['pies'].fields.size.should == 2
+      expect(@parsed.forms['pies'].fields.size).to eq(2)
     end
 
     it 'creates forms with the right type info' do
-      @parsed.forms['pies'].fields['ref'].field_type.should == 'String'
+      expect(@parsed.forms['pies'].fields['ref'].field_type).to eq('String')
     end
 
     it 'creates forms with the right default info' do
-      @parsed.forms['pies'].fields['q'].default.should ==
-        '[[at(document.tags, ["Pie"])][any(document.type, ["product"])]]'
+      expect(@parsed.forms['pies'].fields['q'].default).to eq(        '[[at(document.tags, ["Pie"])][any(document.type, ["product"])]]')
     end
 
     it "create fields (other than 'q') as non repeatable" do
-      @parsed.forms['pies'].fields['ref'].repeatable.should be_false
+      expect(@parsed.forms['pies'].fields['ref'].repeatable).to be(false)
     end
 
     it "create 'q' fields as repeatable" do
-      @parsed.forms['pies'].fields['q'].repeatable.should be_true
+      expect(@parsed.forms['pies'].fields['q'].repeatable).to be(true)
     end
 
   end
@@ -234,11 +233,11 @@ describe 'Api' do
     end
 
     it 'returns the json representation of the api' do
-      JSON.load(@json)['foo'].should == 'bar'
+      expect(JSON.load(@json)['foo']).to eq('bar')
     end
 
     it 'returns the json representation of the api containing one single element' do
-      JSON.load(@json).size.should == 1
+      expect(JSON.load(@json).size).to eq(1)
     end
   end
 
@@ -259,7 +258,7 @@ describe 'Api' do
       CGI.escape(@redirect_uri)
     end
     it 'build a valid url' do
-      oauth_initiate_url.should == "https://micro.prismic.io/auth?client_id=#@client_id&redirect_uri=#{redirect_uri_encoded}&scope=#@scope"
+      expect(oauth_initiate_url).to eq("https://micro.prismic.io/auth?client_id=#@client_id&redirect_uri=#{redirect_uri_encoded}&scope=#@scope")
     end
   end
 
@@ -276,11 +275,11 @@ describe 'LinkResolver' do
   end
 
   it 'builds the right URL from a DocumentLink' do
-    @link_resolver.link_to(@doc_link).should == '/fr-fr/blog-post/id/my-slug'
+    expect(@link_resolver.link_to(@doc_link)).to eq('/fr-fr/blog-post/id/my-slug')
   end
 
   it 'builds the right URL from a Document' do
-    @link_resolver.link_to(@document).should == '/en-us/blog-post/id/my-slug'
+    expect(@link_resolver.link_to(@document)).to eq('/en-us/blog-post/id/my-slug')
   end
 end
 
@@ -316,36 +315,36 @@ describe 'Document' do
         Prismic::Fragments::StructuredText::Block::Heading.new('This is the highest title of the fragment, but not the document', [], 2),
         Prismic::Fragments::StructuredText::Block::Text.new('This is not a title', [])
       ])
-      @document.first_title.should == 'This is the highest title of the document'
+      expect(@document.first_title).to eq('This is the highest title of the document')
     end
 
     it 'returns false if no title' do
-      @document.first_title.should == false
+      expect(@document.first_title).to be(false)
     end
   end
 
   describe 'slug' do
     it 'returns the first slug if found' do
-      @document.slug.should == 'my-slug'
+      expect(@document.slug).to eq('my-slug')
     end
 
     it "returns '-' if no slug found" do
       @document.slugs = []
-      @document.slug.should == '-'
+      expect(@document.slug).to eq('-')
     end
   end
 
   describe 'as_html' do
     it 'returns a <section> HTML element' do
-      Nokogiri::XML(@document.as_html(@link_resolver)).child.name.should == 'section'
+      expect(Nokogiri::XML(@document.as_html(@link_resolver)).child.name).to eq('section')
     end
 
     it "returns a HTML element with a 'data-field' attribute" do
-      Nokogiri::XML(@document.as_html(@link_resolver)).child.has_attribute?('data-field').should be_true
+      expect(Nokogiri::XML(@document.as_html(@link_resolver)).child.has_attribute?('data-field')).to be(true)
     end
 
     it "returns a HTML element with a 'data-field' attribute containing the name of the field" do
-      Nokogiri::XML(@document.as_html(@link_resolver)).child.attribute('data-field').value.should == 'field1'
+      expect(Nokogiri::XML(@document.as_html(@link_resolver)).child.attribute('data-field').value).to eq('field1')
     end
   end
 end
@@ -365,32 +364,32 @@ describe 'SearchForm' do
 
     it 'should be created for each valid field names' do
       @form = create_form('a_param' => @field)
-      @form.should respond_to(:a_param)
+      expect(@form).to respond_to(:a_param)
     end
 
     it 'should be created for each valid field names with number' do
       @form = create_form('a_param2' => @field)
-      @form.should respond_to(:a_param2)
+      expect(@form).to respond_to(:a_param2)
     end
 
     it 'should be created for each camelCase field names' do
       @form = create_form('anExampleParam0A0B' => @field)
-      @form.should respond_to(:an_example_param0_a0_b)
+      expect(@form).to respond_to(:an_example_param0_a0_b)
     end
 
     it 'should not be created for field names begining with a number' do
       @form = create_form('2param' => @field)
-      @form.should_not respond_to(:'2param')
+      expect(@form).not_to respond_to(:'2param')
     end
 
     it 'should not be created for field names begining with an underscore' do
       @form = create_form('_param' => @field)
-      @form.should_not respond_to(:'_param')
+      expect(@form).not_to respond_to(:'_param')
     end
 
     it 'should not be created for field names containing invalid characters' do
       @form = create_form('a-param' => @field)
-      @form.should_not respond_to(:'a-param')
+      expect(@form).not_to respond_to(:'a-param')
     end
 
     it 'should not be created if a method with same name already exists' do
@@ -398,7 +397,7 @@ describe 'SearchForm' do
         'ok'
       end }
       @form = create_form('param_example_for_tests' => @field)
-      @form.param_example_for_tests.should == 'ok'
+      expect(@form.param_example_for_tests).to eq('ok')
     end
 
   end
@@ -409,44 +408,44 @@ describe 'SearchForm' do
       @field = Prismic::Field.new('String', 'foo', true)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => ['foo', 'bar'] }  # test the 1st call
+      expect(@form.data).to eq({ 'q' => ['foo', 'bar'] })  # test the 1st call
       @form.set('q', 'baz')
-      @form.data.should == { 'q' => ['foo', 'bar', 'baz'] }  # test an other
+      expect(@form.data).to eq({ 'q' => ['foo', 'bar', 'baz'] })  # test an other
     end
 
     it 'replace value for non repeatable fields' do
       @field = Prismic::Field.new('String', 'foo', false)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => 'bar' }  # test the 1st call
+      expect(@form.data).to eq({ 'q' => 'bar' })  # test the 1st call
       @form.set('q', 'baz')
-      @form.data.should == { 'q' => 'baz' }  # test an other
+      expect(@form.data).to eq({ 'q' => 'baz' })  # test an other
     end
 
     it 'replace empty string value with nil' do
       @field = Prismic::Field.new('String', nil, true)
       @form = create_form('q' => @field)
       @form.set('q', '')
-      @form.data.should == { 'q' => nil }
+      expect(@form.data).to eq({ 'q' => nil })
     end
 
     it 'create value array for repeatable fields without value' do
       @field = Prismic::Field.new('String', nil, true)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => ['bar'] }
+      expect(@form.data).to eq({ 'q' => ['bar'] })
     end
 
     it 'create value for non repeatable fields without value' do
       @field = Prismic::Field.new('String', nil, false)
       @form = create_form('q' => @field)
       @form.set('q', 'bar')
-      @form.data.should == { 'q' => 'bar' }
+      expect(@form.data).to eq({ 'q' => 'bar' })
     end
 
     it 'returns the form itself' do
       @form = create_form('q' => @field)
-      @form.query('foo').should equal @form
+      expect(@form.query('foo')).to eq(@form)
     end
 
     it 'merge user defined params into default ones' do
@@ -454,7 +453,7 @@ describe 'SearchForm' do
       default_params = {'param1' => field.('a'), 'param2' => field.('b')}
       @form = create_form(default_params)
       @form.set('param1', 'a2')
-      @form.data.should == {'param1' => 'a2', 'param2' => 'b'}
+      expect(@form.data).to eq({'param1' => 'a2', 'param2' => 'b'})
     end
   end
 

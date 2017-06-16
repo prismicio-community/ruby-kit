@@ -11,42 +11,40 @@ describe "Experiments'" do
 
     it 'response is properly parsed' do
       first = @experiments.running[0]
-      first.id.should == 'VDUBBawGAKoGelsX'
-      first.google_id.should == '_UQtin7EQAOH5M34RQq6Dg'
-      first.name.should == 'Exp 1'
+      expect(first.id).to eq('VDUBBawGAKoGelsX')
+      expect(first.google_id).to eq('_UQtin7EQAOH5M34RQq6Dg')
+      expect(first.name).to eq('Exp 1')
 
       base = first.variations[0]
-      base.id.should == 'VDUBBawGAKoGelsZ'
-      base.label.should == 'Base'
-      base.ref.should == 'VDUBBawGALAGelsa'
+      expect(base.id).to eq('VDUBBawGAKoGelsZ')
+      expect(base.label).to eq('Base')
+      expect(base.ref).to eq('VDUBBawGALAGelsa')
     end
 
     describe 'cookies' do
       it 'is empty' do
-        @experiments.ref_from_cookie('').should be_nil
+        expect(@experiments.ref_from_cookie('')).to be(nil)
       end
 
       it 'invalid content' do
-        @experiments.ref_from_cookie('Ponyes are awesome').should be_nil
+        expect(@experiments.ref_from_cookie('Ponyes are awesome')).to be(nil)
       end
 
       it 'actual running variation index' do
-        @experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%200').should == 'VDUBBawGALAGelsa'
-        @experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%201').should == 'VDUUmHIKAZQKk9uq'
+        expect(@experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%200')).to eq('VDUBBawGALAGelsa')
+        expect(@experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%201')).to eq('VDUUmHIKAZQKk9uq')
       end
 
       it 'index overflow' do
-        @experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%209').should be_nil
-        @experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%20-1').should be_nil
+        expect(@experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%209')).to be(nil)
+        expect(@experiments.ref_from_cookie('_UQtin7EQAOH5M34RQq6Dg%20-1')).to be(nil)
       end
 
       it 'unknown Google ID' do
-        @experiments.ref_from_cookie('NotAGoodLookingId%200').should be_nil
-        @experiments.ref_from_cookie('NotAGoodLookingId%201').should be_nil
+        expect(@experiments.ref_from_cookie('NotAGoodLookingId%200')).to be(nil)
+        expect(@experiments.ref_from_cookie('NotAGoodLookingId%201')).to be(nil)
       end
 
     end
 
 end
-
-
