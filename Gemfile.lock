@@ -44,6 +44,3 @@ DEPENDENCIES
   rspec (~> 2.14)
   simplecov (~> 0.7)
   yajl-ruby
-
-BUNDLED WITH
-   1.14.6
