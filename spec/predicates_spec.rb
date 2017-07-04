@@ -19,6 +19,13 @@ describe 'predicates' do
       form = @api.form('everything').query(Predicates.at('document.id', 'UrjI1gEAALOCeO5i'))
       form.data['q'].should == ['[[:d = at(document.id, "UrjI1gEAALOCeO5i")]]']
     end
+    it 'allows to reuse predicates', focus: true do
+      predicate = Predicates.at('document.id', 'UrjI1gEAALOCeO5i')
+      form = @api.form('everything').query(predicate)
+      form.data['q'].should == ['[[:d = at(document.id, "UrjI1gEAALOCeO5i")]]']
+      form2 = @api.form('everything').query(predicate)
+      form2.data['q'].should == ['[[:d = at(document.id, "UrjI1gEAALOCeO5i")]]']
+    end
   end
 
   describe 'not predicate' do
