@@ -178,7 +178,7 @@ module Prismic
         res = http_client.get(url, data, 'Accept' => 'application/json')
         case res.code
         when '200'
-          res
+          res.body
         when '401', '403'
           begin
             json = JSON.load(res.body)
@@ -205,7 +205,7 @@ module Prismic
       cache = opts.has_key?(:cache) ? opts[:cache] : Prismic::DefaultCache
 
       resp = get(url, access_token, http_client, api_cache)
-      json = JSON.load(resp.body)
+      json = JSON.load(resp)
       parse_api_response(json, access_token, http_client, cache)
     end
 
