@@ -2,8 +2,23 @@
 module Prismic
   module Fragments
 
-    # A fragment of type Slice, an item in a SliceZone
-    class Slice < Fragment
+    # A fragment of type CompositeSlice, an item in a SliceZone
+    class CompositeSlice < Fragment
+      attr_accessor :slice_type
+      attr_accessor :slice_label
+      attr_accessor :non_repeat
+      attr_accessor :repeat
+
+      def initialize(slice_type, slice_label, non_repeat, repeat)
+        @slice_type = slice_type
+        @slice_label = slice_label
+        @non_repeat = non_repeat
+        @repeat = repeat
+      end
+    end
+
+    # A fragment of type SimpleSlice, an item in a SliceZone
+    class SimpleSlice < Fragment
       attr_accessor :slice_type
       attr_accessor :slice_label
       attr_accessor :value

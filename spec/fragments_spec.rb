@@ -720,9 +720,9 @@ describe 'Group' do
 
 end
 
-describe 'Slices' do
+describe 'Simple slice' do
   before do
-    @raw_json_slices = File.read("#{File.dirname(__FILE__)}/responses_mocks/slices.json")
+    @raw_json_slices = File.read("#{File.dirname(__FILE__)}/responses_mocks/simple_slice.json")
     @json_slices = JSON.load(@raw_json_slices)
     @doc = Prismic::JsonParser.document_parser(@json_slices)
     @slices = @doc.get_slice_zone("article.blocks")
@@ -734,4 +734,26 @@ describe 'Slices' do
     @slices.as_html(@link_resolver).gsub('&#39;', "'").should == %[<div data-slicetype="features" class="slice features-label"><section data-field="illustration"><img src="https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg" alt="" width="4285" height="709" /></section>\n<section data-field="title"><span class="text">c'est un bloc features</span></section></div>\n<div data-slicetype="text" class="slice"><p>C'est un bloc content</p></div>\n<div data-slicetype="separator" class="slice"><section data-field="sep"><hr class="separator" /></section></div>]
   end
 
+  it 'get item correctly' do
+    expected_url = 'https://wroomdev.s3.amazonaws.com/toto/db3775edb44f9818c54baa72bbfc8d3d6394b6ef_hsf_evilsquall.jpg'
+    @slices.slices[0].value[0]["illustration"].url.should == expected_url
+  end
+end
+
+describe 'Composite slice' do
+  before do
+    @raw_json_slices = File.read("#{File.dirname(__FILE__)}/responses_mocks/composite_slice.json")
+    @json_slices = JSON.load(@raw_json_slices)
+    @doc = Prismic::JsonParser.document_parser(@json_slices)
+    @slices = @doc.get_slice_zone("nav-nodejs.items")
+    @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.type}/#{doc_link.id}" }
+  end
+
+  it 'get item in non-repeat correctly' do
+    @slices.slices[0].non_repeat['label'].as_text().should == 'Getting Started'
+  end
+
+  it 'get item in repeat correctly' do
+    @slices.slices[0].repeat[0]['label'].as_text().should == 'Start from Scratch'
+  end
 end
