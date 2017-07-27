@@ -749,11 +749,19 @@ describe 'Composite slice' do
     @link_resolver = Prismic.link_resolver('master'){|doc_link| "http://localhost/#{doc_link.type}/#{doc_link.id}" }
   end
 
+  it 'get html' do
+    @slices.as_html(@link_resolver).gsub('&#39;', "'").should == %[<div data-slicetype="with-submenu" class="slice"><p>Getting Started</p><section data-field="label"><p>Start from Scratch</p></section>\n<section data-field="link"><a href="http://localhost/page-nodejs/WPeD0SoAACsABzNC">page---nodejs---getting-started-with-the-starter-kit</a></section></div>]
+  end
+
+  it 'get text' do
+    @slices.as_text.should == %[Getting Started\nStart from Scratch\n]
+  end
+
   it 'get item in non-repeat correctly' do
-    @slices.slices[0].non_repeat['label'].as_text().should == 'Getting Started'
+    @slices.slices[0].non_repeat['label'].as_text.should == 'Getting Started'
   end
 
   it 'get item in repeat correctly' do
-    @slices.slices[0].repeat[0]['label'].as_text().should == 'Start from Scratch'
+    @slices.slices[0].repeat[0]['label'].as_text.should == 'Start from Scratch'
   end
 end
