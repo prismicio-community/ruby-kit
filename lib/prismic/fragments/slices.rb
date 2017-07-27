@@ -15,6 +15,40 @@ module Prismic
         @non_repeat = non_repeat
         @repeat = repeat
       end
+
+      # Generate an text representation of the group
+      #
+      # @return [String] the text representation
+      def as_text
+        non_repeat_text = ''
+        @non_repeat.each do |fragment_key, fragment_value|
+          non_repeat_text += fragment_value.as_text
+        end
+
+        "#{non_repeat_text}\n#{@repeat.as_text}"
+      end
+
+      # Generate an HTML representation of the group
+      #
+      # @param link_resolver [LinkResolver] The LinkResolver used to build
+      #     application's specific URL
+      #
+      # @return [String] the HTML representation
+      def as_html(link_resolver=nil)
+        classes = ['slice']
+        unless (@slice_label.nil?)
+          classes.push(@slice_label)
+        end
+
+        non_repeat_html = ''
+        @non_repeat.each do |fragment_key, fragment_value|
+          non_repeat_html += fragment_value.as_html(link_resolver)
+        end
+
+        repeat_html = repeat.as_html(link_resolver)
+
+        %[<div data-slicetype="#{@slice_type}" class="#{classes.join(' ')}">#{non_repeat_html + repeat_html}</div>]
+      end
     end
 
     # A fragment of type SimpleSlice, an item in a SliceZone
