@@ -208,8 +208,23 @@ module Prismic
 
       def slices_parser(json)
         slices = []
+
         json['value'].each do |data|
-          slices << Prismic::Fragments::Slice.new(data['slice_type'], data['slice_label'], fragment_parser(data['value']))
+          slice_type = data['slice_type']
+          slice_label = data['slice_label']
+
+          if data.key?('value')
+            slices << Prismic::Fragments::SimpleSlice.new(slice_type, slice_label, fragment_parser(data['value']))
+          else
+            non_repeat = {}
+            data['non-repeat'].each do |fragment_key, fragment_value|
+              non_repeat[fragment_key] = fragment_parser(fragment_value)
+            end
+
+            repeat = group_parser({ 'type' => 'Group', 'value' => data['repeat']})
+
+            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)            
+          end
         end
         Prismic::Fragments::SliceZone.new(slices)
       end

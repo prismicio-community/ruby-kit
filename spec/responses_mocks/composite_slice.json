@@ -1,0 +1,63 @@
+{
+  "id": "WPeLbyoAACsAB1Su",
+  "uid": null,
+  "type": "nav-nodejs",
+  "href": "http://prismicio-docs.prismic.io/api/v1/documents/search?ref=WXnqmigAALs3V7Kx&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22WPeLbyoAACsAB1Su%22%29+%5D%5D",
+  "tags": [],
+  "first_publication_date": "2017-04-19T16:08:43+0000",
+  "last_publication_date": "2017-07-07T11:26:27+0000",
+  "slugs": ["navigation---nodejs", "navigation-nodejs"],
+  "data": {
+	"nav-nodejs": {
+	  "display-name": {
+		"type": "StructuredText",
+		"value": [{
+		  "type": "paragraph",
+		  "text": "Navigation - NodeJS",
+		  "spans": []
+		}]
+	  },
+	  "items": {
+		"type": "SliceZone",
+		"value": [{
+		  "type": "Slice",
+		  "slice_type": "with-submenu",
+		  "slice_label": null,
+		  "repeat": [{
+			"label": {
+			  "type": "StructuredText",
+			  "value": [{
+				"type": "paragraph",
+				"text": "Start from Scratch",
+				"spans": []
+			  }]
+			},
+			"link": {
+			  "type": "Link.document",
+			  "value": {
+				"document": {
+				  "id": "WPeD0SoAACsABzNC",
+				  "type": "page-nodejs",
+				  "tags": [],
+				  "slug": "page---nodejs---getting-started-with-the-starter-kit",
+				  "uid": "prismic-from-scratch-with-nodejs"
+				},
+				"isBroken": false
+			  }
+			}
+		  }],
+		  "non-repeat": {
+			"label": {
+			  "type": "StructuredText",
+			  "value": [{
+				"type": "paragraph",
+				"text": "Getting Started",
+				"spans": []
+			  }]
+			}
+		  }
+		}]
+	  }
+	}
+  }
+}
