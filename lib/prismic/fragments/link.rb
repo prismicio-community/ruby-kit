@@ -33,6 +33,10 @@ module Prismic
         @url = url
       end
 
+      def as_text
+        @url
+      end
+
       # Returns the URL of the link
       #
       # @note The link_resolver parameter is accepted but it is not used by
