@@ -138,6 +138,8 @@ module Prismic
           def serialize(text, link_resolver = nil)
             if link.is_a? Prismic::Fragments::DocumentLink and link.broken
               "<span>#{text}</span>"
+            elsif defined?(link.target) and link.target != nil
+              %(<a href="#{link.url(link_resolver)}" target="#{link.target}" rel="noopener">#{text}</a>)
             else
               %(<a href="#{link.url(link_resolver)}">#{text}</a>)
             end

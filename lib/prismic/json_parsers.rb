@@ -74,7 +74,7 @@ module Prismic
       end
 
       def web_link_parser(json)
-        Prismic::Fragments::WebLink.new(json['value']['url'])
+        Prismic::Fragments::WebLink.new(json['value']['url'], json['value']['target'])
       end
 
       def date_parser(json)
