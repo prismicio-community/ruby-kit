@@ -11,6 +11,7 @@ end
 describe 'WebLink' do
   before do
       @web_link = Prismic::Fragments::WebLink.new('my_url')
+      @target_blank = Prismic::Fragments::WebLink.new('my_url', '_blank')
   end
   describe 'as_html' do
     it "returns an <a> HTML element" do
@@ -27,6 +28,14 @@ describe 'WebLink' do
 
     it "returns a HTML element whose content is the link" do
       Nokogiri::XML(@web_link.as_html).child.content.should == 'my_url'
+    end
+
+    it "returns an <a> HTML element with a target attribute" do
+      Nokogiri::XML(@target_blank.as_html).child.has_attribute?('target').should be_true
+    end
+
+    it "returns an <a> HTML element with an target blank attribute" do
+      Nokogiri::XML(@target_blank.as_html).child.attribute('target').value.should == '_blank'
     end
   end
 
@@ -650,6 +659,8 @@ describe 'StructuredText::Hyperlink' do
     )
     @hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @link)
     @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    @target_blank = Prismic::Fragments::WebLink.new("link_url", "_blank")
+    @target_hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @target_blank)
   end
 
   describe 'as_html' do
@@ -662,6 +673,9 @@ describe 'StructuredText::Hyperlink' do
     it "can generate valid html for broken link" do
       @link.broken = true
       @hyperlink.serialize('', @link_resolver).should == '<span></span>'
+    end
+    it "can generate valid html for target blank" do
+      @target_hyperlink.serialize('', @link_resolver).should == '<a href="link_url" target="_blank" rel="noopener"></a>'
     end
   end
 end
