@@ -83,7 +83,7 @@ module Prismic
     class ImageLink < Link
       attr_accessor :url, :target
 
-      def initialize(url)
+      def initialize(url, target = nil)
         @url = url
         @target = target
       end
