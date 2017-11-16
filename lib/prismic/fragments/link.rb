@@ -16,7 +16,7 @@ module Prismic
       end
 
       def as_html(link_resolver=nil)
-        %(#{start_html(link_resolver, target)}#{url(link_resolver)}#{end_html})
+        %(#{start_html(link_resolver, @target)}#{url(link_resolver)}#{end_html})
       end
 
       # Returns the URL of the link
