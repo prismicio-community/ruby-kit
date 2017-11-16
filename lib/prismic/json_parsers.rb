@@ -50,15 +50,23 @@ module Prismic
           URI.unescape(doc['slug']),
           doc['lang'],
           fragments,
-          json['value']['isBroken'])
+          json['value']['isBroken'],
+          json['value']['target'] ? json['value']['target'] : nil)
       end
 
       def image_link_parser(json)
-        Prismic::Fragments::ImageLink.new(json['value']['image']['url'])
+        Prismic::Fragments::ImageLink.new(
+          json['value']['image']['url'],
+          json['value']['target'] ? json['value']['target'] : nil)
       end
 
       def file_link_parser(json)
-        Prismic::Fragments::FileLink.new(json['value']['file']['url'], json['value']['file']['name'], json['value']['file']['kind'], json['value']['file']['size'])
+        Prismic::Fragments::FileLink.new(
+          json['value']['file']['url'],
+          json['value']['file']['name'],
+          json['value']['file']['kind'],
+          json['value']['file']['size'],
+          json['value']['target'] ? json['value']['target'] : nil )
       end
 
       def text_parser(json)
@@ -74,7 +82,7 @@ module Prismic
       end
 
       def web_link_parser(json)
-        Prismic::Fragments::WebLink.new(json['value']['url'])
+        Prismic::Fragments::WebLink.new(json['value']['url'], json['value']['target'])
       end
 
       def date_parser(json)

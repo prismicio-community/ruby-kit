@@ -53,7 +53,7 @@ module Prismic
 
         def as_html(link_resolver=nil)
           html = []
-          html << (link_to.nil? ? '' : link_to.start_html(link_resolver))
+          html << (link_to.nil? ? '' : link_to.start_html(link_resolver, link_to.target))
           html << %(<img src="#@url" alt="#@alt" width="#@width" height="#@height" />)
           html << (link_to.nil? ? '' : link_to.end_html)
           html.join
