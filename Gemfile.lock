@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prismic.io (1.5.0)
+    prismic.io (1.6.0)
       hashery (~> 2.1.1)
 
 GEM
@@ -44,6 +44,3 @@ DEPENDENCIES
   rspec (~> 2.14)
   simplecov (~> 0.7)
   yajl-ruby
-
-BUNDLED WITH
-   1.16.0
