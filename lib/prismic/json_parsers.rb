@@ -98,14 +98,7 @@ module Prismic
       end
 
       def embed_parser(json)
-        oembed = json['value']['oembed']
-        Prismic::Fragments::Embed.new(
-          oembed['type'],
-          oembed['provider_name'],
-          oembed['provider_url'],
-          oembed['html'],
-          oembed
-        )
+        embed_object_parser(json['value']['oembed'])
       end
 
       def geo_point_parser(json)
@@ -179,17 +172,13 @@ module Prismic
             )
           when 'image'
             Prismic::Fragments::StructuredText::Block::Image.new(
-                view_parser(block),
-                block['label']
+              view_parser(block),
+              block['label']
             )
           when 'embed'
-            boembed = block['oembed']
-            Prismic::Fragments::Embed.new(
-              boembed['type'],
-              boembed['provider_name'],
-              boembed['provider_url'],
-              boembed['html'],
-              boembed
+            Prismic::Fragments::StructuredText::Block::Embed.new(
+              embed_object_parser(block['oembed']),
+              block['label']
             )
           else
             puts "Unknown bloc type: #{block['type']}"
@@ -338,6 +327,16 @@ module Prismic
         elsif json['type'] == 'Link.file'
           file_link_parser(json)
         end
+      end
+
+      def embed_object_parser(json)
+        Prismic::Fragments::Embed.new(
+          json['type'],
+          json['provider_name'],
+          json['provider_url'],
+          json['html'],
+          json
+        )
       end
     end
   end
