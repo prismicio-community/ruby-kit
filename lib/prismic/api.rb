@@ -119,7 +119,12 @@ module Prismic
       unless opts.key?("lang")
         opts["lang"] = '*'
       end
-      query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)[0]
+      response = query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)
+      if response.total_results_size <= 1
+        return response[0]
+      else
+        return response
+      end
     end
     alias :getByUID :get_by_uid
 
