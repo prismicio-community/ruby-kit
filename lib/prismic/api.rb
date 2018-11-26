@@ -116,15 +116,10 @@ module Prismic
     # @param opts [Hash] query options (ref, etc.)
     # @return the document, or nil if not found
     def get_by_uid(typ, uid, opts={})
-      unless opts.key?("lang")
-        opts["lang"] = '*'
+      if opts["lang"] == "*"
+        raise "FORDIDDEN. You can't use getByUID with *, use the predicates instead."
       end
-      response = query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)
-      if response.total_results_size <= 1
-        return response[0]
-      else
-        return response
-      end
+      query(Prismic::Predicates::at('my.'+typ+'.uid', uid), opts)
     end
     alias :getByUID :get_by_uid
 
@@ -133,7 +128,7 @@ module Prismic
     # @param opts [Hash] query options (page, pageSize, ref, etc.)
     # @return the document, or nil if not found
     def get_by_ids(ids, opts={})
-      unless opts.key?("lang")
+      unless opts.key("lang")
         opts["lang"] = '*'
       end
       query(Prismic::Predicates::in('document.id', ids), opts)
