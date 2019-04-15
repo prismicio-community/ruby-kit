@@ -135,6 +135,19 @@ module Prismic
     end
     alias :getByIDs :get_by_ids
 
+    # Retrieve multiple documents by their uids
+    # @param typ [String] the document type's name
+    # @param uids [String] the uids to search
+    # @param opts [Hash] query options (ref, etc.)
+
+    def get_by_uids(typ, uids, opts = {})
+      unless opts.key?("lang")
+        opts["lang"] = '*'
+      end
+      query(Prismic::Predicates::in('my.'+typ+'.uid', uids), opts)
+    end
+    alias :getByUIDs :get_by_uids
+    
     # Retrieve one single typed document by its type
     # @param typ [String] the document type's name
     # @param opts [Hash] query options (ref, etc.)
