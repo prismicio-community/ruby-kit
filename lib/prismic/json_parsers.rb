@@ -25,8 +25,13 @@ module Prismic
           'Multiple'       => method(:multiple_parser),
           'Group'          => method(:group_parser),
           'SliceZone'      => method(:slices_parser),
-          'Separator'      => method(:separator_parser)
+          'Separator'      => method(:separator_parser),
+          'IntegrationFields' => method(:integration_fields_parser)
         }
+      end
+
+      def integration_fields_parser(json)
+        Prismic::Fragments::IntegrationField.new(json['value'])
       end
 
       def document_link_parser(json)
@@ -220,7 +225,7 @@ module Prismic
 
             repeat = group_parser({ 'type' => 'Group', 'value' => data['repeat']})
 
-            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)            
+            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)
           end
         end
         Prismic::Fragments::SliceZone.new(slices)
@@ -235,7 +240,7 @@ module Prismic
       end
 
       def alternate_language_parser(alternate_language)
-        Prismic::AlternateLanguage.new(alternate_language) 
+        Prismic::AlternateLanguage.new(alternate_language)
       end
 
       def document_parser(json)
@@ -253,7 +258,7 @@ module Prismic
 
         alternate_languages = nil
         if json.key?('alternate_languages')
-          alternate_languages = Hash[json['alternate_languages'].map { |doc| 
+          alternate_languages = Hash[json['alternate_languages'].map { |doc|
             [doc['lang'], alternate_language_parser(doc)]
           }]
         end
