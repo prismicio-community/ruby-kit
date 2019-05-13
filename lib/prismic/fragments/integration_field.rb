@@ -7,8 +7,8 @@ module Prismic
         @value = value
       end
 
-      def as_html
-        "<p>#{as_text}</p>"
+      def as_json
+        value.to_json
       end
 
       def as_text
