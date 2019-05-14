@@ -9,7 +9,7 @@ rvm:
 - jruby-1.7.26
 
 sudo: false
-
+before_install: gem install bundler:1.16.0
 script: bundle exec rspec spec
 
 notifications:
