@@ -9,7 +9,6 @@ rvm:
 - jruby-1.7.26
 
 sudo: false
-cache: bundler
 
 script: bundle exec rspec spec
 
