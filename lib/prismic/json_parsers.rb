@@ -26,7 +26,8 @@ module Prismic
           'Group'          => method(:group_parser),
           'SliceZone'      => method(:slices_parser),
           'Separator'      => method(:separator_parser),
-          'IntegrationFields' => method(:integration_fields_parser)
+          'IntegrationFields' => method(:integration_fields_parser),
+          'Boolean' => ->(json) { json['value'] }
         }
       end
 
