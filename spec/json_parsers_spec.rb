@@ -495,3 +495,20 @@ describe 'structured_text_label_parser' do
   end
 
 end
+
+describe 'boolean_field_parser' do 
+  before do
+    raw_json = <<json
+    {
+      "type": "Boolean",
+      "value": true
+    }
+json
+    @json = JSON.load(raw_json)
+  end
+
+  it "correctly parses Boolean objects" do
+    bool = Prismic::JsonParser.boolean_field_parser(@json)
+    bool.value.should == true
+  end
+end
