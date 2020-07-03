@@ -792,4 +792,11 @@ describe 'Boolean Field' do
     @booleanfield = Prismic::Fragments::BooleanField::new(false)
     @booleanfield.as_html.should == expected_boolean_field
   end
+
+  it 'value' do 
+    expected_value = true
+    @booleanfield = Prismic::Fragments::BooleanField::new(true)
+    @booleanfield.value.should == expected_value
+  end
+
 end

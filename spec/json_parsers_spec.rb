@@ -381,7 +381,7 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 14
+    @document.fragments.size.should == 15
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
   end
 end
