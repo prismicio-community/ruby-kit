@@ -779,3 +779,17 @@ describe 'Composite slice' do
     @slices.slices[0].repeat[0]['label'].as_text.should == 'Start from Scratch'
   end
 end
+
+describe 'Boolean Field' do 
+  it 'get html: true' do 
+    expected_boolean_field = %[<input type="checkbox" checked="checked" />]
+    @booleanfield = Prismic::Fragments::BooleanField::new(true)
+    @booleanfield.as_html.should == expected_boolean_field
+  end
+
+  it 'get html: false' do 
+    expected_boolean_field = %[<input type="checkbox" />]
+    @booleanfield = Prismic::Fragments::BooleanField::new(false)
+    @booleanfield.as_html.should == expected_boolean_field
+  end
+end
