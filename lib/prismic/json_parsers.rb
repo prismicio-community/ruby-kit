@@ -26,12 +26,17 @@ module Prismic
           'Group'          => method(:group_parser),
           'SliceZone'      => method(:slices_parser),
           'Separator'      => method(:separator_parser),
-          'IntegrationFields' => method(:integration_fields_parser)
+          'IntegrationFields' => method(:integration_fields_parser),
+          'Boolean' => method(:boolean_field_parser)
         }
       end
 
       def integration_fields_parser(json)
         Prismic::Fragments::IntegrationField.new(json['value'])
+      end
+
+      def boolean_field_parser(json) 
+        Prismic::Fragments::BooleanField.new(json['value'])
       end
 
       def document_link_parser(json)
