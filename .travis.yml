@@ -16,11 +16,7 @@ script: bundle exec rspec spec
 
 notifications:
   email:
-  - evo@zenexity.com
-
-addons:
-  code_climate:
-    repo_token: f46a7e216896abddbc4877ce065239e8ac9f575af7a120bdaa61a42be70777e9
+  - sebastien@prismic.io
 
 deploy:
   provider: rubygems
