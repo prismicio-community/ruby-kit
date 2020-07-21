@@ -369,7 +369,7 @@ describe 'document_parser' do
     @document.slugs.should == ['vanilla-macaron', '南大沢']
     @document.lang.should == 'en-us'
 
-    @gq_document.type.should = 'show_and_tell'
+    @gq_document.type.should == 'show_and_tell'
   end
 
   it "correctly parses the document's publication dates" do

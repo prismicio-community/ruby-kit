@@ -17,7 +17,10 @@
   "lang": "en-us",
   "alternate_languages": [],
   "data": {
-    "show_and_tell_date": "2020-07-07",
+    "show_and_tell_date": {
+      "type": "Date",
+      "value": "2020-07-07"
+    },
     "author":{
       "id":"XwS_RREAACcAEHrD",
       "type":"marketing_developers",
