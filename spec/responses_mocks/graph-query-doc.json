@@ -1,0 +1,34 @@
+{
+  "id": "XwTHHhEAACgAEJ21",
+  "uid": "test-article-2",
+  "type": "show_and_tell",
+  "href":"https://testin123.cdn.prismic.io/api/v2/documents/search?ref=XwTHIhEAACUAEJ3J&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22XwTHHhEAACgAEJ21%22%29+%5D%5D",
+  "tags":[],
+  "first_publication_date":"2020-07-07T19:04:02+0000",
+  "last_publication_date":"2020-07-07T19:04:02+0000",
+  "slugs":["2020-07-07"],
+  "linked_documents": [{
+    "id":"XwTHHhEAACgAEJ21",
+    "tags": [],
+    "type": "show_and_tell",
+    "slug": "2020-07-07",
+    "lang":"en-us"
+  }],
+  "lang": "en-us",
+  "alternate_languages": [],
+  "data": {
+    "show_and_tell_date": "2020-07-07",
+    "author":{
+      "id":"XwS_RREAACcAEHrD",
+      "type":"marketing_developers",
+      "tags": [],
+      "slug":"andre-molnar",
+      "lang":"en-us",
+      "uid":"andremolnar",
+      "link_type":"Document",
+      "isBroken":false
+    },
+    "subject":"Second of a kind",
+    "body":[]
+  }
+}

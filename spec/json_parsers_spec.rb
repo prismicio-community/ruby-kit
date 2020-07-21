@@ -355,6 +355,10 @@ describe 'document_parser' do
     raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/document.json")
     json = JSON.load(raw_json)
     @document = Prismic::JsonParser.document_parser(json)
+
+    graph_query_raw_json = File.read("#{File.dirname(__FILE__)}/responses_mocks/graph-query-doc.json")
+    gq_josn = JSON.load(graph_query_raw_json)
+    @gq_document = Prismic::JsonParser.document_parser(gq_josn)
   end
 
   it "correctly parses Document objects" do
@@ -364,6 +368,8 @@ describe 'document_parser' do
     @document.tags.should == ['Macaron']
     @document.slugs.should == ['vanilla-macaron', '南大沢']
     @document.lang.should == 'en-us'
+
+    @gq_document.type.should = 'show_and_tell'
   end
 
   it "correctly parses the document's publication dates" do
