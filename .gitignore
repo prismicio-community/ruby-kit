@@ -6,4 +6,4 @@ pkg/*.gem
 .yardoc/
 doc/
 node_modules/
-
+vendor/
