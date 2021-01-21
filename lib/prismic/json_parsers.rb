@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'uri'
+require 'cgi'
 
 module Prismic
   module JsonParser
@@ -57,7 +57,7 @@ module Prismic
           doc['uid'],
           type,
           doc['tags'],
-          ::URI::DEFAULT_PARSER.unescape(doc['slug']),
+          CGI.unescape(doc['slug']),
           doc['lang'],
           fragments,
           json['value']['isBroken'],
@@ -278,7 +278,7 @@ module Prismic
             json['type'],
             json['href'],
             json['tags'],
-            json['slugs'].map { |slug| ::URI::DEFAULT_PARSER.unescape(slug) },
+            json['slugs'].map { |slug| CGI.unescape(slug) },
             json['first_publication_date'] && Time.parse(json['first_publication_date']),
             json['last_publication_date'] && Time.parse(json['last_publication_date']),
             json['lang'],
