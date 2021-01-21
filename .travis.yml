@@ -1,26 +1,22 @@
 language: ruby
 rvm:
-- 2.4.1
-- 2.3.4
-- 2.2.7
-- 2.1.1
-- 2.1.0
-- 2.0.0
-- 1.9.3
-- jruby-19mode
+#- ruby-head
+- 2.6.3
+- 2.5.5
+- 2.4.6
+- jruby-head
+- jruby-9.1.9.0
+#- jruby-1.7.26
 
 sudo: false
 cache: bundler
 
+before_install: gem install bundler:1.16.0
 script: bundle exec rspec spec
 
 notifications:
   email:
-  - evo@zenexity.com
-
-addons:
-  code_climate:
-    repo_token: f46a7e216896abddbc4877ce065239e8ac9f575af7a120bdaa61a42be70777e9
+  - sebastien@prismic.io
 
 deploy:
   provider: rubygems

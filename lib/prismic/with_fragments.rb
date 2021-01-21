@@ -156,6 +156,13 @@ module Prismic
       fragment
     end
 
+    # @return [Fragments::BooleanField]
+    def get_boolean_field(field)
+      fragment = self[field]
+      return nil unless fragment.is_a? Prismic::Fragments::BooleanField
+      fragment
+    end
+
     # @return [Array<LinkedDocument>]
     def linked_documents
       self.fragments.map { |name, fragment|

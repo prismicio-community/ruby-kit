@@ -41,7 +41,7 @@ describe "Cache's" do
         @cache['fake_key3'] = 3
       end
       it 'contains some keys' do
-        @cache.include?('fake_key1').should be_true
+        @cache.include?('fake_key1').should be true
       end
       it 'contains all keys' do
         @cache.intern.size.should == 3
@@ -52,8 +52,8 @@ describe "Cache's" do
       it 'keeps readed keys alive' do
         @cache['fake_key1']
         @cache['fake_key4'] = 4
-        @cache.include?('fake_key1').should be_true
-        @cache.include?('fake_key2').should be_false
+        @cache.include?('fake_key1').should be true
+        @cache.include?('fake_key2').should be false
       end
     end
 

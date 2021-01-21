@@ -381,7 +381,7 @@ describe 'document_parser' do
   end
 
   it "correctly parses the document's fragments" do
-    @document.fragments.size.should == 14
+    @document.fragments.size.should == 15
     @document.fragments['name'].should be_a Prismic::Fragments::StructuredText
   end
 end
@@ -494,4 +494,21 @@ describe 'structured_text_label_parser' do
             "<h3>Pastry Dresser, or designer?</h3>\n\n<p>And even before the illustration and colors, you really need to take the time to think about your destination, to make sure it&#39;s nothing short of perfect. This may imply taking the time to sit down for a few minutes with a paper and a pen. The first skill of an imaginative Pastry Dresser is a drawing skill, just like a fashion stylist.</p>"
   end
 
+end
+
+describe 'boolean_field_parser' do 
+  before do
+    raw_json = <<json
+    {
+      "type": "Boolean",
+      "value": true
+    }
+json
+    @json = JSON.load(raw_json)
+  end
+
+  it "correctly parses Boolean objects" do
+    bool = Prismic::JsonParser.boolean_field_parser(@json)
+    bool.value.should == true
+  end
 end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'uri'
+require 'cgi'
 
 module Prismic
   module JsonParser
@@ -25,8 +25,18 @@ module Prismic
           'Multiple'       => method(:multiple_parser),
           'Group'          => method(:group_parser),
           'SliceZone'      => method(:slices_parser),
-          'Separator'      => method(:separator_parser)
+          'Separator'      => method(:separator_parser),
+          'IntegrationFields' => method(:integration_fields_parser),
+          'Boolean' => method(:boolean_field_parser)
         }
+      end
+
+      def integration_fields_parser(json)
+        Prismic::Fragments::IntegrationField.new(json['value'])
+      end
+
+      def boolean_field_parser(json) 
+        Prismic::Fragments::BooleanField.new(json['value'])
       end
 
       def document_link_parser(json)
@@ -47,7 +57,7 @@ module Prismic
           doc['uid'],
           type,
           doc['tags'],
-          URI.unescape(doc['slug']),
+          CGI.unescape(doc['slug']),
           doc['lang'],
           fragments,
           json['value']['isBroken'],
@@ -220,7 +230,7 @@ module Prismic
 
             repeat = group_parser({ 'type' => 'Group', 'value' => data['repeat']})
 
-            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)            
+            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)
           end
         end
         Prismic::Fragments::SliceZone.new(slices)
@@ -235,7 +245,7 @@ module Prismic
       end
 
       def alternate_language_parser(alternate_language)
-        Prismic::AlternateLanguage.new(alternate_language) 
+        Prismic::AlternateLanguage.new(alternate_language)
       end
 
       def document_parser(json)
@@ -253,7 +263,7 @@ module Prismic
 
         alternate_languages = nil
         if json.key?('alternate_languages')
-          alternate_languages = Hash[json['alternate_languages'].map { |doc| 
+          alternate_languages = Hash[json['alternate_languages'].map { |doc|
             [doc['lang'], alternate_language_parser(doc)]
           }]
         end
@@ -268,7 +278,7 @@ module Prismic
             json['type'],
             json['href'],
             json['tags'],
-            json['slugs'].map { |slug| URI.unescape(slug) },
+            json['slugs'].map { |slug| CGI.unescape(slug) },
             json['first_publication_date'] && Time.parse(json['first_publication_date']),
             json['last_publication_date'] && Time.parse(json['last_publication_date']),
             json['lang'],

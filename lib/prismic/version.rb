@@ -1,6 +1,6 @@
 # encoding: utf-8
 module Prismic
 
-  VERSION = '1.6.2'
+  VERSION = '1.8.0'
 
 end
