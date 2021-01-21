@@ -1,17 +1,13 @@
 language: ruby
 rvm:
-#- ruby-head
-- 2.6.3
-- 2.5.5
-- 2.4.6
-- jruby-head
-- jruby-9.1.9.0
-#- jruby-1.7.26
+- 2.6
+- 2.5
+- jruby
 
 sudo: false
 cache: bundler
 
-before_install: gem install bundler:1.16.0
+before_install: gem install bundler
 script: bundle exec rspec spec
 
 notifications:
