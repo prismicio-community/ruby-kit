@@ -36,6 +36,10 @@
         }
         ]
       },
+      "checkbox": {
+        "type": "Boolean",
+        "value": true
+      },
       "short_lede": {
         "type": "StructuredText",
         "value": [

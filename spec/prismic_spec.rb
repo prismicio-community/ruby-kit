@@ -118,7 +118,7 @@ describe 'Api' do
 
   describe 'master' do
     it 'returns a master Ref' do
-      @api.master.master?.should be_true
+      @api.master.master?.should be true
     end
   end
 
@@ -219,11 +219,11 @@ describe 'Api' do
     end
 
     it "create fields (other than 'q') as non repeatable" do
-      @parsed.forms['pies'].fields['ref'].repeatable.should be_false
+      @parsed.forms['pies'].fields['ref'].repeatable.should be false
     end
 
     it "create 'q' fields as repeatable" do
-      @parsed.forms['pies'].fields['q'].repeatable.should be_true
+      @parsed.forms['pies'].fields['q'].repeatable.should be true
     end
 
   end
@@ -341,7 +341,7 @@ describe 'Document' do
     end
 
     it "returns a HTML element with a 'data-field' attribute" do
-      Nokogiri::XML(@document.as_html(@link_resolver)).child.has_attribute?('data-field').should be_true
+      Nokogiri::XML(@document.as_html(@link_resolver)).child.has_attribute?('data-field').should be true
     end
 
     it "returns a HTML element with a 'data-field' attribute containing the name of the field" do

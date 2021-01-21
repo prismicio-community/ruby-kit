@@ -3,8 +3,12 @@ module Prismic
   module Fragments
     class Link < Fragment
 
-      def start_html(link_resolver = nil)
-        %(<a href="#{url(link_resolver)}">)
+      def start_html(link_resolver = nil, target = nil)
+        unless target.nil?
+          %(<a href="#{url(link_resolver)}" target="#{target}" rel="noopener">)
+        else 
+          %(<a href="#{url(link_resolver)}">)
+        end
       end
 
       def end_html
@@ -12,7 +16,7 @@ module Prismic
       end
 
       def as_html(link_resolver=nil)
-        %(#{start_html(link_resolver)}#{url(link_resolver)}#{end_html})
+        %(#{start_html(link_resolver, @target)}#{url(link_resolver)}#{end_html})
       end
 
       # Returns the URL of the link
@@ -27,10 +31,11 @@ module Prismic
     end
 
     class WebLink < Link
-      attr_accessor :url
+      attr_accessor :url, :target
 
-      def initialize(url)
+      def initialize(url, target = nil)
         @url = url
+        @target = target
       end
 
       def as_text
@@ -51,13 +56,14 @@ module Prismic
     end
 
     class FileLink < Link
-      attr_accessor :url, :name, :kind, :size
+      attr_accessor :url, :name, :kind, :size, :target
 
-      def initialize(url, name, kind, size)
+      def initialize(url, name, kind, size, target = nil)
         @url = url
         @name = name
         @kind = kind
         @size = size
+        @target = target
       end
 
       def as_html(link_resolver=nil)
@@ -79,10 +85,11 @@ module Prismic
     end
 
     class ImageLink < Link
-      attr_accessor :url
+      attr_accessor :url, :target
 
-      def initialize(url)
+      def initialize(url, target = nil)
         @url = url
+        @target = target
       end
 
       # Returns the URL of the link
@@ -100,9 +107,9 @@ module Prismic
 
     class DocumentLink < Link
       include Prismic::WithFragments
-      attr_accessor :id, :uid, :type, :tags, :slug, :lang, :fragments, :broken
+      attr_accessor :id, :uid, :type, :tags, :slug, :lang, :fragments, :broken, :target
 
-      def initialize(id, uid, type, tags, slug, lang, fragments, broken)
+      def initialize(id, uid, type, tags, slug, lang, fragments, broken, target = nil)
         @id = id
         @uid = uid
         @type = type
@@ -111,9 +118,10 @@ module Prismic
         @lang = lang
         @fragments = fragments
         @broken = broken
+        @target = target
       end
 
-      def start_html(link_resolver)
+      def start_html(link_resolver, target = nil)
         broken? ? %(<span>) : super
       end
 

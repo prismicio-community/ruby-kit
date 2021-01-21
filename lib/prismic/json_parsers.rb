@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'uri'
+require 'cgi'
 
 module Prismic
   module JsonParser
@@ -25,8 +25,18 @@ module Prismic
           'Multiple'       => method(:multiple_parser),
           'Group'          => method(:group_parser),
           'SliceZone'      => method(:slices_parser),
-          'Separator'      => method(:separator_parser)
+          'Separator'      => method(:separator_parser),
+          'IntegrationFields' => method(:integration_fields_parser),
+          'Boolean' => method(:boolean_field_parser)
         }
+      end
+
+      def integration_fields_parser(json)
+        Prismic::Fragments::IntegrationField.new(json['value'])
+      end
+
+      def boolean_field_parser(json) 
+        Prismic::Fragments::BooleanField.new(json['value'])
       end
 
       def document_link_parser(json)
@@ -47,18 +57,26 @@ module Prismic
           doc['uid'],
           type,
           doc['tags'],
-          URI.unescape(doc['slug']),
+          CGI.unescape(doc['slug']),
           doc['lang'],
           fragments,
-          json['value']['isBroken'])
+          json['value']['isBroken'],
+          json['value']['target'] ? json['value']['target'] : nil)
       end
 
       def image_link_parser(json)
-        Prismic::Fragments::ImageLink.new(json['value']['image']['url'])
+        Prismic::Fragments::ImageLink.new(
+          json['value']['image']['url'],
+          json['value']['target'] ? json['value']['target'] : nil)
       end
 
       def file_link_parser(json)
-        Prismic::Fragments::FileLink.new(json['value']['file']['url'], json['value']['file']['name'], json['value']['file']['kind'], json['value']['file']['size'])
+        Prismic::Fragments::FileLink.new(
+          json['value']['file']['url'],
+          json['value']['file']['name'],
+          json['value']['file']['kind'],
+          json['value']['file']['size'],
+          json['value']['target'] ? json['value']['target'] : nil )
       end
 
       def text_parser(json)
@@ -74,7 +92,7 @@ module Prismic
       end
 
       def web_link_parser(json)
-        Prismic::Fragments::WebLink.new(json['value']['url'])
+        Prismic::Fragments::WebLink.new(json['value']['url'], json['value']['target'])
       end
 
       def date_parser(json)
@@ -90,14 +108,7 @@ module Prismic
       end
 
       def embed_parser(json)
-        oembed = json['value']['oembed']
-        Prismic::Fragments::Embed.new(
-          oembed['type'],
-          oembed['provider_name'],
-          oembed['provider_url'],
-          oembed['html'],
-          oembed
-        )
+        embed_object_parser(json['value']['oembed'])
       end
 
       def geo_point_parser(json)
@@ -171,17 +182,13 @@ module Prismic
             )
           when 'image'
             Prismic::Fragments::StructuredText::Block::Image.new(
-                view_parser(block),
-                block['label']
+              view_parser(block),
+              block['label']
             )
           when 'embed'
-            boembed = block['oembed']
-            Prismic::Fragments::Embed.new(
-              boembed['type'],
-              boembed['provider_name'],
-              boembed['provider_url'],
-              boembed['html'],
-              boembed
+            Prismic::Fragments::StructuredText::Block::Embed.new(
+              embed_object_parser(block['oembed']),
+              block['label']
             )
           else
             puts "Unknown bloc type: #{block['type']}"
@@ -223,7 +230,7 @@ module Prismic
 
             repeat = group_parser({ 'type' => 'Group', 'value' => data['repeat']})
 
-            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)            
+            slices << Prismic::Fragments::CompositeSlice.new(slice_type, slice_label, non_repeat, repeat)
           end
         end
         Prismic::Fragments::SliceZone.new(slices)
@@ -238,7 +245,7 @@ module Prismic
       end
 
       def alternate_language_parser(alternate_language)
-        Prismic::AlternateLanguage.new(alternate_language) 
+        Prismic::AlternateLanguage.new(alternate_language)
       end
 
       def document_parser(json)
@@ -256,7 +263,7 @@ module Prismic
 
         alternate_languages = nil
         if json.key?('alternate_languages')
-          alternate_languages = Hash[json['alternate_languages'].map { |doc| 
+          alternate_languages = Hash[json['alternate_languages'].map { |doc|
             [doc['lang'], alternate_language_parser(doc)]
           }]
         end
@@ -271,7 +278,7 @@ module Prismic
             json['type'],
             json['href'],
             json['tags'],
-            json['slugs'].map { |slug| URI.unescape(slug) },
+            json['slugs'].map { |slug| CGI.unescape(slug) },
             json['first_publication_date'] && Time.parse(json['first_publication_date']),
             json['last_publication_date'] && Time.parse(json['last_publication_date']),
             json['lang'],
@@ -330,6 +337,16 @@ module Prismic
         elsif json['type'] == 'Link.file'
           file_link_parser(json)
         end
+      end
+
+      def embed_object_parser(json)
+        Prismic::Fragments::Embed.new(
+          json['type'],
+          json['provider_name'],
+          json['provider_url'],
+          json['html'],
+          json
+        )
       end
     end
   end

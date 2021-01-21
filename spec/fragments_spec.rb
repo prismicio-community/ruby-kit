@@ -11,6 +11,7 @@ end
 describe 'WebLink' do
   before do
       @web_link = Prismic::Fragments::WebLink.new('my_url')
+      @target_blank = Prismic::Fragments::WebLink.new('my_url', '_blank')
   end
   describe 'as_html' do
     it "returns an <a> HTML element" do
@@ -18,7 +19,7 @@ describe 'WebLink' do
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@web_link.as_html).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@web_link.as_html).child.has_attribute?('href').should be true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
@@ -27,6 +28,14 @@ describe 'WebLink' do
 
     it "returns a HTML element whose content is the link" do
       Nokogiri::XML(@web_link.as_html).child.content.should == 'my_url'
+    end
+
+    it "returns an <a> HTML element with a target attribute" do
+      Nokogiri::XML(@target_blank.as_html).child.has_attribute?('target').should be true
+    end
+
+    it "returns an <a> HTML element with an target blank attribute" do
+      Nokogiri::XML(@target_blank.as_html).child.attribute('target').value.should == '_blank'
     end
   end
 
@@ -79,7 +88,7 @@ describe 'ImageLink' do
     end
 
     it "returns a HTML element with an href attribute" do
-      Nokogiri::XML(@image_link.as_html).child.has_attribute?('href').should be_true
+      Nokogiri::XML(@image_link.as_html).child.has_attribute?('href').should be true
     end
 
     it "returns a HTML element with an href attribute pointing to the url" do
@@ -360,11 +369,11 @@ describe 'Color' do
 
   describe 'self.valid?' do
     it "returns true if the color is valid" do
-      Prismic::Fragments::Color.valid?(@hex_value).should be_true
+      Prismic::Fragments::Color.valid?(@hex_value).should be true
     end
 
     it "returns false if the color is not valid" do
-      Prismic::Fragments::Color.valid?("I'm a murloc").should be_false
+      Prismic::Fragments::Color.valid?("I'm a murloc").should be false
     end
   end
 end
@@ -386,7 +395,7 @@ describe 'Embed' do
     end
 
     it "returns an element with a data-oembed attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed').should be true
     end
 
     it "returns an element with a data-oembed attribute containing the url" do
@@ -394,7 +403,7 @@ describe 'Embed' do
     end
 
     it "returns an element with a data-oembed-type attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-type').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-type').should be true
     end
 
     it "returns an element with a data-oembed-type attribute containing the type in lowercase" do
@@ -402,7 +411,7 @@ describe 'Embed' do
     end
 
     it "returns an element with a data-oembed-provider attribute" do
-      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-provider').should be_true
+      Nokogiri::XML(@embed.as_html).child.has_attribute?('data-oembed-provider').should be true
     end
 
     it "returns an element with a data-oembed-provider attribute containing the provider in lowercase" do
@@ -650,6 +659,8 @@ describe 'StructuredText::Hyperlink' do
     )
     @hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @link)
     @link_resolver = Prismic.link_resolver("master"){|doc_link| "http://localhost/#{doc_link.id}" }
+    @target_blank = Prismic::Fragments::WebLink.new("link_url", "_blank")
+    @target_hyperlink = Prismic::Fragments::StructuredText::Span::Hyperlink.new(0, 0, @target_blank)
   end
 
   describe 'as_html' do
@@ -662,6 +673,9 @@ describe 'StructuredText::Hyperlink' do
     it "can generate valid html for broken link" do
       @link.broken = true
       @hyperlink.serialize('', @link_resolver).should == '<span></span>'
+    end
+    it "can generate valid html for target blank" do
+      @target_hyperlink.serialize('', @link_resolver).should == '<a href="link_url" target="_blank" rel="noopener"></a>'
     end
   end
 end
@@ -764,4 +778,25 @@ describe 'Composite slice' do
   it 'get item in repeat correctly' do
     @slices.slices[0].repeat[0]['label'].as_text.should == 'Start from Scratch'
   end
+end
+
+describe 'Boolean Field' do 
+  it 'get html: true' do 
+    expected_boolean_field = %[<input type="checkbox" checked="checked" />]
+    @booleanfield = Prismic::Fragments::BooleanField::new(true)
+    @booleanfield.as_html.should == expected_boolean_field
+  end
+
+  it 'get html: false' do 
+    expected_boolean_field = %[<input type="checkbox" />]
+    @booleanfield = Prismic::Fragments::BooleanField::new(false)
+    @booleanfield.as_html.should == expected_boolean_field
+  end
+
+  it 'value' do 
+    expected_value = true
+    @booleanfield = Prismic::Fragments::BooleanField::new(true)
+    @booleanfield.value.should == expected_value
+  end
+
 end

@@ -138,6 +138,8 @@ module Prismic
           def serialize(text, link_resolver = nil)
             if link.is_a? Prismic::Fragments::DocumentLink and link.broken
               "<span>#{text}</span>"
+            elsif !link.target.nil?
+              %(<a href="#{link.url(link_resolver)}" target="#{link.target}" rel="noopener">#{text}</a>)
             else
               %(<a href="#{link.url(link_resolver)}">#{text}</a>)
             end
@@ -370,11 +372,27 @@ module Prismic
         end
 
         class Embed < Block
-          attr_accessor :label
+          attr_accessor :embed, :label
 
           def initialize(embed, label)
             @embed = embed
             @label = label
+          end
+
+          def embed_type
+            @embed.embed_type
+          end
+
+          def provider
+            @embed.provider
+          end
+
+          def url
+            @embed.url
+          end
+
+          def html
+            @embed.html
           end
 
           def as_html(link_resolver, html_serializer = nil)
