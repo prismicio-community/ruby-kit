@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'cgi'
+require 'time'
 
 module Prismic
   module JsonParser
