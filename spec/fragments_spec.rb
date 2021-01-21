@@ -40,8 +40,8 @@ describe 'WebLink' do
   end
 
   describe 'as_text' do
-    it 'raises an NotImplementedError' do
-      expect { @web_link.as_text }.to raise_error NotImplementedError
+    it 'returns the url' do
+      @web_link.as_text.should == 'my_url'
     end
   end
 
