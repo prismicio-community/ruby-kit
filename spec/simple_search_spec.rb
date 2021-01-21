@@ -53,6 +53,15 @@ describe Prismic::API do
     end
   end
 
+  describe '#get_by_uids' do 
+    it 'returns the right documents' do
+      docs = @api.get_by_uids('all', ['all1', 'all2'])
+      docs.size.should == 2
+      docs[0].id.should == 'WHyJqyYAAHgyXbcj'
+      docs[1].id.should == 'WH2PaioAALYBEgug'
+    end
+  end
+
   describe '#get_single' do
     it 'returns the singleton document of a type' do
       # 'single' is the type name
