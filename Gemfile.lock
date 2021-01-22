@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prismic.io (1.8.0)
+    prismic.io (1.8.1)
       hashery (~> 2.1.1)
 
 GEM
