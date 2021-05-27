@@ -2,8 +2,6 @@ var gulp = require('gulp'),
     gist = require('gulp-gist'),
     deploy = require("gulp-gh-pages");
 
-var pkg = require('./package.json');
-
 gulp.task('deploy:doc', function () {
     gulp.src("./doc/**/*")
         .pipe(deploy());
