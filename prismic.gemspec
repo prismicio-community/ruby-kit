@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rspec', '~> 2.14'
+  spec.add_development_dependency 'rspec-core', '~> 2.14'
   spec.add_development_dependency 'nokogiri', '~> 1.6'
   spec.add_runtime_dependency 'hashery', '~> 2.1.1'
 end
