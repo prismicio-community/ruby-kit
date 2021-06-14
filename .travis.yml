@@ -14,7 +14,7 @@ jobs:
   include:
     - rvm: jruby-head
       before_install: 
-        - gem uninstall -i $(rvm gemdir)@global -ax bundler || true
+        - rvm @global do gem uninstall bundler -a -x -I || true
         - gem install bundler -v 2.1.4
 
 notifications:
