@@ -17,6 +17,8 @@ jobs:
         - gem install bundler -v 2.1.4 -N
       install: 
         - bundle _2.1.4_ install --jobs=3 --retry=3 
+      script:
+        - bundle _2.1.4_ exec rspec spec
 
 notifications:
   email:
