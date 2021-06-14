@@ -13,7 +13,9 @@ script: bundle exec rspec spec
 jobs:
   include:
     - rvm: jruby-head
-      before_install: gem install bundler -v 2.1.4
+      before_install: 
+        - gem uninstall -i $(rvm gemdir)@global -ax bundler || true
+        - gem install bundler -v 2.1.4
 
 notifications:
   email:
