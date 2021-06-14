@@ -16,7 +16,7 @@ jobs:
       before_install: 
         - gem install bundler -v 2.1.4 -N
       install: 
-        - bundle _2.1.4_ install --jobs=3 --retry=3 --deployment
+        - bundle _2.1.4_ install --jobs=3 --retry=3 
 
 notifications:
   email:
