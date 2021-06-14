@@ -5,7 +5,7 @@ rvm:
 # - jruby-head
 
 sudo: false
-cache: bundler
+# cache: bundler
 
 before_install: gem install bundler
 script: bundle exec rspec spec
