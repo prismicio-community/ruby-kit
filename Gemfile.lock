@@ -14,6 +14,7 @@ GEM
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     racc (1.5.2)
+    racc (1.5.2-java)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -25,6 +26,7 @@ GEM
     yajl-ruby (1.4.1)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
@@ -32,6 +34,7 @@ DEPENDENCIES
   nokogiri (~> 1.6)
   prismic.io!
   rspec (~> 2.14)
+  rspec-core (~> 2.14)
   yajl-ruby
 
 BUNDLED WITH
