@@ -70,6 +70,6 @@ We hope you'll get involved! Read our [Contributors' Guide](/CONTRIBUTING.md) fo
 
 ### Licence
 
-This software is licensed under [the Apache 2 license](/LICENSE.md)
+This software is licensed under [Apache 2.0 license](/LICENSE.md)
 
 Copyright 2013-2021 Prismic <contact@prismic.io> (https://prismic.io)
