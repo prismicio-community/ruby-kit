@@ -11,6 +11,8 @@ GEM
     hashery (2.1.2)
     nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.11.7-x86_64-linux)
+      racc (~> 1.4)
     racc (1.5.2)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
@@ -24,6 +26,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-19
+  x86_64-linux
 
 DEPENDENCIES
   hashery (~> 2.1.1)
