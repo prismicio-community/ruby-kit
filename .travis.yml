@@ -2,33 +2,28 @@ language: ruby
 rvm:
 - 2.6
 - 2.5
-# - jruby-head
-
 cache: bundler
-
 before_install: gem install bundler
 script: bundle exec rspec spec
-
 jobs:
   include:
-    - rvm: jruby-head
-      before_install: 
-        - gem install bundler -v 2.1.4 -N
-      install: 
-        - bundle _2.1.4_ install --jobs=3 --retry=3 --deployment
-      script:
-        - bundle _2.1.4_ exec rspec spec
-
+  - rvm: jruby-head
+    before_install:
+    - gem install bundler -v 2.1.4 -N
+    install:
+    - bundle _2.1.4_ install --jobs=3 --retry=3 --deployment
+    script:
+    - bundle _2.1.4_ exec rspec spec
 notifications:
   email:
   - sebastien@prismic.io
   - fares.droubi@prismic.io
-
 deploy:
   provider: rubygems
   api_key:
-    secure: TBCtAi8FnlHzuiv86Me/YpMdGeAiG9d+J3ZpxWIY32jJv+t8dsW8Fej4jhGSW0aarPT7sarXan6cez0ssSDObUwWMYJfshmMsKykTi6TW4US2ZXtWxtglABYK2DJ/8N1fgkdXKO0NRMF7RVUoJNSw+91GX7ug/obNiCcmG/ms5I=
-  gemspec: prismic.gemspec
+    secure: RnJstdoBduc0Gxmj/0pXzzSj6K4v6bD7nhWuyBsx+/v5b9pWP/VNl1fKfq4Wc2pVm7SzWLMvkGgkbKuBiftPr163GkAny//c/nQxUqTmYNlGDSCnxebIb4U78MhK1soyhO+QNZexVzUhSbqqFqokmkFqScW2S3dpso7KaO4Ne/o=
+  gem: prismic.io
   on:
     tags: true
-    all_branches: true
+    repo: prismicio-community/ruby-kit
+  skip_cleanup: 'true'
