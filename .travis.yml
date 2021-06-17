@@ -4,7 +4,6 @@ rvm:
 - 2.5
 # - jruby-head
 
-sudo: false
 cache: bundler
 
 before_install: gem install bundler
