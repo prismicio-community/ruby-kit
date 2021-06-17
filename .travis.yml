@@ -23,6 +23,7 @@ jobs:
 notifications:
   email:
   - sebastien@prismic.io
+  - fares.droubi@prismic.io
 
 deploy:
   provider: rubygems
