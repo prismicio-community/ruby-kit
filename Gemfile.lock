@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prismic.io (1.8.1)
+    prismic.io (1.8.2)
       hashery (~> 2.1.1)
 
 GEM
@@ -9,14 +9,9 @@ GEM
   specs:
     diff-lcs (1.4.4)
     hashery (2.1.2)
-    mini_portile2 (2.5.3)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
-      racc (~> 1.4)
-    nokogiri (1.11.7-java)
+    nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
     racc (1.5.2)
-    racc (1.5.2-java)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -28,8 +23,7 @@ GEM
     yajl-ruby (1.4.1)
 
 PLATFORMS
-  java
-  ruby
+  x86_64-darwin-19
 
 DEPENDENCIES
   hashery (~> 2.1.1)
@@ -40,4 +34,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   2.1.4
+   2.2.20
