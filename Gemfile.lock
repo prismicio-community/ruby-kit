@@ -9,9 +9,11 @@ GEM
   specs:
     diff-lcs (1.4.4)
     hashery (2.1.2)
-    mini_portile2 (2.5.0)
-    nokogiri (1.11.1)
+    mini_portile2 (2.5.3)
+    nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
+    nokogiri (1.11.7-java)
       racc (~> 1.4)
     racc (1.5.2)
     racc (1.5.2-java)
