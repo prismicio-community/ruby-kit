@@ -17,7 +17,7 @@ assignees: ''
 ### Versions
 
 - ruby-kit: <!-- ex: v0.1.0 -->
-- gem version: <!-- ex: v1.8.1 -->
+- gem version: <!-- ex: v1.8.2 -->
 
 ### Reproduction
 
