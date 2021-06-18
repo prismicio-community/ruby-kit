@@ -21,7 +21,7 @@ notifications:
 deploy:
   provider: rubygems
   api_key:
-    secure: RnJstdoBduc0Gxmj/0pXzzSj6K4v6bD7nhWuyBsx+/v5b9pWP/VNl1fKfq4Wc2pVm7SzWLMvkGgkbKuBiftPr163GkAny//c/nQxUqTmYNlGDSCnxebIb4U78MhK1soyhO+QNZexVzUhSbqqFqokmkFqScW2S3dpso7KaO4Ne/o=
+    secure: F/k9ZOYNaWIPQQiBAikbFCwNK4oph4+sZbH6aIXdbi6q+GXQEe1m59z3zqJovxbvZfoqs5ohCY1R352+R280iBRTRq/0Cxcl7ouSHqU9aKwGAYoLfB1mbWVdjykqMlP5k1bYWDi8WyJEjYxRTEkO6hXUAp3q7Qj1AbqHQUFbSdY=
   gem: prismic.io
   gemspec: prismic.gemspec
   on:
