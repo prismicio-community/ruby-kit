@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{The standard Prismic.io's API library.}
   spec.summary       = %q{Prismic.io development kit}
   spec.homepage      = 'http://prismic.io'
-  spec.license       = 'Apache-2'
+  spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
