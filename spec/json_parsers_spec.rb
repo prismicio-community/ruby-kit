@@ -69,19 +69,38 @@ json
 end
 
 describe 'date_parser' do
-  before do
-    raw_json = <<json
-    {
-      "type": "date",
-      "value": "2013-09-19"
-    }
-json
-    @json = JSON.load(raw_json)
+  context 'when date response' do
+    before do
+      raw_json = <<~JSON
+        {
+          "type": "date",
+          "value": "2013-09-19"
+        }
+      JSON
+      @json = JSON.load(raw_json)
+    end
+
+    it "correctly parses Date objects" do
+      date = Prismic::JsonParser.date_parser(@json)
+      date.value.should == Time.new(2013, 9, 19)
+    end
   end
 
-  it "correctly parses Date objects" do
-    date = Prismic::JsonParser.date_parser(@json)
-    date.value.should == Time.new(2013, 9, 19)
+  context 'when date response not valid date' do
+    before do
+      raw_json = <<~JSON
+        {
+          "type": "date",
+          "value": ""
+        }
+      JSON
+      @json = JSON.load(raw_json)
+    end
+
+    it "returns empty string for the value" do
+      date = Prismic::JsonParser.date_parser(@json)
+      date.value.should == ''
+    end
   end
 end
 
@@ -496,7 +515,7 @@ describe 'structured_text_label_parser' do
 
 end
 
-describe 'boolean_field_parser' do 
+describe 'boolean_field_parser' do
   before do
     raw_json = <<json
     {
