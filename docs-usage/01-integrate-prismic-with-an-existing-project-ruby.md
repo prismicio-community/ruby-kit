@@ -52,11 +52,11 @@ response = api.query(Prismic::Predicates.at("document.type", "page"))
 documents = response.results
 ```
 
-To learn more about querying the API and explore the many ways to retrieve your content, check out the [How to Query the API](../02-query-the-api/01-how-to-query-the-api.md) page.
+To learn more about querying the API and explore the many ways to retrieve your content, check out the [How to Query the API](./02-query-the-api/01-how-to-query-the-api.md) page.
 
 ### Pagination of API Results
 
-When querying a Prismic repository, your results will be paginated. By default, there are 20 documents per page in the results. You can read more about how to manipulate the pagination in the [Pagination for Results](../02-query-the-api/16-pagination-for-results.md) page.
+When querying a Prismic repository, your results will be paginated. By default, there are 20 documents per page in the results. You can read more about how to manipulate the pagination in the [Pagination for Results](./02-query-the-api/16-pagination-for-results.md) page.
 
 ## 5. Add the queried content to your templates
 
@@ -75,7 +75,7 @@ You can read more about templating your content in the Templating section of the
 
 ## 6. Take advantage of Previews and the Prismic Toolbar
 
-In order to take full advantage of Prismic's features, check out the[ Previews and the Prismic Toolbar](../04-beyond-the-api/02-previews-and-the-toolbar.md) page. There you will find the steps needed to add these features to your own Ruby app.
+In order to take full advantage of Prismic's features, check out the[ Previews and the Prismic Toolbar](./04-beyond-the-api/02-previews-and-the-toolbar.md) page. There you will find the steps needed to add these features to your own Ruby app.
 
 ## And your Prismic journey begins!
 
