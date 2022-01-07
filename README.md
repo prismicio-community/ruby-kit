@@ -9,15 +9,16 @@ The prismic kit is compatible with Ruby 1.9.3 or later.
 
 #### Install the kit for your project
 
-*(Assuming that [Ruby is installed](https://www.ruby-lang.org/en/downloads/) on your computer, as well as [RubyGems](http://rubygems.org/pages/download))*
-
+_(Assuming that [Ruby is installed](https://www.ruby-lang.org/en/downloads/) on your computer, as well as [RubyGems](http://rubygems.org/pages/download))_
 
 To install the gem on your computer, run in shell:
 
 ```sh
 gem install prismic.io --pre
 ```
+
 then add in your code:
+
 ```ruby
 require 'prismic'
 ```
@@ -30,7 +31,7 @@ gem 'prismic.io', require: 'prismic'
 
 #### Get started
 
-- [developer documentation](https://prismic.io/docs)
+- [developer documentation](./docs-usage)
 - [quickstart](https://prismic.io/quickstart)
 - [API reference](http://prismicio.github.io/ruby-kit/)
 
@@ -62,11 +63,9 @@ Please document any bugfix or new feature, using the [Yard](http://yardoc.org/) 
 
 If you find existing code that is not optimally documented and wish to make it better, we really appreciate it; but you should document it on its own branch and its own pull request.
 
-
 ### Contributing
 
 We hope you'll get involved! Read our [Contributors' Guide](/CONTRIBUTING.md) for details.
-
 
 ### Licence
 
