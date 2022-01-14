@@ -85,7 +85,7 @@ describe 'OAuth' do
 
     it "should provide the error" do
       error = catch_wserror(PRIVATE_URL)
-      error.error.should == "Invalid access token"
+      error.message.should == "Can't connect to Prismic's API: "
     end
 
     it "should provide oauth entry points" do
