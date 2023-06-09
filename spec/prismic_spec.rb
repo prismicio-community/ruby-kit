@@ -141,8 +141,8 @@ describe 'Api' do
       }.to raise_error(Prismic::API::BadPrismicResponseError, 'No refs given')
     end
 
-    it 'creates 2 refs' do
-      @parsed.refs.size.should == 2
+    it 'creates 3 refs' do
+      @parsed.refs.size.should == 3
     end
 
     it "creates the right ref's ref" do
@@ -155,6 +155,10 @@ describe 'Api' do
 
     it "creates the right ref's 'master' value" do
       @parsed.refs['bar'].master?.should == false
+    end
+
+    it "creates the right ref's 'release2' value" do
+      @parsed.refs['release2'].master?.should == false
     end
 
     it 'creates 3 bookmarks' do

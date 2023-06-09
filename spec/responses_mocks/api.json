@@ -11,6 +11,12 @@
          "ref":"foo",
          "label":"bar",
          "isMasterRef":false
+      },
+      {
+         "id":"release2",
+         "ref":"abc123",
+         "label":null,
+         "isMasterRef":false
       }
    ],
    "bookmarks":{

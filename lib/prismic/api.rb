@@ -147,7 +147,7 @@ module Prismic
       query(Prismic::Predicates::in('my.'+typ+'.uid', uids), opts)
     end
     alias :getByUIDs :get_by_uids
-    
+
     # Retrieve one single typed document by its type
     # @param typ [String] the document type's name
     # @param opts [Hash] query options (ref, etc.)
@@ -232,7 +232,7 @@ module Prismic
         }]
         api.refs = Hash[data_refs.map { |ref|
           scheduled_at = ref['scheduledAt']
-          [ref['label'].downcase, Ref.new(ref['id'], ref['ref'], ref['label'], ref['isMasterRef'], scheduled_at && Time.at(scheduled_at / 1000.0))]
+          [ref.fetch('label', ref['id']).downcase, Ref.new(ref['id'], ref['ref'], ref['label'], ref['isMasterRef'], scheduled_at && Time.at(scheduled_at / 1000.0))]
         }]
         api.tags = data['tags']
         api.types = data['types']
