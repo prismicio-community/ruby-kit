@@ -232,7 +232,7 @@ module Prismic
         }]
         api.refs = Hash[data_refs.map { |ref|
           scheduled_at = ref['scheduledAt']
-          [ref['label']&.downcase || ref['id'].downcase, Ref.new(ref['id'], ref['ref'], ref['label'], ref['isMasterRef'], scheduled_at && Time.at(scheduled_at / 1000.0))]
+          [ref.fetch('label', ref['id']).downcase, Ref.new(ref['id'], ref['ref'], ref['label'], ref['isMasterRef'], scheduled_at && Time.at(scheduled_at / 1000.0))]
         }]
         api.tags = data['tags']
         api.types = data['types']
