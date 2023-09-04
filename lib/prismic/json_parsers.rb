@@ -36,7 +36,7 @@ module Prismic
         Prismic::Fragments::IntegrationField.new(json['value'])
       end
 
-      def boolean_field_parser(json) 
+      def boolean_field_parser(json)
         Prismic::Fragments::BooleanField.new(json['value'])
       end
 
@@ -84,7 +84,7 @@ module Prismic
         Prismic::Fragments::Text.new(json['value'])
       end
 
-      def separator_parser(json)
+      def separator_parser(_)
         Prismic::Fragments::Separator.new('')
       end
 
@@ -97,6 +97,8 @@ module Prismic
       end
 
       def date_parser(json)
+        return Prismic::Fragments::Text.new('') if json['value'].empty?
+
         Prismic::Fragments::Date.new(Time.parse(json['value']))
       end
 
